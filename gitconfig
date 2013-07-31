@@ -1,0 +1,13 @@
+#To be appended after .gitconfig for colors and shortcuts
+[color]
+	diff  = auto
+	status= auto
+	branch= auto
+	interactive = true
+[alias]
+	st = status
+	co = checkout
+	ci = commit
+	br = branch
+	lg = log --graph
+	d = diff
