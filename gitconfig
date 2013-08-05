@@ -11,3 +11,5 @@
 	br = branch
 	lg = log --graph
 	d = diff
+[push]
+	default = simple
