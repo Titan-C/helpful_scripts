@@ -11,6 +11,7 @@ done
 #Add scripts to PATH
 cat bashrc > ~/.bashrc
 source ~/.bashrc
+cat vimrc > ~/.vimrc
 
 
 #Configuring git
