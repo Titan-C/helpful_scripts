@@ -1,3 +1,3 @@
 #! /bin/bash
 
-xkbcomp -I~/.xkb keymap/custom $DISPLAY
+xkbcomp -I$HOME/.xkb ~/.xkb/keymap/custom $DISPLAY
