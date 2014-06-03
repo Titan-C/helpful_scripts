@@ -8,7 +8,7 @@ usage(){
 
 #Cleaning modules
 latex(){
-EXTENSIONS="*.aux *.tex~ *.tex.backup *.dvi *.log *.pdf"
+EXTENSIONS="*.aux *.tex~ *.tex.backup *.dvi *.log *.pdf *.nav *.out *.snm *.toc"
 for dir in $(ls -d */ ./)
 do
     cd $dir
@@ -18,4 +18,4 @@ done
 
 #Run script
 [[ $# -eq 0 ]] && usage
-$1 
+$1
