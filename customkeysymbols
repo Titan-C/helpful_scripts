@@ -1,6 +1,8 @@
 partial alphanumeric_keys
 xkb_symbols "dvorakOscar" {
 
+    include "es(basic)"
+
     name[Group1]= "Spanish (Dvorak Programer us_es oscar)";
 
     //             Unmodified       Shift           AltGr            Shift+AltGr

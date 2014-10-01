@@ -21,4 +21,6 @@ export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
 
 #Custom PATHS
 PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+
 export PATH=~/Documents/helpful_scripts:$PATH
