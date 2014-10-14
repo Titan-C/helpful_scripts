@@ -22,8 +22,8 @@ git config --global push.default simple
 cat gitconfig >> ~/.gitconfig
 
 #Configuring Custom Keyboard
-mkdir -p ~/.xkb/keymap/
-cat customkeymap > ~/.xkb/keymap/custom
-mkdir -p ~/.xkb/symbols/
-cat customkeysymbols > ~/.xkb/symbols/custom
+#mkdir -p ~/.xkb/keymap/
+#cat customkeymap > ~/.xkb/keymap/custom
+#mkdir -p ~/.xkb/symbols/
+#cat customkeysymbols > ~/.xkb/symbols/custom
 
