@@ -23,4 +23,11 @@ export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
 PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 
-export PATH=~/Documents/helpful_scripts:$PATH
+export PATH=~/repos/helpful_scripts:$PATH
+
+anacondainit() {
+    export PATH=~/libs/miniconda/bin:$PATH
+    export QT_PLUGIN_PATH=""
+    export LD_LIBRARY_PATH=/home/oscar/libs/lib:$LD_LIBRARY_PATH
+}
+alias sshlink='ssh -X'
