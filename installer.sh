@@ -1,6 +1,6 @@
 #! /bin/bash
-USERNAME="Óscar Nájera"
-USERMAIL="najera.oscar@gmail.com"
+USERNAME=""
+USERMAIL=""
 
 #Make scripts executable
 for file in $(ls *.sh)
@@ -10,6 +10,7 @@ done
 
 #Add scripts to PATH
 cat bashrc >> ~/.bashrc
+echo "set show-all-if-unmodified on" >> ~/.inputrc
 source ~/.bashrc
 cat vimrc >> ~/.vimrc
 
