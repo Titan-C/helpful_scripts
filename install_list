@@ -1,0 +1,4 @@
+yaourt -S aspell-{en,de,es,fr}
+yaourt -S hunspell-{en,de,es,fr}
+yaourt -S hyphen-{en,de,es,fr}
+
