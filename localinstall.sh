@@ -1,7 +1,7 @@
 #! /bin/bash
 
 LIB=~/libs/
-MAKEFLAGS="-j2"
+MAKEFLAGS="-j8"
 
 mkdir ${LIB}
 
@@ -21,16 +21,17 @@ boostv=boost_1_57_0
 wget http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz/download
 tar -xf ${boostv}.tar.gz
 cd ${boostv}
-./bootstrap --prefix=${LIB} --with-toolset=gcc --with-icu
+./bootstrap.sh --prefix=${LIB} --with-toolset=gcc --with-icu
 echo "using mpi ;" >> project-config.jam
 ./b2 \
       variant=release \
+      debug-symbols=off \
       threading=multi \
       runtime-link=shared \
       link=shared,static \
       toolset=gcc \
-      cflags="-O3 -pipe" linkflags="${LDFLAGS}" \
-      ${MAKEFLAGS}
+      cflags="-O3 -pipe" \
+      ${MAKEFLAGS} \
       install
 cd
 
@@ -75,7 +76,8 @@ cmake ../ -DCMAKE_INSTALL_PREFIX=${LIB} \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_Fortran_COMPILER=gfortran \
     -DLAPACKE=ON
-make
+make -j4
+cd
 
 ## Anaconda
 wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
