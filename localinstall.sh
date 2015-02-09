@@ -15,6 +15,21 @@ make install
 cd
 
 ## boost
+boostv=boost_1_57_0
+wget http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz/download
+tar -xf ${boostv}.tar.gz
+cd ${boostv}
+./bootstrap --prefix=${LIB} --with-toolset=gcc --with-icu
+echo "using mpi ;" >> project-config.jam
+./b2 \
+      variant=release \
+      threading=multi \
+      runtime-link=shared \
+      link=shared,static \
+      toolset=gcc \
+      cflags="-O3 -pipe" linkflags="${LDFLAGS}" \
+      install
+
 ## fftw
 fftwv=fftw-3.3.4
 wget http://www.fftw.org/${fftwv}.tar.gz
