@@ -3,7 +3,7 @@
 LIB=~/libs/
 MAKEFLAGS="-j8"
 
-mkdir ${LIB}
+mkdir -p ${LIB}
 
 
 ## cmake
@@ -79,10 +79,9 @@ cmake ../ -DCMAKE_INSTALL_PREFIX=${LIB} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_SKIP_RPATH=ON \
     -DBUILD_SHARED_LIBS=ON \
-    -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_Fortran_COMPILER=gfortran \
     -DLAPACKE=ON
-make -j4
+make ${MAKEFLAGS}
 cd
 }
 
@@ -96,12 +95,29 @@ conda update --yes conda
 conda create --yes -n alps pip scipy numpy matplotlib hdf5
 }
 
+## local env
+work_env() {
+anacondainit
+export LD_LIBRARY_PATH=${LIB}/lib:$LD_LIBRARY_PATH
+source activate alps
+}
+
+
 ## ALPS
 inst_alps() {
 alpsv=alps-2.2.b3-r7462-src
-wget http://alps.comp-phys.org/static/software/releases/${alpsv}.tar.gz
-tar -xf ${alpsv}.tar.gz
-cd ${alpsv}
+#wget http://alps.comp-phys.org/static/software/releases/${alpsv}.tar.gz
+#tar -xf ${alpsv}.tar.gz
+#cd ${alpsv}
 mkdir build
 cd build
+export LD_LIBRARY_PATH=/home/oscar/libs/lib:$LD_LIBRARY_PATH
+cmake ../alps/ -DCMAKE_INSTALL_PREFIX=${LIB} \
+#         -DCMAKE_BINARY_DIR=./build \
+          -DCMAKE_BUILD_TYPE=Release
+make ${MAKEFLAGS}
+make test
+make install
 }
+
+inst_alps
