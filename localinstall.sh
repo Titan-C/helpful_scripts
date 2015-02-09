@@ -1,6 +1,8 @@
 #! /bin/bash
 
 LIB=~/libs/
+MAKEFLAGS="-j2"
+
 mkdir ${LIB}
 
 
@@ -28,7 +30,26 @@ echo "using mpi ;" >> project-config.jam
       link=shared,static \
       toolset=gcc \
       cflags="-O3 -pipe" linkflags="${LDFLAGS}" \
+      ${MAKEFLAGS}
       install
+cd
+
+
+## hdf5
+hdf5v=hdf5-1.8.14
+wget http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.14.tar
+tar -xf ${hdf5v}
+cd ${hdf5v}
+./configure --prefix=${LIB} --disable-static \
+    --enable-hl \
+    --enable-threadsafe \
+    --enable-linux-lfs \
+    --enable-production \
+    --with-pic \
+    --disable-sharedlib-rpath
+make
+cd
+
 
 ## fftw
 fftwv=fftw-3.3.4
@@ -36,7 +57,7 @@ wget http://www.fftw.org/${fftwv}.tar.gz
 tar -xf ${fftwv}.tar.gz
 cd ${fftwv}
 ./configure --prefix=${LIB} --enable-openmp --enable-mpi --enable-sse --enable-sse2 --enable-avx CFLAGS="-O2"
-make -j8
+make ${MAKEFLAGS}
 make install
 cd
 
