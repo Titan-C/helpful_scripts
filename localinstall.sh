@@ -7,6 +7,7 @@ mkdir ${LIB}
 
 
 ## cmake
+inst_cmake() {
 cmakev=cmake-3.1.2
 wget http://www.cmake.org/files/v3.1/${cmake}.tar.gz  -O cmake.tar.gz
 tar -xf cmake.tar.gz
@@ -15,10 +16,11 @@ cd ${cmakev}
 make
 make install
 cd
-
+}
 ## boost
+inst_boost() {
 boostv=boost_1_57_0
-wget http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz/download
+wget http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz
 tar -xf ${boostv}.tar.gz
 cd ${boostv}
 ./bootstrap.sh --prefix=${LIB} --with-toolset=gcc --with-icu
@@ -34,9 +36,10 @@ echo "using mpi ;" >> project-config.jam
       ${MAKEFLAGS} \
       install
 cd
-
+}
 
 ## hdf5
+inst_hdf5() {
 hdf5v=hdf5-1.8.14
 wget http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.14.tar
 tar -xf ${hdf5v}.tar
@@ -50,9 +53,10 @@ cd ${hdf5v}
     --disable-sharedlib-rpath
 make
 cd
-
+}
 
 ## fftw
+inst_fftw () {
 fftwv=fftw-3.3.4
 wget http://www.fftw.org/${fftwv}.tar.gz
 tar -xf ${fftwv}.tar.gz
@@ -61,8 +65,10 @@ cd ${fftwv}
 make ${MAKEFLAGS}
 make install
 cd
+}
 
 ## lapack
+inst_lapack() {
 lapackv=lapack-3.5.0
 wget http://www.netlib.org/lapack/lapack-3.5.0.tgz
 tar -xf ${lapackv}.tgz
@@ -78,20 +84,24 @@ cmake ../ -DCMAKE_INSTALL_PREFIX=${LIB} \
     -DLAPACKE=ON
 make -j4
 cd
+}
 
 ## Anaconda
+inst_anaconda() {
 wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
 chmod +x miniconda.sh
 ./miniconda.sh -b
 export PATH=~/miniconda/bin:$PATH
 conda update --yes conda
 conda create --yes -n alps pip scipy numpy matplotlib hdf5
+}
 
 ## ALPS
+inst_alps() {
 alpsv=alps-2.2.b3-r7462-src
 wget http://alps.comp-phys.org/static/software/releases/${alpsv}.tar.gz
 tar -xf ${alpsv}.tar.gz
 cd ${alpsv}
 mkdir build
 cd build
-
+}
