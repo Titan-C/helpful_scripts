@@ -38,7 +38,7 @@ cd
 ## hdf5
 hdf5v=hdf5-1.8.14
 wget http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.14.tar
-tar -xf ${hdf5v}
+tar -xf ${hdf5v}.tar
 cd ${hdf5v}
 ./configure --prefix=${LIB} --disable-static \
     --enable-hl \
@@ -61,6 +61,21 @@ make ${MAKEFLAGS}
 make install
 cd
 
+## lapack
+lapackv=lapack-3.5.0
+wget http://www.netlib.org/lapack/lapack-3.5.0.tgz
+tar -xf ${lapackv}.tgz
+cd ${lapackv}
+install -d build
+cd build
+cmake ../ -DCMAKE_INSTALL_PREFIX=${LIB} \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_SKIP_RPATH=ON \
+    -DBUILD_SHARED_LIBS=ON \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_Fortran_COMPILER=gfortran \
+    -DLAPACKE=ON
+make
 
 ## Anaconda
 wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
@@ -68,4 +83,13 @@ chmod +x miniconda.sh
 ./miniconda.sh -b
 export PATH=~/miniconda/bin:$PATH
 conda update --yes conda
+conda create --yes -n alps pip scipy numpy matplotlib hdf5
+
+## ALPS
+alpsv=alps-2.2.b3-r7462-src
+wget http://alps.comp-phys.org/static/software/releases/${alpsv}.tar.gz
+tar -xf ${alpsv}.tar.gz
+cd ${alpsv}
+mkdir build
+cd build
 
