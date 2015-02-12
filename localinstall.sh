@@ -121,3 +121,13 @@ make install
 }
 
 inst_alps
+
+# local boost mpi python
+inst_mpipy () {
+DIR=~/miniconda/envs/alps/lib/python2.7/site-packages/boost
+mkdir -vp ${DIR}
+cp -v mpi_py_init.py ${DIR}/__init__.py
+cp -v /home/oscar/libs/lib/mpi.so ${DIR}/
+}
+inst_mpipy
+
