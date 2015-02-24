@@ -92,7 +92,7 @@ chmod +x miniconda.sh
 ./miniconda.sh -b
 export PATH=~/miniconda/bin:$PATH
 conda update --yes conda
-conda create --yes -n alps pip scipy numpy matplotlib hdf5
+conda create --yes -n alps pip scipy numpy matplotlib hdf5 h5py
 }
 
 ## local env
