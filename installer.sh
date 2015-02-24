@@ -9,9 +9,9 @@ do
 done
 
 #Add scripts to PATH
-cat bashrc > ~/.bashrc
+cat bashrc >> ~/.bashrc
 source ~/.bashrc
-cat vimrc > ~/.vimrc
+cat vimrc >> ~/.vimrc
 
 
 #Configuring git

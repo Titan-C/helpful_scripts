@@ -94,6 +94,7 @@ export PATH=~/miniconda/bin:$PATH
 conda update --yes conda
 conda create --yes -n alps pip scipy numpy matplotlib hdf5 h5py
 }
+## conda install ipython jinja2 numba mako pep8 pillow pip pyflakes
 
 ## local env
 work_env() {
@@ -120,7 +121,6 @@ make test
 make install
 }
 
-inst_alps
 
 # local boost mpi python
 inst_mpipy () {
@@ -129,5 +129,4 @@ mkdir -vp ${DIR}
 cp -v mpi_py_init.py ${DIR}/__init__.py
 cp -v /home/oscar/libs/lib/mpi.so ${DIR}/
 }
-inst_mpipy
 
