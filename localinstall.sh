@@ -107,9 +107,9 @@ source activate alps
 ## ALPS
 inst_alps() {
 alpsv=alps-2.2.b3-r7462-src
-#wget http://alps.comp-phys.org/static/software/releases/${alpsv}.tar.gz
-#tar -xf ${alpsv}.tar.gz
-#cd ${alpsv}
+wget http://alps.comp-phys.org/static/software/releases/${alpsv}.tar.gz
+tar -xf ${alpsv}.tar.gz
+cd ${alpsv}
 mkdir build
 cd build
 export LD_LIBRARY_PATH=/home/oscar/libs/lib:$LD_LIBRARY_PATH
