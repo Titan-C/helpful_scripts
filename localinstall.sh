@@ -1,6 +1,6 @@
 #! /bin/bash
 
-LIB=~/libs/
+LIB=/home/oscar/libs/
 MAKEFLAGS="-j8"
 
 mkdir -p ${LIB}
@@ -128,5 +128,37 @@ DIR=~/miniconda/envs/alps/lib/python2.7/site-packages/boost
 mkdir -vp ${DIR}
 cp -v mpi_py_init.py ${DIR}/__init__.py
 cp -v /home/oscar/libs/lib/mpi.so ${DIR}/
+}
+
+# install gmp
+inst_gmp () {
+wget ftp://gcc.gnu.org/pub/gcc/infrastructure/gmp-4.3.2.tar.bz2
+bunzip2 gmp-4.3.2.tar.bz2
+tar xf gmp-4.3.2.tar
+cd gmp-4.3.2
+./configure --prefix=/home/oscar/libs/
+make -j8
+make check
+make install
+}
+
+# install mpfr
+inst_mpfr () {
+mpfrv=mpfr-2.4.2
+ftp://gcc.gnu.org/pub/gcc/infrastructure/${mpfrv}.tar.bz2
+tar -xf ${mpfrv}.tar.bz2
+cd ${mpfrv}
+./configure --prefix=${LIB} --with-gmp=${LIB}
+make ${MAKEFLAGS} && make check && make install
+}
+
+# install mpc
+inst_mpc () {
+mpcv=mpc-0.8.1
+wget ftp://gcc.gnu.org/pub/gcc/infrastructure/${mpcv}.tar.gz
+tar -xf ${mpcv}.tar.gz
+cd ${mpcv}
+./configure --prefix=${LIB} --with-gmp=${LIB}
+make ${MAKEFLAGS} && make check && make install
 }
 
