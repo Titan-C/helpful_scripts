@@ -1,6 +1,6 @@
 #! /bin/bash
 
-LIB=/home/oscar/libs/
+LIB=/home/oscar/libns/
 MAKEFLAGS="-j8"
 
 mkdir -p ${LIB}
@@ -19,8 +19,8 @@ cd
 }
 ## boost
 inst_boost() {
-boostv=boost_1_57_0
-wget http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.gz
+boostv=boost_1_55_0
+wget http://sourceforge.net/projects/boost/files/boost/1.55.0/${boostv}.tar.gz
 tar -xf ${boostv}.tar.gz
 cd ${boostv}
 ./bootstrap.sh --prefix=${LIB} --with-toolset=gcc --with-icu
@@ -41,7 +41,7 @@ cd
 ## hdf5
 inst_hdf5() {
 hdf5v=hdf5-1.8.14
-wget http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.14.tar
+wget http://www.hdfgroup.org/ftp/HDF5/current/src/${hdf5v}.tar
 tar -xf ${hdf5v}.tar
 cd ${hdf5v}
 ./configure --prefix=${LIB} --disable-static \
@@ -51,8 +51,11 @@ cd ${hdf5v}
     --enable-production \
     --with-pic \
     --disable-sharedlib-rpath
-make
-cd
+make ${MAKEFLAGS}
+make check
+make install
+make check-install
+cd ..
 }
 
 ## fftw
@@ -70,7 +73,7 @@ cd
 ## lapack
 inst_lapack() {
 lapackv=lapack-3.5.0
-wget http://www.netlib.org/lapack/lapack-3.5.0.tgz
+wget http://www.netlib.org/lapack/${lapackv}.tgz
 tar -xf ${lapackv}.tgz
 cd ${lapackv}
 install -d build
@@ -92,9 +95,12 @@ chmod +x miniconda.sh
 ./miniconda.sh -b
 export PATH=~/miniconda/bin:$PATH
 conda update --yes conda
-conda create --yes -n alps pip scipy numpy matplotlib hdf5 h5py
+conda create --yes -n triqs pip scipy numpy matplotlib hdf5 h5py ipython \
+    jinja2 numba pep8 pillow pip pyflakes mpi4py pytest cython numba \
+    sphinx spyder
+source activate triqs
+pip install mako
 }
-## conda install ipython jinja2 numba mako pep8 pillow pip pyflakes
 
 ## local env
 work_env() {
@@ -114,7 +120,6 @@ mkdir build
 cd build
 export LD_LIBRARY_PATH=/home/oscar/libs/lib:$LD_LIBRARY_PATH
 cmake ../alps/ -DCMAKE_INSTALL_PREFIX=${LIB} \
-#         -DCMAKE_BINARY_DIR=./build \
           -DCMAKE_BUILD_TYPE=Release
 make ${MAKEFLAGS}
 make test
@@ -136,20 +141,22 @@ wget ftp://gcc.gnu.org/pub/gcc/infrastructure/gmp-4.3.2.tar.bz2
 bunzip2 gmp-4.3.2.tar.bz2
 tar xf gmp-4.3.2.tar
 cd gmp-4.3.2
-./configure --prefix=/home/oscar/libs/
+./configure --prefix=${LIB} --enable-cxx
 make -j8
 make check
 make install
+cd
 }
 
 # install mpfr
 inst_mpfr () {
 mpfrv=mpfr-2.4.2
-ftp://gcc.gnu.org/pub/gcc/infrastructure/${mpfrv}.tar.bz2
+wget ftp://gcc.gnu.org/pub/gcc/infrastructure/${mpfrv}.tar.bz2
 tar -xf ${mpfrv}.tar.bz2
 cd ${mpfrv}
 ./configure --prefix=${LIB} --with-gmp=${LIB}
 make ${MAKEFLAGS} && make check && make install
+cd
 }
 
 # install mpc
@@ -160,5 +167,17 @@ tar -xf ${mpcv}.tar.gz
 cd ${mpcv}
 ./configure --prefix=${LIB} --with-gmp=${LIB}
 make ${MAKEFLAGS} && make check && make install
+cd
 }
 
+# install gcc
+inst_gcc () {
+gccv=gcc-4.9.2
+wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
+tar -xf ${gccv}.tar.gz
+cd ${gccv}
+./configure --prefix=${LIB} --enable-checking=release --with-gmp=${LIB} \
+    --with-mpfr=${LIB} --with-mpc=${LIB} --disable-multilib
+make ${MAKEFLAGS} && make install
+cd
+}
