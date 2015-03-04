@@ -9,8 +9,8 @@ mkdir -p ${LIB}
 ## cmake
 inst_cmake() {
 cmakev=cmake-3.1.2
-wget http://www.cmake.org/files/v3.1/${cmake}.tar.gz  -O cmake.tar.gz
-tar -xf cmake.tar.gz
+wget http://www.cmake.org/files/v3.1/${cmakev}.tar.gz
+tar -xf ${cmakev}.tar.gz
 cd ${cmakev}
 ./bootstrap --parallel=4 --prefix=${LIB}
 make
@@ -97,7 +97,7 @@ export PATH=~/miniconda/bin:$PATH
 conda update --yes conda
 conda create --yes -n triqs pip scipy numpy matplotlib hdf5 h5py ipython \
     jinja2 numba pep8 pillow pip pyflakes mpi4py pytest cython numba \
-    sphinx spyder coverage
+    sphinx spyder coverage rope
 source activate triqs
 pip install mako
 }
