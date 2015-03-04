@@ -175,8 +175,8 @@ inst_gcc () {
 gccv=gcc-4.9.2
 wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
 tar -xf ${gccv}.tar.gz
-cd ${gccv}
-./configure --prefix=${LIB} --enable-checking=release --with-gmp=${LIB} \
+mkdir build_${gccv} && cd build_${gccv}
+../${gccv}/configure --prefix=${LIB} --enable-checking=release --with-gmp=${LIB} \
     --with-mpfr=${LIB} --with-mpc=${LIB} --disable-multilib
 make ${MAKEFLAGS} && make install
 cd
