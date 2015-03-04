@@ -97,7 +97,7 @@ export PATH=~/miniconda/bin:$PATH
 conda update --yes conda
 conda create --yes -n triqs pip scipy numpy matplotlib hdf5 h5py ipython \
     jinja2 numba pep8 pillow pip pyflakes mpi4py pytest cython numba \
-    sphinx spyder
+    sphinx spyder coverage
 source activate triqs
 pip install mako
 }
@@ -173,11 +173,13 @@ cd
 # install gcc
 inst_gcc () {
 gccv=gcc-4.9.2
-wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
+#wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
 tar -xf ${gccv}.tar.gz
+cd ${gccv}
+./contrib/download_prerequisites
+cd ..
 mkdir build_${gccv} && cd build_${gccv}
-../${gccv}/configure --prefix=${LIB} --enable-checking=release --with-gmp=${LIB} \
-    --with-mpfr=${LIB} --with-mpc=${LIB} --disable-multilib
+../${gccv}/configure --prefix=${LIB} --enable-checking=release --disable-multilib
 make ${MAKEFLAGS} && make install
 cd
 }
