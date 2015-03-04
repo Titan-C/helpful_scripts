@@ -64,7 +64,7 @@ fftwv=fftw-3.3.4
 wget http://www.fftw.org/${fftwv}.tar.gz
 tar -xf ${fftwv}.tar.gz
 cd ${fftwv}
-./configure --prefix=${LIB} --enable-openmp --enable-mpi --enable-sse --enable-sse2 --enable-avx CFLAGS="-O2"
+./configure --prefix=${LIB} --enable-openmp --enable-mpi --enable-shared --enable-threads --enable-sse2 --enable-avx CFLAGS="-O2"
 make ${MAKEFLAGS}
 make install
 cd
