@@ -97,7 +97,7 @@ export PATH=~/miniconda/bin:$PATH
 conda update --yes conda
 conda create --yes -n dev pip scipy numpy matplotlib hdf5 h5py ipython \
     jinja2 numba pep8 pillow pyflakes pytest cython numba \
-    sphinx spyder coverage nose rope
+    sphinx spyder coverage nose rope tornado jsonschema
 source activate triqs
 pip install mako
 }
