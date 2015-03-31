@@ -1,6 +1,6 @@
 #! /bin/bash
 
-LIB=/home/oscar/libns/
+LIB=/home/oscar/libs/
 MAKEFLAGS="-j8"
 
 mkdir -p ${LIB}
@@ -13,7 +13,7 @@ wget http://www.cmake.org/files/v3.1/${cmakev}.tar.gz
 tar -xf ${cmakev}.tar.gz
 cd ${cmakev}
 ./bootstrap --parallel=4 --prefix=${LIB}
-make
+make ${MAKEFLAGS}
 make install
 cd
 }
@@ -88,6 +88,18 @@ make ${MAKEFLAGS}
 cd
 }
 
+## Openblas
+inst_openblas() {
+op_ver=0.2.14
+wget http://github.com/xianyi/OpenBLAS/archive/v${op_ver}.tar.gz
+tar -xf v${op_ver}.tar.gz
+cd OpenBLAS-${op_ver}
+make NUM_THREADS=8
+make tests
+make PREFIX=${LIB} install
+}
+
+
 ## Anaconda
 inst_anaconda() {
 wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
@@ -98,15 +110,16 @@ conda update --yes conda
 conda create --yes -n dev pip scipy numpy matplotlib hdf5 h5py ipython \
     jinja2 numba pep8 pillow pyflakes pytest cython numba \
     sphinx spyder coverage nose rope tornado jsonschema
-source activate triqs
+source activate dev
 pip install mako
+pip install mpi4py
 }
 
 ## local env
 work_env() {
 anacondainit
 export LD_LIBRARY_PATH=${LIB}/lib:$LD_LIBRARY_PATH
-source activate alps
+source activate dev
 }
 
 
@@ -132,7 +145,7 @@ inst_mpipy () {
 DIR=~/miniconda/envs/alps/lib/python2.7/site-packages/boost
 mkdir -vp ${DIR}
 cp -v mpi_py_init.py ${DIR}/__init__.py
-cp -v /home/oscar/libs/lib/mpi.so ${DIR}/
+cp -v ${LIB}lib/mpi.so ${DIR}/
 }
 
 # install gmp
@@ -142,7 +155,7 @@ bunzip2 gmp-4.3.2.tar.bz2
 tar xf gmp-4.3.2.tar
 cd gmp-4.3.2
 ./configure --prefix=${LIB} --enable-cxx
-make -j8
+make ${MAKEFLAGS}
 make check
 make install
 cd
@@ -173,7 +186,7 @@ cd
 # install gcc
 inst_gcc () {
 gccv=gcc-4.9.2
-#wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
+wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
 tar -xf ${gccv}.tar.gz
 cd ${gccv}
 ./contrib/download_prerequisites
