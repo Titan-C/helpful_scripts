@@ -119,6 +119,8 @@ pip install mpi4py
 work_env() {
 anacondainit
 export LD_LIBRARY_PATH=${LIB}/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=${LIB}/libs/lib64:$LD_LIBRARY_PATH
+
 source activate dev
 }
 
@@ -139,6 +141,13 @@ make test
 make install
 }
 
+
+# Triqs
+inst_triqs() {
+CXX=g++ cmake -DCMAKE_INSTALL_PREFIX=${LIB} -DUSE_CPP14=ON -DBoost_INCLUDE_DIR=${LIB}/include/ ../triqs/
+make -j8
+make test
+}
 
 # local boost mpi python
 inst_mpipy () {

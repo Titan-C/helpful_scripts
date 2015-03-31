@@ -26,8 +26,12 @@ export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 export PATH=~/repos/helpful_scripts:$PATH
 
 anacondainit() {
-    export PATH=~/libs/miniconda/bin:$PATH
-    export QT_PLUGIN_PATH=""
-    export LD_LIBRARY_PATH=/home/oscar/libs/lib:$LD_LIBRARY_PATH
+export PATH=~/libs/bin:$PATH
+export PATH=~/miniconda/bin:$PATH
+export LD_LIBRARY_PATH=/home/oscar/libs/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/home/oscar/libs/lib64:$LD_LIBRARY_PATH
+export QT_PLUGIN_PATH=""
+export PYTHONPATH=/home/oscar/libs/lib:$PYTHONPATH
 }
+
 alias sshlink='ssh -X'
