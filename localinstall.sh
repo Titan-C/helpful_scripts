@@ -99,6 +99,18 @@ make tests
 make PREFIX=${LIB} install
 }
 
+## GSL
+inst_gsl() {
+gslv=gsl-1.16
+wget http://mirror.ibcp.fr/pub/gnu/gsl/${gslv}.tar.gz
+tar -xf ${gslv}.tar.gz
+cd ${gslv}
+./configure --prefix=${LIB}
+make ${MAKEFLAGS}
+make install
+cd
+}
+
 
 ## Anaconda
 inst_anaconda() {
