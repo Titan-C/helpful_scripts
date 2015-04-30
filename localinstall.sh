@@ -3,8 +3,29 @@
 LIB=/home/oscar/libs/
 MAKEFLAGS="-j8"
 
+export CC=gcc
+export CXX=g++
+export FC=gfortran
+# export CC=icc
+# export CXX=icpc
+# export FC=ifort
 mkdir -p ${LIB}
 
+inst_dev() {
+inst_gcc
+inst_gmp
+inst_cmake
+inst_binutils
+inst_openmpi
+
+inst_openblas
+inst_hdf5
+inst_fftw
+inst_gsl
+inst_boost
+inst_alps
+inst_triqs
+}
 
 ## cmake
 inst_cmake() {
@@ -17,6 +38,18 @@ make ${MAKEFLAGS}
 make install
 cd
 }
+
+## binutils
+inst_binutils () {
+binutilsv=binutils-2.25
+wget http://ftp.gnu.org/gnu/binutils/${binutilsv}tar.gz
+tar -xf ${binutilsv}tar.gz
+cd ${binutilsv}
+./configure --prefix=${LIB}
+make install
+cd
+}
+
 ## boost
 inst_boost() {
 boostv=boost_1_55_0
@@ -41,8 +74,8 @@ cd
 ## hdf5
 inst_hdf5() {
 hdf5v=hdf5-1.8.14
-wget http://www.hdfgroup.org/ftp/HDF5/current/src/${hdf5v}.tar
-tar -xf ${hdf5v}.tar
+wget ftp://ftp.hdfgroup.org/HDF5/current/src/${hdf5v}.tar.bz2
+tar -xf ${hdf5v}.tar.bz2
 cd ${hdf5v}
 ./configure --prefix=${LIB} --disable-static \
     --enable-hl \
@@ -55,7 +88,7 @@ make ${MAKEFLAGS}
 make check
 make install
 make check-install
-cd ..
+cd
 }
 
 ## fftw
@@ -94,9 +127,12 @@ op_ver=0.2.14
 wget http://github.com/xianyi/OpenBLAS/archive/v${op_ver}.tar.gz
 tar -xf v${op_ver}.tar.gz
 cd OpenBLAS-${op_ver}
-make NUM_THREADS=8
-make tests
+make DYNAMIC_ARCH=1
 make PREFIX=${LIB} install
+cd ${LIB}/lib/
+ln -sf libopenblas.so libblas.so
+ln -sf libopenblas.so liblapack.so
+cd
 }
 
 ## GSL
@@ -121,7 +157,7 @@ export PATH=~/miniconda/bin:$PATH
 conda update --yes conda
 conda create --yes -n dev pip scipy numpy matplotlib hdf5 h5py ipython \
     jinja2 numba pep8 pillow pyflakes pytest cython numba \
-    sphinx spyder coverage nose rope tornado jsonschema numpydoc
+    sphinx spyder coverage nose rope tornado jsonschema numpydoc mistune
 source activate dev
 pip install mako
 pip install mpi4py
@@ -151,19 +187,24 @@ cmake ../alps/ -DCMAKE_INSTALL_PREFIX=${LIB} \
 make ${MAKEFLAGS}
 make test
 make install
+cd
 }
 
 
 # Triqs
 inst_triqs() {
-CXX=g++ cmake -DCMAKE_INSTALL_PREFIX=${LIB} -DUSE_CPP14=ON -DBoost_INCLUDE_DIR=${LIB}/include/ ../triqs/
-make -j8
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=${LIB} -DUSE_CPP14=ON -DBoost_INCLUDE_DIR=${LIB}/include/ ~/dev/triqs/
+make ${MAKEFLAGS}
 make test
+make install
+cd
 }
 
 # local boost mpi python
 inst_mpipy () {
-DIR=~/miniconda/envs/alps/lib/python2.7/site-packages/boost
+DIR=~/miniconda/envs/dev/lib/python2.7/site-packages/boost
 mkdir -vp ${DIR}
 cp -v mpi_py_init.py ${DIR}/__init__.py
 cp -v ${LIB}lib/mpi.so ${DIR}/
@@ -215,5 +256,16 @@ cd ..
 mkdir build_${gccv} && cd build_${gccv}
 ../${gccv}/configure --prefix=${LIB} --enable-checking=release --disable-multilib
 make ${MAKEFLAGS} && make install
+cd
+}
+
+#install openmpi
+inst_openmpi () {
+ompiv=openmpi-1.8.4
+#wget http://www.open-mpi.org/software/ompi/v1.8/downloads/${ompiv}.tar.bz2
+tar -xf ${ompiv}.tar.bz2
+cd ${ompiv}
+./configure --prefix=${LIB}
+make ${MAKEFLAGS} && make all install
 cd
 }
