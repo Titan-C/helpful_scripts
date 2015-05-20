@@ -193,13 +193,21 @@ cd
 
 # Triqs
 inst_triqs() {
-mkdir build
-cd build
+mkdir -p buildtriqs
+cd buildtriqs
 cmake -DCMAKE_INSTALL_PREFIX=${LIB} -DUSE_CPP14=ON -DBoost_INCLUDE_DIR=${LIB}/include/ ~/dev/triqs/
 make ${MAKEFLAGS}
 make test
 make install
-cd
+cd ..
+
+mkdir -p buildcthyb
+cd buildcthyb
+cmake -DTRIQS_PATH=${LIB} ../cthyb
+make ${MAKEFLAGS}
+make test
+make install
+cd ..
 }
 
 # local boost mpi python
