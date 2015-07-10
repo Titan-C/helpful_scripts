@@ -37,13 +37,13 @@ anacondainit
 parser = argparse.ArgumentParser(description='Job submission script')
 parser.add_argument('-l', '--loop', nargs='+', required=True,
                     help='Argument to loop over in the submission script')
-parser.add_argument('-n', '--job_name', required=True,
+parser.add_argument('-N', '--job_name', required=True,
                     help='Name for job.')
 parser.add_argument('-cp', '--cpus', default=12, type=int)
 parser.add_argument('-q', '--queue', choices=['theo-ox.q', 'shared.q'],
                     default='theo-ox.q', help='(default: %(default)s)')
 parser.add_argument('-mpi', action='store_const', default='',
-                    const='mpirun -np $NSLOTS ')
+                    const='mpirun -np $NSLOTS ', help='Use mpirun')
 parser.add_argument('executable', nargs='+', help='executable instruction')
 args = parser.parse_args()
 dargs = vars(args)
@@ -52,6 +52,10 @@ dargs = vars(args)
 
 job_name = dargs.pop('job_name')
 command = ' '.join(args.executable) + ' '
+if args.queue == 'shared.q':
+    dargs['queue'] = 'shared.q\n#$ -l hostname=compute-0-19'
+    dargs['cpus'] = 20
+
 for loop in args.loop:
 #    # Open a pipe to the qsub command.
     job = subprocess.Popen('qsub',
