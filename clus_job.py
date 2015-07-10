@@ -29,7 +29,7 @@ JOB_STRING = """
 
 export OPENBLAS_NUM_THREADS=1
 
-#anacondainit
+anacondainit
 
 {executable}
 """
