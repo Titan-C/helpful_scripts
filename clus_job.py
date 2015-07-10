@@ -38,7 +38,7 @@ parser = argparse.ArgumentParser(description='Job submission script')
 parser.add_argument('-l', '--loop', nargs='+', required=True,
                     help='Argument to loop over in the submission script')
 parser.add_argument('-n', '--job_name', required=True,
-                    help='Name for job. Accepts format braces, joins loop')
+                    help='Name for job.')
 parser.add_argument('-cp', '--cpus', default=12, type=int)
 parser.add_argument('-q', '--queue', choices=['theo-ox.q', 'shared.q'],
                     default='theo-ox.q', help='(default: %(default)s)')
@@ -51,6 +51,7 @@ dargs = vars(args)
 # Loop over your jobs
 
 job_name = dargs.pop('job_name')
+command = ' '.join(args.executable) + ' '
 for loop in args.loop:
 #    # Open a pipe to the qsub command.
     job = subprocess.Popen('qsub',
@@ -59,9 +60,10 @@ for loop in args.loop:
                         )
 #
 #    # Customize your options here
-    dargs['job_name'] = job_name.format(loop)
-    dargs['executable'] = args.mpi + ' '.join(args.executable) + ' ' + loop
+    dargs['job_name'] = job_name + loop
+    dargs['executable'] = args.mpi + command + loop
     job_string = JOB_STRING.format(**dargs)
+#    print(job_string)
 
 #    # Send job_string to qsub
     job.communicate(job_string)
