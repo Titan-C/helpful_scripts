@@ -42,7 +42,7 @@ parser.add_argument('-cp', '--cpus', default=12, type=int)
 parser.add_argument('-q', '--queue', choices=['theo-ox.q', 'shared.q'],
                     default='theo-ox.q', help='(default: %(default)s)')
 parser.add_argument('-mpi', action='store_const', default='',
-                    const='mpirun -np $NSLOTS')
+                    const='mpirun -np $NSLOTS ')
 parser.add_argument('executable', nargs='+', help='executable instruction')
 args = parser.parse_args()
 dargs = vars(args)
@@ -59,7 +59,7 @@ for loop in args.loop:
 #
 #    # Customize your options here
     dargs['job_name'] = job_name.format(loop)
-    dargs['executable'] = ' '.join(args.executable) + ' ' + loop
+    dargs['executable'] = args.mpi + ' '.join(args.executable) + ' ' + loop
     job_string = JOB_STRING.format(**dargs)
 
 #    # Send job_string to qsub
