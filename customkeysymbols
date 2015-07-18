@@ -31,10 +31,10 @@ xkb_symbols "dvorakOscar" {
     key <AD08> { [          c, C,         ccedilla, Ccedilla			] };
 
     key <AD11> { [ slash,           question,       questiondown                ] };
-    key <AD12> { [     ampersand, dolar, asciitilde, dead_tilde	] };
+    key <AD12> { [     ampersand, dollar] };
 
     key <AC09> { [          n, N, ntilde, Ntilde]};
-    key <AC11> { [ minus,           underscore					] };
+    key <AC11> { [ minus,           underscore, asciitilde, dead_tilde] };
     key <BKSL> { [ backslash,  bar      ] };
 
     key <AB01> { [ period, colon] };
