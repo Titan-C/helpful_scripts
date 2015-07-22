@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Vundle manages Vundle
@@ -9,18 +9,18 @@ Plugin 'VundleVim/Vundle.vim'
 
 " bundles installed here
 Plugin 'tpope/vim-fugitive'
-Plugin 'klen/python-mode'
-
+"Plugin 'klen/python-mode'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'davidhalter/jedi-vim'
 
 call vundle#end()
 filetype plugin indent on
 
 " automatically reload vimrc when it's saved
 au BufWritePost .vimrc so ~/.vimrc
-
-
 syntax on				" syntax hightlight
 autocmd BufWritePre * :%s/\s\+$//e	" clear trailing whitespace
+set number
 
 " autocompletion
 set wildmode=longest,list,full
