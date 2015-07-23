@@ -21,6 +21,8 @@ au BufWritePost .vimrc so ~/.vimrc
 syntax on				" syntax hightlight
 autocmd BufWritePre * :%s/\s\+$//e	" clear trailing whitespace
 set number
+colorscheme delek
+set t_Co=256
 
 " autocompletion
 set wildmode=longest,list,full
