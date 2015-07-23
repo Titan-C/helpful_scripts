@@ -27,9 +27,9 @@ JOB_STRING = """
 #$ -M najera.oscar@gmail.com
 #$ -m abe # (a = abort, b = begin, e = end)
 
-export OPENBLAS_NUM_THREADS=1
-
 anacondainit
+
+export OPENBLAS_NUM_THREADS={blasth}
 
 {executable}
 """
@@ -39,6 +39,7 @@ parser.add_argument('-l', '--loop', nargs='+', required=True,
                     help='Argument to loop over in the submission script')
 parser.add_argument('-N', '--job_name', required=True,
                     help='Name for job.')
+parser.add_argument('-bth', '--blasth', default=1, type=int)
 parser.add_argument('-cp', '--cpus', default=12, type=int)
 parser.add_argument('-q', '--queue', choices=['theo-ox.q', 'shared.q'],
                     default='theo-ox.q', help='(default: %(default)s)')
@@ -67,7 +68,7 @@ for loop in args.loop:
     dargs['job_name'] = job_name + loop
     dargs['executable'] = args.mpi + command + loop
     job_string = JOB_STRING.format(**dargs)
-#    print(job_string)
+    print(job_string)
 
 #    # Send job_string to qsub
     job.communicate(job_string)
