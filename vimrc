@@ -12,6 +12,8 @@ Plugin 'tpope/vim-fugitive'
 "Plugin 'klen/python-mode'
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'jceb/vim-orgmode'
+Plugin 'itchyny/calendar.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -36,3 +38,7 @@ set expandtab
 
 " powerline activate
 set laststatus=2
+
+let g:calendar_google_calendar = 1
+let g:calendar_google_tast = 1
+
