@@ -14,6 +14,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'jceb/vim-orgmode'
 Plugin 'itchyny/calendar.vim'
+Plugin 'vimwiki/vimwiki'
 
 call vundle#end()
 filetype plugin indent on
@@ -42,3 +43,5 @@ set laststatus=2
 let g:calendar_google_calendar = 1
 let g:calendar_google_tast = 1
 
+" vimwiki
+let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/'}]
