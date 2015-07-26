@@ -26,6 +26,7 @@ autocmd BufWritePre * :%s/\s\+$//e	" clear trailing whitespace
 set number
 colorscheme delek
 set t_Co=256
+let mapleader = "\<Space>"
 
 " autocompletion
 set wildmode=longest,list,full
