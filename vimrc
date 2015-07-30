@@ -46,3 +46,13 @@ let g:calendar_google_tast = 1
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/'}]
+
+set smartcase       " ignore case if search pattern is all lowercase
+set hlsearch        " highlight search
+set history=1000    " rememeber commands
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
