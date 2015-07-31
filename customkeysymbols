@@ -25,19 +25,20 @@ xkb_symbols "dvorakOscar" {
     key <BKSP> { [ BackSpace,       BackSpace	] };
 
 
-    key <AD01> { [ apostrophe,  quotedbl, grave, asciicircum  ] };
-    key <AD02> { [      comma, semicolon, less	] };
-    key <AD03> { [          w, W	, greater] };
-    key <AD08> { [          c, C,         ccedilla, Ccedilla			] };
+    key <AD01> { [ apostrophe,      quotedbl,   grave, asciicircum  ] };
+    key <AD02> { [ comma,           semicolon,  less	] };
+    key <AD03> { [ period,          colon,      greater ] };
+    key <AD08> { [ c,               C,          ccedilla,   Ccedilla ] };
 
-    key <AD11> { [ slash,           question,       questiondown                ] };
-    key <AD12> { [     ampersand, dollar] };
+    key <AD11> { [ slash,           question,  questiondown ] };
+    key <AD12> { [ ampersand,       dollar ] };
 
-    key <AC09> { [          n, N, ntilde, Ntilde]};
-    key <AC11> { [ minus,           underscore, asciitilde, dead_tilde] };
-    key <BKSL> { [ backslash,  bar      ] };
+    key <AC09> { [ n,               N,          ntilde,     Ntilde ]};
+    key <AC11> { [ minus,           underscore, asciitilde, dead_tilde ] };
+    key <BKSL> { [ backslash,       bar ] };
 
-    key <AB01> { [ period, colon] };
-    key <AB08> { [ dead_acute, dead_diaeresis, dead_grave, dead_circumflex] };
+    key <LSGT> { [ Shift_L]};
+    key <AB01> { [ w,               W ] };
+    key <AB08> { [ dead_acute,      dead_diaeresis, dead_grave, dead_circumflex ] };
 
 };
