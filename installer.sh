@@ -9,10 +9,10 @@ do
 done
 
 #Add scripts to PATH
-cat bashrc >> ~/.bashrc
-echo "set show-all-if-unmodified on" >> ~/.inputrc
+ln -s bashrc ~/.bashrc
 source ~/.bashrc
-cat vimrc >> ~/.vimrc
+echo "set show-all-if-unmodified on" >> ~/.inputrc
+ln -s vimrc  ~/.vimrc
 
 
 #Configuring git
