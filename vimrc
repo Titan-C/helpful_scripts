@@ -46,6 +46,7 @@ let g:calendar_google_tast = 1
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/'}]
+let g:vimwiki_use_calendar = 1
 
 set smartcase       " ignore case if search pattern is all lowercase
 set hlsearch        " highlight search
