@@ -26,6 +26,8 @@
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
     "e" 'helm-find-files
+    "p" 'helm-projectile
+    "g" 'magit-status
     "bd" 'kill-this-buffer)
 
 (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
