@@ -33,8 +33,8 @@ anacondainit() {
     export LD_LIBRARY_PATH=$HOME/libs/lib:$LD_LIBRARY_PATH
     export LD_LIBRARY_PATH=$HOME/libs/lib64:$LD_LIBRARY_PATH
     export PYTHONPATH=$HOME/libs/lib:$PYTHONPATH
+    export OPENBLAS_NUM_THREADS=1
 }
 
 alias desklink='ssh -Y oscar@129.175.81.91'
 alias sshipy='ssh -Y -N -f -L localhost:6001:localhost:7002 orlando@lps.u-psud.fr'
-
