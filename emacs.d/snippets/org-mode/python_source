@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: python_source
+# key: pysrc
+# binding: direct-keybinding
+# --
+#+BEGIN_SRC ipython :session ${1:session} :file ${2:file} :exports results
+  $0
+#+END_SRC
