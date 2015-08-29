@@ -100,3 +100,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; entertainment
+(setq twittering-icon-mode t)
+(setq twittering-use-icon-storage t)
