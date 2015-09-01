@@ -94,6 +94,7 @@
 
 ;; Languages configs
 ;; Python
+(setq python-shell-interpreter "ipython")
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 ;; Markdown
