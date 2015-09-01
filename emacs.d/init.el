@@ -3,6 +3,9 @@
                          ("gnu" . "http://elpa.gnu.org/packages/")))
 (require 'package)
 (package-initialize)
+(eval-when-compile
+  (require 'use-package))
+(setq use-package-always-ensure t)
 
 (load-theme 'misterioso t)
 (custom-set-variables
@@ -73,7 +76,9 @@
 
 
 ;; Editing assintants
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(use-package flycheck
+  :init
+  (add-hook 'after-init-hook 'global-flycheck-mode))
 (define-key evil-motion-state-map "gp" 'flycheck-previous-error)
 (define-key evil-motion-state-map "gn" 'flycheck-next-error)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
