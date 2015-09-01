@@ -13,7 +13,7 @@
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(send-mail-function (quote smtpmail-send-it))
  '(smtpmail-smtp-server "smtp.googlemail.com")
- '(smtpmail-smtp-service 465))
+ '(smtpmail-smtp-service 465 t))
  ;; start fullscreen
 
 
@@ -40,7 +40,6 @@
 (require 'powerline-evil)
 
 (require 'helm-config)
-;(global-set-key (kbd "M-x") 'helm-M-x)
 (helm-mode 1)
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
@@ -55,14 +54,15 @@
 (setq org-journal-dir "~/Dropbox/org/journal/")
 (add-hook 'org-journal-mode-hook 'auto-fill-mode)
 (setq org-agenda-files (list org-journal-dir
+			     "~/Dropbox/org/schedule.org"
 			     "~/Dropbox/org/todo.org"))
 (setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+")
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-iswitchb)
 (require 'org-gcal)
-;(setq org-gcal-client-id "127248754961-ipgp675sf8q6cepjkvlc5s1bh672bko8.apps.googleusercontent.com"
-;      org-gcal-client-secret  "DF3h_ZXgujvE0a26ybscCDXz"
-;      org-gcal-file-alist '("najera.oscar@gmail.com" . "~/Dropbox/org/schedule.org"))
+(setq org-gcal-client-id "127248754961-ipgp675sf8q6cepjkvlc5s1bh672bko8.apps.googleusercontent.com"
+      org-gcal-client-secret  "DF3h_ZXgujvE0a26ybscCDXz"
+      org-gcal-file-alist '(("najera.oscar@gmail.com" . "~/Dropbox/org/schedule.org")))
 ;; Previewing latex fragments in org mode
 (setq org-latex-create-formula-image-program 'imagemagick) ;; Recommended to use imagemagick
 (require 'ob-ipython)
@@ -73,7 +73,11 @@
 
 
 ;; Editing assintants
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(define-key evil-motion-state-map "gp" 'flycheck-previous-error)
+(define-key evil-motion-state-map "gn" 'flycheck-next-error)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (global-relative-line-numbers-mode)
 ;(add-hook 'prog-mode-hook 'relative-line-numbers-mode t)
 ;(add-hook 'prog-mode-hook 'line-number-mode t)
@@ -102,5 +106,6 @@
  )
 
 ;; entertainment
+(setq twittering-use-master-password t)
 (setq twittering-icon-mode t)
 (setq twittering-use-icon-storage t)
