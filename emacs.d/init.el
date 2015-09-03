@@ -38,37 +38,44 @@
 (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
 
-(require 'powerline)
-(powerline-default-theme)
-(require 'powerline-evil)
+(use-package powerline-evil
+  :config
+  (powerline-default-theme))
 
-(require 'helm-config)
-(helm-mode 1)
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
+(use-package helm
+  :config
+  (require 'helm-config)
+  (helm-mode 1))
+(use-package helm-projectile
+  :config
+  (projectile-global-mode)
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on))
 
 
 ;; Org mode setup
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
-(require 'org-journal)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(setq org-journal-dir "~/Dropbox/org/journal/")
-(add-hook 'org-journal-mode-hook 'auto-fill-mode)
-(setq org-agenda-files (list org-journal-dir
-			     "~/Dropbox/org/schedule.org"
-			     "~/Dropbox/org/todo.org"))
-(setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+")
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-iswitchb)
-(require 'org-gcal)
-(setq org-gcal-client-id "127248754961-ipgp675sf8q6cepjkvlc5s1bh672bko8.apps.googleusercontent.com"
+(use-package org-journal
+;;(require 'org-journal)
+  :bind (("\C-cl" . org-store-link)
+	 ("\C-cb" . org-iswitchb)
+         ("\C-ca" . org-agenda)
+         ("\C-cc" . org-capture))
+  :init
+  (setq org-journal-dir "~/Dropbox/org/journal/")
+  (add-hook 'org-journal-mode-hook 'auto-fill-mode)
+  (setq org-agenda-files (list org-journal-dir
+                               "~/Dropbox/org/schedule.org"
+                               "~/Dropbox/org/todo.org"))
+  (setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+"))
+
+(use-package org-gcal
+  :init (setq org-gcal-client-id "127248754961-ipgp675sf8q6cepjkvlc5s1bh672bko8.apps.googleusercontent.com"
       org-gcal-client-secret  "DF3h_ZXgujvE0a26ybscCDXz"
-      org-gcal-file-alist '(("najera.oscar@gmail.com" . "~/Dropbox/org/schedule.org")))
+      org-gcal-file-alist '(("najera.oscar@gmail.com" . "~/Dropbox/org/schedule.org"))))
 ;; Previewing latex fragments in org mode
 (setq org-latex-create-formula-image-program 'imagemagick) ;; Recommended to use imagemagick
-(require 'ob-ipython)
+(use-package ob-ipython)
 (setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
 ;;; display/update images in the buffer after I evaluate
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
@@ -83,27 +90,32 @@
 (define-key evil-motion-state-map "gn" 'flycheck-next-error)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(global-relative-line-numbers-mode)
-;(add-hook 'prog-mode-hook 'relative-line-numbers-mode t)
-;(add-hook 'prog-mode-hook 'line-number-mode t)
-;(add-hook 'prog-mode-hook 'column-number-mode t)
+(use-package relative-line-numbers
+  :config (global-relative-line-numbers-mode))
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(require 'yasnippet)
-(yas-global-mode t)
+(use-package yasnippet
+  :config (yas-global-mode t))
 
 ;; Languages configs
 ;; Python
 (setq python-shell-interpreter "ipython")
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
+(use-package jedi
+  :config
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (setq jedi:complete-on-dot t))
+
 ;; Markdown
 (autoload 'markdown-mode "markdown-mode"
    "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
 ;; Latex
-(load "auctex.el" nil t t)
-(setq LaTeX-command "latex -shell-escape")
+(use-package auctex
+  :config
+  (load "auctex.el" nil t t)
+  (setq LaTeX-command "latex -shell-escape"))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -112,6 +124,8 @@
  )
 
 ;; entertainment
-(setq twittering-use-master-password t)
-(setq twittering-icon-mode t)
-(setq twittering-use-icon-storage t)
+(use-package twittering-mode
+  :config
+  (setq twittering-use-master-password t)
+  (setq twittering-icon-mode t)
+  (setq twittering-use-icon-storage t))
