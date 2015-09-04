@@ -111,10 +111,11 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; Latex
-(use-package auctex
+(use-package tex-site
+  :ensure auctex
   :config
-  (load "auctex.el" nil t t)
   (setq LaTeX-command "latex -shell-escape"))
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
