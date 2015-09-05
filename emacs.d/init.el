@@ -84,8 +84,11 @@
 
 ;; Editing assintants
 (use-package flycheck
+  :config
+  (flycheck-add-next-checker 'python-flake8 'python-pylint)
   :init
   (add-hook 'after-init-hook 'global-flycheck-mode))
+
 (define-key evil-motion-state-map "gp" 'flycheck-previous-error)
 (define-key evil-motion-state-map "gn" 'flycheck-next-error)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
