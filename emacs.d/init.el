@@ -18,6 +18,8 @@
  '(smtpmail-smtp-server "smtp.googlemail.com")
  '(smtpmail-smtp-service 465 t))
  ;; start fullscreen
+(setq backup-directory-alist '(("~/.emacs.d/backups")))
+(fset 'yes-or-no-p 'y-or-n-p)
 
 
 ;; Evil mode configuration
@@ -64,6 +66,7 @@
   :init
   (setq org-journal-dir "~/Dropbox/org/journal/")
   (add-hook 'org-journal-mode-hook 'auto-fill-mode)
+  (add-hook 'org-journal-mode-hook 'flyspell-mode)
   (setq org-agenda-files (list org-journal-dir
                                "~/Dropbox/org/schedule.org"
                                "~/Dropbox/org/todo.org"))
