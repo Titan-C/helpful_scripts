@@ -48,6 +48,7 @@
   :config
   (require 'helm-config)
   (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x b") 'helm-mini)
   (helm-mode 1))
 (use-package helm-projectile
   :config
@@ -100,7 +101,6 @@
 (use-package relative-line-numbers
   :config (global-relative-line-numbers-mode))
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 (use-package yasnippet
   :config (yas-global-mode t))
 
