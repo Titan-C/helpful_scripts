@@ -72,7 +72,7 @@
   (setq org-agenda-files (list org-journal-dir
                                "~/Dropbox/org/schedule.org"
                                "~/Dropbox/org/todo.org"))
-  (setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+"))
+  (setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+\\'"))
 
 (use-package org-gcal
   :init (setq org-gcal-client-id "127248754961-ipgp675sf8q6cepjkvlc5s1bh672bko8.apps.googleusercontent.com"
