@@ -24,7 +24,7 @@ JOB_STRING = """
 #$ -q {queue}
 #$ -pe mpi {cpus}
 #$ -N {job_name}
-#$ -M najera.oscar@gmail.com
+#$ -M oscar
 #$ -m abe # (a = abort, b = begin, e = end)
 
 anacondainit
