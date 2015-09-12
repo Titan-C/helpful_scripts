@@ -58,7 +58,11 @@
 
 
 ;; Org mode setup
-(setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
+(setq org-capture-templates
+      '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Tasks")
+	 "* TODO %?\n  %U\n  %i\n  %a")))
+
 (use-package org-journal
 ;;(require 'org-journal)
   :bind (("\C-cl" . org-store-link)
