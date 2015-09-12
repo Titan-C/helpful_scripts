@@ -1,4 +1,7 @@
 ;; GNUS configuration
+(setq user-mail-address "najera.oscar@gmail.com"
+      user-full-name    "Óscar Nájera")
+
 (require 'nnir)
 (setq gnus-fetch-old-headers t)
 
