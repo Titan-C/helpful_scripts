@@ -23,15 +23,15 @@ JOB_STRING = """
 
 #$ -q {queue}
 #$ -pe mpi {cpus}
-#$ -N {job_name}
-#$ -M oscar
+#$ -N "{job_name} {command}"
+#$ -M oscar,oscar.najera-ocampo@u-psud.fr
 #$ -m abe # (a = abort, b = begin, e = end)
 
 anacondainit
 
 export OPENBLAS_NUM_THREADS={blasth}
 
-{executable}
+{mpi}{command}
 """
 
 parser = argparse.ArgumentParser(description='Job submission script')
@@ -51,7 +51,6 @@ dargs = vars(args)
 
 # Loop over your jobs
 
-job_name = dargs.pop('job_name')
 command = ' '.join(args.executable) + ' '
 if args.queue == 'shared.q':
     dargs['queue'] = 'shared.q\n#$ -l hostname=compute-0-19'
@@ -61,15 +60,15 @@ for loop in args.loop:
 #    # Open a pipe to the qsub command.
     job = subprocess.Popen('qsub',
                         stdin=subprocess.PIPE,
-                        #stdout=subprocess.PIPE,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
                         )
 #
 #    # Customize your options here
-    dargs['job_name'] = job_name + loop
-    dargs['executable'] = args.mpi + command + loop
+    dargs['command'] = command + loop
     job_string = JOB_STRING.format(**dargs)
-    print(job_string)
 
 #    # Send job_string to qsub
-    job.communicate(job_string)
-
+    stdout, stderr = job.communicate(job_string)
+    print(stdout)
+    print(stderr)
