@@ -61,6 +61,7 @@
 
 
 ;; Org mode setup
+(add-hook 'org-mode-hook 'turn-on-flyspell)
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
 (setq org-capture-templates
       '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Tasks")
