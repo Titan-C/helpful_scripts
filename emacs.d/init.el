@@ -61,7 +61,9 @@
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
 (setq org-capture-templates
       '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Tasks")
-	 "* TODO %?\n  %U\n  %i\n  %a")))
+	 "* TODO %?\n  %U\n  %i\n  %a")
+        ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
+	 "* %?\n  %^T\n  %i\n  %a")))
 
 (use-package org-journal
 ;;(require 'org-journal)
@@ -78,6 +80,9 @@
                                "~/Dropbox/org/todo.org"))
   (setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+\\'"))
 
+(setq org-refile-targets (quote ((nil :maxlevel . 2)
+                                 ("~/Dropbox/org/todo.org" :maxlevel . 2))))
+(setq org-refile-use-outline-path nil)
 (use-package org-gcal
   :init (setq org-gcal-client-id "127248754961-ipgp675sf8q6cepjkvlc5s1bh672bko8.apps.googleusercontent.com"
       org-gcal-client-secret  "DF3h_ZXgujvE0a26ybscCDXz"
