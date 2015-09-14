@@ -68,7 +68,8 @@ for loop in args.loop:
     dargs['command'] = command + loop
     job_string = JOB_STRING.format(**dargs)
 
+
 #    # Send job_string to qsub
     stdout, stderr = job.communicate(job_string)
-    print(stdout)
-    print(stderr)
+    print('qsub out: ', stdout)
+    print('qsub err: ', stderr)
