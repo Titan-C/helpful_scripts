@@ -1,0 +1,15 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: new_module
+# key: nmod
+# binding: direct-keybinding
+# --
+# -*- coding: utf-8 -*-
+r"""
+${1:docstring}
+"""
+# Created ${2:`(current-time-string)`}
+# Author: Óscar Nájera
+
+from __future__ import division, absolute_import, print_function
+
+$0
