@@ -3,11 +3,8 @@
 # key: sympy
 # binding: direct-keybinding
 # --
-#+BEGIN_SRC ipython :session sym_math :exports none :results output raw
+#+BEGIN_SRC ipython :session sym_math :exports ${1:results} :results output ${2:latex}
+  from pyutils.latex_print import platex
   $0
-  print(sympy.latex(    ))
+  platex( )
 #+END_SRC
-
-\begin{equation}
-
-\end{equation}
