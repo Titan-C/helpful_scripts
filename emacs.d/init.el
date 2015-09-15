@@ -82,7 +82,7 @@
   (setq org-agenda-files (list org-journal-dir
                                "~/Dropbox/org/schedule.org"
                                "~/Dropbox/org/todo.org"))
-  (setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+\\'"))
+  (setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|\\`[0-9]+\\'"))
 
 (setq org-refile-targets (quote ((nil :maxlevel . 2)
                                  ("~/Dropbox/org/todo.org" :maxlevel . 2))))

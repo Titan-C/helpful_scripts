@@ -3,7 +3,6 @@
       user-full-name    "Óscar Nájera")
 
 (require 'nnir)
-(setq gnus-fetch-old-headers t)
 
 (setq gnus-select-method
       '(nnimap "gmail"
