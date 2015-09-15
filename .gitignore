@@ -13,5 +13,6 @@ Makefile.in
 /missing
 #*#
 /emacs.d/*
+!/emacs.d/snippets/
 .directory
 hub

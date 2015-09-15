@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: sympy_l
+# key: sympy
+# binding: direct-keybinding
+# --
+#+BEGIN_SRC ipython :session sym_math :exports none :results output raw
+  $0
+#+END_SRC
