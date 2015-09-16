@@ -36,7 +36,7 @@
     "g" 'magit-status
     "t" 'eshell
     "q" 'kill-buffer-and-window
-    "bd" 'kill-this-buffer)
+    "b" 'helm-mini)
 
 (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
 (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
@@ -48,10 +48,10 @@
   (powerline-default-theme))
 
 (use-package helm
+  :bind (("M-x" . helm-M-x)
+         ("C-x b" . helm-mini))
   :config
   (require 'helm-config)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x b") 'helm-mini)
   (helm-mode 1))
 (use-package helm-projectile
   :config
