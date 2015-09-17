@@ -38,10 +38,30 @@
     "q" 'kill-buffer-and-window
     "b" 'helm-mini)
 
-(define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-(define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-(define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-(define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
+
+(define-key evil-normal-state-map "r" nil) ;; block replace
+(define-key evil-motion-state-map "r" 'evil-backward-char) ;; back
+(define-key evil-motion-state-map "n" 'evil-next-line) ;; next line
+(define-key evil-motion-state-map "l" 'evil-search-next) ;; next look up
+(define-key evil-motion-state-map "t" 'evil-previous-line) ;; top back up
+
+(define-key evil-normal-state-map "s" nil) ;; remove substitute
+(define-key evil-motion-state-map "s" 'evil-forward-char)  ;; moves ight
+
+(define-key evil-normal-state-map "h" 'evil-replace)
+(define-key evil-motion-state-map "j" 'evil-find-char-to)
+(define-key evil-motion-state-map "J" 'evil-find-char-to-backward)
+
+
+
+;; end and begining of lines
+(define-key evil-motion-state-map "-" 'evil-end-of-line)
+(define-key evil-motion-state-map "0" 'evil-beginning-of-line)
+
+(define-key evil-normal-state-map (kbd "C-r") 'evil-window-left)
+(define-key evil-normal-state-map (kbd "C-n") 'evil-window-down)
+(define-key evil-normal-state-map (kbd "C-t") 'evil-window-up)
+(define-key evil-normal-state-map (kbd "C-s") 'evil-window-right)
 
 (use-package powerline-evil
   :config
@@ -108,7 +128,7 @@
   (add-hook 'after-init-hook 'global-flycheck-mode))
 
 (define-key evil-motion-state-map "gp" 'flycheck-previous-error)
-(define-key evil-motion-state-map "gn" 'flycheck-next-error)
+(define-key evil-motion-state-map "gl" 'flycheck-next-error)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (use-package relative-line-numbers
@@ -116,6 +136,8 @@
 
 (use-package yasnippet
   :config (yas-global-mode t))
+
+(add-hook 'git-commit-mode-hook 'evil-insert-state)
 
 ;; Languages configs
 ;; Python
