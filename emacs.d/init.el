@@ -34,8 +34,11 @@
     "e" 'helm-find-files
     "p" 'helm-projectile
     "g" 'magit-status
-    "t" 'eshell
+    "s" 'eshell
     "q" 'kill-buffer-and-window
+    "c" 'ace-jump-char-mode
+    "r" 'ace-jump-word-mode
+    "n" 'ace-jump-line-mode
     "b" 'helm-mini)
 
 
