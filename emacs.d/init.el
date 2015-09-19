@@ -84,6 +84,10 @@
 
 
 ;; Org mode setup
+
+(setq org-directory "~/Dropbox/org"
+      org-mobile-directory "~/Dropbox/MobileOrg"
+      org-mobile-inbox-for-pull "~/Dropbox/org/mobilecaptures.org")
 (evil-leader/set-key-for-mode 'org-mode
     "t"  'org-previous-visible-heading
     "n"  'org-next-visible-heading
@@ -117,10 +121,7 @@
 (setq org-refile-targets (quote ((nil :maxlevel . 2)
                                  ("~/Dropbox/org/todo.org" :maxlevel . 2))))
 (setq org-refile-use-outline-path nil)
-(use-package org-gcal
-  :init (setq org-gcal-client-id "127248754961-ipgp675sf8q6cepjkvlc5s1bh672bko8.apps.googleusercontent.com"
-      org-gcal-client-secret  "DF3h_ZXgujvE0a26ybscCDXz"
-      org-gcal-file-alist '(("najera.oscar@gmail.com" . "~/Dropbox/org/schedule.org"))))
+
 ;; Previewing latex fragments in org mode
 (setq org-latex-create-formula-image-program 'imagemagick) ;; Recommended to use imagemagick
 (use-package ob-ipython)
