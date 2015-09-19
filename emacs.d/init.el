@@ -154,6 +154,7 @@
 (setq python-shell-interpreter "ipython")
 (use-package jedi
   :config
+  (add-hook 'python-mode-hook 'flyspell-prog-mode)
   (add-hook 'python-mode-hook 'jedi:setup)
   (setq jedi:complete-on-dot t))
 
