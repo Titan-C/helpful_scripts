@@ -106,22 +106,20 @@
         ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
 	 "* %?\n  %^T\n  %i\n  %a")))
 
-(use-package org-journal
-;;(require 'org-journal)
+(use-package org
   :bind (("\C-cl" . org-store-link)
 	 ("\C-cb" . org-iswitchb)
          ("\C-ca" . org-agenda)
          ("\C-cc" . org-capture))
   :init
-  (setq org-journal-dir "~/Dropbox/org/journal/")
-  (add-hook 'org-journal-mode-hook 'auto-fill-mode)
-  (add-hook 'org-journal-mode-hook 'flyspell-mode)
-  (setq org-agenda-files (list org-journal-dir
-                               "~/Dropbox/org/schedule.org"
-                               "~/Dropbox/org/todo.org"))
-  (setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|\\`[0-9]+\\'"))
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
+			       "~/Dropbox/org/journal.org"
+                               "~/Dropbox/org/todo.org")))
 
 (setq org-refile-targets (quote ((nil :maxlevel . 2)
+                                 ("~/Dropbox/org/journal.org" :maxlevel . 3)
                                  ("~/Dropbox/org/todo.org" :maxlevel . 2))))
 (setq org-refile-use-outline-path nil)
 
