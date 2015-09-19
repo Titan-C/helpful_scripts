@@ -36,9 +36,10 @@
     "g" 'magit-status
     "s" 'eshell
     "q" 'kill-buffer-and-window
+    "oa" 'org-agenda
+    "oc" 'org-capture
     "c" 'ace-jump-char-mode
     "r" 'ace-jump-word-mode
-    "n" 'ace-jump-line-mode
     "b" 'helm-mini)
 
 
@@ -83,6 +84,13 @@
 
 
 ;; Org mode setup
+(evil-leader/set-key-for-mode 'org-mode
+    "t"  'org-previous-visible-heading
+    "n"  'org-next-visible-heading
+    "oh" 'org-insert-heading
+    "os" 'org-sort-list
+    "ot" 'org-todo)
+
 (add-hook 'org-mode-hook 'turn-on-flyspell)
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
 (setq org-capture-templates
