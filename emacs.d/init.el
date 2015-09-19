@@ -35,6 +35,7 @@
     "p" 'helm-projectile
     "g" 'magit-status
     "s" 'eshell
+    "w" 'save-buffer
     "q" 'kill-buffer-and-window
     "oa" 'org-agenda
     "oc" 'org-capture
