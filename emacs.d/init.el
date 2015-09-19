@@ -54,8 +54,7 @@
 (define-key evil-normal-state-map "h" 'evil-replace)
 (define-key evil-motion-state-map "j" 'evil-find-char-to)
 (define-key evil-motion-state-map "J" 'evil-find-char-to-backward)
-
-
+(define-key evil-normal-state-map "k" 'redo)
 
 ;; end and begining of lines
 (define-key evil-motion-state-map "-" 'evil-end-of-line)
