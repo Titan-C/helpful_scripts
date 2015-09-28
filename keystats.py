@@ -9,12 +9,12 @@ Follow statistics of my keystrokes
 
 from __future__ import division, absolute_import, print_function
 import re
+import collections
 
 
 with open('/home/oscar/keylog', 'r') as keyshom:
     data = keyshom.read()
 sta = re.findall(r'KeyPress.*?\[(\w+)\]', data)
-perstats = [(keystr, sta.count(keystr)) for keystr in set(sta)]
-sorted_list = sorted(perstats, key=lambda x: x[1])
+collstat = collections.Counter(sta)
 
-print(sorted_list)
+print(collstat.most_common())
