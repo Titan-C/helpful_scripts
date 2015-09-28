@@ -15,11 +15,18 @@ import argparse
 parser = argparse.ArgumentParser(description='Key press statistics')
 parser.add_argument('-file', default='/home/oscar/keylog',
                     help='Key pressing log file')
+parser.add_argument('-txt', action='store_true',
+                    help='is it a text file?')
+
 arguments = parser.parse_args()
+
 
 with open(arguments.file, 'r') as keyshom:
     data = keyshom.read()
-sta = re.findall(r'KeyPress.*?\[(\w+)\]', data)
-collstat = collections.Counter(sta)
+
+if not arguments.txt:
+    data = re.findall(r'KeyPress.*?\[(\w+)\]', data)
+
+collstat = collections.Counter(data)
 
 print(collstat.most_common())
