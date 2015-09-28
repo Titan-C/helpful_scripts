@@ -102,7 +102,7 @@
       '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Tasks")
 	 "* TODO %?\n  %U\n  %i\n  %a")
 	("j" "Journal Entry" entry (file+datetree "~/Dropbox/org/journal.org")
-         "* %(format-time-string \"%H:%M\") %?\n\n  %i\n  %a")
+         "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a")
         ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
 	 "* %?\n  %^T\n  %i\n  %a")))
 
