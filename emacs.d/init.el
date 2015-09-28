@@ -54,9 +54,11 @@
 (define-key evil-motion-state-map "s" 'evil-forward-char)  ;; moves ight
 
 (define-key evil-normal-state-map "h" 'evil-replace)
+(define-key evil-visual-state-map "h" 'evil-replace) ;; because it seems to respect old motion
 (define-key evil-motion-state-map "j" 'evil-find-char-to)
 (define-key evil-motion-state-map "J" 'evil-find-char-to-backward)
 (define-key evil-normal-state-map "k" 'redo)
+(define-key evil-motion-state-map "k" nil) ;; to block old motion
 
 ;; end and begining of lines
 (define-key evil-motion-state-map "-" 'evil-end-of-line)
