@@ -85,7 +85,7 @@
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 
-
+(ac-config-default)
 ;; Org mode setup
 
 (setq org-directory "~/Dropbox/org"
