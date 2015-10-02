@@ -28,7 +28,9 @@ xkb_symbols "dvorakOscar" {
     key <AD01> { [ apostrophe,      quotedbl,   grave, asciicircum  ] };
     key <AD02> { [ comma,           semicolon,  less	] };
     key <AD03> { [ period,          colon,      greater ] };
+    key <AD07> { [ l,               L, sterling ]};
     key <AD08> { [ c,               C,          ccedilla,   Ccedilla ] };
+    key <AD10> { [ g,               G, dstroke, Dstroke		]};
 
     key <AD11> { [ slash,           question,  questiondown ] };
     key <AD12> { [ ampersand,       dollar ] };
