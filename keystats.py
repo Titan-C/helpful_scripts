@@ -30,3 +30,12 @@ if not arguments.txt:
 collstat = collections.Counter(data)
 
 print(collstat.most_common())
+
+if arguments.txt:
+    pair_data = re.findall(r'(\w.)', data) + re.findall(r'(.\w)', data)
+else:
+    pair_data = zip(data[:-1], data[1:]) + zip(data[1:], data[:-1])
+
+pair_stat = collections.Counter(pair_data)
+for i, (pair, count) in enumerate(pair_stat.most_common(50)):
+    print(i, pair, count)
