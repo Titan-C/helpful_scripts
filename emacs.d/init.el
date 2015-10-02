@@ -1,11 +1,17 @@
+(require 'package)
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")))
-(require 'package)
 (package-initialize)
+
+(unless (package-installed-p 'use-package)
+   (package-refresh-contents)
+   (package-install 'use-package))
+
 (eval-when-compile
-  (require 'use-package))
-(setq use-package-always-ensure t)
+    (require 'use-package)
+    (setq use-package-verbose t
+          use-package-always-ensure t))
 
 (load-theme 'misterioso t)
 (custom-set-variables
@@ -43,6 +49,8 @@
     "r" 'ace-jump-word-mode
     "b" 'helm-mini)
 
+(use-package ace-jump-mode
+  :ensure t )
 
 (define-key evil-normal-state-map "r" nil) ;; block replace
 (define-key evil-motion-state-map "r" 'evil-backward-char) ;; back
@@ -85,7 +93,10 @@
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 
-(ac-config-default)
+(use-package auto-complete
+  :init
+  (ac-config-default)
+  (setq ac-auto-show-menu 0.2))
 ;; Org mode setup
 
 (setq org-directory "~/Dropbox/org"
@@ -151,7 +162,9 @@
 (use-package yasnippet
   :config (yas-global-mode t))
 
-(add-hook 'git-commit-mode-hook 'evil-insert-state)
+(use-package magit
+  :init
+  (add-hook 'git-commit-mode-hook 'evil-insert-state))
 
 ;; Languages configs
 ;; Python
