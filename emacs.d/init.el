@@ -152,8 +152,8 @@
   :init
   (add-hook 'after-init-hook 'global-flycheck-mode))
 
-(define-key evil-motion-state-map "lp" 'flycheck-previous-error)
-(define-key evil-motion-state-map "ll" 'flycheck-next-error)
+(define-key evil-motion-state-map "gp" 'flycheck-previous-error)
+(define-key evil-motion-state-map "gl" 'flycheck-next-error)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (use-package relative-line-numbers
