@@ -54,6 +54,8 @@
 
 (define-key evil-normal-state-map "r" nil) ;; block replace
 (define-key evil-motion-state-map "r" 'evil-backward-char) ;; back
+(define-key evil-insert-state-map "\C-r" 'evil-delete-backward-char)
+
 (define-key evil-motion-state-map "n" 'evil-next-line) ;; next line
 (define-key evil-motion-state-map "l" 'evil-search-next) ;; next look up
 (define-key evil-motion-state-map "t" 'evil-previous-line) ;; top back up
@@ -174,6 +176,9 @@
   (add-hook 'python-mode-hook 'flyspell-prog-mode)
   (add-hook 'python-mode-hook 'jedi:setup)
   (setq jedi:complete-on-dot t))
+
+(use-package cython-mode
+  :ensure t)
 
 ;; Markdown
 (autoload 'markdown-mode "markdown-mode"
