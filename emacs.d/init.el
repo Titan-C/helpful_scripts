@@ -208,3 +208,6 @@
   (setq twittering-use-master-password t)
   (setq twittering-icon-mode t)
   (setq twittering-use-icon-storage t))
+
+(use-package ssh
+  :ensure t)
