@@ -167,6 +167,9 @@
 (use-package magit
   :init
   (add-hook 'git-commit-mode-hook 'evil-insert-state))
+(use-package magit-gh-pulls
+  :init
+  (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
 ;; Languages configs
 ;; Python
