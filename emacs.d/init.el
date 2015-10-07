@@ -182,6 +182,8 @@
 
 (use-package cython-mode
   :ensure t)
+(use-package yaml-mode
+  :ensure t)
 
 ;; Markdown
 (autoload 'markdown-mode "markdown-mode"
