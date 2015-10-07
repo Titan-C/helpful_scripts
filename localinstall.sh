@@ -160,6 +160,7 @@ conda create --yes -n dev pip scipy numpy matplotlib hdf5 h5py ipython \
     sphinx spyder coverage nose rope tornado jsonschema numpydoc mistune \
     joblib pylint flake8 jupyter line_profiler pandas
 source activate dev
+pip install gnureadline
 pip install mako, pytest-cov
 pip install mpi4py
 }
