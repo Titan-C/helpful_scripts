@@ -165,7 +165,7 @@
   :config (yas-global-mode t))
 
 (use-package magit
-  :init
+  :config
   (define-key magit-mode-map "t" 'magit-section-backward)
   (define-key magit-mode-map "\M-t" 'magit-section-backward-sibling)
   (define-key magit-mode-map "p" 'magit-tag-popup)
