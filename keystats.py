@@ -29,7 +29,9 @@ if not arguments.txt:
 
 collstat = collections.Counter(data)
 
-print(collstat.most_common())
+print('Most typed characters')
+for i, (char, count) in enumerate(collstat.most_common()):
+    print(i, char, count)
 
 if arguments.txt:
     pair_data = re.findall(r'(\w.)', data) + re.findall(r'(.\w)', data)
@@ -37,5 +39,6 @@ else:
     pair_data = list(zip(data[:-1], data[1:])) + list(zip(data[1:], data[:-1]))
 
 pair_stat = collections.Counter(pair_data)
+print('Most recurrent key successions')
 for i, (pair, count) in enumerate(pair_stat.most_common(50)):
     print(i, pair, count)
