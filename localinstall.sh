@@ -41,11 +41,12 @@ cd
 
 ## binutils
 inst_binutils () {
-binutilsv=binutils-2.25
-wget http://ftp.gnu.org/gnu/binutils/${binutilsv}tar.gz
-tar -xf ${binutilsv}tar.gz
+binutilsv=binutils-2.25.1
+wget http://ftp.gnu.org/gnu/binutils/${binutilsv}.tar.gz
+tar -xf ${binutilsv}.tar.gz
 cd ${binutilsv}
 ./configure --prefix=${LIB}
+make
 make install
 cd
 }
@@ -269,8 +270,8 @@ cd
 
 #install openmpi
 inst_openmpi () {
-ompiv=openmpi-1.8.4
-#wget http://www.open-mpi.org/software/ompi/v1.8/downloads/${ompiv}.tar.bz2
+ompiv=openmpi-1.10.0
+wget http://www.open-mpi.org/software/ompi/v1.10/downloads/${ompiv}.tar.bz2
 tar -xf ${ompiv}.tar.bz2
 cd ${ompiv}
 ./configure --prefix=${LIB}
