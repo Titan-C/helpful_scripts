@@ -52,8 +52,8 @@ cd
 
 ## boost
 inst_boost() {
-boostv=boost_1_55_0
-wget http://sourceforge.net/projects/boost/files/boost/1.55.0/${boostv}.tar.gz
+boostv=boost_1_58_0
+wget http://sourceforge.net/projects/boost/files/boost/1.58.0/${boostv}.tar.gz
 tar -xf ${boostv}.tar.gz
 cd ${boostv}
 ./bootstrap.sh --prefix=${LIB} --with-toolset=gcc --with-icu
@@ -255,7 +255,7 @@ cd
 
 # install gcc
 inst_gcc () {
-gccv=gcc-4.9.2
+gccv=gcc-5.2.0
 wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
 tar -xf ${gccv}.tar.gz
 cd ${gccv}
