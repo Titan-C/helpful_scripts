@@ -118,6 +118,8 @@
 	 "* TODO %?\n  %U\n  %i\n  %a")
 	("j" "Journal Entry" entry (file+datetree "~/Dropbox/org/journal.org")
          "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a")
+	("l" "Lab Journal Entry" entry (file+datetree "~/Dropbox/org/PHD_Journal.org")
+         "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
         ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
 	 "* %?\n  %^T\n  %i\n  %a")))
 
