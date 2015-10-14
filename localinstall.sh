@@ -1,6 +1,6 @@
 #! /bin/bash
 
-LIB=/home/oscar/libs/
+LIB=$HOME/libs/
 MAKEFLAGS="-j8"
 
 export CC=gcc
@@ -11,12 +11,17 @@ export FC=gfortran
 # export FC=ifort
 mkdir -p ${LIB}
 
+export PATH=$HOME/libs/bin:$PATH
+export LD_LIBRARY_PATH=${LIB}/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=${LIB}/libs/lib64:$LD_LIBRARY_PATH
+
 inst_dev() {
 inst_gcc
 inst_gmp
 inst_cmake
 inst_binutils
 inst_openmpi
+inst_anaconda
 
 inst_openblas
 inst_hdf5
@@ -164,15 +169,6 @@ source activate dev
 pip install gnureadline mako pytest-cov mpi4py
 }
 
-## local env
-work_env() {
-anacondainit
-export LD_LIBRARY_PATH=${LIB}/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=${LIB}/libs/lib64:$LD_LIBRARY_PATH
-
-source activate dev
-}
-
 
 ## ALPS
 inst_alps() {
@@ -263,7 +259,8 @@ cd ${gccv}
 ./contrib/download_prerequisites
 cd ..
 mkdir build_${gccv} && cd build_${gccv}
-../${gccv}/configure --prefix=${LIB} --enable-checking=release --disable-multilib
+../${gccv}/configure --prefix=${LIB} --enable-checking=release --disable-multilib \
+   --enable-languages=c,c++,fortran
 make ${MAKEFLAGS} && make install
 cd
 }
