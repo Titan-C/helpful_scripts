@@ -1,6 +1,6 @@
 #! /bin/bash
 
-LIB=$HOME/libs/
+LIB=$HOME/libs_gcc4/
 MAKEFLAGS="-j8"
 
 export CC=gcc
@@ -11,9 +11,9 @@ export FC=gfortran
 # export FC=ifort
 mkdir -p ${LIB}
 
-export PATH=$HOME/libs/bin:$PATH
+export PATH=${LIB}/bin:$PATH
 export LD_LIBRARY_PATH=${LIB}/lib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=${LIB}/libs/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=${LIB}/lib64:$LD_LIBRARY_PATH
 
 inst_dev() {
 inst_gcc
@@ -252,7 +252,7 @@ cd
 
 # install gcc
 inst_gcc () {
-gccv=gcc-5.2.0
+gccv=gcc-4.9.2
 wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
 tar -xf ${gccv}.tar.gz
 cd ${gccv}
