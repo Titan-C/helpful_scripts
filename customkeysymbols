@@ -35,7 +35,9 @@ xkb_symbols "dvorakOscar" {
     key <AD11> { [ slash,           question,  questiondown ] };
     key <AD12> { [ ampersand,       dollar ] };
 
-    key <AC09> { [ n,               N,          ntilde,     Ntilde ]};
+    key <AC04> { [ i,               I,          Oe,         OE ] };
+    key <AC05> { [ u,               U,          Aring,      Aring ] };
+    key <AC09> { [ n,               N,          tilde,      Ntilde ] };
     key <AC11> { [ minus,           underscore, asciitilde, dead_tilde ] };
     key <BKSL> { [ backslash,       bar ] };
 
