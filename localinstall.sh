@@ -217,10 +217,11 @@ cp -v ${LIB}lib/mpi.so ${DIR}/
 
 # install gmp
 inst_gmp () {
-wget ftp://gcc.gnu.org/pub/gcc/infrastructure/gmp-4.3.2.tar.bz2
-bunzip2 gmp-4.3.2.tar.bz2
-tar xf gmp-4.3.2.tar
-cd gmp-4.3.2
+gmpv=gmp-6.0.0a
+wget https://gmplib.org/download/gmp/${gmpv}.tar.bz2
+bunzip2 ${gmpv}.tar.bz2
+tar xf ${gmpv}.tar
+cd ${gmpv}
 ./configure --prefix=${LIB} --enable-cxx
 make ${MAKEFLAGS}
 make check
