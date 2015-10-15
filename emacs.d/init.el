@@ -105,8 +105,8 @@
       org-mobile-directory "~/Dropbox/MobileOrg"
       org-mobile-inbox-for-pull "~/Dropbox/org/mobilecaptures.org")
 (evil-leader/set-key-for-mode 'org-mode
-    "t"  'org-previous-visible-heading
-    "n"  'org-next-visible-heading
+    "ot"  'org-previous-visible-heading
+    "on"  'org-next-visible-heading
     "oh" 'org-insert-heading
     "os" 'org-sort-list
     "ot" 'org-todo)
