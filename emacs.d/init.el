@@ -161,7 +161,9 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (use-package relative-line-numbers
-  :config (global-relative-line-numbers-mode))
+  :config
+  (add-hook 'python-mode-hook 'relative-line-numbers-mode))
+
 
 (use-package yasnippet
   :config (yas-global-mode t))
