@@ -173,6 +173,7 @@
   (define-key magit-mode-map "t" 'magit-section-backward)
   (define-key magit-mode-map "\M-t" 'magit-section-backward-sibling)
   (define-key magit-mode-map "p" 'magit-tag-popup)
+  (add-hook 'git-commit-mode-hook 'flyspell-mode)
   (add-hook 'git-commit-mode-hook 'evil-insert-state))
 (use-package magit-gh-pulls
   :init
