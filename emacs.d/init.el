@@ -162,7 +162,8 @@
 
 (use-package relative-line-numbers
   :config
-  (add-hook 'python-mode-hook 'relative-line-numbers-mode))
+  (global-relative-line-numbers-mode)
+  (setq relative-line-numbers-motion-function 'forward-visible-line))
 
 
 (use-package yasnippet
