@@ -45,8 +45,8 @@
     "q" 'kill-buffer-and-window
     "oa" 'org-agenda
     "oc" 'org-capture
-    "c" 'ace-jump-char-mode
-    "r" 'ace-jump-word-mode
+    "r" 'ace-jump-char-mode
+    "c" 'ace-jump-word-mode
     "b" 'helm-mini)
 
 (use-package ace-jump-mode
@@ -105,8 +105,8 @@
       org-mobile-directory "~/Dropbox/MobileOrg"
       org-mobile-inbox-for-pull "~/Dropbox/org/mobilecaptures.org")
 (evil-leader/set-key-for-mode 'org-mode
-    "ot"  'org-previous-visible-heading
-    "on"  'org-next-visible-heading
+    "ot"  'outline-previous-visible-heading
+    "on"  'outline-next-visible-heading
     "oh" 'org-insert-heading
     "os" 'org-sort-list
     "ot" 'org-todo)
@@ -115,13 +115,13 @@
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
 (setq org-capture-templates
       '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Tasks")
-	 "* TODO %?\n  %U\n  %i\n  %a")
+	 "* TODO %?\n  %U\n  %i\n  %a" :clock-in t :clock-resume t)
 	("j" "Journal Entry" entry (file+datetree "~/Dropbox/org/journal.org")
-         "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a")
+         "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
 	("l" "Lab Journal Entry" entry (file+datetree "~/Dropbox/org/PHD_Journal.org")
          "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
         ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
-	 "* %?\n  %^T\n  %i\n  %a")))
+	 "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
 
 (use-package org
   :bind (("\C-cl" . org-store-link)
