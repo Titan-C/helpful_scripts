@@ -55,6 +55,7 @@
 (define-key evil-normal-state-map "r" nil) ;; block replace
 (define-key evil-motion-state-map "r" 'evil-backward-char) ;; back
 (define-key evil-insert-state-map "\C-r" 'evil-delete-backward-char)
+(define-key evil-insert-state-map "\C-b" 'evil-delete-backward-word)
 
 (define-key evil-motion-state-map "n" 'evil-next-line) ;; next line
 (define-key evil-motion-state-map "l" 'evil-search-next) ;; next look up
