@@ -1,5 +1,4 @@
 #! /bin/bash
 
-#xkbcomp -I$HOME/.xkb ~/.xkb/keymap/custom $DISPLAY
-setxkbmap -option caps:backspace
-xmodmap -e "clear Lock"
+# Sets my custom keyboard layout
+setxkbmap -I$HOME/dev/helpful_scripts/xkb/ dvorakprog -option caps:escape -geometry 'microsoft(natural)' -print | xkbcomp -I$HOME/dev/helpful_scripts/xkb/ - $DISPLAY
