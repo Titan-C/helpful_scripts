@@ -149,6 +149,16 @@
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 (setq org-src-fontify-natively t);; sintax highligting of codeblock in org
 
+;; dired
+;; modify dired keys
+(progn
+  (require 'dired )
+  (define-key dired-mode-map "t" 'dired-previous-line)
+  (define-key dired-mode-map "p" 'dired-toggle-marks)
+  )
+
+
+
 
 ;; Editing assintants
 (use-package flycheck
