@@ -1,8 +1,8 @@
 #! /bin/bash
 
-SCRIPTS=$HOME/dev/helpful_scripts/xkb/
+SCRIPTS=$HOME/dev/helpful_scripts
 # Sets my custom keyboard layout
-setxkbmap -I$SCRIPTS dvorakprog -option caps:escape -geometry 'microsoft(natural)' -print | xkbcomp -I$SCRIPTS - $DISPLAY
+setxkbmap -I$SCRIPTS/xkb/ dvorakprog -option caps:escape -geometry 'microsoft(natural)' -print | xkbcomp -I$SCRIPTS/xkb/ - $DISPLAY
 
 # Set anaconda
 anacondainit() {
