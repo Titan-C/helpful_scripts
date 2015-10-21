@@ -219,8 +219,7 @@ cp -v ${LIB}lib/mpi.so ${DIR}/
 inst_gmp () {
 gmpv=gmp-6.0.0a
 wget https://gmplib.org/download/gmp/${gmpv}.tar.bz2
-bunzip2 ${gmpv}.tar.bz2
-tar xf ${gmpv}.tar
+tar jxf ${gmpv}.tar.bz2
 cd ${gmpv}
 ./configure --prefix=${LIB} --enable-cxx
 make ${MAKEFLAGS}
