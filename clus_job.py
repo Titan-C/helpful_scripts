@@ -24,7 +24,7 @@ JOB_STRING = """
 #$ -q {queue}
 #$ -pe mpi {cpus}
 #$ -N "{job_name} {command}"
-#$ -M oscar,oscar.najera-ocampo@u-psud.fr
+#$ -M oscar.najera-ocampo@u-psud.fr
 #$ -m abe # (a = abort, b = begin, e = end)
 
 anacondainit
