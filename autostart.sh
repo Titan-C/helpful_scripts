@@ -4,6 +4,7 @@ SCRIPTS=$HOME/dev/helpful_scripts
 # Sets my custom keyboard layout
 setxkbmap -I$SCRIPTS/xkb/ dvorakprog -option caps:escape -geometry 'microsoft(natural)' -print | xkbcomp -I$SCRIPTS/xkb/ - $DISPLAY
 
+
 # Set anaconda
 anacondainit() {
     export PATH=$HOME/miniconda/bin:$SCRIPTS:$PATH
@@ -16,6 +17,8 @@ anacondainit() {
     export OPENBLAS_NUM_THREADS=1
 }
 
+
 anacondainit
+keylogger.sh
 source activate dev
 emacs &
