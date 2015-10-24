@@ -233,3 +233,7 @@
 
 (use-package ssh
   :ensure t)
+
+(use-package ox-reveal
+  :config
+  (setq org-reveal-root "file:///home/oscar/dev/reveal.js"))
