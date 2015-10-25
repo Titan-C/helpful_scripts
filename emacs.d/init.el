@@ -59,7 +59,9 @@
 
 (define-key evil-motion-state-map "n" 'evil-next-line) ;; next line
 (define-key evil-motion-state-map "l" 'evil-search-next) ;; next look up
+(define-key evil-motion-state-map "L" 'evil-search-previous)
 (define-key evil-motion-state-map "t" 'evil-previous-line) ;; top back up
+(define-key evil-normal-state-map "T" 'evil-join) ;; line together
 
 (define-key evil-normal-state-map "s" nil) ;; remove substitute
 (define-key evil-motion-state-map "s" 'evil-forward-char)  ;; moves ight
