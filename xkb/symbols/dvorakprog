@@ -30,7 +30,7 @@ xkb_symbols "dvorakOscar" {
     key <AD03> { [ period,          colon,      greater ] };
     key <AD07> { [ l,               L, sterling ]};
     key <AD08> { [ c,               C,          ccedilla,   Ccedilla ] };
-    key <AD10> { [ g,               G, dstroke, Dstroke		]};
+    key <AD10> { [ g,               G, j, J ]};
 
     key <AD11> { [ slash,           question,  questiondown ] };
     key <AD12> { [ ampersand,       dollar ] };
@@ -41,8 +41,12 @@ xkb_symbols "dvorakOscar" {
     key <AC11> { [ minus,           underscore, asciitilde, dead_tilde ] };
     key <BKSL> { [ backslash,       bar ] };
 
-    key <LSGT> { [ Shift_L]};
+    key <LSGT> { [ Shift_L ]};
     key <AB01> { [ w,               W ] };
+    key <AB02> { [ q,		    Q, z, Z ]};
+    key <AB03> { [ g,               G, j, J ]};
+    key <AB04> { [ Return, Return, k, K ]};
+    key <AB10> { [ Shift_R ]};
     key <AB08> { [ dead_acute,      dead_diaeresis, dead_grave, dead_circumflex ] };
 
 };
