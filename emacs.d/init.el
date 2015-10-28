@@ -47,15 +47,15 @@
     "oc" 'org-capture
     "r" 'ace-jump-char-mode
     "c" 'ace-jump-word-mode
-    "b" 'helm-mini)
+    "g" 'helm-mini)
 
 (use-package ace-jump-mode
   :ensure t )
 
 (define-key evil-normal-state-map "r" nil) ;; block replace
 (define-key evil-motion-state-map "r" 'evil-backward-char) ;; back
-(define-key evil-insert-state-map "\C-r" 'evil-delete-backward-char)
-(define-key evil-insert-state-map "\C-b" 'evil-delete-backward-word)
+(define-key evil-insert-state-map "\C-l" 'evil-delete-backward-char)
+(define-key evil-insert-state-map "\C-r" 'evil-delete-backward-word)
 
 (define-key evil-motion-state-map "n" 'evil-next-line) ;; next line
 (define-key evil-motion-state-map "l" 'evil-search-next) ;; next look up
@@ -64,7 +64,7 @@
 (define-key evil-normal-state-map "T" 'evil-join) ;; line together
 
 (define-key evil-normal-state-map "s" nil) ;; remove substitute
-(define-key evil-motion-state-map "s" 'evil-forward-char)  ;; moves ight
+(define-key evil-motion-state-map "s" 'evil-forward-char)  ;; moves right
 
 (define-key evil-normal-state-map "h" 'evil-replace)
 (define-key evil-visual-state-map "h" 'evil-replace) ;; because it seems to respect old motion
@@ -88,7 +88,7 @@
 
 (use-package helm
   :bind (("M-x" . helm-M-x)
-         ("C-x b" . helm-mini))
+         ("C-x g" . helm-mini))
   :config
   (require 'helm-config)
   (helm-mode 1))
@@ -110,7 +110,7 @@
 (evil-leader/set-key-for-mode 'org-mode
     "ot"  'outline-previous-visible-heading
     "on"  'outline-next-visible-heading
-    "oh" 'org-insert-heading
+    "oo" 'org-insert-heading
     "os" 'org-sort-list
     "ot" 'org-todo)
 
