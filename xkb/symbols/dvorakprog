@@ -28,15 +28,19 @@ xkb_symbols "dvorakOscar" {
     key <AD01> { [ apostrophe,      quotedbl,   grave, asciicircum  ] };
     key <AD02> { [ comma,           semicolon,  less	] };
     key <AD03> { [ period,          colon,      greater ] };
-    key <AD07> { [ l,               L, sterling ]};
+    key <AD07> { [ u,            U,          uacute,     Uacute ] };
     key <AD08> { [ c,               C,          ccedilla,   Ccedilla ] };
     key <AD10> { [ g,               G, j, J ]};
 
     key <AD11> { [ slash,           question,  questiondown ] };
     key <AD12> { [ ampersand,       dollar ] };
 
-    key <AC04> { [ i,               I,          oe,         OE ] };
-    key <AC05> { [ u,               U,          Aring,      Aring ] };
+    key <AC01> { [ a,	      	 A,          aacute,     Aacute ]};
+    key <AC02> { [ o,	      	 O,          oacute,     Oacute ]};
+    key <AC03> { [ e,	      	 E,          eacute,     Eacute ]};
+    key <AC04> { [ i,	      	 I,          iacute,     Iacute ]};
+    key <AC05> { [ m,            M,          mu	]};
+
     key <AC09> { [ n,               N,          ntilde,      Ntilde ] };
     key <AC11> { [ minus,           underscore, asciitilde, dead_tilde ] };
     key <BKSL> { [ backslash,       bar ] };
@@ -46,7 +50,9 @@ xkb_symbols "dvorakOscar" {
     key <AB02> { [ q,		    Q, z, Z ]};
     key <AB03> { [ g,               G, j, J ]};
     key <AB04> { [ Return, Return, k, K ]};
+
+    key <AB07> { [ l,               L, sterling ]};
+    key <AB08> { [ BackSpace,    dead_diaeresis, dead_grave, dead_circumflex ] };
     key <AB10> { [ Shift_R ]};
-    key <AB08> { [ dead_acute,      dead_diaeresis, dead_grave, dead_circumflex ] };
 
 };
