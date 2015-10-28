@@ -19,6 +19,6 @@ anacondainit() {
 
 
 anacondainit
-keylogger.sh
+$SCRIPTS/keylogger.sh
 source activate dev
 emacs &
