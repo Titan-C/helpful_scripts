@@ -36,7 +36,7 @@ for i, (char, count) in enumerate(collstat.most_common()):
 if arguments.txt:
     pair_data = re.findall(r'(\w.)', data) + re.findall(r'(.\w)', data)
 else:
-    pair_data = list(zip(data[:-1], data[1:])) + list(zip(data[1:], data[:-1]))
+    pair_data = list(zip(data[:-1], data[1:]))
 
 pair_stat = collections.Counter(pair_data)
 print('Most recurrent key successions')
