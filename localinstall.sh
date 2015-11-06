@@ -4,7 +4,7 @@
 # =================================================
 
 
-export BUILD_DIR=$HOME/$BÐ
+export BUILD_DIR=$HOME/builds/$BD
 export CC=gcc
 export CXX=g++
 export FC=gfortran
@@ -16,6 +16,9 @@ MAKEFLAGS="-j8"
 
 inst_dev() {
 inst_gmp
+inst_mpfr
+inst_mpc
+inst_isl
 inst_gcc
 inst_cmake
 inst_binutils
@@ -221,7 +224,7 @@ cd ${BUILD_DIR}
 # install mpfr
 inst_mpfr () {
 #mpfrv=mpfr-2.4.2
-mpfrv=mpfr-3.1.3.tar.bz2
+mpfrv=mpfr-3.1.3
 wget http://www.mpfr.org/mpfr-current/${mpfrv}.tar.bz2
 tar -xf ${mpfrv}.tar.bz2
 cd ${mpfrv}
@@ -242,6 +245,18 @@ make ${MAKEFLAGS} && make check && make install
 cd ${BUILD_DIR}
 }
 
+# install isl
+inst_isl () {
+islv=isl-0.14
+wget http://isl.gforge.inria.fr/${islv}.tar.bz2
+tar -xf ${islv}.tar.bz2
+cd ${islv}
+./configure --prefix=${CONDA_ENV_PATH} --with-gmp-prefix=${CONDA_ENV_PATH}
+make ${MAKEFLAGS} && make check && make install
+cd ${BUILD_DIR}
+}
+
+
 # install gcc
 inst_gcc () {
 gccv=gcc-4.9.2
@@ -252,7 +267,8 @@ cd ${gccv}
 cd ..
 mkdir build_${gccv} && cd build_${gccv}
 ../${gccv}/configure --prefix=${CONDA_ENV_PATH} --enable-checking=release --disable-multilib \
-   --enable-languages=c,c++,fortran
+   --enable-languages=c,c++,fortran --with-gmp=${CONDA_ENV_PATH} --with-mpfr=${CONDA_ENV_PATH} \
+--with-mpc=${CONDA_ENV_PATH} --with-isl=${CONDA_ENV_PATH} --with-default-libstdcxx-abi=gcc4-compatible
 make ${MAKEFLAGS} && make install
 cd ${BUILD_DIR}
 }
