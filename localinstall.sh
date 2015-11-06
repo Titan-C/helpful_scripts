@@ -107,27 +107,9 @@ make install
 cd
 }
 
-## lapack
-inst_lapack() {
-lapackv=lapack-3.5.0
-wget http://www.netlib.org/lapack/${lapackv}.tgz
-tar -xf ${lapackv}.tgz
-cd ${lapackv}
-install -d build
-cd build
-cmake ../ -DCMAKE_INSTALL_PREFIX=${CONDA_ENV_PATH} \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_SKIP_RPATH=ON \
-    -DBUILD_SHARED_LIBS=ON \
-    -DCMAKE_Fortran_COMPILER=gfortran \
-    -DLAPACKE=ON
-make ${MAKEFLAGS}
-cd
-}
-
 ## Openblas
 inst_openblas() {
-op_ver=0.2.14
+op_ver=0.2.15
 wget http://github.com/xianyi/OpenBLAS/archive/v${op_ver}.tar.gz
 tar -xf v${op_ver}.tar.gz
 cd OpenBLAS-${op_ver}
@@ -153,20 +135,30 @@ cd
 
 
 ## Anaconda
+python_pack='matplotlib hdf5 h5py ipython
+    jinja2 numba pep8 pillow pyflakes pytest cython numba
+    sphinx spyder coverage nose rope tornado jsonschema numpydoc mistune
+    joblib pylint flake8 jupyter line_profiler pandas sympy'
+python_pip='mako pytest-cov mpi4py'
+
 inst_anaconda() {
-wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
 chmod +x miniconda.sh
 ./miniconda.sh -b
-export PATH=~/miniconda/bin:$PATH
-conda update --yes conda
-conda create --yes -n dev pip scipy numpy matplotlib hdf5 h5py ipython \
-    jinja2 numba pep8 pillow pyflakes pytest cython numba \
-    sphinx spyder coverage nose rope tornado jsonschema numpydoc mistune \
-    joblib pylint flake8 jupyter line_profiler pandas
-source activate dev
-pip install gnureadline mako pytest-cov mpi4py
+export PATH=~/miniconda3/bin:$PATH
 }
 
+inst_new_pyenv() {
+conda update --yes conda
+conda create --yes -n $1 python=$2 pip
+source activate $1
+pip install gnureadline
+}
+
+inst_numpy_or_scipy() {
+    python setup.py config_fc --fcompiler=gnu95 build -j 8
+    python setup.py install
+    }
 
 ## ALPS
 inst_alps() {
@@ -214,7 +206,7 @@ cp -v ${CONDA_ENV_PATH}lib/mpi.so ${DIR}/
 
 # install gmp
 inst_gmp () {
-gmpv=gmp-6.0.0a
+gmpv=gmp-6.1.0
 wget https://gmplib.org/download/gmp/${gmpv}.tar.bz2
 tar jxf ${gmpv}.tar.bz2
 cd ${gmpv}
