@@ -4,6 +4,7 @@
 # =================================================
 
 
+export BUILD_DIR=$HOME/$BÐ
 export CC=gcc
 export CXX=g++
 export FC=gfortran
@@ -14,8 +15,8 @@ export FC=gfortran
 MAKEFLAGS="-j8"
 
 inst_dev() {
-inst_gcc
 inst_gmp
+inst_gcc
 inst_cmake
 inst_binutils
 inst_openmpi
@@ -39,7 +40,7 @@ cd ${cmakev}
 ./bootstrap --parallel=4 --prefix=${CONDA_ENV_PATH}
 make ${MAKEFLAGS}
 make install
-cd
+cd ${BUILD_DIR}
 }
 
 ## binutils
@@ -51,7 +52,7 @@ cd ${binutilsv}
 ./configure --prefix=${CONDA_ENV_PATH}
 make
 make install
-cd
+cd ${BUILD_DIR}
 }
 
 ## boost
@@ -72,7 +73,7 @@ echo "using mpi ;" >> project-config.jam
       cflags="-O3 -pipe" \
       ${MAKEFLAGS} \
       install
-cd
+cd ${BUILD_DIR}
 }
 
 ## hdf5
@@ -92,7 +93,7 @@ make ${MAKEFLAGS}
 make check
 make install
 make check-install
-cd
+cd ${BUILD_DIR}
 }
 
 ## fftw
@@ -104,7 +105,7 @@ cd ${fftwv}
 ./configure --prefix=${CONDA_ENV_PATH} --enable-openmp --enable-mpi --enable-shared --enable-threads --enable-sse2 --enable-avx CFLAGS="-O2"
 make ${MAKEFLAGS}
 make install
-cd
+cd ${BUILD_DIR}
 }
 
 ## Openblas
@@ -118,7 +119,7 @@ make PREFIX=${CONDA_ENV_PATH} install
 cd ${CONDA_ENV_PATH}/lib/
 ln -sf libopenblas.so libblas.so
 ln -sf libopenblas.so liblapack.so
-cd
+cd ${BUILD_DIR}
 }
 
 ## GSL
@@ -130,7 +131,7 @@ cd ${gslv}
 ./configure --prefix=${CONDA_ENV_PATH}
 make ${MAKEFLAGS}
 make install
-cd
+cd ${BUILD_DIR}
 }
 
 
@@ -173,7 +174,7 @@ cmake ../alps/ -DCMAKE_INSTALL_PREFIX=${CONDA_ENV_PATH} \
 make ${MAKEFLAGS}
 make test
 make install
-cd
+cd ${BUILD_DIR}
 }
 
 
@@ -214,29 +215,31 @@ cd ${gmpv}
 make ${MAKEFLAGS}
 make check
 make install
-cd
+cd ${BUILD_DIR}
 }
 
 # install mpfr
 inst_mpfr () {
-mpfrv=mpfr-2.4.2
-wget ftp://gcc.gnu.org/pub/gcc/infrastructure/${mpfrv}.tar.bz2
+#mpfrv=mpfr-2.4.2
+mpfrv=mpfr-3.1.3.tar.bz2
+wget http://www.mpfr.org/mpfr-current/${mpfrv}.tar.bz2
 tar -xf ${mpfrv}.tar.bz2
 cd ${mpfrv}
 ./configure --prefix=${CONDA_ENV_PATH} --with-gmp=${CONDA_ENV_PATH}
 make ${MAKEFLAGS} && make check && make install
-cd
+cd ${BUILD_DIR}
 }
 
 # install mpc
 inst_mpc () {
-mpcv=mpc-0.8.1
-wget ftp://gcc.gnu.org/pub/gcc/infrastructure/${mpcv}.tar.gz
+#mpcv=mpc-0.8.1
+mpcv=mpc-1.0.3
+wget ftp://ftp.gnu.org/gnu/mpc/${mpcv}.tar.gz
 tar -xf ${mpcv}.tar.gz
 cd ${mpcv}
 ./configure --prefix=${CONDA_ENV_PATH} --with-gmp=${CONDA_ENV_PATH}
 make ${MAKEFLAGS} && make check && make install
-cd
+cd ${BUILD_DIR}
 }
 
 # install gcc
@@ -251,7 +254,7 @@ mkdir build_${gccv} && cd build_${gccv}
 ../${gccv}/configure --prefix=${CONDA_ENV_PATH} --enable-checking=release --disable-multilib \
    --enable-languages=c,c++,fortran
 make ${MAKEFLAGS} && make install
-cd
+cd ${BUILD_DIR}
 }
 
 #install openmpi
@@ -262,5 +265,5 @@ tar -xf ${ompiv}.tar.bz2
 cd ${ompiv}
 ./configure --prefix=${CONDA_ENV_PATH}
 make ${MAKEFLAGS} && make all install
-cd
+cd ${BUILD_DIR}
 }
