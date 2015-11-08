@@ -27,16 +27,17 @@
 (setq smtpmail-smtp-service 587
       gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
 ;;; bbdb
-(use-package bbdb
-  :init
-  (setq bbdb-file "~/Dropbox/bbdb"
+(setq bbdb-file "~/Dropbox/bbdb"
         bbdb-offer-save 'auto
         bbdb-notice-auto-save-file t
         bbdb-expand-mail-aliases t
         bbdb-canonicalize-redundant-nets-p t
         bbdb-always-add-addresses t
         bbdb-complete-name-allow-cycling t
- ))
+ )
+(require 'bbdb)
+(bbdb-initialize)
+(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
 
 ;; linebreak in message editing
 (defun my-message-mode-setup ()
