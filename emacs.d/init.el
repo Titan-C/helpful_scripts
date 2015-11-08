@@ -132,6 +132,7 @@
          ("\C-ca" . org-agenda)
          ("\C-cc" . org-capture))
   :init
+  (setq org-agenda-start-on-weekday 0)
   (add-hook 'org-mode-hook 'auto-fill-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
   (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
