@@ -26,9 +26,12 @@ xkb_symbols "dvorakOscar" {
 
 
     key <AD01> { [ apostrophe,      quotedbl,   grave,    asciicircum  ] };
-    key <AD02> { [ comma,           semicolon,  less,     guillemotleft ] };
+    key <AD02> { [ p,               P,          less,     guillemotleft ] };
     key <AD03> { [ period,          colon,      greater,  guillemotright ] };
-    key <AD07> { [ u,               U,          uacute,   Uacute ] };
+    key <AD04> { [ y,               Y, yen ]};
+    key <AD05> { [ b, B, comma, semicolon ]};
+    key <AD06> { [ k, K ]};
+    key <AD07> { [ f, F, tslash, Tslash				]};
     key <AD08> { [ c,               C,          ccedilla, Ccedilla ] };
     key <AD10> { [ j, J ]};
 
@@ -41,6 +44,7 @@ xkb_symbols "dvorakOscar" {
     key <AC04> { [ i,	      	 I,          iacute,     Iacute ]};
     key <AC05> { [ m,            M,          mu	]};
 
+    key <AC06> { [ u,               U,          uacute,   Uacute ] };
     key <AC09> { [ n,               N,          ntilde,      Ntilde ] };
     key <AC11> { [ minus,           underscore, asciitilde, dead_tilde ] };
     key <BKSL> { [ backslash,       bar ] };
@@ -48,8 +52,8 @@ xkb_symbols "dvorakOscar" {
     key <LSGT> { [ Shift_L ]};
     key <AB01> { [ w,               W ] };
     key <AB02> { [ q,		    Q, z, Z ]};
-    key <AB03> { [ k, K ]};
-    key <AB04> { [ Return, Return, k, K ]};
+    key <AB03> { [ Return, Return, k, K ]};
+    key <AB04> { [ d,               D          ] };
 
     key <AB06> { [ g, G, b, B ]};
     key <AB07> { [ l,               L, sterling ]};
