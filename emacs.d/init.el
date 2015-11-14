@@ -26,7 +26,7 @@
  ;; start fullscreen
 (setq backup-directory-alist '(("~/.emacs.d/backups")))
 (fset 'yes-or-no-p 'y-or-n-p)
-
+(scroll-bar-mode 0)
 
 ;; Evil mode configuration
 (unless (fboundp 'evil-leader-mode)
