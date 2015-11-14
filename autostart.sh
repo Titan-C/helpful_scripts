@@ -9,6 +9,4 @@ $SCRIPTS/keymaps.sh
 $SCRIPTS/keylogger.sh
 
 source activate dev
-export LD_LIBRARY_PATH=$CONDA_ENV_PATH/lib
-export OPENBLAS_NUM_THREADS=1
 emacs &
