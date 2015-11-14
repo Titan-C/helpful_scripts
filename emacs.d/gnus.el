@@ -1,7 +1,4 @@
 ;; GNUS configuration
-(setq user-mail-address "najera.oscar@gmail.com"
-      user-full-name    "Óscar Nájera")
-
 (require 'nnir)
 
 (setq gnus-select-method
@@ -26,21 +23,3 @@
 
 (setq smtpmail-smtp-service 587
       gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
-;;; bbdb
-(setq bbdb-file "~/Dropbox/bbdb"
-        bbdb-offer-save 'auto
-        bbdb-notice-auto-save-file t
-        bbdb-expand-mail-aliases t
-        bbdb-canonicalize-redundant-nets-p t
-        bbdb-always-add-addresses t
-        bbdb-complete-name-allow-cycling t
- )
-(require 'bbdb)
-(bbdb-initialize)
-(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-
-;; linebreak in message editing
-(defun my-message-mode-setup ()
-(setq fill-column 72)
-(turn-on-auto-fill))
-(add-hook 'message-mode-hook 'my-message-mode-setup)

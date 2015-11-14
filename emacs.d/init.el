@@ -19,6 +19,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("9ff70d8009ce8da6fa204e803022f8160c700503b6029a8d8880a7a78c5ff2e5" default)))
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(send-mail-function (quote smtpmail-send-it))
  '(smtpmail-smtp-server "smtp.googlemail.com")
@@ -240,3 +243,26 @@
 (use-package ox-reveal
   :config
   (setq org-reveal-root "file:///home/oscar/dev/reveal.js"))
+
+;;; bbdb
+(setq user-mail-address "najera.oscar@gmail.com"
+      user-full-name    "Óscar Nájera")
+
+(setq bbdb-file "~/Dropbox/bbdb"
+        bbdb-offer-save 'auto
+        bbdb-notice-auto-save-file t
+        bbdb-expand-mail-aliases t
+        bbdb-canonicalize-redundant-nets-p t
+        bbdb-always-add-addresses t
+        bbdb-complete-name-allow-cycling t
+ )
+(require 'bbdb)
+(bbdb-initialize 'gnus 'message)
+(bbdb-insinuate-message)
+(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
+
+;; linebreak in message editing
+(defun my-message-mode-setup ()
+(setq fill-column 72)
+(turn-on-auto-fill))
+(add-hook 'message-mode-hook 'my-message-mode-setup)
