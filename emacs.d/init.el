@@ -211,9 +211,14 @@
   :ensure t)
 
 ;; Markdown
-(autoload 'markdown-mode "markdown-mode"
+(use-package markdown-mode
+  :init
+  (autoload 'markdown-mode "markdown-mode"
    "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  (add-hook 'markdown-mode-hook 'auto-fill-mode)
+  (add-hook 'markdown-mode-hook 'flyspell-mode))
+
 
 ;; Latex
 (use-package tex-site
