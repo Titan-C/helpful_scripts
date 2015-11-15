@@ -111,7 +111,7 @@
       org-mobile-directory "~/Dropbox/MobileOrg"
       org-mobile-inbox-for-pull "~/Dropbox/org/mobilecaptures.org")
 (evil-leader/set-key-for-mode 'org-mode
-    "ot"  'outline-previous-visible-heading
+    "or"  'outline-previous-visible-heading
     "on"  'outline-next-visible-heading
     "oo" 'org-insert-heading
     "os" 'org-sort-list
@@ -131,7 +131,6 @@
 
 (use-package org
   :bind (("\C-cl" . org-store-link)
-	 ("\C-cb" . org-iswitchb)
          ("\C-ca" . org-agenda)
          ("\C-cc" . org-capture))
   :init
