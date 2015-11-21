@@ -8,6 +8,10 @@
 #+END_SRC
 
 * Editor
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist '(("~/.emacs.d/backups")))
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
   (load-theme 'misterioso t)
@@ -15,10 +19,8 @@
   :config
   (powerline-default-theme))
 #+END_SRC
-** Key Bindings
+** Evil-mode
 #+BEGIN_SRC emacs-lisp
-
-;; Evil mode configuration
 (unless (fboundp 'evil-leader-mode)
 (package-install 'evil-leader))
 (global-evil-leader-mode)
@@ -43,14 +45,16 @@
 (use-package key-chord
 :init
     (setq key-chord-two-keys-delay 0.2)
-    (key-chord-define evil-insert-state-map "rt" 'evil-normal-state)
+    (key-chord-define evil-insert-state-map "tn" 'evil-normal-state)
 :config
     (key-chord-mode 1))
 
-
 (use-package ace-jump-mode
 :ensure t )
+#+END_SRC
 
+** Key Bindings
+#+BEGIN_SRC emacs-lisp
 (define-key evil-normal-state-map "r" nil) ;; block replace
 (define-key evil-motion-state-map "r" 'evil-backward-char) ;; back
 (define-key evil-insert-state-map "\C-l" 'evil-delete-backward-char)
@@ -81,13 +85,25 @@
 (define-key evil-normal-state-map (kbd "C-t") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-s") 'evil-window-right)
 
+;; dired
+;; modify dired keys
+(progn
+(require 'dired )
+(define-key dired-mode-map "t" 'dired-previous-line)
+(define-key dired-mode-map "p" 'dired-toggle-marks)
+)
+#+END_SRC
+** Add-ons
+#+BEGIN_SRC emacs-lisp
+(use-package ssh
+:ensure t)
 #+END_SRC
 * Orgmode
 #+BEGIN_SRC emacs-lisp
   (use-package org
   :bind (("\C-cl" . org-store-link)
-          ("\C-ca" . org-agenda)
-          ("\C-cc" . org-capture))
+         ("\C-ca" . org-agenda)
+         ("\C-cc" . org-capture))
   :init
   (setq org-agenda-start-on-weekday 0)
   (add-hook 'org-mode-hook 'auto-fill-mode)
@@ -98,8 +114,8 @@
       org-mobile-inbox-for-pull "~/Dropbox/org/mobilecaptures.org")
 
   (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
-                                  "~/Dropbox/org/journal.org"
-                                  "~/Dropbox/org/todo.org")))
+                               "~/Dropbox/org/journal.org"
+                               "~/Dropbox/org/todo.org")))
 
   (setq org-refile-targets (quote ((nil :maxlevel . 2)
                                   ("~/Dropbox/org/journal.org" :maxlevel . 3)
@@ -113,6 +129,9 @@
       "oo" 'org-insert-heading
       "os" 'org-sort-list
       "ot" 'org-todo)
+
+;; Previewing latex fragments in org mode
+(setq org-latex-create-formula-image-program 'imagemagick) ;; Recommended to use imagemagick
 #+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp
@@ -120,118 +139,36 @@
   (setq org-capture-templates
       '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Tasks")
           "* TODO %?\n  %U\n  %i\n  %a" :clock-in t :clock-resume t)
-          ("j" "Journal Entry" entry (file+datetree "~/Dropbox/org/journal.org")
+        ("j" "Journal Entry" entry (file+datetree "~/Dropbox/org/journal.org")
           "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
-          ("l" "Lab Journal Entry" entry (file+datetree "~/Dropbox/org/PHD_Journal.org")
+        ("l" "Lab Journal Entry" entry (file+datetree "~/Dropbox/org/PHD_Journal.org")
           "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
-          ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
+        ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
           "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
-
-
 #+END_SRC
-* Coding
-
+** Babel
+*** IPython
 #+BEGIN_SRC emacs-lisp
-
-(custom-set-variables
-;; custom-set-variables was added by Custom.
-;; If you edit it by hand, you could mess it up, so be careful.
-;; Your init file should contain only one such instance.
-;; If there is more than one, they won't work right.
-'(custom-safe-themes
-    (quote
-    ("9ff70d8009ce8da6fa204e803022f8160c700503b6029a8d8880a7a78c5ff2e5" default)))
-'(initial-frame-alist (quote ((fullscreen . maximized))))
-'(send-mail-function (quote smtpmail-send-it))
-'(smtpmail-smtp-server "smtp.googlemail.com")
-'(smtpmail-smtp-service 465 t))
-;; start fullscreen
-(setq backup-directory-alist '(("~/.emacs.d/backups")))
-(fset 'yes-or-no-p 'y-or-n-p)
-
-
-(use-package helm
-:bind (("M-x" . helm-M-x)
-	("C-x g" . helm-mini))
-:config
-(require 'helm-config)
-(helm-mode 1))
-(use-package helm-projectile
-:config
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
-(helm-projectile-on))
-
-(use-package auto-complete
-:init
-(ac-config-default)
-(setq ac-auto-show-menu 0.2))
-
-;; Previewing latex fragments in org mode
-(setq org-latex-create-formula-image-program 'imagemagick) ;; Recommended to use imagemagick
-(use-package ob-ipython)
+(setq org-src-fontify-natively t);; sintax highligting of codeblock in org
+(use-package ob-ipython
+  :ensure t)
 (setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
 ;;; display/update images in the buffer after I evaluate
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
-(setq org-src-fontify-natively t);; sintax highligting of codeblock in org
-
-;; dired
-;; modify dired keys
-(progn
-(require 'dired )
-(define-key dired-mode-map "t" 'dired-previous-line)
-(define-key dired-mode-map "p" 'dired-toggle-marks)
-)
-
-
-
-
-;; Editing assintants
-(use-package flycheck
+#+END_SRC
+*** RevealJS
+#+BEGIN_SRC emacs-lisp
+(use-package ox-reveal
 :config
-(flycheck-add-next-checker 'python-flake8 'python-pylint)
-:init
-(add-hook 'after-init-hook 'global-flycheck-mode))
+(setq org-reveal-root "file:///home/oscar/dev/reveal.js"))
+#+END_SRC
 
-(define-key evil-motion-state-map "gL" 'flycheck-previous-error)
-(define-key evil-motion-state-map "gl" 'flycheck-next-error)
+* Text Editing
+#+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-(use-package relative-line-numbers
-:config
-(global-relative-line-numbers-mode)
-(setq relative-line-numbers-motion-function 'forward-visible-line))
-
-
-(use-package yasnippet
-:config (yas-global-mode t))
-
-(use-package magit
-:config
-(define-key magit-mode-map "t" 'magit-section-backward)
-(define-key magit-mode-map "\M-t" 'magit-section-backward-sibling)
-(define-key magit-mode-map "p" 'magit-tag-popup)
-(add-hook 'git-commit-mode-hook 'flyspell-mode)
-(add-hook 'git-commit-mode-hook 'evil-insert-state))
-(use-package magit-gh-pulls
-:init
-(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
-
-;; Languages configs
-;; Python
-(setq python-shell-interpreter "ipython")
-(use-package jedi
-:config
-(add-hook 'python-mode-hook 'flyspell-prog-mode)
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t))
-
-(use-package cython-mode
-:ensure t)
-(use-package yaml-mode
-:ensure t)
-
-;; Markdown
+#+END_SRC
+** Markdown
+#+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
 :init
 (autoload 'markdown-mode "markdown-mode"
@@ -239,38 +176,90 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-hook 'markdown-mode-hook 'auto-fill-mode)
 (add-hook 'markdown-mode-hook 'flyspell-mode))
-
-
-;; Latex
+#+END_SRC
+** Latex
+#+BEGIN_SRC emacs-lisp
 (use-package tex-site
 :ensure auctex
 :config
 (setq LaTeX-command "latex -shell-escape"))
+#+END_SRC
+* Helm
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+  :bind (("M-x" . helm-M-x)
+         ("C-x g" . helm-mini))
+  :config
+  (require 'helm-config)
+  (helm-mode 1))
 
+  (use-package helm-projectile
+  :config
+  (projectile-global-mode)
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on))
+#+END_SRC
 
-(custom-set-faces
-;; custom-set-faces was added by Custom.
-;; If you edit it by hand, you could mess it up, so be careful.
-;; Your init file should contain only one such instance.
-;; If there is more than one, they won't work right.
-)
-
-;; entertainment
-(use-package twittering-mode
+** Completion
+#+BEGIN_SRC emacs-lisp
+(use-package auto-complete
+:init
+(ac-config-default)
+(setq ac-auto-show-menu 0.2))
+(use-package yasnippet
+:config (yas-global-mode t))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(use-package relative-line-numbers
 :config
-(setq twittering-use-master-password t)
-(setq twittering-icon-mode t)
-(setq twittering-use-icon-storage t))
+(global-relative-line-numbers-mode)
+(setq relative-line-numbers-motion-function 'forward-visible-line))
+#+END_SRC
 
-(use-package ssh
-:ensure t)
+* Magit
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+  :config
+  (define-key magit-mode-map "t" 'magit-section-backward)
+  (define-key magit-mode-map "\M-t" 'magit-section-backward-sibling)
+  (define-key magit-mode-map "p" 'magit-tag-popup)
+  (add-hook 'git-commit-mode-hook 'flyspell-mode)
+  (add-hook 'git-commit-mode-hook 'evil-insert-state))
+  (use-package magit-gh-pulls
+  :init
+  (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
+#+END_SRC
 
-(use-package ox-reveal
-:config
-(setq org-reveal-root "file:///home/oscar/dev/reveal.js"))
+* Coding
+** Linting
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+  :config
+  (flycheck-add-next-checker 'python-flake8 'python-pylint)
+  :init
+  (define-key evil-motion-state-map "gL" 'flycheck-previous-error)
+  (define-key evil-motion-state-map "gl" 'flycheck-next-error)
+  (add-hook 'after-init-hook 'global-flycheck-mode))
+#+END_SRC
+** Python
+ #+BEGIN_SRC emacs-lisp
+ (setq python-shell-interpreter "ipython")
+ (use-package jedi
+ :config
+ (add-hook 'python-mode-hook 'flyspell-prog-mode)
+ (add-hook 'python-mode-hook 'jedi:setup)
+ (setq jedi:complete-on-dot t))
 
-;;; bbdb
-
+ (use-package cython-mode
+ :ensure t)
+ (use-package yaml-mode
+ :ensure t)
+ #+END_SRC
+* Email
+** BBDB
+#+BEGIN_SRC emacs-lisp
+(use-package 'bbdb
+:init
 (setq bbdb-file "~/Dropbox/bbdb"
 	bbdb-offer-save 'auto
 	bbdb-notice-auto-save-file t
@@ -282,16 +271,32 @@
 (require 'bbdb)
 (bbdb-initialize 'gnus 'message)
 (bbdb-insinuate-message)
-(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-
+(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus))
+#+END_SRC
+** Composer
+#+BEGIN_SRC emacs-lisp
 ;; linebreak in message editing
 (defun my-message-mode-setup ()
 (setq fill-column 72)
 (turn-on-auto-fill))
+
 (add-hook 'message-mode-hook 'my-message-mode-setup)
 (add-hook 'message-mode-hook 'flyspell-mode)
 (add-hook 'message-mode-hook 'turn-on-orgstruct)
 (add-hook 'message-mode-hook 'turn-on-orgstruct++)
 (add-hook 'message-mode-hook 'turn-on-orgtbl)
-
+#+END_SRC
+** twitter
+#+BEGIN_SRC emacs-lisp
+(use-package twittering-mode
+:config
+(setq twittering-use-master-password t)
+(setq twittering-icon-mode t)
+(setq twittering-use-icon-storage t))
+#+END_SRC
+** Send
+#+BEGIN_SRC emacs-lisp
+  (setq send-mail-function 'smtpmail-send-it
+      smtpmail-smtp-server "smtp.googlemail.com"
+      smtpmail-smtp-service 465 t)
 #+END_SRC
