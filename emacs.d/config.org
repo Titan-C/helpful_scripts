@@ -295,6 +295,7 @@
 ** Send
 #+BEGIN_SRC emacs-lisp
   (setq send-mail-function 'smtpmail-send-it
-      smtpmail-smtp-server "smtp.googlemail.com"
-      smtpmail-smtp-service 465)
+        message-send-mail-function 'message-smtpmail-send-it
+        smtpmail-smtp-server "smtp.googlemail.com"
+        smtpmail-smtp-service 587)
 #+END_SRC
