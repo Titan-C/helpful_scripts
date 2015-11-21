@@ -279,3 +279,7 @@
 (setq fill-column 72)
 (turn-on-auto-fill))
 (add-hook 'message-mode-hook 'my-message-mode-setup)
+(add-hook 'message-mode-hook 'flyspell-mode)
+(add-hook 'message-mode-hook 'turn-on-orgstruct)
+(add-hook 'message-mode-hook 'turn-on-orgstruct++)
+(add-hook 'message-mode-hook 'turn-on-orgtbl)
