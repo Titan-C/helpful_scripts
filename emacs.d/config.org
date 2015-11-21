@@ -9,6 +9,9 @@
 * Style
 #+BEGIN_SRC emacs-lisp
   (load-theme 'misterioso t)
+  (use-package powerline-evil
+  :config
+  (powerline-default-theme))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -92,9 +95,6 @@
 (define-key evil-normal-state-map (kbd "C-t") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-s") 'evil-window-right)
 
-(use-package powerline-evil
-:config
-(powerline-default-theme))
 
 (use-package helm
 :bind (("M-x" . helm-M-x)
