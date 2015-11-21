@@ -52,6 +52,15 @@
     "c" 'ace-jump-word-mode
     "g" 'helm-mini)
 
+
+(use-package key-chord
+  :init
+    (setq key-chord-two-keys-delay 0.2)
+    (key-chord-define evil-insert-state-map "rt" 'evil-normal-state)
+  :config
+    (key-chord-mode 1))
+
+
 (use-package ace-jump-mode
   :ensure t )
 
@@ -172,7 +181,7 @@
   :init
   (add-hook 'after-init-hook 'global-flycheck-mode))
 
-(define-key evil-motion-state-map "gp" 'flycheck-previous-error)
+(define-key evil-motion-state-map "gL" 'flycheck-previous-error)
 (define-key evil-motion-state-map "gl" 'flycheck-next-error)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
