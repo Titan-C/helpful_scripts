@@ -12,7 +12,7 @@ Makefile.in
 /install-sh
 /missing
 #*#
-/emacs.d/*
+/emacs.d/*/
 !/emacs.d/snippets/
 .directory
 hub
