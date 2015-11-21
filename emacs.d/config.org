@@ -258,8 +258,6 @@
 * Email
 ** BBDB
 #+BEGIN_SRC emacs-lisp
-(use-package 'bbdb
-:init
 (setq bbdb-file "~/Dropbox/bbdb"
 	bbdb-offer-save 'auto
 	bbdb-notice-auto-save-file t
@@ -271,7 +269,7 @@
 (require 'bbdb)
 (bbdb-initialize 'gnus 'message)
 (bbdb-insinuate-message)
-(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus))
+(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
 #+END_SRC
 ** Composer
 #+BEGIN_SRC emacs-lisp
@@ -298,5 +296,5 @@
 #+BEGIN_SRC emacs-lisp
   (setq send-mail-function 'smtpmail-send-it
       smtpmail-smtp-server "smtp.googlemail.com"
-      smtpmail-smtp-service 465 t)
+      smtpmail-smtp-service 465)
 #+END_SRC
