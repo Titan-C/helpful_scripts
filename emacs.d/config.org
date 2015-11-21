@@ -6,31 +6,17 @@
   (setq user-mail-address "najera.oscar@gmail.com"
         user-full-name    "Óscar Nájera")
 #+END_SRC
-* Style
+
+* Editor
+** Style
 #+BEGIN_SRC emacs-lisp
   (load-theme 'misterioso t)
   (use-package powerline-evil
   :config
   (powerline-default-theme))
 #+END_SRC
-
+** Key Bindings
 #+BEGIN_SRC emacs-lisp
-
-(custom-set-variables
-;; custom-set-variables was added by Custom.
-;; If you edit it by hand, you could mess it up, so be careful.
-;; Your init file should contain only one such instance.
-;; If there is more than one, they won't work right.
-'(custom-safe-themes
-    (quote
-    ("9ff70d8009ce8da6fa204e803022f8160c700503b6029a8d8880a7a78c5ff2e5" default)))
-'(initial-frame-alist (quote ((fullscreen . maximized))))
-'(send-mail-function (quote smtpmail-send-it))
-'(smtpmail-smtp-server "smtp.googlemail.com")
-'(smtpmail-smtp-service 465 t))
-;; start fullscreen
-(setq backup-directory-alist '(("~/.emacs.d/backups")))
-(fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Evil mode configuration
 (unless (fboundp 'evil-leader-mode)
@@ -95,6 +81,74 @@
 (define-key evil-normal-state-map (kbd "C-t") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-s") 'evil-window-right)
 
+#+END_SRC
+* Orgmode
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+  :bind (("\C-cl" . org-store-link)
+          ("\C-ca" . org-agenda)
+          ("\C-cc" . org-capture))
+  :init
+  (setq org-agenda-start-on-weekday 0)
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+  (add-hook 'org-mode-hook 'flyspell-mode)
+
+  (setq org-directory "~/Dropbox/org"
+      org-mobile-directory "~/Dropbox/MobileOrg"
+      org-mobile-inbox-for-pull "~/Dropbox/org/mobilecaptures.org")
+
+  (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
+                                  "~/Dropbox/org/journal.org"
+                                  "~/Dropbox/org/todo.org")))
+
+  (setq org-refile-targets (quote ((nil :maxlevel . 2)
+                                  ("~/Dropbox/org/journal.org" :maxlevel . 3)
+                                  ("~/Dropbox/org/todo.org" :maxlevel . 2))))
+
+  (setq org-refile-use-outline-path nil)
+
+  (evil-leader/set-key-for-mode 'org-mode
+      "or"  'outline-previous-visible-heading
+      "on"  'outline-next-visible-heading
+      "oo" 'org-insert-heading
+      "os" 'org-sort-list
+      "ot" 'org-todo)
+#+END_SRC
+** Capture
+#+BEGIN_SRC emacs-lisp
+  (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
+  (setq org-capture-templates
+      '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Tasks")
+          "* TODO %?\n  %U\n  %i\n  %a" :clock-in t :clock-resume t)
+          ("j" "Journal Entry" entry (file+datetree "~/Dropbox/org/journal.org")
+          "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
+          ("l" "Lab Journal Entry" entry (file+datetree "~/Dropbox/org/PHD_Journal.org")
+          "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
+          ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
+          "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
+
+
+#+END_SRC
+* Coding
+
+#+BEGIN_SRC emacs-lisp
+
+(custom-set-variables
+;; custom-set-variables was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
+'(custom-safe-themes
+    (quote
+    ("9ff70d8009ce8da6fa204e803022f8160c700503b6029a8d8880a7a78c5ff2e5" default)))
+'(initial-frame-alist (quote ((fullscreen . maximized))))
+'(send-mail-function (quote smtpmail-send-it))
+'(smtpmail-smtp-server "smtp.googlemail.com")
+'(smtpmail-smtp-service 465 t))
+;; start fullscreen
+(setq backup-directory-alist '(("~/.emacs.d/backups")))
+(fset 'yes-or-no-p 'y-or-n-p)
+
 
 (use-package helm
 :bind (("M-x" . helm-M-x)
@@ -112,46 +166,6 @@
 :init
 (ac-config-default)
 (setq ac-auto-show-menu 0.2))
-;; Org mode setup
-
-(setq org-directory "~/Dropbox/org"
-    org-mobile-directory "~/Dropbox/MobileOrg"
-    org-mobile-inbox-for-pull "~/Dropbox/org/mobilecaptures.org")
-(evil-leader/set-key-for-mode 'org-mode
-    "or"  'outline-previous-visible-heading
-    "on"  'outline-next-visible-heading
-    "oo" 'org-insert-heading
-    "os" 'org-sort-list
-    "ot" 'org-todo)
-
-(add-hook 'org-mode-hook 'turn-on-flyspell)
-(setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
-(setq org-capture-templates
-    '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Tasks")
-	"* TODO %?\n  %U\n  %i\n  %a" :clock-in t :clock-resume t)
-	("j" "Journal Entry" entry (file+datetree "~/Dropbox/org/journal.org")
-	"* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
-	("l" "Lab Journal Entry" entry (file+datetree "~/Dropbox/org/PHD_Journal.org")
-	"* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
-	("e" "Event" entry (file "~/Dropbox/org/schedule.org")
-	"* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
-
-(use-package org
-:bind (("\C-cl" . org-store-link)
-	("\C-ca" . org-agenda)
-	("\C-cc" . org-capture))
-:init
-(setq org-agenda-start-on-weekday 0)
-(add-hook 'org-mode-hook 'auto-fill-mode)
-(add-hook 'org-mode-hook 'flyspell-mode)
-(setq org-agenda-files (list "~/Dropbox/org/schedule.org"
-				"~/Dropbox/org/journal.org"
-				"~/Dropbox/org/todo.org")))
-
-(setq org-refile-targets (quote ((nil :maxlevel . 2)
-				("~/Dropbox/org/journal.org" :maxlevel . 3)
-				("~/Dropbox/org/todo.org" :maxlevel . 2))))
-(setq org-refile-use-outline-path nil)
 
 ;; Previewing latex fragments in org mode
 (setq org-latex-create-formula-image-program 'imagemagick) ;; Recommended to use imagemagick
