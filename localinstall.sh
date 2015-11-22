@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # I assume a conda env is already loaded to work on
-# =================================================
+# If not, make one and then re-source this file
 
 
 export BUILD_DIR=$HOME/builds/$BD
@@ -127,7 +127,7 @@ cd ${BUILD_DIR}
 
 ## GSL
 inst_gsl() {
-gslv=gsl-1.16
+gslv=gsl-latest
 wget http://mirror.ibcp.fr/pub/gnu/gsl/${gslv}.tar.gz
 tar -xf ${gslv}.tar.gz
 cd ${gslv}
@@ -140,7 +140,7 @@ cd ${BUILD_DIR}
 
 ## Anaconda
 python_pack='matplotlib hdf5 h5py ipython
-    jinja2 numba pep8 pillow pyflakes pytest cython numba
+    jinja2 pep8 pillow pyflakes pytest cython numba
     sphinx spyder coverage nose rope tornado jsonschema numpydoc mistune
     joblib pylint flake8 jupyter line_profiler pandas sympy'
 python_pip='mako pytest-cov mpi4py'
@@ -160,8 +160,8 @@ pip install gnureadline
 }
 
 inst_numpy_or_scipy() {
-    python setup.py config_fc --fcompiler=gnu95 build -j 8
-    python setup.py install
+    python setup.py config_fc --fcompiler=gnu95 build ${MAKEFLAGS}
+    python setup.py config_fc --fcompiler=gnu95 install --optimize=1
     }
 
 ## ALPS
@@ -223,7 +223,6 @@ cd ${BUILD_DIR}
 
 # install mpfr
 inst_mpfr () {
-#mpfrv=mpfr-2.4.2
 mpfrv=mpfr-3.1.3
 wget http://www.mpfr.org/mpfr-current/${mpfrv}.tar.bz2
 tar -xf ${mpfrv}.tar.bz2
@@ -235,7 +234,6 @@ cd ${BUILD_DIR}
 
 # install mpc
 inst_mpc () {
-#mpcv=mpc-0.8.1
 mpcv=mpc-1.0.3
 wget ftp://ftp.gnu.org/gnu/mpc/${mpcv}.tar.gz
 tar -xf ${mpcv}.tar.gz
@@ -262,9 +260,6 @@ inst_gcc () {
 gccv=gcc-4.9.2
 wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
 tar -xf ${gccv}.tar.gz
-cd ${gccv}
-./contrib/download_prerequisites
-cd ..
 mkdir build_${gccv} && cd build_${gccv}
 ../${gccv}/configure --prefix=${CONDA_ENV_PATH} --enable-checking=release --disable-multilib \
    --enable-languages=c,c++,fortran --with-gmp=${CONDA_ENV_PATH} --with-mpfr=${CONDA_ENV_PATH} \
