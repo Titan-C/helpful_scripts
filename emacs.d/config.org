@@ -163,6 +163,22 @@
 (setq org-reveal-root "file:///home/oscar/dev/reveal.js"))
 #+END_SRC
 
+** Key Bindings
+*** normal & insert state shortcuts.
+#+BEGIN_SRC emacs-lisp
+  (mapc (lambda (state)
+          (evil-define-key state org-mode-map
+            (kbd "M-r") 'org-metaleft
+            (kbd "M-t") 'org-metaup
+            (kbd "M-n") 'org-metadown
+            (kbd "M-s") 'org-metaright
+            (kbd "M-R") 'org-shiftmetaleft
+            (kbd "M-T") 'org-shiftmetaup
+            (kbd "M-N") 'org-shiftmetadown
+            (kbd "M-S") 'org-shiftmetaright
+            ))
+        '(normal insert))
+#+END_SRC
 * Text Editing
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -229,7 +245,6 @@
   :init
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 #+END_SRC
-
 * Coding
 ** Linting
 #+BEGIN_SRC emacs-lisp
