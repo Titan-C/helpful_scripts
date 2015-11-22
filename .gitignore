@@ -11,7 +11,8 @@ Makefile.in
 /depcomp
 /install-sh
 /missing
-#*#
+*#
+/emacs.d/config.el
 /emacs.d/*/
 !/emacs.d/snippets/
 .directory
