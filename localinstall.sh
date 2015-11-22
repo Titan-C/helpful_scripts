@@ -156,12 +156,16 @@ inst_new_pyenv() {
 conda update --yes conda
 conda create --yes -n $1 python=$2 pip
 source activate $1
+conda install ${python_pack}
 pip install gnureadline
+echo "remember to delete the venv openblas to use local one"
+echo "then reinstall numpy & scipy from source with local blas"
 }
 
 inst_numpy_or_scipy() {
     python setup.py config_fc --fcompiler=gnu95 build ${MAKEFLAGS}
     python setup.py config_fc --fcompiler=gnu95 install --optimize=1
+    python setup.py install
     }
 
 ## ALPS
