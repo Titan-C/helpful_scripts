@@ -1,6 +1,20 @@
 #! /bin/bash
-USERNAME=""
-USERMAIL=""
+
+if [[ $# -ne 2 ]]
+then
+  echo "Usage: installer.sh 'Your name' your_email";
+  exit;
+fi
+USERNAME=$1
+USERMAIL=$2
+
+# Configuring git
+rm -f ~/.gitconfig
+git config --global user.name "$USERNAME"
+git config --global user.email $USERMAIL
+git config --global push.default simple
+cat gitconfig >> ~/.gitconfig
+
 
 #Make scripts executable
 for file in $(ls *.sh)
@@ -8,23 +22,18 @@ do
     chmod 755 $file
 done
 
-#Add scripts to PATH
-ln -s bashrc ~/.bashrc
+# create symlinks from the homedir to the selected files in this directory specified in $files
+files="bashrc emacs.d gnus vimrc vimperatorrc"
+for file in $files; do
+    echo "Creating symlink to $file in home directory."
+    rm ~/.$file
+    ln -s $PWD/$file ~/.$file
+done
+
 source ~/.bashrc
 echo "set show-all-if-unmodified on" >> ~/.inputrc
-ln -s vimrc  ~/.vimrc
 
 
-#Configuring git
-rm -f ~/.gitconfig
-git config --global user.name "$USERNAME"
-git config --global user.email $USERMAIL
-git config --global push.default simple
-cat gitconfig >> ~/.gitconfig
-
-#Configuring Custom Keyboard
-#mkdir -p ~/.xkb/keymap/
-#cat customkeymap > ~/.xkb/keymap/custom
-#mkdir -p ~/.xkb/symbols/
-#cat customkeysymbols > ~/.xkb/symbols/custom
-
+# messages
+echo "Remember to set the auto start to the desktop environment"
+echo "That loads Emacs and the custom keymaps"
