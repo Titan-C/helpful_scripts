@@ -42,6 +42,9 @@
     "c" 'ace-jump-word-mode
     "g" 'helm-mini)
 
+;;(global-set-key [escape] 'keyboard-quit)
+(global-set-key [escape] 'helm-keyboard-quit)
+
 
 (use-package key-chord
 :init
