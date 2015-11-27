@@ -8,5 +8,5 @@ export QT_PLUGIN_PATH=""
 $SCRIPTS/keymaps.sh
 $SCRIPTS/keylogger.sh
 
-source activate dev
+source activate hpc3
 emacs &
