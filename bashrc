@@ -1,4 +1,4 @@
-#
+#-*- mode: shell-script; -*-
 # ~/.bashrc
 #
 
@@ -39,3 +39,5 @@ aactivate() {
 
 alias desklink='ssh -Y oscar@129.175.81.91'
 alias sshipy='ssh -Y -N -f -L localhost:6001:localhost:7002 orlando@lps.u-psud.fr'
+alias vact='source activate'
+alias opbs1='export OPENBLAS_NUM_THREADS=1'
