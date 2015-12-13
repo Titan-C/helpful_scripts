@@ -358,6 +358,11 @@ on a fragment]]
  (use-package yaml-mode
  :ensure t)
  #+END_SRC
+** Web
+#+BEGIN_SRC emacs-lisp
+  (use-package scss-mode
+   :ensure t)
+#+END_SRC
 * Email
 ** BBDB
 #+BEGIN_SRC emacs-lisp
