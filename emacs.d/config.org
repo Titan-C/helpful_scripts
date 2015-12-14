@@ -429,5 +429,5 @@ on a fragment]]
     :ensure t
     :config
     (pdf-tools-install)
-    (add-hook 'pdf-view-mode-hook 'evil-emacs-state))
+    (add-hook 'pdf-view-mode-hook 'turn-off-evil-mode))
 #+END_SRC
