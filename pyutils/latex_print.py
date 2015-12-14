@@ -11,7 +11,13 @@ import sympy
 
 
 def platex(*args):
-    """Call sympy latex print over arguments """
+    """Call sympy latex print over arguments
+
+    Parameters
+    ----------
+    *args: as many sympy expressions as wanted is the same latex
+       equation environment
+    """
 
     print(r'\begin{equation}')
 
