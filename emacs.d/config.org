@@ -267,6 +267,20 @@ on a fragment]]
             ))
         '(normal insert))
 #+END_SRC
+** Citations
+
+#+BEGIN_SRC emacs-lisp
+    (use-package helm-bibtex
+      :ensure t
+      :config
+      (setq helm-bibtex-bibliography '("~/Dropbox/org/papers.bib"))
+      (setq helm-bibtex-library-path '("~/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/"
+                                       "~/Documents/Mendeley Desktop/"))
+      (setq helm-bibtex-pdf-field "File")
+      (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org"))
+
+#+END_SRC
+
 * Text Editing
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
