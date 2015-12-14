@@ -19,6 +19,13 @@
   :config
   (powerline-default-theme))
 #+END_SRC
+#+BEGIN_SRC emacs-lisp
+(use-package relative-line-numbers
+:config
+(global-relative-line-numbers-mode)
+(setq relative-line-numbers-motion-function 'forward-visible-line))
+#+END_SRC
+
 ** Evil-mode
 #+BEGIN_SRC emacs-lisp
 (unless (fboundp 'evil-leader-mode)
@@ -324,13 +331,6 @@ on a fragment]]
 (use-package yasnippet
 :config (yas-global-mode t))
 #+END_SRC
-#+BEGIN_SRC emacs-lisp
-(use-package relative-line-numbers
-:config
-(global-relative-line-numbers-mode)
-(setq relative-line-numbers-motion-function 'forward-visible-line))
-#+END_SRC
-
 * Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
