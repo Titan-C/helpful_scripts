@@ -310,6 +310,11 @@ on a fragment]]
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-ag
+    :ensure t)
+#+END_SRC
+
 ** Citations
 #+BEGIN_SRC emacs-lisp
   (use-package helm-bibtex
@@ -320,7 +325,6 @@ on a fragment]]
     (setq helm-bibtex-pdf-field "File")
     (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org"))
 #+END_SRC
-
 
 ** Completion
 #+BEGIN_SRC emacs-lisp
@@ -421,6 +425,9 @@ on a fragment]]
 
 * Test/temp
 #+BEGIN_SRC emacs-lisp
-  (use-package helm-ag
-    :ensure t)
+  (use-package pdf-tools
+    :ensure t
+    :config
+    (pdf-tools-install)
+    (add-hook 'pdf-view-mode-hook 'evil-emacs-state))
 #+END_SRC
