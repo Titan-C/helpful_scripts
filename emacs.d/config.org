@@ -228,6 +228,14 @@ on a fragment]]
 
 (add-hook 'post-command-hook 'org-latex-fragment-toggle)
 #+END_SRC
+
+This is to export with bibtex
+#+BEGIN_SRC emacs-lisp
+  (setq org-latex-pdf-process '("pdflatex -interaction nonstopmode -output-directory %o %f"
+                                "bibtex %b"
+                                "pdflatex -interaction nonstopmode -output-directory %o %f"
+                                "pdflatex -interaction nonstopmode -output-directory %o %f"))
+#+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
