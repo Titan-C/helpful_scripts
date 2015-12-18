@@ -5,7 +5,7 @@ noremap t k
 noremap s l
 noremap r h
 noremap l n
-set hintchars=aoeirtns
+set hintchars=etirason
 source! .vimperatorrc.local
 
 " vim: set ft=vimperator:
