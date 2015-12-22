@@ -15,13 +15,13 @@ export FC=gfortran
 MAKEFLAGS="-j8"
 
 inst_dev() {
+inst_binutils
 inst_gmp
 inst_mpfr
 inst_mpc
 inst_isl
-inst_gcc
+inst_gcc 5.3.0
 inst_cmake
-inst_binutils
 inst_openmpi
 inst_anaconda
 
@@ -36,8 +36,8 @@ inst_triqs
 
 ## cmake
 inst_cmake() {
-cmakev=cmake-3.1.2
-wget http://www.cmake.org/files/v3.1/${cmakev}.tar.gz
+cmakev=cmake-3.4.1
+wget http://www.cmake.org/files/v3.4/${cmakev}.tar.gz || exit 1
 tar -xf ${cmakev}.tar.gz
 cd ${cmakev}
 ./bootstrap --parallel=4 --prefix=${CONDA_ENV_PATH}
