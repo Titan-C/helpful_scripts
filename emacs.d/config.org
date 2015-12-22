@@ -14,7 +14,7 @@
 #+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
-  (load-theme 'misterioso t)
+  (load-theme 'zenburn t)
   (use-package powerline-evil
   :config
   (powerline-default-theme))
@@ -384,6 +384,13 @@ This is to export with bibtex
   (use-package scss-mode
    :ensure t)
 #+END_SRC
+** C++
+#+BEGIN_SRC emacs-lisp
+  (use-package cmake-mode
+    :mode (("CMakeLists\\.txt\\'" . cmake-mode)
+           ("\\.cmake\\'" . cmake-mode)))
+#+END_SRC
+
 * Email
 ** BBDB
 #+BEGIN_SRC emacs-lisp
