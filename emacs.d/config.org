@@ -327,10 +327,8 @@ This is to export with bibtex
 #+BEGIN_SRC emacs-lisp
   (use-package helm-bibtex
     :config
-    (setq helm-bibtex-bibliography '("~/Dropbox/org/papers.bib"))
-    (setq helm-bibtex-library-path '("~/.local/share/data/Mendeley Ltd./Mendeley Desktop/Downloaded/"
-                                     "~/Documents/Mendeley Desktop/"))
-    (setq helm-bibtex-pdf-field "File")
+    (setq helm-bibtex-bibliography '("~/Documents/library.bib"))
+    (setq helm-bibtex-pdf-field "file")
     (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org"))
 #+END_SRC
 
