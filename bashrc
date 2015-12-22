@@ -31,9 +31,10 @@ anacondainit() {
 }
 
 aactivate() {
+    anacondainit
     source activate $1
     # Local libraries
-    export LD_LIBRARY_PATH=$CONDA_ENV_PATH/lib
+    export LD_LIBRARY_PATH=$CONDA_ENV_PATH/lib:$CONDA_ENV_PATH/lib64
     export OPENBLAS_NUM_THREADS=1
 }
 

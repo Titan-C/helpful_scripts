@@ -15,6 +15,8 @@ export FC=gfortran
 MAKEFLAGS="-j8"
 
 inst_dev() {
+inst_anaconda
+inst_new_pyenv hpc2_be 2
 inst_binutils
 inst_gmp
 inst_mpfr
@@ -23,7 +25,6 @@ inst_isl
 inst_gcc 5.3.0
 inst_cmake
 inst_openmpi
-inst_anaconda
 
 inst_openblas
 inst_hdf5
@@ -37,7 +38,7 @@ inst_triqs
 ## cmake
 inst_cmake() {
 cmakev=cmake-3.4.1
-wget http://www.cmake.org/files/v3.4/${cmakev}.tar.gz || exit 1
+wget --no-check-certificate http://www.cmake.org/files/v3.4/${cmakev}.tar.gz || exit 1
 tar -xf ${cmakev}.tar.gz
 cd ${cmakev}
 ./bootstrap --parallel=4 --prefix=${CONDA_ENV_PATH}
