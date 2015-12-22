@@ -261,20 +261,23 @@ cd ${BUILD_DIR}
 
 # install gcc
 inst_gcc () {
-gccv=gcc-4.9.2
-wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz
+gccv=gcc-$1
+wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz || exit 1
 tar -xf ${gccv}.tar.gz
+cd ${gccv}
+patch ./contrib/download_prerequisites $HOME/dev/helpful_scripts/gcc_prereq.patch
+./contrib/download_prerequisites
+cd ..
 mkdir build_${gccv} && cd build_${gccv}
 ../${gccv}/configure --prefix=${CONDA_ENV_PATH} --enable-checking=release --disable-multilib \
-   --enable-languages=c,c++,fortran --with-gmp=${CONDA_ENV_PATH} --with-mpfr=${CONDA_ENV_PATH} \
---with-mpc=${CONDA_ENV_PATH} --with-isl=${CONDA_ENV_PATH} --with-default-libstdcxx-abi=gcc4-compatible
+   --enable-languages=c,c++,fortran
 make ${MAKEFLAGS} && make install
 cd ${BUILD_DIR}
 }
 
 #install openmpi
 inst_openmpi () {
-ompiv=openmpi-1.10.0
+ompiv=openmpi-1.10.1
 wget http://www.open-mpi.org/software/ompi/v1.10/downloads/${ompiv}.tar.bz2
 tar -xf ${ompiv}.tar.bz2
 cd ${ompiv}
