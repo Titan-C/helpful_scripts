@@ -82,7 +82,7 @@ cd ${BUILD_DIR}
 
 ## hdf5
 inst_hdf5() {
-hdf5v=hdf5-1.8.14
+hdf5v=hdf5-1.8.16
 wget ftp://ftp.hdfgroup.org/HDF5/current/src/${hdf5v}.tar.bz2
 tar -xf ${hdf5v}.tar.bz2
 cd ${hdf5v}
@@ -128,7 +128,7 @@ cd ${BUILD_DIR}
 
 ## GSL
 inst_gsl() {
-gslv=gsl-latest
+gslv=gsl-2.1
 wget http://mirror.ibcp.fr/pub/gnu/gsl/${gslv}.tar.gz
 tar -xf ${gslv}.tar.gz
 cd ${gslv}
