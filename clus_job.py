@@ -8,11 +8,9 @@ Created on Fri Jul 10 13:11:33 2015
 Cluster job submission in Python
 """
 
-#
+from __future__ import division, absolute_import, print_function
 import argparse
 import subprocess
-import time
-
 
 JOB_STRING = """
 #!/bin/bash
@@ -26,8 +24,6 @@ JOB_STRING = """
 #$ -N "{job_name} {command}"
 #$ -M oscar.najera-ocampo@u-psud.fr
 #$ -m abe # (a = abort, b = begin, e = end)
-
-anacondainit
 
 export OPENBLAS_NUM_THREADS={blasth}
 
@@ -57,19 +53,18 @@ if args.queue == 'shared.q':
     dargs['cpus'] = 20
 
 for loop in args.loop:
-#    # Open a pipe to the qsub command.
+    # Open a pipe to the qsub command.
     job = subprocess.Popen('qsub',
-                        stdin=subprocess.PIPE,
-                        stdout=subprocess.PIPE,
-                        stderr=subprocess.PIPE,
-                        )
-#
-#    # Customize your options here
+                           stdin=subprocess.PIPE,
+                           stdout=subprocess.PIPE,
+                           stderr=subprocess.PIPE,
+                          )
+    # Customize your options here
     dargs['command'] = command + loop
     job_string = JOB_STRING.format(**dargs)
 
 
-#    # Send job_string to qsub
+    # Send job_string to qsub
     stdout, stderr = job.communicate(job_string)
     print('qsub out: ', stdout)
     print('qsub err: ', stderr)
