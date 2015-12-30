@@ -17,6 +17,8 @@ parser.add_argument('-file', default='/home/oscar/keylog',
                     help='Key pressing log file')
 parser.add_argument('-txt', action='store_true',
                     help='is it a text file?')
+parser.add_argument('-chr', action='store_true',
+                    help='Count the shift chording ')
 
 arguments = parser.parse_args()
 
@@ -25,18 +27,22 @@ with open(arguments.file, 'r') as keyshom:
     data = keyshom.read()
 
 if not arguments.txt:
-    data = re.findall(r'KeyPress.*?\[(\w+)\]', data)
+    kdata = re.findall(r'KeyPress.*?\[(\w+)\]', data)
 
-collstat = collections.Counter(data)
+if arguments.chr:
+    print('yo')
+    kdata = re.findall(r'KeyPress.*?\[(\w+)\].*?\[Shift.*?\]', data)
+
+collstat = collections.Counter(kdata)
 
 print('Most typed characters')
 for i, (char, count) in enumerate(collstat.most_common()):
     print(i, char, count)
 
 if arguments.txt:
-    pair_data = re.findall(r'(\w.)', data) + re.findall(r'(.\w)', data)
+    pair_data = re.findall(r'(\w.)', kdata) + re.findall(r'(.\w)', kdata)
 else:
-    pair_data = list(zip(data[:-1], data[1:]))
+    pair_data = list(zip(kdata[:-1], kdata[1:]))
 
 pair_stat = collections.Counter(pair_data)
 print('Most recurrent key successions')
