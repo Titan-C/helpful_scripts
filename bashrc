@@ -17,8 +17,6 @@ git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
 
-#PS1='[\u@\h \W]\$ '
-
 #Custom PATHS
 PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
@@ -44,3 +42,7 @@ alias vact='source activate'
 alias opbs1='export OPENBLAS_NUM_THREADS=1'
 alias isrun='ps -ae | grep'
 alias qstatf='qstat -f | grep theo-ox -A 1'
+
+if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
+    aactivate hpc2_be
+fi
