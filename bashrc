@@ -2,7 +2,26 @@
 # ~/.bashrc
 #
 
-# If not running interactively, don't do anything
+# Set up local Anaconda virtual environments
+anacondainit() {
+    export PATH=$HOME/miniconda3/bin:$PATH
+    export QT_PLUGIN_PATH=""
+}
+
+aactivate() {
+    anacondainit
+    source activate $1
+    # Local libraries
+    export LD_LIBRARY_PATH=$CONDA_ENV_PATH/lib:$CONDA_ENV_PATH/lib64
+    export OPENBLAS_NUM_THREADS=1
+}
+
+# load environment if on cluster
+if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
+    aactivate hpc2_be
+fi
+
+# If not running interactively, finish here
 [[ $- != *i* ]] && return
 
 #Colorful output
@@ -20,21 +39,7 @@ export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
 #Custom PATHS
 PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
-
 export PATH=~/dev/helpful_scripts:$PATH
-
-anacondainit() {
-    export PATH=$HOME/miniconda3/bin:$PATH
-    export QT_PLUGIN_PATH=""
-}
-
-aactivate() {
-    anacondainit
-    source activate $1
-    # Local libraries
-    export LD_LIBRARY_PATH=$CONDA_ENV_PATH/lib:$CONDA_ENV_PATH/lib64
-    export OPENBLAS_NUM_THREADS=1
-}
 
 alias desklink='ssh -Y oscar@129.175.81.91'
 alias ipyn='jupyter notebook --no-browser&'
@@ -43,7 +48,3 @@ alias vact='source activate'
 alias opbs1='export OPENBLAS_NUM_THREADS=1'
 alias isrun='ps -ae | grep'
 alias qstatf='qstat -f | grep theo-ox -A 1'
-
-if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
-    aactivate hpc2_be
-fi
