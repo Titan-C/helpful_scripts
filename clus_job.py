@@ -66,5 +66,4 @@ for loop in args.loop:
 
     # Send job_string to qsub
     stdout, stderr = job.communicate(job_string)
-    print('qsub out: ', stdout)
-    print('qsub err: ', stderr)
+    print('qsub out: ', stdout, 'qsub err: ', stderr)
