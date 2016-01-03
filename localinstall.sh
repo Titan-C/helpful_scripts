@@ -5,6 +5,7 @@
 
 
 export BUILD_DIR=$HOME/builds/$BD
+mkdir -p $BUILD_DIR
 export CC=gcc
 export CXX=g++
 export FC=gfortran
@@ -194,15 +195,17 @@ cmake -DCMAKE_INSTALL_PREFIX=${CONDA_ENV_PATH} -DUSE_CPP14=ON ~/dev/triqs/
 make ${MAKEFLAGS}
 make test
 make install
-cd ..
+cd ${BUILD_DIR}
+}
 
+inst_cthyb() {
 mkdir -p buildcthyb
 cd buildcthyb
-cmake -DTRIQS_PATH=${CONDA_ENV_PATH} ../cthyb
+cmake -DTRIQS_PATH=${CONDA_ENV_PATH} ~/dev/cthyb
 make ${MAKEFLAGS}
 make test
 make install
-cd ..
+cd ${BUILD_DIR}
 }
 
 # local boost mpi python
