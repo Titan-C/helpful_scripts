@@ -6,6 +6,8 @@
 
 export BUILD_DIR=$HOME/builds/$BD
 mkdir -p $BUILD_DIR
+cd $BUILD_DIR
+
 export CC=gcc
 export CXX=g++
 export FC=gfortran
@@ -34,6 +36,7 @@ inst_gsl
 inst_boost
 inst_alps
 inst_triqs
+inst_cthyb
 }
 
 ## cmake
