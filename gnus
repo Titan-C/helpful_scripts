@@ -8,6 +8,10 @@
 	   (nnir-search-engine imap)
            (nnimap-stream ssl)))
 
+;; Archive outgoing email in Sent folder on imap.googlemail.com:
+(setq gnus-message-archive-method '(nnimap "imap.googlemail.com")
+    gnus-message-archive-group "[Gmail]/Sent Mail")
+
 (add-to-list 'gnus-secondary-select-methods
     '(nnimap "U-psud"
 	(nnimap-address "zimbra.u-psud.fr")
