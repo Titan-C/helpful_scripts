@@ -28,40 +28,40 @@
 
 ** Evil-mode
 #+BEGIN_SRC emacs-lisp
-(unless (fboundp 'evil-leader-mode)
-(package-install 'evil-leader))
-(global-evil-leader-mode)
-(setq evil-search-module 'evil-search)
-(require 'evil)
-(evil-mode 1)
-(evil-leader/set-leader "<SPC>")
-(evil-leader/set-key
-    "x" 'helm-M-x
-    "e" 'helm-find-files
-    "p" 'helm-projectile
-    "t" 'magit-status
-    "s" 'eshell
-    "w" 'save-buffer
-    "q" 'kill-buffer-and-window
-    "oa" 'org-agenda
-    "oc" 'org-capture
-    "r" 'ace-jump-char-mode
-    "c" 'ace-jump-word-mode
-    "g" 'helm-mini)
+  (unless (fboundp 'evil-leader-mode)
+  (package-install 'evil-leader))
+  (global-evil-leader-mode)
+  (setq evil-search-module 'evil-search)
+  (require 'evil)
+  (evil-mode 1)
+  (evil-leader/set-leader "<SPC>")
+  (evil-leader/set-key
+      "x" 'helm-M-x
+      "e" 'helm-find-files
+      "p" 'helm-projectile
+      "t" 'magit-status
+      "s" 'eshell
+      "w" 'save-buffer
+      "q" 'kill-buffer-and-window
+      "oa" 'org-agenda
+      "oc" 'org-capture
+      "r" 'avy-goto-char
+      "c" 'avy-goto-word-1
+      "g" 'helm-mini)
 
-;;(global-set-key [escape] 'keyboard-quit)
-(global-set-key [escape] 'helm-keyboard-quit)
+  ;;(global-set-key [escape] 'keyboard-quit)
+  (global-set-key [escape] 'helm-keyboard-quit)
 
 
-(use-package key-chord
-:init
-    (setq key-chord-two-keys-delay 0.05)
-    (key-chord-define evil-insert-state-map "tn" 'evil-normal-state)
-:config
-    (key-chord-mode 1))
+  (use-package key-chord
+  :init
+      (setq key-chord-two-keys-delay 0.05)
+      (key-chord-define evil-insert-state-map "tn" 'evil-normal-state)
+  :config
+      (key-chord-mode 1))
 
-(use-package ace-jump-mode
-:ensure t )
+  (use-package avy
+  :ensure t )
 #+END_SRC
 
 ** Key Bindings
@@ -108,6 +108,38 @@
 #+BEGIN_SRC emacs-lisp
 (use-package ssh
 :ensure t)
+#+END_SRC
+* Helm
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+  :bind (("M-x" . helm-M-x)
+         ("C-x g" . helm-mini))
+  :config
+  (require 'helm-config)
+  (define-key helm-map (kbd "C-f") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-t") 'helm-previous-line)
+  (define-key helm-map (kbd "C-p") 'helm-toggle-resplit-and-swap-windows)
+  (helm-mode 1))
+
+  (use-package helm-projectile
+  :config
+  (projectile-global-mode)
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-ag
+    :ensure t)
+#+END_SRC
+
+** Completion
+#+BEGIN_SRC emacs-lisp
+(use-package auto-complete
+:init
+(ac-config-default)
+(setq ac-auto-show-menu 0.2))
+(use-package yasnippet
+:config (yas-global-mode t))
 #+END_SRC
 * Orgmode
 #+BEGIN_SRC emacs-lisp
@@ -265,7 +297,22 @@ This is to export with bibtex
 :config
 (setq org-reveal-root "file:///home/oscar/dev/reveal.js"))
 #+END_SRC
+** Bibliography references
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-bibtex
+    :config
+    (setq helm-bibtex-bibliography '("~/Documents/library.bib"))
+    (setq helm-bibtex-pdf-field "file")
+    (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org"))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (use-package org-ref
+   :init
+   (setq org-ref-bibliography-notes 'helm-bibtex-notes-path)
+   (setq org-ref-default-bibliography helm-bibtex-bibliography)
+   )
+#+END_SRC
 ** Key Bindings
 *** normal & insert state shortcuts.
 #+BEGIN_SRC emacs-lisp
@@ -302,47 +349,6 @@ This is to export with bibtex
 :ensure auctex
 :config
 (setq LaTeX-command "latex -shell-escape"))
-#+END_SRC
-* Helm
-#+BEGIN_SRC emacs-lisp
-  (use-package helm
-  :bind (("M-x" . helm-M-x)
-         ("C-x g" . helm-mini))
-  :config
-  (require 'helm-config)
-  (define-key helm-map (kbd "C-f") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-t") 'helm-previous-line)
-  (define-key helm-map (kbd "C-p") 'helm-toggle-resplit-and-swap-windows)
-  (helm-mode 1))
-
-  (use-package helm-projectile
-  :config
-  (projectile-global-mode)
-  (setq projectile-completion-system 'helm)
-  (helm-projectile-on))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-ag
-    :ensure t)
-#+END_SRC
-
-** Citations
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-bibtex
-    :config
-    (setq helm-bibtex-bibliography '("~/Documents/library.bib"))
-    (setq helm-bibtex-pdf-field "file")
-    (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org"))
-#+END_SRC
-
-** Completion
-#+BEGIN_SRC emacs-lisp
-(use-package auto-complete
-:init
-(ac-config-default)
-(setq ac-auto-show-menu 0.2))
-(use-package yasnippet
-:config (yas-global-mode t))
 #+END_SRC
 * Magit
 #+BEGIN_SRC emacs-lisp
@@ -447,3 +453,5 @@ This is to export with bibtex
     (pdf-tools-install)
     (add-hook 'pdf-view-mode-hook 'turn-off-evil-mode))
 #+END_SRC
+
+bibliography:list.bib
