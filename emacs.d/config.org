@@ -302,7 +302,7 @@ This is to export with bibtex
 ** Bibliography references
 #+BEGIN_SRC emacs-lisp
   (use-package helm-bibtex
-    :config
+    :init
     (setq helm-bibtex-bibliography '("~/Documents/library.bib"))
     (setq helm-bibtex-pdf-field "file")
     (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org"))
@@ -451,10 +451,6 @@ This is to export with bibtex
 * Test/temp
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
-    :ensure t
-    :config
-    (pdf-tools-install)
-    (add-hook 'pdf-view-mode-hook 'turn-off-evil-mode))
+    :commands (pdf-tools-install)
+    :init (add-hook 'pdf-view-mode-hook 'evil-emacs-state))
 #+END_SRC
-
-bibliography:list.bib
