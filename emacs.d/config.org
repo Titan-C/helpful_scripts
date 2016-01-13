@@ -14,7 +14,9 @@
 #+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
-  (load-theme 'zenburn t)
+  (use-package zenburn-theme
+   :config
+   (load-theme 'zenburn t))
   (use-package powerline-evil
   :config
   (powerline-default-theme))
