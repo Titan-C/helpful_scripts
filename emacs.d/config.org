@@ -298,7 +298,7 @@ This is to export with bibtex
 *** RevealJS
 #+BEGIN_SRC emacs-lisp
 (use-package ox-reveal
-:config
+:init
 (setq org-reveal-root "file:///home/oscar/dev/reveal.js"))
 #+END_SRC
 ** Bibliography references
@@ -349,7 +349,7 @@ This is to export with bibtex
 #+BEGIN_SRC emacs-lisp
 (use-package tex-site
 :ensure auctex
-:config
+:init
 (setq LaTeX-command "latex -shell-escape"))
 #+END_SRC
 * Magit
@@ -362,6 +362,7 @@ This is to export with bibtex
   (define-key magit-mode-map "t" 'magit-section-backward)
   (define-key magit-mode-map "\M-t" 'magit-section-backward-sibling)
   (define-key magit-mode-map "p" 'magit-tag-popup))
+
   (use-package magit-gh-pulls
   :init
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
@@ -381,7 +382,7 @@ This is to export with bibtex
  #+BEGIN_SRC emacs-lisp
  (setq python-shell-interpreter "ipython")
  (use-package jedi
- :config
+ :init
  (add-hook 'python-mode-hook 'flyspell-prog-mode)
  (add-hook 'python-mode-hook 'jedi:setup)
  (setq jedi:complete-on-dot t))
@@ -437,7 +438,7 @@ This is to export with bibtex
 ** twitter
 #+BEGIN_SRC emacs-lisp
 (use-package twittering-mode
-:config
+:init
 (setq twittering-use-master-password t)
 (setq twittering-icon-mode t)
 (setq twittering-use-icon-storage t))
