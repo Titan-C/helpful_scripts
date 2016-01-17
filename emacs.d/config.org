@@ -42,6 +42,8 @@
       "e" 'helm-find-files
       "p" 'helm-projectile
       "t" 'magit-status
+      "m" 'gnus
+      "ha" 'helm-projectile-ag
       "s" 'eshell
       "w" 'save-buffer
       "q" 'kill-buffer-and-window
