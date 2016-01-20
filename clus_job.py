@@ -21,7 +21,7 @@ JOB_STRING = """
 
 #$ -q {queue}
 #$ -pe mpi {cpus}
-#$ -N "{job_name}"
+#$ -N "{job_name}{0}"
 #$ -M oscar.najera-ocampo@u-psud.fr
 #$ -m abe # (a = abort, b = begin, e = end)
 
@@ -61,7 +61,7 @@ for loop in args.loop:
                           )
     # Customize your options here
     dargs['command'] = command + loop
-    job_string = JOB_STRING.format(**dargs)
+    job_string = JOB_STRING.format(loop, **dargs)
 
 
     # Send job_string to qsub
