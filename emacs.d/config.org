@@ -99,14 +99,28 @@
 (define-key evil-normal-state-map (kbd "C-n") 'evil-window-down)
 (define-key evil-normal-state-map (kbd "C-t") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "C-s") 'evil-window-right)
+#+END_SRC
 
-;; dired
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :diminish which-key-mode
+    :init
+    (setq which-key-idle-delay 0.5)
+    (which-key-mode))
+#+END_SRC
+** Dired
+#+BEGIN_SRC emacs-lisp
 ;; modify dired keys
 (progn
 (require 'dired )
 (define-key dired-mode-map "t" 'dired-previous-line)
 (define-key dired-mode-map "p" 'dired-toggle-marks)
 )
+#+END_SRC
+** Spelling
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
 #+END_SRC
 ** Add-ons
 #+BEGIN_SRC emacs-lisp
@@ -148,13 +162,13 @@
 * Orgmode
 #+BEGIN_SRC emacs-lisp
   (use-package org
-  :bind (("\C-cl" . org-store-link)
-         ("\C-ca" . org-agenda)
-         ("\C-cc" . org-capture))
-  :init
-  (setq org-agenda-start-on-weekday 0)
-  (add-hook 'org-mode-hook 'auto-fill-mode)
-  (add-hook 'org-mode-hook 'flyspell-mode)
+    :bind (("\C-cl" . org-store-link)
+           ("\C-ca" . org-agenda)
+           ("\C-cc" . org-capture))
+    :init
+    (setq org-agenda-start-on-weekday 0)
+    (add-hook 'org-mode-hook 'auto-fill-mode)
+    (add-hook 'org-mode-hook 'flyspell-mode))
 
   (setq org-directory "~/Dropbox/org"
       org-mobile-directory "~/Dropbox/MobileOrg"
@@ -162,7 +176,7 @@
 
   (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
                                "~/Dropbox/org/journal.org"
-                               "~/Dropbox/org/todo.org")))
+                               "~/Dropbox/org/todo.org"))
 
   (setq org-refile-targets (quote ((nil :maxlevel . 2)
                                   ("~/Dropbox/org/journal.org" :maxlevel . 3)
@@ -176,7 +190,16 @@
       "oo" 'org-insert-heading
       "os" 'org-sort-list
       "ot" 'org-todo)
+#+END_SRC
+** Alerts
 
+This is to set the reminders of calendar events to desktop notify
+#+BEGIN_SRC emacs-lisp
+  (use-package org-alert
+    :init
+    (setq alert-default-style 'libnotify)
+    (setq org-alert-interval 1200)
+    (org-alert-enable))
 #+END_SRC
 ** Latex
 This is to render latex formulas in the org buffer live after
@@ -385,6 +408,7 @@ This is to export with bibtex
  :init
  (add-hook 'python-mode-hook 'flyspell-prog-mode)
  (add-hook 'python-mode-hook 'jedi:setup)
+ :config
  (setq jedi:complete-on-dot t))
 
  (use-package cython-mode
