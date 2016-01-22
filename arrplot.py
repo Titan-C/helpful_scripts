@@ -14,16 +14,15 @@ import dmft.common as gf
 
 
 parser = argparse.ArgumentParser(description='Plot npy files')
-parser.add_argument('file', help='File containing the ndarray')
+parser.add_argument('file', nargs='+', help='File containing the ndarray')
 parser.add_argument('-T', '--transpose', action='store_true',
                     help='Transpose the shape of the array for plotting')
 parser.add_argument('-b', '--beta', metavar='B', type=float,
                     help='The inverse temperature')
 
 
-def main():
-    args = parser.parse_args()
-    array = np.load(args.file)
+def ploter(fname, args):
+    array = np.load(fname)
     if args.transpose:
         array = np.transpose(array)
 
@@ -38,7 +37,9 @@ def main():
     else:
         plt.plot(x, array)
 
-    plt.show()
 
 if __name__ == '__main__':
-    main()
+    args = parser.parse_args()
+    for fname in args.file:
+        ploter(fname, args)
+    plt.show()
