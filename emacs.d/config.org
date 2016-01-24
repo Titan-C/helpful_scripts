@@ -199,7 +199,7 @@ This is to set the reminders of calendar events to desktop notify
     :init
     (setq alert-default-style 'libnotify)
     (setq org-alert-interval 1200)
-    (org-alert-enable))
+    :commands (org-alert-enable))
 #+END_SRC
 ** Latex
 This is to render latex formulas in the org buffer live after
