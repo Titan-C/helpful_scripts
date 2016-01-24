@@ -161,7 +161,7 @@
 #+END_SRC
 * Orgmode
 #+BEGIN_SRC emacs-lisp
-  (use-package org
+  (use-package org-plus-contrib
     :bind (("\C-cl" . org-store-link)
            ("\C-ca" . org-agenda)
            ("\C-cc" . org-capture))
@@ -449,16 +449,20 @@ This is to export with bibtex
 #+END_SRC
 ** Composer
 #+BEGIN_SRC emacs-lisp
-;; linebreak in message editing
-(defun my-message-mode-setup ()
-(setq fill-column 72)
-(turn-on-auto-fill))
+  ;; linebreak in message editing
+  (defun my-message-mode-setup ()
+  (setq fill-column 72)
+  (turn-on-auto-fill))
 
-(add-hook 'message-mode-hook 'my-message-mode-setup)
-(add-hook 'message-mode-hook 'flyspell-mode)
-(add-hook 'message-mode-hook 'turn-on-orgstruct)
-(add-hook 'message-mode-hook 'turn-on-orgstruct++)
-(add-hook 'message-mode-hook 'turn-on-orgtbl)
+  (add-hook 'message-mode-hook 'my-message-mode-setup)
+  (add-hook 'message-mode-hook 'flyspell-mode)
+  (add-hook 'message-mode-hook 'turn-on-orgstruct)
+  (add-hook 'message-mode-hook 'turn-on-orgstruct++)
+  (add-hook 'message-mode-hook 'turn-on-orgtbl)
+  (use-package org-mime
+    :ensure org-plus-contrib
+    :defer t
+    :commands (org-mime-htmlize org-mime-org-buffer-htmlize))
 #+END_SRC
 ** twitter
 #+BEGIN_SRC emacs-lisp
