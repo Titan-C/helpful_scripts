@@ -431,20 +431,20 @@ This is to export with bibtex
 * Email
 ** BBDB
 #+BEGIN_SRC emacs-lisp
-(use-package bbdb
-:init
-(setq bbdb-file "~/Dropbox/bbdb"
-	bbdb-offer-save 'auto
-	bbdb-notice-auto-save-file t
-	bbdb-expand-mail-aliases t
-	bbdb-canonicalize-redundant-nets-p t
-	bbdb-always-add-addresses t
-	bbdb-complete-name-allow-cycling t
-)
-(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-:config
-(bbdb-initialize 'gnus 'message)
-(bbdb-insinuate-message))
+  (use-package bbdb
+  :init
+  (setq bbdb-file "~/Dropbox/bbdb"
+          bbdb-offer-save 'auto
+          bbdb-notice-auto-save-file t
+          bbdb-expand-mail-aliases t
+          bbdb-canonicalize-redundant-nets-p t
+          bbdb-always-add-addresses t
+          bbdb-complete-name-allow-cycling t
+  )
+  (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
+  :config
+  (bbdb-initialize 'gnus 'message)
+  (bbdb-insinuate-message))
 #+END_SRC
 ** Composer
 #+BEGIN_SRC emacs-lisp

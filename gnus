@@ -1,3 +1,4 @@
+;;-*- mode: emacs-lisp; -*-
 ;; GNUS configuration
 (require 'nnir)
 
@@ -26,3 +27,13 @@
 	gnus-article-sort-by-date))
 
 (setq gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+
+(define-key gnus-group-mode-map "p" 'gnus-topic-mode)
+(define-key gnus-group-mode-map "P" 'gnus-group-topic-map)
+(define-key gnus-group-mode-map "t" 'gnus-group-prev-unread-group)
+(define-key gnus-group-mode-map "T" 'gnus-group-prev-group)
+
+(define-key gnus-summary-mode-map "T" 'gnus-summary-prev-article)
+(define-key gnus-summary-mode-map "t" 'gnus-summary-prev-unread-article)
+(define-key gnus-summary-mode-map "p" 'gnus-summary-toggle-header)
+(define-key gnus-summary-mode-map "P" 'gnus-summary-thread-map)
