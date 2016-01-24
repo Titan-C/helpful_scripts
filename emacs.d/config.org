@@ -399,7 +399,7 @@ This is to export with bibtex
   :init
   (define-key evil-motion-state-map "gL" 'flycheck-previous-error)
   (define-key evil-motion-state-map "gl" 'flycheck-next-error)
-  (add-hook 'after-init-hook 'global-flycheck-mode))
+  (add-hook 'prog-mode-hook 'flycheck-mode))
 #+END_SRC
 ** Python
  #+BEGIN_SRC emacs-lisp
