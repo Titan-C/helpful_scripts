@@ -196,10 +196,11 @@
 This is to set the reminders of calendar events to desktop notify
 #+BEGIN_SRC emacs-lisp
   (use-package org-alert
+    :ensure t
     :init
     (setq alert-default-style 'libnotify)
     (setq org-alert-interval 1200)
-    :commands (org-alert-enable))
+    (org-alert-enable))
 #+END_SRC
 ** Latex
 This is to render latex formulas in the org buffer live after
