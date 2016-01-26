@@ -46,7 +46,8 @@
       "ha" 'helm-projectile-ag
       "s" 'eshell
       "w" 'save-buffer
-      "q" 'kill-buffer-and-window
+      "q" 'kill-this-buffer
+      "Q" 'kill-buffer-and-window
       "oa" 'org-agenda
       "oc" 'org-capture
       "r" 'avy-goto-char
@@ -200,6 +201,7 @@ This is to set the reminders of calendar events to desktop notify
     :init
     (setq alert-default-style 'libnotify)
     (setq org-alert-interval 1200)
+    :config
     (org-alert-enable))
 #+END_SRC
 ** Latex
