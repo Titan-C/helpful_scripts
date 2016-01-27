@@ -186,11 +186,14 @@
   (setq org-refile-use-outline-path nil)
 
   (evil-leader/set-key-for-mode 'org-mode
-      "or"  'outline-previous-visible-heading
+      "ot"  'outline-previous-visible-heading
       "on"  'outline-next-visible-heading
-      "oo" 'org-insert-heading
-      "os" 'org-sort-list
-      "ot" 'org-todo)
+      "oo"  'org-insert-heading
+      "os"  'org-sort-list
+      "oci" 'org-clock-in
+      "oco" 'org-clock-out
+      "ocd" 'org-clock-display
+      "oe" 'org-todo)
 #+END_SRC
 ** Alerts
 
