@@ -49,7 +49,6 @@
       "q" 'kill-this-buffer
       "Q" 'kill-buffer-and-window
       "oa" 'org-agenda
-      "oc" 'org-capture
       "r" 'avy-goto-char
       "c" 'avy-goto-word-1
       "g" 'helm-mini)
@@ -334,9 +333,12 @@ This is to export with bibtex
 #+BEGIN_SRC emacs-lisp
   (use-package helm-bibtex
     :init
-    (setq helm-bibtex-bibliography '("~/Documents/library.bib"))
+    (setq helm-bibtex-bibliography '("~/Dropbox/arxiv.bib" "~/Documents/library.bib"))
     (setq helm-bibtex-pdf-field "file")
-    (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org"))
+    (setq helm-bibtex-library-path "~/Dropbox/bibtex-pdf/")
+    (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
+    (evil-leader/set-key
+      "hb" 'helm-bibtex))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -344,7 +346,12 @@ This is to export with bibtex
    :init
    (setq org-ref-bibliography-notes 'helm-bibtex-notes-path)
    (setq org-ref-default-bibliography helm-bibtex-bibliography)
-   )
+   (setq org-ref-pdf-directory helm-bibtex-library-path)
+   :config
+   (require 'org-ref-pdf)
+   (require 'org-ref-url-utils)
+   (require 'org-ref-arxiv)
+  )
 #+END_SRC
 ** Key Bindings
 *** normal & insert state shortcuts.
