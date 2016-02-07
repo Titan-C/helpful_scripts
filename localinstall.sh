@@ -292,3 +292,15 @@ cd ${ompiv}
 make ${MAKEFLAGS} && make all install
 cd ${BUILD_DIR}
 }
+
+
+#install emacs
+inst_emacs () {
+emacsv=emacs-24.5
+wget ftp://ftp.gnu.org/pub/gnu/emacs/${emacsv}.tar.gz
+tar -xf ${emacsv}.tar.gz
+cd ${emacsv}
+./configure --prefix=${CONDA_ENV_PATH}
+make ${MAKEFLAGS} && make all install
+cd ${BUILD_DIR}
+}
