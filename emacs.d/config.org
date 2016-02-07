@@ -335,8 +335,13 @@ This is to export with bibtex
     :init
     (setq helm-bibtex-bibliography '("~/Dropbox/arxiv.bib" "~/Documents/library.bib"))
     (setq helm-bibtex-pdf-field "file")
-    (setq helm-bibtex-library-path "~/Dropbox/bibtex-pdf/")
+    (setq helm-bibtex-library-path '("~/Dropbox/bibtex-pdf"))
     (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
+
+    (setq helm-bibtex-pdf-open-function
+        (lambda (fpath)
+            (start-process "okular" "*helm-bibtex-okular*" "okular" fpath)))
+
     (evil-leader/set-key
       "hb" 'helm-bibtex))
 #+END_SRC
