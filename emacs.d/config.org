@@ -503,6 +503,9 @@ This is to export with bibtex
 * Test/temp
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
-    :commands (pdf-tools-install)
-    :init (add-hook 'pdf-view-mode-hook 'evil-emacs-state))
+    :mode (("\\.pdf$" . pdf-view-mode))
+    :init (add-hook 'pdf-view-mode-hook 'evil-emacs-state)
+    (add-hook 'pdf-view-mode-hook 'pdf-view-set-slice-from-bounding-box)
+    :config
+    (pdf-tools-install))
 #+END_SRC
