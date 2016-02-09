@@ -137,6 +137,9 @@
   (define-key helm-map (kbd "C-f") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-t") 'helm-previous-line)
   (define-key helm-map (kbd "C-p") 'helm-toggle-resplit-and-swap-windows)
+  (evil-leader/set-key
+      "hl" 'helm-locate
+      "ho" 'helm-occur)
   (helm-mode 1))
 
   (use-package helm-projectile
