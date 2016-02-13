@@ -342,10 +342,6 @@ This is to export with bibtex
     (setq helm-bibtex-library-path '("~/Dropbox/bibtex-pdf"))
     (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
 
-    (setq helm-bibtex-pdf-open-function
-        (lambda (fpath)
-            (start-process "okular" "*helm-bibtex-okular*" "okular" fpath)))
-
     (evil-leader/set-key
       "hb" 'helm-bibtex))
 #+END_SRC
@@ -503,10 +499,9 @@ This is to export with bibtex
 
 * Test/temp
 #+BEGIN_SRC emacs-lisp
-  (use-package pdf-tools
-    :mode (("\\.pdf$" . pdf-view-mode))
-    :init
-    (add-hook 'pdf-view-mode-hook 'evil-emacs-state)
-    :config
-    (pdf-tools-install))
+    (use-package pdf-tools
+      :mode (("\\.pdf$" . pdf-view-mode))
+      :config
+      (pdf-tools-install)
+      (evil-set-initial-state 'pdf-view-mode 'emacs))
 #+END_SRC
