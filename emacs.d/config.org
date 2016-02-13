@@ -22,10 +22,11 @@
   (powerline-default-theme))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-(use-package relative-line-numbers
-:config
-(global-relative-line-numbers-mode)
-(setq relative-line-numbers-motion-function 'forward-visible-line))
+  (use-package relative-line-numbers
+    :init
+    (add-hook 'prog-mode-hook 'relative-line-numbers-mode)
+    (add-hook 'text-mode-hook 'relative-line-numbers-mode)
+    (setq relative-line-numbers-motion-function 'forward-visible-line))
 #+END_SRC
 
 ** Evil-mode
@@ -504,8 +505,8 @@ This is to export with bibtex
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
     :mode (("\\.pdf$" . pdf-view-mode))
-    :init (add-hook 'pdf-view-mode-hook 'evil-emacs-state)
-    (add-hook 'pdf-view-mode-hook 'pdf-view-set-slice-from-bounding-box)
+    :init
+    (add-hook 'pdf-view-mode-hook 'evil-emacs-state)
     :config
     (pdf-tools-install))
 #+END_SRC
