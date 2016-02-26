@@ -156,10 +156,9 @@
 
 ** Completion
 #+BEGIN_SRC emacs-lisp
-(use-package auto-complete
+(use-package company
 :init
-(ac-config-default)
-(setq ac-auto-show-menu 0.2))
+(add-hook 'after-init-hook 'global-company-mode))
 (use-package yasnippet
 :config (yas-global-mode t))
 #+END_SRC
@@ -422,12 +421,18 @@ This is to export with bibtex
 ** Python
  #+BEGIN_SRC emacs-lisp
  (setq python-shell-interpreter "ipython")
- (use-package jedi
+ (use-package elpy
  :init
  (add-hook 'python-mode-hook 'flyspell-prog-mode)
- (add-hook 'python-mode-hook 'jedi:setup)
+ (add-hook 'python-mode-hook #'elpy-enable)
  :config
- (setq jedi:complete-on-dot t))
+ (remove-hook 'elpy-modules 'elpy-module-flymake)
+ (elpy-use-ipython)
+)
+
+(use-package py-autopep8
+  :config
+  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
 
  (use-package cython-mode
  :ensure t)
