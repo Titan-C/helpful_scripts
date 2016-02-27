@@ -437,7 +437,7 @@ This is to export with bibtex
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
 
  (use-package cython-mode
- :ensure t)
+    :mode (("\\.pyx" . cython-mode)))
  (use-package yaml-mode
  :ensure t)
  #+END_SRC
