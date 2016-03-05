@@ -436,8 +436,8 @@ This is to export with bibtex
  (use-package elpy
  :init
  (add-hook 'python-mode-hook 'flyspell-prog-mode)
- (add-hook 'python-mode-hook #'elpy-enable)
  :config
+ (elpy-enable)
  (remove-hook 'elpy-modules 'elpy-module-flymake)
  (elpy-use-ipython)
 )

@@ -148,7 +148,7 @@ python_pack='matplotlib hdf5 h5py ipython
     jinja2 pep8 pillow pyflakes pytest cython numba
     sphinx spyder coverage nose rope tornado jsonschema numpydoc mistune
     joblib pylint flake8 jupyter line_profiler pandas sympy'
-python_pip='mako pytest-cov mpi4py'
+python_pip='mako pytest-cov mpi4py importmagic yapf autopep8'
 
 inst_anaconda() {
 wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
