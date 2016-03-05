@@ -431,26 +431,29 @@ This is to export with bibtex
   (add-hook 'prog-mode-hook 'flycheck-mode))
 #+END_SRC
 ** Python
- #+BEGIN_SRC emacs-lisp
- (setq python-shell-interpreter "ipython")
- (use-package elpy
- :init
- (add-hook 'python-mode-hook 'flyspell-prog-mode)
- :config
- (elpy-enable)
- (remove-hook 'elpy-modules 'elpy-module-flymake)
- (elpy-use-ipython)
-)
+#+BEGIN_SRC emacs-lisp
+  (use-package elpy :ensure t :defer t)
 
-(use-package py-autopep8
-  :config
-  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
+  (use-package python
+      :mode (("\\.py" . python-mode))
+      :init
+          (add-hook 'python-mode-hook 'flyspell-prog-mode)
+          (setq python-shell-interpreter "ipython")
+      :config
+          (elpy-enable)
+          (remove-hook 'elpy-modules 'elpy-module-flymake)
+          (elpy-use-ipython)
+   )
 
- (use-package cython-mode
-    :mode (("\\.pyx" . cython-mode)))
- (use-package yaml-mode
- :ensure t)
- #+END_SRC
+  (use-package py-autopep8
+      :config
+          (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
+
+  (use-package cython-mode
+      :mode (("\\.pyx" . cython-mode)))
+
+  (use-package yaml-mode :ensure t)
+#+END_SRC
 ** Web
 #+BEGIN_SRC emacs-lisp
   (use-package scss-mode
