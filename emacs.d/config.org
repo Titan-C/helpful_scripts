@@ -454,6 +454,29 @@ This is to export with bibtex
 
   (use-package yaml-mode :ensure t)
 #+END_SRC
+*** IPython Notebook
+#+BEGIN_SRC emacs-lisp
+  (use-package ein
+      :commands ein:notebooklist-open
+      :init (evil-leader/set-key "ipn" 'ein:notebooklist-open)
+      :config (mapc (lambda (state)
+          (evil-define-key state ein:notebook-multilang-mode-map
+              (kbd "M-y") 'ein:worksheet-copy-cell
+              (kbd "M-p") 'ein:worksheet-yank-cell
+              (kbd "M-d") 'ein:worksheet-kill-cell
+              (kbd "M-o") 'ein:worksheet-insert-cell-below
+              (kbd "M-O") 'ein:worksheet-insert-cell-above
+
+              (kbd "M-n") 'ein:worksheet-goto-next-input
+              (kbd "M-t") 'ein:worksheet-goto-prev-input
+              (kbd "M-N") 'ein:worksheet-move-cell-down
+              (kbd "M-T") 'ein:worksheet-move-cell-up
+
+              (kbd "M-h") 'ein:worksheet-toggle-output
+              (kbd "M-R") 'ein:worksheet-rename-sheet
+              )) '(normal insert))
+          )
+#+END_SRC
 ** Web
 #+BEGIN_SRC emacs-lisp
   (use-package scss-mode
