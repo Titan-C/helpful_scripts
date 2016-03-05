@@ -165,11 +165,8 @@
 * Orgmode
 #+BEGIN_SRC emacs-lisp
   (use-package org-plus-contrib
-    :bind (("\C-cl" . org-store-link)
-           ("\C-ca" . org-agenda)
-           ("\C-cc" . org-capture))
+    :bind (("\C-cl" . org-store-link))
     :init
-    (setq org-agenda-start-on-weekday 0)
     (add-hook 'org-mode-hook 'auto-fill-mode)
     (add-hook 'org-mode-hook 'flyspell-mode))
 
@@ -177,11 +174,6 @@
       org-mobile-directory "~/Dropbox/MobileOrg"
       org-mobile-inbox-for-pull "~/Dropbox/org/mobilecaptures.org")
 
-  (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
-                               "~/Dropbox/org/journal.org"
-                               "~/Dropbox/org/todo.org"))
-  (org-agenda-list 1)
-  (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
 
   (setq org-refile-targets (quote ((nil :maxlevel . 2)
                                   ("~/Dropbox/org/journal.org" :maxlevel . 3)
@@ -198,6 +190,24 @@
       "oco" 'org-clock-out
       "ocd" 'org-clock-display
       "oe" 'org-todo)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package org-plus-contrib
+    :bind (("\C-ca" . org-agenda)
+           ("\C-cc" . org-capture)
+           :map org-agenda-mode-map
+                ("t" . org-agenda-previous-line)
+                ("T" . org-agenda-previous-item)
+                ("p" . org-agenda-todo)
+                ("P" . org-agenda-show-tags))
+    :init
+    (setq org-agenda-start-on-weekday 0)
+    (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
+                                "~/Dropbox/org/journal.org"
+                                "~/Dropbox/org/todo.org"))
+    (org-agenda-list 1)
+    (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
+  )
 #+END_SRC
 ** Alerts
 
