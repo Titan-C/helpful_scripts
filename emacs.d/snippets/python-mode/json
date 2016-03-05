@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: json
+# key: json
+# binding: direct-keybinding
+# --
+with open("$1", "${2:r}") as fname:
+    $3 = json.${4:load}(fname)
