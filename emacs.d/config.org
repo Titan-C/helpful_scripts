@@ -457,9 +457,11 @@ This is to export with bibtex
 *** IPython Notebook
 #+BEGIN_SRC emacs-lisp
   (use-package ein
-      :commands ein:notebooklist-open
+      :ensure t
       :init (evil-leader/set-key "ipn" 'ein:notebooklist-open)
-      :config (mapc (lambda (state)
+      :config
+      (require 'ein-multilang)
+      (mapc (lambda (state)
           (evil-define-key state ein:notebook-multilang-mode-map
               (kbd "M-y") 'ein:worksheet-copy-cell
               (kbd "M-p") 'ein:worksheet-yank-cell
@@ -475,7 +477,7 @@ This is to export with bibtex
               (kbd "M-h") 'ein:worksheet-toggle-output
               (kbd "M-R") 'ein:worksheet-rename-sheet
               )) '(normal insert))
-          )
+  )
 #+END_SRC
 ** Web
 #+BEGIN_SRC emacs-lisp
