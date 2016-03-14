@@ -159,6 +159,7 @@
 
 ** Completion
 #+BEGIN_SRC emacs-lisp
+(global-set-key "\M-/" 'hippie-expand)
 (use-package company
 :init
 (add-hook 'after-init-hook 'global-company-mode))
