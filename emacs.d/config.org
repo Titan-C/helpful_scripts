@@ -140,6 +140,8 @@
   (define-key helm-map (kbd "C-t") 'helm-previous-line)
   (define-key helm-map (kbd "C-p") 'helm-toggle-resplit-and-swap-windows)
   (evil-leader/set-key
+      "hs" 'helm-semantic-or-imenu
+      "hd" 'helm-show-kill-ring
       "hl" 'helm-locate
       "ho" 'helm-occur)
   (helm-mode 1))
