@@ -9,9 +9,10 @@
 
 * Editor
 #+BEGIN_SRC emacs-lisp
-(setq backup-directory-alist '(("~/.emacs.d/backups")))
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq-default indent-tabs-mode nil)
+  (setq backup-directory-alist '(("~/.emacs.d/backups")))
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (setq-default indent-tabs-mode nil)
+  (electric-pair-mode)
 #+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
@@ -442,7 +443,6 @@ This is to export with bibtex
       :mode (("\\.py" . python-mode))
       :init
           (add-hook 'python-mode-hook 'flyspell-prog-mode)
-          (setq python-shell-interpreter "ipython")
       :config
           (elpy-enable)
           (remove-hook 'elpy-modules 'elpy-module-flymake)
@@ -559,5 +559,3 @@ This is to export with bibtex
     (pdf-tools-install)
     (evil-set-initial-state 'pdf-view-mode 'emacs))
 #+END_SRC
-
-#+RESULTS:
