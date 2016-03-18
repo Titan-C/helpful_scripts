@@ -20,6 +20,7 @@ JOB_STRING = """
 #$ -S /bin/bash
 
 #$ -q {queue}
+#$ -p {priority}
 #$ -pe mpi {cpus}
 #$ -N "{job_name}{0}"
 #$ -M oscar.najera-ocampo@u-psud.fr
@@ -37,6 +38,7 @@ parser.add_argument('-N', '--job_name', required=True,
                     help='Name for job.')
 parser.add_argument('-bth', '--blasth', default=1, type=int)
 parser.add_argument('-cp', '--cpus', default=12, type=int)
+parser.add_argument('-p', '--priority', default=-10, type=int)
 parser.add_argument('-q', '--queue', choices=['theo-ox.q', 'shared.q'],
                     default='theo-ox.q', help='(default: %(default)s)')
 parser.add_argument('-mpi', action='store_const', default='',
