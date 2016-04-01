@@ -311,6 +311,18 @@ on a fragment]]
 
 
 (add-hook 'post-command-hook 'org-latex-fragment-toggle)
+
+;; ** <<APS journals>>
+(require 'ox-latex)
+(add-to-list 'org-latex-classes '("revtex4-1"
+				  "\\documentclass{revtex4-1}
+ [PACKAGES]
+ [EXTRA]"
+				   ("\\section{%s}" . "\\section*{%s}")
+				   ("\\subsection{%s}" . "\\subsection*{%s}")
+				   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+				   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+				   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+END_SRC
 
 This is to export with bibtex
