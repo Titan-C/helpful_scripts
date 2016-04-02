@@ -13,6 +13,7 @@
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
   (electric-pair-mode)
+  (add-hook 'text-mode-hook 'visual-line-mode)
 #+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
