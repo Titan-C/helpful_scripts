@@ -20,10 +20,14 @@
   (use-package zenburn-theme
    :config
    (load-theme 'zenburn t))
-  (use-package powerline-evil
+  (use-package spaceline-config
+  :ensure spaceline
   :config
-  (powerline-default-theme))
+  (spaceline-spacemacs-theme)
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
+        powerline-default-separator 'wave))
 #+END_SRC
+
 #+BEGIN_SRC emacs-lisp
   (use-package relative-line-numbers
     :init
