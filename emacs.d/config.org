@@ -331,6 +331,12 @@ on a fragment]]
                                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
                                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+  (add-to-list 'org-latex-classes '("letter"
+                      "\\documentclass{letter}
+       \[DEFAULT-PACKAGES]
+       \[PACKAGES]
+       \[EXTRA]"))
 #+END_SRC
 
 *** bibtex
