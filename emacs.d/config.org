@@ -362,12 +362,13 @@ on a fragment]]
 ** Babel
 *** IPython
 #+BEGIN_SRC emacs-lisp
-(setq org-src-fontify-natively t);; sintax highligting of codeblock in org
-(use-package ob-ipython
-  :ensure t)
-(setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
-;;; display/update images in the buffer after I evaluate
-(add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+  (setq org-src-fontify-natively t);; sintax highligting of codeblock in org
+  (use-package ob-ipython
+    :ensure t)
+  (setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
+  (setq org-export-babel-evaluate nil)    ;don't execute code blocks during export
+  ;;; display/update images in the buffer after I evaluate
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 #+END_SRC
 *** RevealJS
 #+BEGIN_SRC emacs-lisp
