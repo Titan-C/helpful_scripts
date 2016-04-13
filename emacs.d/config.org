@@ -373,10 +373,10 @@ on a fragment]]
 #+BEGIN_SRC emacs-lisp
   (use-package helm-bibtex
     :init
-    (setq helm-bibtex-bibliography '("~/Dropbox/arxiv.bib" "~/Documents/library.bib"))
-    (setq helm-bibtex-pdf-field "file")
-    (setq helm-bibtex-library-path "~/Dropbox/bibtex-pdf/")
-    (setq helm-bibtex-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
+    (setq bibtex-completion-bibliography '("~/Dropbox/arxiv.bib" "~/Documents/library.bib"))
+    (setq bibtex-completion-pdf-field "file")
+    (setq bibtex-completion-library-path "~/Dropbox/bibtex-pdf/")
+    (setq bibtex-completion-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
 
     (evil-leader/set-key
       "hb" 'helm-bibtex))
@@ -385,9 +385,9 @@ on a fragment]]
 #+BEGIN_SRC emacs-lisp
   (use-package org-ref
    :init
-   (setq org-ref-bibliography-notes 'helm-bibtex-notes-path)
-   (setq org-ref-default-bibliography helm-bibtex-bibliography)
-   (setq org-ref-pdf-directory helm-bibtex-library-path)
+   (setq org-ref-bibliography-notes 'bibtex-completion-notes-path)
+   (setq org-ref-default-bibliography bibtex-completion-bibliography)
+   (setq org-ref-pdf-directory bibtex-completion-library-path)
    :config
    (require 'org-ref-pdf)
    (require 'org-ref-url-utils)
