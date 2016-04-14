@@ -14,6 +14,7 @@
   (setq-default indent-tabs-mode nil)
   (electric-pair-mode)
   (add-hook 'text-mode-hook 'visual-line-mode)
+  (setq safe-local-variable-values '((ispell-dictionary . "spanish")))
 #+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
