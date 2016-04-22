@@ -181,6 +181,7 @@
     :init
     (add-hook 'org-mode-hook 'auto-fill-mode)
     (add-hook 'org-mode-hook 'flyspell-mode))
+  (setq org-hide-emphasis-markers t)
 
   (setq org-directory "~/Dropbox/org"
       org-mobile-directory "~/Dropbox/MobileOrg"
