@@ -297,7 +297,7 @@ This is to set the reminders of calendar events to desktop notify
 #+BEGIN_SRC emacs-lisp
   (use-package helm-bibtex
     :init
-    (setq bibtex-completion-bibliography '("~/Dropbox/arxiv.bib" "~/Documents/library.bib"))
+    (setq bibtex-completion-bibliography '("~/Documents/zotero.bib" "~/Dropbox/arxiv.bib" "~/Documents/library.bib"))
     (setq bibtex-completion-pdf-field "file")
     (setq bibtex-completion-library-path "~/Dropbox/bibtex-pdf/")
     (setq bibtex-completion-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
