@@ -342,7 +342,6 @@ This is to set the reminders of calendar events to desktop notify
    (setq org-ref-bibliography-notes bibtex-completion-notes-path)
    (setq org-ref-default-bibliography bibtex-completion-bibliography)
    (setq org-ref-pdf-directory bibtex-completion-library-path)
-   :config
    (require 'org-ref-pdf)
    (require 'org-ref-url-utils)
    (require 'org-ref-arxiv)
@@ -350,6 +349,14 @@ This is to set the reminders of calendar events to desktop notify
    (setq doi-utils-download-pdf nil
          doi-utils-make-notes nil)
   )
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (defhydra helm-org-ref-insert-link ()
+    ("c" org-ref-helm-insert-cite-link "cite article")
+    ("r" org-ref-helm-insert-ref-link "reference link")
+    ("l" org-ref-helm-insert-label-link "create label"))
+
+  (define-key org-mode-map "jj" 'helm-org-ref-insert-link/body)
 #+END_SRC
 ** Key Bindings
 *** normal & insert state shortcuts.
