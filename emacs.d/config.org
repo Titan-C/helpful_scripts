@@ -339,13 +339,16 @@ This is to set the reminders of calendar events to desktop notify
 #+BEGIN_SRC emacs-lisp
   (use-package org-ref
    :init
-   (setq org-ref-bibliography-notes 'bibtex-completion-notes-path)
+   (setq org-ref-bibliography-notes bibtex-completion-notes-path)
    (setq org-ref-default-bibliography bibtex-completion-bibliography)
    (setq org-ref-pdf-directory bibtex-completion-library-path)
    :config
    (require 'org-ref-pdf)
    (require 'org-ref-url-utils)
    (require 'org-ref-arxiv)
+   (require 'doi-utils)
+   (setq doi-utils-download-pdf nil
+         doi-utils-make-notes nil)
   )
 #+END_SRC
 ** Key Bindings
