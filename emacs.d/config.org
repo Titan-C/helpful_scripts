@@ -297,7 +297,7 @@ This is to set the reminders of calendar events to desktop notify
 #+BEGIN_SRC emacs-lisp
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
   (setq org-capture-templates
-      '(("t" "Task" entry (file+headline "~/Dropbox/org/notes.org" "Tasks")
+      '(("t" "Task" entry (file+headline "~/Dropbox/org/todo.org")
           "* TODO %?\n  %U\n  %i\n  %a" :clock-in t :clock-resume t)
         ("j" "Journal Entry" entry (file+datetree "~/Dropbox/org/journal.org")
           "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
