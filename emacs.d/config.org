@@ -139,26 +139,56 @@
 * Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
-  :bind (("M-x" . helm-M-x)
-         ("C-x g" . helm-mini))
-  :config
-  (require 'helm-config)
-  (define-key helm-map (kbd "C-f") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-t") 'helm-previous-line)
-  (define-key helm-map (kbd "C-p") 'helm-toggle-resplit-and-swap-windows)
-  (evil-leader/set-key
-      "hs" 'helm-semantic-or-imenu
-      "hd" 'helm-show-kill-ring
-      "hl" 'helm-locate
-      "ho" 'helm-occur)
-  (helm-mode 1))
+      :bind (("M-x" . helm-M-x)
+             ("C-x g" . helm-mini))
+      :config
+      (require 'helm-config)
+      (define-key helm-map (kbd "C-p") 'helm-toggle-resplit-and-swap-windows)
+
+      (evil-leader/set-key
+          "hs" 'helm-semantic-or-imenu
+          "hd" 'helm-show-kill-ring
+          "hl" 'helm-locate
+          "ho" 'helm-occur)
+
+      (helm-mode 1))
 
   (use-package helm-projectile
-  :config
-  (projectile-global-mode)
-  (setq projectile-completion-system 'helm)
-  (helm-projectile-on))
+      :config
+      (projectile-global-mode)
+      (setq projectile-completion-system 'helm)
+      (helm-projectile-on))
+
+  (use-package hydra
+      ;; Hydra to enter in vim normal state like
+      ;; for speed key bindings
+      :init
+      (defhydra helm-vim-normal ()
+          ("?" helm-help "help")
+          ("<escape>" keyboard-escape-quit "exit")
+          ("q" keyboard-escape-quit "exit")
+          ("<SPC>" helm-toggle-visible-mark "mark")
+          ("m" helm-toggle-all-marks "(un)mark all")
+          ("f" helm-execute-persistent-action "persistent")
+          ("g" helm-beginning-of-buffer "top")
+          ("G" helm-end-of-buffer "bottom")
+          ("c" helm-find-files-up-one-level "Dir up")
+          ("h" helm-find-files-down-last-level "Dir down")
+          ("n" helm-next-line "down")
+          ("t" helm-previous-line "up")
+          ("r" helm-previous-source "prev src")
+          ("s" helm-next-source "next src")
+          ("w" helm-toggle-resplit-and-swap-windows "swap windows")
+          ("i" nil "cancel"))
+
+      (define-key helm-map (kbd "<escape>") 'helm-vim-normal/body)
+
+      ;;(key-chord-define helm-map "jk" 'helm-like-unite/body)
+      )
 #+END_SRC
+
+#+RESULTS:
+
 #+BEGIN_SRC emacs-lisp
   (use-package helm-ag
     :ensure t)
