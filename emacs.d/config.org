@@ -254,15 +254,7 @@
 #+END_SRC
 ** Alerts
 This is to set the reminders of calendar events to desktop notify
-#+BEGIN_SRC emacs-lisp
-  (use-package org-alert
-    :ensure t
-    :init
-    (setq alert-default-style 'libnotify)
-    (setq org-alert-interval 1200)
-    :config
-    (org-alert-enable))
-#+END_SRC
+*** TODO Find notifications setup org-alert is too annoying
 ** Latex
 #+BEGIN_SRC emacs-lisp
 (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
