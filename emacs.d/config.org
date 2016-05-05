@@ -356,7 +356,7 @@ This is to set the reminders of calendar events to desktop notify
     ("r" org-ref-helm-insert-ref-link "reference link")
     ("l" org-ref-helm-insert-label-link "create label"))
 
-  (define-key org-mode-map "jj" 'helm-org-ref-insert-link/body)
+  (key-chord-define org-mode-map "jj" 'helm-org-ref-insert-link/body)
 #+END_SRC
 ** Key Bindings
 *** normal & insert state shortcuts.
