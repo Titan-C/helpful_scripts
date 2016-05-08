@@ -3,7 +3,7 @@
 # key: eq
 # --
 
-\begin{equation}
-\label{${1:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}%
+\begin{${1:$$(yas-choose-value '("equation" "eqnarray"))}}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}%
 $0
-\end{equation}
+\end{$1}
