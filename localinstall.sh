@@ -18,8 +18,8 @@ export FC=gfortran
 MAKEFLAGS="-j8"
 
 inst_dev() {
-inst_anaconda
-inst_new_pyenv hpc2_be 2
+#inst_anaconda
+#inst_new_pyenv hpc2 2
 inst_binutils
 inst_gmp
 inst_mpfr
@@ -27,6 +27,7 @@ inst_mpc
 inst_isl
 inst_gcc 5.3.0
 inst_cmake
+inst_autoconf
 inst_openmpi
 
 inst_openblas
@@ -34,7 +35,8 @@ inst_hdf5
 inst_fftw
 inst_gsl
 inst_boost
-inst_alps
+#inst_alps
+pip install $python_pip # This is because mpi4py has to be build after having openmpi in case it was installed before uninstall and clear pip cache in ~/.cache/pip to rebuild.
 inst_triqs
 inst_cthyb
 }
@@ -291,6 +293,11 @@ cd ${ompiv}
 ./configure --prefix=${CONDA_ENV_PATH}
 make ${MAKEFLAGS} && make all install
 cd ${BUILD_DIR}
+}
+
+inst_autoconf () {
+wget http://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
+
 }
 
 

@@ -18,7 +18,7 @@ aactivate() {
 
 # load environment if on cluster
 if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
-    aactivate hpc2_be
+    aactivate hpc2
 fi
 
 # If not running interactively, finish here

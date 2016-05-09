@@ -21,7 +21,7 @@ JOB_STRING = """
 
 #$ -q {queue}
 #$ -p {priority}
-#$ -pe mpi {cpus}
+#$ -pe mpich {cpus}
 #$ -N "{job_name}{0}"
 #$ -M oscar.najera-ocampo@u-psud.fr
 #$ -m abe # (a = abort, b = begin, e = end)
