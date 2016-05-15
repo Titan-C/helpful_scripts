@@ -443,6 +443,8 @@ This is to set the reminders of calendar events to desktop notify
       :init (evil-leader/set-key "ipn" 'ein:notebooklist-open)
       :config
       (require 'ein-multilang)
+      (setq ein:complete-on-dot t
+            ein:use-auto-complete t)
       (mapc (lambda (state)
           (evil-define-key state ein:notebook-multilang-mode-map
               (kbd "M-y") 'ein:worksheet-copy-cell
