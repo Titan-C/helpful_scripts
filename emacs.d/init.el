@@ -1,6 +1,8 @@
 ;;; Begin initialization
 (setq gc-cons-threshold 100000000)
 (scroll-bar-mode 0)
+(tool-bar-mode 0)
+
 (require 'package)
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")
