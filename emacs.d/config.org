@@ -144,8 +144,8 @@
        (":" winner-redo)
        ("SPC" nil)
        )
-    (evil-leader/set-key "w" 'hydra-window/body))
-
+    ;; Launch this Hydra with Space+w
+    (key-chord-define-global " w" 'hydra-window/body))
 #+END_SRC
 
 ** Evil-mode
@@ -315,23 +315,39 @@
 ** Main Behavior
 #+BEGIN_SRC emacs-lisp
   (use-package org-plus-contrib
-    :bind (("\C-cl" . org-store-link))
+    :bind (("\C-ca" . org-agenda)
+           ("\C-cc" . org-capture)
+           ("\C-cl" . org-store-link))
     :init
-    (add-hook 'org-mode-hook 'auto-fill-mode)
-    (add-hook 'org-mode-hook 'flyspell-mode))
-  (setq org-hide-emphasis-markers t)
+    (add-hook 'org-agenda-mode-hook (lambda ()
+     (define-key org-agenda-mode-map "t" 'org-agenda-previous-line)
+     (define-key org-agenda-mode-map "T" 'org-agenda-previous-item)
+     (define-key org-agenda-mode-map "p" 'org-agenda-todo)
+     (define-key org-agenda-mode-map "P" 'org-agenda-show-tags)))
 
-  (setq org-directory "~/Dropbox/org"
+    ;; Work directories
+    (setq org-directory "~/Dropbox/org"
       org-mobile-directory "~/Dropbox/MobileOrg"
       org-mobile-inbox-for-pull "~/Dropbox/org/mobilecaptures.org")
 
-
-  (setq org-refile-targets (quote ((nil :maxlevel . 2)
+    ;; Refile
+    (setq org-refile-targets (quote ((nil :maxlevel . 2)
                                   ("~/Dropbox/org/journal.org" :maxlevel . 3)
                                   ("~/Dropbox/org/todo.org" :maxlevel . 2))))
+    (setq org-refile-use-outline-path nil)
 
-  (setq org-refile-use-outline-path nil)
+    ;; Agenda files
+    (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
+                                "~/Dropbox/org/journal.org"
+                                "~/Dropbox/org/todo.org"))
+    (setq org-agenda-start-on-weekday 0)
 
+    ;; Text editing
+    (setq org-hide-emphasis-markers t)
+    (add-hook 'org-mode-hook 'auto-fill-mode)
+    (add-hook 'org-mode-hook 'flyspell-mode))
+
+  ;; leader shortcuts
   (evil-leader/set-key-for-mode 'org-mode
       "ot"  'outline-previous-visible-heading
       "on"  'outline-next-visible-heading
@@ -343,25 +359,11 @@
       "oe" 'org-todo)
 
   (delete '("\\.pdf\\'" . default) org-file-apps)
+
+  (org-agenda-list 1)
+  (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
 #+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (use-package org-plus-contrib
-    :bind (("\C-ca" . org-agenda)
-           ("\C-cc" . org-capture)
-           :map org-agenda-mode-map
-                ("t" . org-agenda-previous-line)
-                ("T" . org-agenda-previous-item)
-                ("p" . org-agenda-todo)
-                ("P" . org-agenda-show-tags))
-    :init
-    (setq org-agenda-start-on-weekday 0)
-    (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
-                                "~/Dropbox/org/journal.org"
-                                "~/Dropbox/org/todo.org"))
-    (org-agenda-list 1)
-    (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
-  )
-#+END_SRC
+
 ** Alerts
 This is to set the reminders of calendar events to desktop notify
 *** TODO Find notifications setup org-alert is too annoying
