@@ -358,10 +358,16 @@
       "ocd" 'org-clock-display
       "oe" 'org-todo)
 
-  (delete '("\\.pdf\\'" . default) org-file-apps)
-
+  ;; Launch day agenda
   (org-agenda-list 1)
   (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
+
+  (use-package org-pdfview
+    :init
+    (delete '("\\.pdf\\'" . default) org-file-apps)
+    (add-to-list 'org-file-apps '("\\.pdf\\'" . org-pdfview-open))
+    (add-to-list 'org-file-apps '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
+    )
 #+END_SRC
 
 ** Alerts
@@ -401,7 +407,7 @@ This is to set the reminders of calendar events to desktop notify
 #+BEGIN_SRC emacs-lisp
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
   (setq org-capture-templates
-      '(("t" "Task" entry (file+headline "~/Dropbox/org/todo.org")
+      '(("t" "Task" entry (file "~/Dropbox/org/todo.org")
           "* TODO %?\n  %U\n  %i\n  %a" :clock-in t :clock-resume t)
         ("j" "Journal Entry" entry (file+datetree "~/Dropbox/org/journal.org")
           "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
