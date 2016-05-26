@@ -44,7 +44,7 @@ inst_cthyb
 ## cmake
 inst_cmake() {
 cmakev=cmake-3.4.1
-wget --no-check-certificate http://www.cmake.org/files/v3.4/${cmakev}.tar.gz || exit 1
+wget --no-check-certificate http://www.cmake.org/files/v3.4/${cmakev}.tar.gz || return 1
 tar -xf ${cmakev}.tar.gz
 cd ${cmakev}
 ./bootstrap --parallel=4 --prefix=${CONDA_ENV_PATH}
@@ -196,20 +196,20 @@ cd ${BUILD_DIR}
 inst_triqs() {
 mkdir -p buildtriqs
 cd buildtriqs
-cmake -DCMAKE_INSTALL_PREFIX=${CONDA_ENV_PATH} -DUSE_CPP14=ON ~/dev/triqs/ || exit 1
-make ${MAKEFLAGS} || exit 1
-make test || exit 1
-make install || exit 1
+cmake -DCMAKE_INSTALL_PREFIX=${CONDA_ENV_PATH} -DUSE_CPP14=ON ~/dev/triqs/ || return 1
+make ${MAKEFLAGS} || return 1
+make test || return 1
+make install || return 1
 cd ${BUILD_DIR}
 }
 
 inst_cthyb() {
 mkdir -p buildcthyb
 cd buildcthyb
-cmake -DTRIQS_PATH=${CONDA_ENV_PATH} ~/dev/cthyb || exit 1
-make ${MAKEFLAGS} || exit 1
-make test || exit 1
-make install || exit 1
+cmake -DTRIQS_PATH=${CONDA_ENV_PATH} ~/dev/cthyb || return 1
+make ${MAKEFLAGS} || return 1
+make test || return 1
+make install || return 1
 cd ${BUILD_DIR}
 }
 
@@ -271,7 +271,7 @@ cd ${BUILD_DIR}
 # install gcc
 inst_gcc () {
 gccv=gcc-$1
-wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz || exit 1
+wget ftp://gcc.gnu.org/pub/gcc/releases/${gccv}/${gccv}.tar.gz || return 1
 tar -xf ${gccv}.tar.gz
 cd ${gccv}
 patch ./contrib/download_prerequisites $HOME/dev/helpful_scripts/gcc_prereq.patch
