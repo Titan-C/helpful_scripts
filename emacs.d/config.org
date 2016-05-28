@@ -372,7 +372,19 @@
 
 ** Alerts
 This is to set the reminders of calendar events to desktop notify
-*** TODO Find notifications setup org-alert is too annoying
+*** WAIT Find notifications setup org-alert is too annoying
+    - State "WAIT"       from "TODO"       [2016-05-28 Sat 12:44] \\
+      Testing how it works using appt
+#+BEGIN_SRC emacs-lisp
+  (setq
+    appt-display-mode-line t     ;; show in the modeline
+    appt-display-format 'window) ;; use our func
+  (appt-activate 1)              ;; active appt (appointment notification)
+  (display-time)                 ;; time display is required for this...
+
+  ;; update appt each time agenda opened
+  (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt)
+#+END_SRC
 ** Latex
 #+BEGIN_SRC emacs-lisp
 (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
