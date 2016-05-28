@@ -89,19 +89,19 @@
        "
     Movement^^        ^Split^         ^Switch^      ^Resize^
     ----------------------------------------------------------------
-    _r_ ←         _d_ vertical      _g_ buffer      _R_ X←
-    _n_ ↓         _q_ horizontal    _f_ind files    _T_ X↓
-    _t_ ↑         _._ undo          _c_ ace 1       _N_ X↑
+    _n_ ←         _d_ vertical      _g_ buffer      _N_ X←
+    _r_ ↓         _q_ horizontal    _f_ind files    _R_ X↓
+    _t_ ↑         _._ undo          _c_ ace 1       _T_ X↑
     _s_ →         _:_ reset         _h_ swap        _S_ X→
     _F_ollow        _D_lt Other                     _p_ maximize
     _SPC_ cancel    onl_y_ this     _x_ delete
     "
-       ("r" windmove-left )
-       ("n" windmove-down )
+       ("r" windmove-down )
        ("t" windmove-up )
+       ("n" windmove-left )
        ("s" windmove-right )
-       ("R" hydra-move-splitter-left)
-       ("N" hydra-move-splitter-down)
+       ("N" hydra-move-splitter-left)
+       ("R" hydra-move-splitter-down)
        ("T" hydra-move-splitter-up)
        ("S" hydra-move-splitter-right)
        ("g" helm-mini)
@@ -192,11 +192,11 @@
 ** Key Bindings
 #+BEGIN_SRC emacs-lisp
 (define-key evil-normal-state-map "r" nil) ;; block replace
-(define-key evil-motion-state-map "r" 'evil-backward-char) ;; back
+(define-key evil-motion-state-map "n" 'evil-backward-char) ;; back
 (define-key evil-insert-state-map "\C-l" 'evil-delete-backward-char)
 (define-key evil-insert-state-map "\C-r" 'evil-delete-backward-word)
 
-(define-key evil-motion-state-map "n" 'evil-next-line) ;; next line
+(define-key evil-motion-state-map "r" 'evil-next-line) ;; next line
 (define-key evil-motion-state-map "l" 'evil-search-next) ;; next look up
 (define-key evil-motion-state-map "L" 'evil-search-previous)
 (define-key evil-motion-state-map "t" 'evil-previous-line) ;; top back up
@@ -277,14 +277,14 @@
           ("q" keyboard-escape-quit "exit")
           ("<SPC>" helm-toggle-visible-mark "mark")
           ("m" helm-toggle-all-marks "(un)mark all")
-          ("f" helm-execute-persistent-action "persistent")
+          ("l" helm-execute-persistent-action "persistent")
           ("g" helm-beginning-of-buffer "top")
           ("G" helm-end-of-buffer "bottom")
           ("c" helm-find-files-up-one-level "Dir up")
-          ("h" helm-find-files-down-last-level "Dir down")
-          ("n" helm-next-line "down")
+          ("f" helm-find-files-down-last-level "Dir down")
+          ("r" helm-next-line "down")
           ("t" helm-previous-line "up")
-          ("r" helm-previous-source "prev src")
+          ("n" helm-previous-source "prev src")
           ("s" helm-next-source "next src")
           ("w" helm-toggle-resplit-and-swap-windows "swap windows")
           ("i" nil "cancel"))
