@@ -33,20 +33,13 @@ set wildmode=longest,list,full
 set wildmenu
 
 " python configs
-" I'm prefer spaces to tabs
+" I prefer spaces to tabs
 set tabstop=4
 set shiftwidth=4
 set expandtab
 
 " powerline activate
 set laststatus=2
-
-let g:calendar_google_calendar = 1
-let g:calendar_google_tast = 1
-
-" vimwiki
-let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/'}]
-let g:vimwiki_use_calendar = 1
 
 set smartcase       " ignore case if search pattern is all lowercase
 set hlsearch        " highlight search
@@ -59,7 +52,7 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " remap to dvorak movements
-no r h
+no r j
 no t k
-no n j
+no n h
 no s l

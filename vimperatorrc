@@ -1,13 +1,13 @@
 "3.10.1 (created: 2015/08/25 00:41:59)
 
-nnoremap n <C-d>
-nnoremap N j
+nnoremap r <C-d>
+nnoremap R j
 nnoremap t <C-u>
 nnoremap T k
 nnoremap s l
 nnoremap S L
-nnoremap r h
-nnoremap R H
+nnoremap n h
+nnoremap N H
 nnoremap l n
 nnoremap L N
 set hintchars=etirason
