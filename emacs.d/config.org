@@ -524,7 +524,11 @@ This is to set the reminders of calendar events to desktop notify
   :config
   (define-key magit-mode-map "t" 'magit-section-backward)
   (define-key magit-mode-map "\M-t" 'magit-section-backward-sibling)
-  (define-key magit-mode-map "p" 'magit-tag-popup))
+  (define-key magit-mode-map "r" 'magit-section-forward)
+  (define-key magit-mode-map "\M-r" 'magit-section-forward-sibling)
+
+  (define-key magit-mode-map "p" 'magit-tag-popup)
+  (define-key magit-mode-map "n" 'magit-rebase-popup))
 
   (use-package magit-gh-pulls
   :init
@@ -581,9 +585,9 @@ This is to set the reminders of calendar events to desktop notify
               (kbd "M-o") 'ein:worksheet-insert-cell-below
               (kbd "M-O") 'ein:worksheet-insert-cell-above
 
-              (kbd "M-n") 'ein:worksheet-goto-next-input
+              (kbd "M-r") 'ein:worksheet-goto-next-input
               (kbd "M-t") 'ein:worksheet-goto-prev-input
-              (kbd "M-N") 'ein:worksheet-move-cell-down
+              (kbd "M-R") 'ein:worksheet-move-cell-down
               (kbd "M-T") 'ein:worksheet-move-cell-up
 
               (kbd "M-h") 'ein:worksheet-toggle-output
@@ -659,8 +663,8 @@ This is to set the reminders of calendar events to desktop notify
   (use-package pdf-tools
     :mode (("\\.pdf$" . pdf-view-mode))
     :bind (:map pdf-view-mode-map
-                ("n" . pdf-view-scroll-up-or-next-page)
-                ("N" . pdf-view-next-page-command)
+                ("r" . pdf-view-scroll-up-or-next-page)
+                ("R" . pdf-view-next-page-command)
                 ("t" . pdf-view-scroll-down-or-previous-page)
                 ("T" . pdf-view-previous-page-command))
     :config
