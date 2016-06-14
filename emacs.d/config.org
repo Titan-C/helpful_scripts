@@ -89,10 +89,10 @@
        "
     Movement^^        ^Split^         ^Switch^      ^Resize^
     ----------------------------------------------------------------
-    _n_ ←         _d_ vertical      _g_ buffer      _N_ X←
-    _r_ ↓         _q_ horizontal    _f_ind files    _R_ X↓
-    _t_ ↑         _._ undo          _c_ ace 1       _T_ X↑
-    _s_ →         _:_ reset         _h_ swap        _S_ X→
+    _n_ ←         _d_ vertical      _g_ buffer      _N_ ←
+    _r_ ↓         _q_ horizontal    _f_ind files    _R_ ↓
+    _t_ ↑         _._ undo          _c_ ace 1       _T_ ↑
+    _s_ →         _:_ reset         _h_ swap        _S_ →
     _F_ollow        _D_lt Other                     _p_ maximize
     _SPC_ cancel    onl_y_ this     _x_ delete
     "
