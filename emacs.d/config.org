@@ -93,7 +93,7 @@
     _r_ ↓         _q_ horizontal    _f_ind files    _R_ ↓
     _t_ ↑         _._ undo          _c_ ace 1       _T_ ↑
     _s_ →         _:_ reset         _h_ swap        _S_ →
-    _F_ollow        _D_lt Other                     _p_ maximize
+    _F_ollow        _D_lt Other     _p_roject files _m_aximize
     _SPC_ cancel    onl_y_ this     _x_ delete
     "
        ("r" windmove-down )
@@ -105,6 +105,7 @@
        ("T" hydra-move-splitter-up)
        ("S" hydra-move-splitter-right)
        ("g" helm-mini)
+       ("p" helm-projectile)
        ("f" helm-find-files)
        ("F" follow-mode)
        ("c" (lambda ()
@@ -136,7 +137,7 @@
                         'hydra-window/body))
            )
        ("y" delete-other-windows)
-       ("p" ace-maximize-window)
+       ("m" ace-maximize-window)
        ("." (progn
               (winner-undo)
               (setq this-command 'winner-undo))
@@ -159,7 +160,7 @@
   (evil-leader/set-leader "<SPC>")
   (evil-leader/set-key
       "x" 'helm-M-x
-      "e" 'helm-find-files
+      "f" 'helm-find-files
       "p" 'helm-projectile
       "t" 'magit-status
       "m" 'gnus
