@@ -350,7 +350,7 @@
   ;; leader shortcuts
   (evil-leader/set-key-for-mode 'org-mode
       "ot"  'outline-previous-visible-heading
-      "on"  'outline-next-visible-heading
+      "or"  'outline-next-visible-heading
       "oo"  'org-insert-heading
       "os"  'org-sort-list
       "oci" 'org-clock-in
