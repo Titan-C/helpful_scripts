@@ -430,11 +430,8 @@ This is to set the reminders of calendar events to desktop notify
           "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
 #+END_SRC
 ** Babel
-*** IPython
 #+BEGIN_SRC emacs-lisp
   (setq org-src-fontify-natively t);; sintax highligting of codeblock in org
-  (use-package ob-ipython
-    :ensure t)
   (setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
   (setq org-export-babel-evaluate nil)    ;don't execute code blocks during export
   ;;; display/update images in the buffer after I evaluate

@@ -3,6 +3,6 @@
 # key: pysrc
 # binding: direct-keybinding
 # --
-#+BEGIN_SRC ipython :session ${1:session} :file ${2:file} :exports results
+#+BEGIN_SRC python :session ${1:session} :exports results
   $0
 #+END_SRC

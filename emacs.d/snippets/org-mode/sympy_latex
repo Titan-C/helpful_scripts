@@ -3,7 +3,7 @@
 # key: sympy
 # binding: direct-keybinding
 # --
-#+BEGIN_SRC ipython :session sym_math :exports ${1:results} :results output ${2:latex}
+#+BEGIN_SRC python :session sym_math :exports ${1:results} :results output ${2:latex}
   from pyutils.latex_print import platex
   $0
   platex( )
