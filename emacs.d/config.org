@@ -656,6 +656,23 @@ This is to set the reminders of calendar events to desktop notify
         smtpmail-smtp-service 587)
 #+END_SRC
 
+* RSS
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed
+      :commands elfeed
+      :bind (:map elfeed-search-mode-map
+              ("r" . next-line)
+              ("t" . previous-line)
+              ("n" . elfeed-search-untag-all-unread)
+             :map elfeed-show-mode-map
+             ("r" . elfeed-show-next)
+             ("t" . elfeed-show-prev)
+             )
+    :config
+      (setq elfeed-feeds (quote ("http://arxiv.org/rss/cond-mat.str-el")))
+      (evil-set-initial-state 'elfeed-show-mode 'emacs)
+      (evil-set-initial-state 'elfeed-search-mode 'emacs))
+#+END_SRC
 * Pdf-Reading
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
