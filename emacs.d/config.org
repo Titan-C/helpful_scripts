@@ -431,6 +431,11 @@ This is to set the reminders of calendar events to desktop notify
 #+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
+  (setq org-babel-load-languages '((emacs-lisp . t)
+                                   (python . t)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
   (setq org-src-fontify-natively t);; sintax highligting of codeblock in org
   (setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
   (setq org-export-babel-evaluate nil)    ;don't execute code blocks during export
