@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: bibliography
+# key: bib
+# --
+bibliographystyle:${1:$$(yas-choose-value '("unsrt" "apsrev"))}
+bibliography:~/Documents/library.bib,~/Documents/zotero.bib
