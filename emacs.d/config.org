@@ -431,8 +431,10 @@ This is to set the reminders of calendar events to desktop notify
 #+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
-  (setq org-babel-load-languages '((emacs-lisp . t)
-                                   (python . t)))
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . t)
+       (python . t)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
