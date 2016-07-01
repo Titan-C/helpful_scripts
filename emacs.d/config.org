@@ -231,7 +231,9 @@
 ;; modify dired keys
 (progn
 (require 'dired )
+(evil-set-initial-state 'dired-mode 'emacs)
 (define-key dired-mode-map "t" 'dired-previous-line)
+(define-key dired-mode-map "r" 'dired-next-line)
 (define-key dired-mode-map "p" 'dired-toggle-marks)
 )
 #+END_SRC
@@ -321,8 +323,12 @@
            ("\C-cl" . org-store-link))
     :init
     (add-hook 'org-agenda-mode-hook (lambda ()
-     (define-key org-agenda-mode-map "t" 'org-agenda-previous-line)
-     (define-key org-agenda-mode-map "T" 'org-agenda-previous-item)
+     (define-key org-agenda-mode-map "T" 'org-agenda-previous-line)
+     (define-key org-agenda-mode-map "t" 'org-agenda-previous-item)
+     (define-key org-agenda-mode-map "R" 'org-agenda-next-line)
+     (define-key org-agenda-mode-map "r" 'org-agenda-next-item)
+     (define-key org-agenda-mode-map "n" 'org-agenda-redo)
+     (define-key org-agenda-mode-map "N" 'org-agenda-clockreport-mode)
      (define-key org-agenda-mode-map "p" 'org-agenda-todo)
      (define-key org-agenda-mode-map "P" 'org-agenda-show-tags)))
 
