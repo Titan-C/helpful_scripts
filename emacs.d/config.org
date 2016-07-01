@@ -602,7 +602,6 @@ This is to set the reminders of calendar events to desktop notify
               (kbd "M-T") 'ein:worksheet-move-cell-up
 
               (kbd "M-h") 'ein:worksheet-toggle-output
-              (kbd "M-R") 'ein:worksheet-rename-sheet
               )) '(normal insert))
   )
 #+END_SRC
