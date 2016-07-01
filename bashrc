@@ -41,10 +41,11 @@ PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 export PATH=~/dev/helpful_scripts:$PATH
 
-alias desklink='ssh -Y oscar@129.175.81.91'
 alias ipyn='jupyter notebook --no-browser&'
-alias sshipy='ssh -Y -N -f -L localhost:6001:localhost:8888 orlando.lps.u-psud.fr'
+alias sshipy='ssh -N -f ipyt'
 alias vact='source activate'
 alias opbs1='export OPENBLAS_NUM_THREADS=1'
 alias isrun='ps -ae | grep'
 alias qstatf='qstat -f | grep theo-ox -A 1'
+
+export TERM=xterm-256color
