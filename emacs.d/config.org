@@ -647,6 +647,7 @@ This is to set the reminders of calendar events to desktop notify
   (add-hook 'message-mode-hook 'turn-on-orgstruct)
   (add-hook 'message-mode-hook 'turn-on-orgstruct++)
   (add-hook 'message-mode-hook 'turn-on-orgtbl)
+  (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
   (use-package org-mime
     :ensure org-plus-contrib
     :defer t

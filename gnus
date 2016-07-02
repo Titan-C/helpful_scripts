@@ -37,3 +37,7 @@
 (define-key gnus-summary-mode-map "t" 'gnus-summary-prev-unread-article)
 (define-key gnus-summary-mode-map "p" 'gnus-summary-toggle-header)
 (define-key gnus-summary-mode-map "P" 'gnus-summary-thread-map)
+
+(setq mm-verify-option 'known
+      mm-decrypt-option 'known)
+(setq gnus-buttonized-mime-types '("multipart/signed" "multipart/encrypted"))
