@@ -496,13 +496,13 @@ This is to set the reminders of calendar events to desktop notify
 #+BEGIN_SRC emacs-lisp
   (mapc (lambda (state)
           (evil-define-key state org-mode-map
-            (kbd "M-r") 'org-metaleft
+            (kbd "M-r") 'org-metadown
             (kbd "M-t") 'org-metaup
-            (kbd "M-n") 'org-metadown
+            (kbd "M-n") 'org-metaleft
             (kbd "M-s") 'org-metaright
-            (kbd "M-R") 'org-shiftmetaleft
+            (kbd "M-R") 'org-shiftmetadown
             (kbd "M-T") 'org-shiftmetaup
-            (kbd "M-N") 'org-shiftmetadown
+            (kbd "M-N") 'org-shiftmetaleft
             (kbd "M-S") 'org-shiftmetaright
             ))
         '(normal insert))
