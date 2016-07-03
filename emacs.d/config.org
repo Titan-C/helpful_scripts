@@ -239,6 +239,9 @@
 #+END_SRC
 ** Spelling
 #+BEGIN_SRC emacs-lisp
+  (setq-default ispell-program-name (executable-find "hunspell"))
+  (setq ispell-really-hunspell t)
+
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
 #+END_SRC
