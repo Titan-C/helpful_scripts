@@ -238,12 +238,20 @@
 )
 #+END_SRC
 ** Spelling
+About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 #+BEGIN_SRC emacs-lisp
   (setq-default ispell-program-name (executable-find "hunspell"))
   (setq ispell-really-hunspell t)
 
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package langtool
+    :config
+    (setq langtool-java-classpath "/usr/share/languagetool:/usr/share/java/languagetool/*"
+          langtool-mother-tongue "es"
+          langtool-disabled-rules '("WHITESPACE_RULE")))
 #+END_SRC
 ** Add-ons
 #+BEGIN_SRC emacs-lisp
