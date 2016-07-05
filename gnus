@@ -32,11 +32,19 @@
 (define-key gnus-group-mode-map "P" 'gnus-group-topic-map)
 (define-key gnus-group-mode-map "t" 'gnus-group-prev-unread-group)
 (define-key gnus-group-mode-map "T" 'gnus-group-prev-group)
+(define-key gnus-group-mode-map "r" 'gnus-group-next-unread-group)
+(define-key gnus-group-mode-map "R" 'gnus-group-next-group)
+(define-key gnus-group-mode-map "N" 'gnus-group-restart)
+(define-key gnus-group-mode-map "n" 'gnus-group-read-init-file)
 
 (define-key gnus-summary-mode-map "T" 'gnus-summary-prev-article)
 (define-key gnus-summary-mode-map "t" 'gnus-summary-prev-unread-article)
+(define-key gnus-summary-mode-map "R" 'gnus-summary-next-article)
+(define-key gnus-summary-mode-map "r" 'gnus-summary-next-unread-article)
 (define-key gnus-summary-mode-map "p" 'gnus-summary-toggle-header)
 (define-key gnus-summary-mode-map "P" 'gnus-summary-thread-map)
+(define-key gnus-summary-mode-map "n" 'gnus-summary-reply)
+(define-key gnus-summary-mode-map "N" 'gnus-summary-reply-with-original)
 
 (setq mm-verify-option 'known
       mm-decrypt-option 'known)
