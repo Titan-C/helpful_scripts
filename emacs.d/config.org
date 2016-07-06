@@ -359,6 +359,7 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
                                 "~/Dropbox/org/journal.org"
                                 "~/Dropbox/org/todo.org"))
     (setq org-agenda-start-on-weekday 0)
+    (setq org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 4)))
 
     ;; Text editing
     (setq org-hide-emphasis-markers t)
