@@ -462,6 +462,7 @@ This is to set the reminders of calendar events to desktop notify
   ;;; display/update images in the buffer after I evaluate
   (setq org-image-actual-width '(500))
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+  (setq org-babel-python-command "ipython")
 #+END_SRC
 *** RevealJS
 #+BEGIN_SRC emacs-lisp
