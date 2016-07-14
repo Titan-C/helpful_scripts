@@ -578,6 +578,7 @@ This is to set the reminders of calendar events to desktop notify
       :init
           (add-hook 'python-mode-hook 'flyspell-prog-mode)
       :config
+          (pyvenv-activate "~/miniconda3/envs/hpc3/")
           (elpy-enable)
           (remove-hook 'elpy-modules 'elpy-module-flymake)
           (elpy-use-ipython)
