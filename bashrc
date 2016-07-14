@@ -24,6 +24,9 @@ fi
 # If not running interactively, finish here
 [[ $- != *i* ]] && return
 
+# Colorful TERM
+export TERM=xterm-256color
+
 #Colorful output
 alias ls='ls --color=auto'
 alias dir="dir --color=auto"
@@ -48,4 +51,4 @@ alias opbs1='export OPENBLAS_NUM_THREADS=1'
 alias isrun='ps -ae | grep'
 alias qstatf='qstat -f | grep theo-ox -A 1'
 
-export TERM=xterm-256color
+alias condup='conda update --all --yes'
