@@ -479,6 +479,13 @@ This is to set the reminders of calendar events to desktop notify
     (setq bibtex-completion-library-path "~/Dropbox/bibtex-pdf/")
     (setq bibtex-completion-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
 
+    (defun bibtex-completion-open-notes-and-pdf (key)
+         (bibtex-completion-open-pdf key)
+         (bibtex-completion-edit-notes key)
+        )
+
+    (helm-add-action-to-source "Edit notes with PDF" 'bibtex-completion-open-notes-and-pdf helm-source-bibtex 1)
+
     (evil-leader/set-key
       "hb" 'helm-bibtex))
 #+END_SRC
