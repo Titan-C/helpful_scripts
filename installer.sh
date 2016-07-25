@@ -23,7 +23,7 @@ do
 done
 
 # create symlinks from the homedir to the selected files in this directory specified in $files
-files="bashrc emacs.d gnus vimrc vimperatorrc"
+files="bashrc emacs.d mbsyncrc gnus vimrc vimperatorrc"
 for file in $files; do
     echo "Creating symlink to $file in home directory."
     rm ~/.$file
