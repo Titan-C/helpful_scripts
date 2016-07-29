@@ -588,6 +588,8 @@ This is to set the reminders of calendar events to desktop notify
           (pyvenv-activate "~/miniconda3/envs/hpc3/")
           (elpy-enable)
           (remove-hook 'elpy-modules 'elpy-module-flymake)
+          (setq python-shell-interpreter "ipython"
+                python-shell-interpreter-args "--simple-prompt --pprint")
           (elpy-use-ipython)
    )
 
