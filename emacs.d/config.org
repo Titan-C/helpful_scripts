@@ -406,7 +406,18 @@ This is to set the reminders of calendar events to desktop notify
 #+END_SRC
 ** Latex
 #+BEGIN_SRC emacs-lisp
-(key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
+  (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
+  ;; code syntax highlighting. See section 12
+  ;; http://orgmode.org/worg/org-tutorials/org-latex-export.html
+  (setq org-latex-listings 'minted)
+  (setq org-latex-custom-lang-environments
+        '(
+         (emacs-lisp "common-lispcode")
+          ))
+  (setq org-latex-minted-options
+        '(("frame" "lines")
+          ("fontsize" "\\scriptsize")
+          ("linenos" "")))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   ;; ** <<APS journals>>
@@ -429,10 +440,10 @@ This is to set the reminders of calendar events to desktop notify
 #+END_SRC
 *** bibtex
 #+BEGIN_SRC emacs-lisp
-  (setq org-latex-pdf-process '("pdflatex -interaction nonstopmode -output-directory %o %f"
+  (setq org-latex-pdf-process '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
                                 "bibtex %b"
-                                "pdflatex -interaction nonstopmode -output-directory %o %f"
-                                "pdflatex -interaction nonstopmode -output-directory %o %f"))
+                                "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                                "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp

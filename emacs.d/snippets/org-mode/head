@@ -12,5 +12,9 @@
 #+LATEX_CLASS_OPTIONS: [a4paper,12pt]
 #+STARTUP: hideblocks
 #+OPTIONS: toc:nil num:nil
+# This is for syntax highlight
+#+LaTeX_HEADER: \usepackage{minted}
+#+LaTeX_HEADER: \usemintedstyle{friendly}
+#+LaTeX_HEADER: \newminted{common-lisp}{fontsize=\footnotesize}
 
 $0
