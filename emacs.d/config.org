@@ -604,6 +604,7 @@ This is to set the reminders of calendar events to desktop notify
           (elpy-use-ipython)
           (setq python-shell-interpreter-args "--simple-prompt --pprint")
           (setq python-shell-completion-native-enable nil)
+          (evil-define-key 'motion python-mode-map "gd" 'elpy-goto-definition)
    )
 
   (use-package py-autopep8
