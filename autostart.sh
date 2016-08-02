@@ -14,6 +14,3 @@ echo 'export DBUS_SESSION_BUS_ADDRESS' >> /tmp/.Xdbus
 if ! pgrep -u $USER ssh-agent > /dev/null; then
     ssh-agent > ~/.ssh-agent-variables
 fi
-if [[ "$SSH_AGENT_PID" == "" ]]; then
-    eval $(<~/.ssh-agent-variables)
-fi

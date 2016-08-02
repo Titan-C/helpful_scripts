@@ -24,6 +24,10 @@ fi
 # If not running interactively, finish here
 [[ $- != *i* ]] && return
 
+# Load the ssh agent variables
+if [[ "$SSH_AGENT_PID" == "" && -f ~/.ssh-agent-variables ]]; then
+    eval $(<~/.ssh-agent-variables)
+fi
 # Colorful TERM
 export TERM=xterm-256color
 
