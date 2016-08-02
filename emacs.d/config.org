@@ -593,19 +593,17 @@ This is to set the reminders of calendar events to desktop notify
 #+END_SRC
 ** Python
 #+BEGIN_SRC emacs-lisp
-  (use-package elpy :ensure t :defer t)
-
-  (use-package python
-      :mode (("\\.py" . python-mode))
+  (use-package elpy
       :init
           (add-hook 'python-mode-hook 'flyspell-prog-mode)
+          (elpy-enable)
       :config
           (pyvenv-activate "~/miniconda3/envs/hpc3/")
-          (elpy-enable)
+          (setq elpy-rpc-backend "jedi")
           (remove-hook 'elpy-modules 'elpy-module-flymake)
-          (setq python-shell-interpreter "ipython"
-                python-shell-interpreter-args "--simple-prompt --pprint")
           (elpy-use-ipython)
+          (setq python-shell-interpreter-args "--simple-prompt --pprint")
+          (setq python-shell-completion-native-enable nil)
    )
 
   (use-package py-autopep8
