@@ -162,7 +162,7 @@
       "f" 'helm-find-files
       "p" 'helm-projectile
       "t" 'magit-status
-      "m" 'gnus
+      "m" 'notmuch-hello
       "ha" 'helm-projectile-ag
       "s" 'eshell
       "q" 'kill-this-buffer
@@ -663,10 +663,38 @@ This is to set the reminders of calendar events to desktop notify
 * Email
 ** client
 #+BEGIN_SRC emacs-lisp
-  (use-package helm-notmuch
+  (use-package notmuch
+    :bind (:map notmuch-hello-mode-map
+          ("l" . notmuch-jump-search)
+          ("/" . notmuch-tree)
+          :map notmuch-search-mode-map
+          ("r" . notmuch-search-next-thread)
+          ("N" . notmuch-search-reply-to-thread)
+          ("t" . notmuch-search-previous-thread)
+          ("f" . notmuch-search-filter-by-tag)
+          ("/" . notmuch-tree)
+          :map notmuch-tree-mode-map
+          ("r" . notmuch-tree-next-matching-message)
+          ("t" . notmuch-tree-prev-matching-message)
+          ("R" . notmuch-tree-next-message)
+          ("T" . notmuch-tree-prev-message)
+          :map notmuch-show-mode-map
+          ("N" . notmuch-show-reply)
+          ("n" . notmuch-show-reply-sender)
+          ("r" . notmuch-show-next-message)
+          ("t" . notmuch-show-previous-message)
+          )
     :config
-    (setq notmuch-search-oldest-first nil)
-    )
+      (define-key notmuch-tree-mode-map "n"
+        (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
+      (define-key notmuch-tree-mode-map "N"
+        (notmuch-tree-close-message-pane-and #'notmuch-show-reply))
+      (setq notmuch-search-oldest-first nil)
+      (evil-set-initial-state 'notmuch-tree-mode 'emacs)
+  )
+
+  (use-package helm-notmuch
+    :ensure t)
 #+END_SRC
 ** BBDB
 #+BEGIN_SRC emacs-lisp
