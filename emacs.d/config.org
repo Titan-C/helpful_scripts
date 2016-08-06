@@ -321,12 +321,25 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 
 ** Completion
 #+BEGIN_SRC emacs-lisp
-(global-set-key "\M-/" 'hippie-expand)
-(use-package company
-:init
-(add-hook 'after-init-hook 'global-company-mode))
-(use-package yasnippet
-:config (yas-global-mode t))
+  (global-set-key "\M-/" 'hippie-expand)
+
+  (use-package company
+    :bind (:map company-active-map
+              ("C-r" . company-select-next)
+              ("C-t" . company-select-previous)
+           :map company-search-map
+              ("C-r" . company-select-next)
+              ("C-t" . company-select-previous))
+      :init
+      (add-hook 'after-init-hook 'global-company-mode)
+      (setq company-idle-delay 0.2
+            company-selection-wrap-around t)
+      )
+
+
+
+  (use-package yasnippet
+  :config (yas-global-mode t))
 #+END_SRC
 * Orgmode
 ** Main Behavior
