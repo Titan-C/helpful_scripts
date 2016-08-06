@@ -1,4 +1,11 @@
+if [[ -z $DBUS_SESSION_BUS_ADDRESS ]]; then
+    source /tmp/.Xdbus
+fi
 
+# Mail download
+mbsync -aV
+
+# Notmuch
 notmuch search --output=files tag:deleted | xargs  -I {} rm -v "{}"
 
 notmuch new
