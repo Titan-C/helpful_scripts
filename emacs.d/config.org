@@ -163,7 +163,6 @@
       "p" 'helm-projectile
       "t" 'magit-status
       "m" 'notmuch-hello
-      "ha" 'helm-projectile-ag
       "s" 'eshell
       "q" 'kill-this-buffer
       "Q" 'kill-buffer-and-window
@@ -273,16 +272,23 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
       (evil-leader/set-key
           "hs" 'helm-semantic-or-imenu
           "hd" 'helm-show-kill-ring
-          "hl" 'helm-locate
-          "ho" 'helm-occur)
+          "hl" 'helm-locate)
 
       (helm-mode 1))
+
+  (use-package helm-ag
+      :ensure t
+      :config
+      (evil-leader/set-key "ho" 'helm-do-ag-this-file)
+  )
 
   (use-package helm-projectile
       :config
       (projectile-global-mode)
       (setq projectile-completion-system 'helm)
-      (helm-projectile-on))
+      (helm-projectile-on)
+      (evil-leader/set-key "ha" 'helm-projectile-ag)
+  )
 
   (use-package hydra
       ;; Hydra to enter in vim normal state like
@@ -309,16 +315,8 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
       (define-key helm-map (kbd "<escape>") 'helm-vim-normal/body)
 
       ;;(key-chord-define helm-map "jk" 'helm-like-unite/body)
-      )
+  )
 #+END_SRC
-
-#+RESULTS:
-
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-ag
-    :ensure t)
-#+END_SRC
-
 ** Completion
 #+BEGIN_SRC emacs-lisp
   (global-set-key "\M-/" 'hippie-expand)
