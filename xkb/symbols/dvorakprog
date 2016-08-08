@@ -1,7 +1,5 @@
-partial alphanumeric_keys
-xkb_symbols "dvorakOscar" {
-
-    include "es(dvorak)"
+default partial alphanumeric_keys modifier_keys
+xkb_symbols "dvorakoscar" {
 
     name[Group1]= "Spanish (Dvorak Programer us_es oscar)";
 
@@ -28,36 +26,45 @@ xkb_symbols "dvorakOscar" {
     key <AD01> { [ apostrophe,      quotedbl,   grave,    asciicircum  ] };
     key <AD02> { [ period,          colon,      less,     guillemotleft ] };
     key <AD03> { [ p,               P,          greater,  guillemotright ] };
-    key <AD04> { [ y,               Y, comma, semicolon ]};
-    key <AD05> { [ b, B, comma, semicolon ]};
-    key <AD06> { [ k, K ]};
-    key <AD07> { [ f, F, tslash, Tslash				]};
-    key <AD08> { [ c,               C,          ccedilla, Ccedilla ] };
-    key <AD10> { [ j, J ]};
+    key <AD04> { [ y,               Y, comma, semicolon ] };
+    key <AD05> { [ b, B, comma, semicolon ] };
 
+    key <AD06> { [ k, K ] };
+    key <AD07> { [ f, F, tslash, Tslash				] };
+    key <AD08> { [ c,               C,          ccedilla, Ccedilla ] };
+    key <AD09> { [ h, H, hstroke, Hstroke			] };
+    key <AD10> { [ j, J ] };
     key <AD11> { [ slash,           question,  questiondown ] };
     key <AD12> { [ ampersand,       dollar ] };
 
-    key <AC01> { [ a,	      	 A,          aacute,     Aacute ]};
-    key <AC02> { [ o,	      	 O,          oacute,     Oacute ]};
-    key <AC03> { [ e,	      	 E,          eacute,     Eacute ]};
-    key <AC04> { [ i,	      	 I,          iacute,     Iacute ]};
-    key <AC05> { [ m,            M,          mu	]};
+    key <AC01> { [ a,	      	 A,          aacute,     Aacute ] };
+    key <AC02> { [ o,	      	 O,          oacute,     Oacute ] };
+    key <AC03> { [ e,	      	 E,          eacute,     Eacute ] };
+    key <AC04> { [ i,	      	 I,          iacute,     Iacute ] };
+    key <AC05> { [ m,            M,          mu	] };
 
     key <AC06> { [ u,               U,          uacute,   Uacute ] };
+    key <AC07> { [ r, R, registered, trademark			] };
+    key <AC08> { [ t, T, thorn, THORN				] };
     key <AC09> { [ n,               N,          ntilde,      Ntilde ] };
+    key <AC10> { [ s, S, ssharp, section			] };
     key <AC11> { [ minus,           underscore, asciitilde, dead_tilde ] };
     key <BKSL> { [ backslash,       bar ] };
 
-    key <LSGT> { [ Shift_L ]};
+    key <LSGT> { [ Shift_L ] };
     key <AB01> { [ w,               W ] };
-    key <AB02> { [ q,		    Q, z, Z ]};
-    key <AB03> { [ Return, Return, k, K ]};
+    key <AB02> { [ q,		    Q, z, Z ] };
+    key <AB03> { [ Return, Return, k, K ] };
     key <AB04> { [ d,               D          ] };
 
-    key <AB06> { [ g, G, b, B ]};
-    key <AB07> { [ l,               L, sterling ]};
+    key <AB05> { [ x, X, multiply, division			] };
+    key <AB06> { [ g, G, b, B ] };
+    key <AB07> { [ l,               L, sterling ] };
     key <AB08> { [ BackSpace,    dead_diaeresis, dead_grave, dead_circumflex ] };
-    key <AB10> { [ Shift_R ]};
+    key <AB09> { [ v, V						] };
+    key <AB10> { [ Shift_R ] };
+    modifier_map Shift {<RTSH>};
+
+    include "level3(ralt_switch)"
 
 };
