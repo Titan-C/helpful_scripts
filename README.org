@@ -1,6 +1,12 @@
 #+TITLE: Helpful Scripts and dotfiles
 #+AUTHOR: Óscar Nájera
 
+* Awesome window manager
+** Some dependencies
+#+BEGIN_SRC shell
+  yaourt -Syua uxrvt
+  yaourt -Syua conky
+#+END_SRC
 * Emacs Configuration
 My current configuration for everyday use.
 
