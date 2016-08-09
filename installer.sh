@@ -30,6 +30,9 @@ for file in $files; do
     ln -s $PWD/$file ~/.$file
 done
 
+ln -s $PWD/conky.conf ~/.config/conky/conky.conf
+ln -s $PWD/awesome/ ~/.config/awesome
+
 source ~/.bashrc
 echo "set show-all-if-unmodified on" >> ~/.inputrc
 
