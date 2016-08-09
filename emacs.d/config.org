@@ -389,6 +389,7 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
       "oci" 'org-clock-in
       "oco" 'org-clock-out
       "ocd" 'org-clock-display
+      "ocr" 'org-clock-goto
       "oe" 'org-todo)
 
   ;; Launch day agenda
