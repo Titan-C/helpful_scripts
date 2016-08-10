@@ -8,11 +8,13 @@ usage(){
 
 #Cleaning modules
 latex(){
-EXTENSIONS="*.aux *.tex~ *.tex.backup *.dvi *.log *.pdf *.nav *.out *.snm *.toc"
-for dir in $(ls -d */ ./)
+EXTENSIONS="*.aux *.tex.backup *.bbl *.bbl~ *.log *.log~ *.nav *.out *.snm *.toc "
+rm -vf $EXTENSIONS
+for dir in $(ls -d */)
 do
     cd $dir
     rm -vf $EXTENSIONS
+    cd ..
 done
 }
 
