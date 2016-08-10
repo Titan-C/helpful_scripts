@@ -4,8 +4,10 @@
 * Awesome window manager
 ** Some dependencies
 #+BEGIN_SRC shell
-  yaourt -Syua uxrvt
+  yaourt -Syua termite
+  yaourt -Syua zsh zsh-completions
   yaourt -Syua conky
+  yaourt -Syua network-manager-applet
 #+END_SRC
 * Emacs Configuration
 My current configuration for everyday use.
