@@ -25,8 +25,8 @@ fi
 [[ $- != *i* ]] && return
 
 # Load the ssh agent variables
-if [[ "$SSH_AGENT_PID" == "" && -f ~/.ssh-agent-variables ]]; then
-    eval $(<~/.ssh-agent-variables)
+if [[ "$SSH_AGENT_PID" == "" && -f $HOME/.ssh/environment-$HOSTNAME ]]; then
+    eval $(<$HOME/.ssh/environment-$HOSTNAME)
 fi
 # Colorful TERM
 export TERM=xterm-256color
@@ -54,5 +54,5 @@ alias vact='source activate'
 alias opbs1='export OPENBLAS_NUM_THREADS=1'
 alias isrun='ps -ae | grep'
 alias qstatf='qstat -f | grep theo-ox -A 1'
-
+alias gdrives='rclone sync --drive-formats ods,odt gdrive: gdrive '
 alias condup='conda update --all --yes'

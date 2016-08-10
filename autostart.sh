@@ -12,5 +12,5 @@ echo 'export DBUS_SESSION_BUS_ADDRESS' >> /tmp/.Xdbus
 
 # ssh-agent environment variables
 if ! pgrep -u $USER ssh-agent > /dev/null; then
-    ssh-agent > ~/.ssh-agent-variables
+    ssh-agent > $HOME/.ssh/environment-$HOSTNAME
 fi
