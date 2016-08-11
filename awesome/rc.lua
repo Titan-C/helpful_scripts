@@ -226,12 +226,12 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
-    awful.key({ modkey,           }, "r",
+    awful.key({ modkey,           }, "t",
         function ()
             awful.client.focus.byidx( 1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "t",
+    awful.key({ modkey,           }, "r",
         function ()
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
@@ -257,11 +257,14 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "l", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
+    awful.key({modkey,            }, "F1",     function () awful.screen.focus(1) end),
+    awful.key({modkey,            }, "F2",     function () awful.screen.focus(2) end),
+
     awful.key({ modkey,           }, "s",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "n",     function () awful.tag.incmwfact(-0.05)    end),
     awful.key({ modkey, "Shift"   }, "n",     function () awful.tag.incnmaster( 1)      end),
     awful.key({ modkey, "Shift"   }, "s",     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "n",     function () awful.tag.incncol( 1) naughty.notify({ title = 'Columns', text = tostring(awful.tag.getncol()), timeout = 0 }) end, "iscre"),
+    awful.key({ modkey, "Control" }, "n",     function () awful.tag.incncol( 1) naughty.notify({ title = 'Columns', text = tostring(awful.tag.getncol()), timeout = 0 }) end),
     awful.key({ modkey, "Control" }, "s",     function () awful.tag.incncol(-1) naughty.notify({ title = 'Columns', text = tostring(awful.tag.getncol()), timeout = 0 }) end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
