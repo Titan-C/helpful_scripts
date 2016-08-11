@@ -14,7 +14,7 @@ theme.wallpaper = "/home/oscar/Pictures/2016/07-Bodylog/14-7-Body.jpg"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "sans 8"
+theme.font      = "DejaVuSerif 11"
 
 -- {{{ Colors
 theme.fg_normal  = "#DCDCCC"

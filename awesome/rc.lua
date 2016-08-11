@@ -11,6 +11,10 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
+-- Setup laptop screen
+awful.util.spawn_with_shell("xrandr --output eDP1 --mode 1920x1080 --output DP1 --mode 1920x1080 --above eDP1 --primary")
+awful.util.spawn_with_shell("$HOME/dev/helpful_scripts/autostart.sh")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -41,9 +45,13 @@ end
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
-editor = os.getenv("EDITOR") or "gvim"
+terminal = "termite"
+editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
+
+-- user defined
+gui_editor = "emacs"
+browser = "firefox"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -260,6 +268,10 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey, "Control" }, "d", awful.client.restore),
 
+    -- User programs
+    awful.key({ modkey }, "h", function () awful.util.spawn(browser) end),
+    awful.key({ modkey }, "v", function () awful.util.spawn(gui_editor) end),
+
     -- Prompt
     awful.key({ modkey },            "l",     function () mypromptbox[mouse.screen]:run() end),
     awful.key({ }, "XF86AudioRaiseVolume", function ()
@@ -458,6 +470,5 @@ function run_once(cmd)
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 
-run_once("autostart.sh")
 run_once("owncloud")
 run_once("nm-applet")
