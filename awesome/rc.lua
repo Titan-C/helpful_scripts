@@ -276,14 +276,22 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "h", function () awful.util.spawn(browser) end),
     awful.key({ modkey }, "v", function () awful.util.spawn(gui_editor) end),
 
-    -- Prompt
-    awful.key({ modkey },            "l",     function () mypromptbox[mouse.screen]:run() end),
+    -- Volume Control
     awful.key({ }, "XF86AudioRaiseVolume", function ()
       awful.util.spawn("amixer set Master 5%+",false) end),
     awful.key({ }, "XF86AudioLowerVolume", function ()
       awful.util.spawn("amixer set Master 5%-",false) end),
     awful.key({ }, "XF86AudioMute", function ()
       awful.util.spawn("amixer sset Master toggle",false) end),
+
+    -- Brightness
+    awful.key({ }, "XF86MonBrightnessDown", function ()
+        awful.util.spawn("xbacklight -dec 10") end),
+    awful.key({ }, "XF86MonBrightnessUp", function ()
+        awful.util.spawn("xbacklight -inc 10") end),
+
+    -- Prompt
+    awful.key({ modkey },            "l",     function () mypromptbox[mouse.screen]:run() end),
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run({ prompt = "Run Lua code: " },
