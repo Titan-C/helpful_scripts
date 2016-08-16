@@ -196,7 +196,7 @@ cd ${BUILD_DIR}
 inst_triqs() {
 mkdir -p buildtriqs
 cd buildtriqs
-cmake -DCMAKE_INSTALL_PREFIX=${CONDA_ENV_PATH} -DUSE_CPP14=ON ~/dev/triqs/ || return 1
+cmake -DCMAKE_INSTALL_PREFIX=${CONDA_PREFIX} -DUSE_CPP14=ON ~/dev/triqs/ || return 1
 make ${MAKEFLAGS} || return 1
 make test || return 1
 make install || return 1
@@ -206,7 +206,7 @@ cd ${BUILD_DIR}
 inst_cthyb() {
 mkdir -p buildcthyb
 cd buildcthyb
-cmake -DTRIQS_PATH=${CONDA_ENV_PATH} ~/dev/cthyb || return 1
+cmake -DTRIQS_PATH=${CONDA_PREFIX} ~/dev/cthyb || return 1
 make ${MAKEFLAGS} || return 1
 make test || return 1
 make install || return 1
