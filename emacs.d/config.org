@@ -424,6 +424,7 @@ This is to set the reminders of calendar events to desktop notify
   (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
   ;; code syntax highlighting. See section 12
   ;; http://orgmode.org/worg/org-tutorials/org-latex-export.html
+  (add-to-list 'org-latex-packages-alist '("" "minted"))
   (setq org-latex-listings 'minted)
   (setq org-latex-custom-lang-environments
         '(
