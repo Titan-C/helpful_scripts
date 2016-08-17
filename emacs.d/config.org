@@ -490,7 +490,16 @@ This is to set the reminders of calendar events to desktop notify
   ;;; display/update images in the buffer after I evaluate
   (setq org-image-actual-width '(500))
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
-  (setq org-babel-python-command "ipython")
+  (setq org-babel-python-command "ipython --simple-prompt --pprint")
+  ;; use %cpaste to paste code into ipython in org mode
+  ;; from http://emacs.stackexchange.com/questions/3859/working-setup-for-ipython-in-babel
+  (defadvice org-babel-python-evaluate-session
+    (around org-python-use-cpaste
+           (session body &optional result-type result-params) activate)
+    "add a %cpaste and '--' to the body, so that ipython does the right thing."
+    (setq body (concat "%cpaste -q \n" body "\n--"))
+    ad-do-it
+    )
 #+END_SRC
 *** RevealJS
 #+BEGIN_SRC emacs-lisp
