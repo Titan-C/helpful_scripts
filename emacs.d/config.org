@@ -595,6 +595,14 @@ This is to set the reminders of calendar events to desktop notify
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'text-mode-hook (lambda () (abbrev-mode 1)))
+;; when writting org-mode latex make this count as words to block
+;; expansion
+(modify-syntax-entry ?_ "w" org-mode-syntax-table)
+(modify-syntax-entry ?^ "w" org-mode-syntax-table)
+#+END_SRC
 ** Markdown
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
