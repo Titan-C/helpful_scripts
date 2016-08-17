@@ -434,7 +434,23 @@ This is to set the reminders of calendar events to desktop notify
         '(("frame" "lines")
           ("fontsize" "\\scriptsize")
           ("linenos" "")))
+  (setq org-highlight-latex-and-related '(latex script entities))
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+    (use-package company-math
+      :ensure company-math
+      :config
+      (defun my-latex-mode-setup ()
+      (setq-local company-backends
+                  (append '((company-math-symbols-latex company-latex-commands))
+                          company-backends)))
+
+       (add-hook 'org-mode-hook 'my-latex-mode-setup)
+       (add-to-list 'company-math-allow-latex-symbols-in-faces 'org-latex-and-related)
+  )
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
   ;; ** <<APS journals>>
   (require 'ox-latex)
