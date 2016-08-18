@@ -61,3 +61,7 @@ Patterns *
 Create Both
 SyncState *
 Expunge Both
+
+# Local Variables:
+# mode: conf-unix
+# End:
