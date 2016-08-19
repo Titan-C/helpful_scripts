@@ -534,6 +534,7 @@ end
 
 run_once("owncloud")
 run_once("nm-applet")
+run_once("dropbox")
 
 -- battery warning
 -- created by bpdp
