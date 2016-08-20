@@ -52,16 +52,21 @@ xkb_symbols "dvorakoscar" {
     key <BKSL> { [ backslash,       bar ] };
 
     key <LSGT> { [ Shift_L ] };
-    key <AB01> { [ w,               W ] };
-    key <AB02> { [ q,		    Q, z, Z ] };
+    key <AB01> { [ w,      W, bar] };
+    key <AB02> { [ q,      Q, z, Z ] };
     key <AB03> { [ Return, Return, k, K ] };
-    key <AB04> { [ d,               D, minus, underscore        ] };
+    key <AB04> { [ d,      D, minus, underscore        ] };
+    key <AB05> { [ x, X,   multiply, division			] };
 
-    key <AB05> { [ x, X, multiply, division			] };
     key <AB06> { [ g, G, b, B ] };
-    key <AB07> { [ l,               L, sterling ] };
+    key <AB07> { [ l, L, euro ] };
     key <AB08> { [ BackSpace,    dead_diaeresis, dead_grave, dead_circumflex ] };
     key <AB09> { [ v, V						] };
     key <AB10> { [ Shift_R ] };
+
     modifier_map Shift {<RTSH>};
+    // The modifiers are reordered
+    include "altwin(ctrl_alt_win)"
+    key <MENU> { [ Alt_R, Meta_R ] };
+    modifier_map Mod1 { <MENU> };
 };
