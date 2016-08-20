@@ -26,7 +26,7 @@
  '(custom-safe-themes
    (quote
     ("c86f868347919095aa44d2a6129dd714cbcf8feaa88ba954f636295b14ceff8f" "9ff70d8009ce8da6fa204e803022f8160c700503b6029a8d8880a7a78c5ff2e5" default)))
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
+ )
 
 ;;; Load the config
 (org-babel-load-file (concat user-emacs-directory "config.org"))
