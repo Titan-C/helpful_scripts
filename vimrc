@@ -13,8 +13,7 @@ Plugin 'tpope/vim-fugitive'
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'jceb/vim-orgmode'
-Plugin 'itchyny/calendar.vim'
-Plugin 'vimwiki/vimwiki'
+Plugin 'tpope/vim-speeddating'
 
 call vundle#end()
 filetype plugin indent on
@@ -52,7 +51,7 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " remap to dvorak movements
-no r j
-no t k
-no n h
-no s l
+noremap r j
+noremap t k
+noremap n h
+noremap s l
