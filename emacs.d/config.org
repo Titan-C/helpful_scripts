@@ -163,7 +163,7 @@
       "p" 'helm-projectile
       "t" 'magit-status
       "m" 'notmuch-hello
-      "s" 'eshell
+      "s" 'multi-term
       "q" 'kill-this-buffer
       "Q" 'kill-buffer-and-window
       "oa" 'org-agenda
@@ -338,6 +338,15 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 
   (use-package yasnippet
   :config (yas-global-mode t))
+#+END_SRC
+* shell
+Zsh is great and it's completion too. Use a compatible term and
+disable other completions.
+#+BEGIN_SRC emacs-lisp
+(use-package multi-term
+  :config
+  (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1)))
+  (setq company-global-modes '(not term-mode)))
 #+END_SRC
 * Orgmode
 ** Main Behavior
