@@ -9,7 +9,8 @@
 
 * Editor
 #+BEGIN_SRC emacs-lisp
-  (setq backup-directory-alist '(("~/.emacs.d/backups")))
+  (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
   (electric-pair-mode)
@@ -239,7 +240,7 @@
 About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 #+BEGIN_SRC emacs-lisp
   (setq-default ispell-program-name (executable-find "hunspell"))
-  (setq ispell-really-hunspell t)
+  ;;(setq ispell-really-hunspell t)
 
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
