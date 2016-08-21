@@ -11,6 +11,10 @@
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
+  (setq vc-follow-symlinks t)
+  (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+  (show-paren-mode t)
+  (setq show-paren-delay 0.0)
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
   (electric-pair-mode)
@@ -234,6 +238,7 @@
 (define-key dired-mode-map "t" 'dired-previous-line)
 (define-key dired-mode-map "r" 'dired-next-line)
 (define-key dired-mode-map "p" 'dired-toggle-marks)
+(setq-default dired-listing-switches "-alh")
 )
 #+END_SRC
 ** Spelling
