@@ -1,0 +1,8 @@
+* RSS                                                                :elfeed:
+** [[http://arxiv.org/rss/cond-mat.str-el][cond-mat.str-el]]
+** Emacs                                                              :emacs:
+*** http://sachachua.com/blog/feed/
+*** http://www.howardism.org/index.xml
+*** http://planet.emacsen.org/atom.xml
+** ArchLinux                                                      :archlinux:
+*** https://www.archlinux.org/feeds/news/
