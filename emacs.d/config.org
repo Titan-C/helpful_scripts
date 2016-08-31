@@ -537,6 +537,7 @@ This is to set the reminders of calendar events to desktop notify
 
   (setq org-babel-default-header-args:python
         '((:session . "Python")
+          (:tangle . "yes")
           (:results . "output")
           (:exports . "results")))
 #+END_SRC
