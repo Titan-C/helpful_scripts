@@ -320,6 +320,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
     awful.key({ modkey, "Control" }, "d", awful.client.restore),
+    awful.key({ }, "F12", function () awful.util.spawn("xscreensaver-command -lock") end),
 
     -- User programs
     awful.key({ modkey }, "h", function () awful.util.spawn(browser) end),
@@ -537,6 +538,8 @@ run_once("nm-applet")
 run_once("dropbox")
 run_once("compton")
 run_once("conky -q -d -c /home/oscar/seamod/conkyrc.lua")
+run_once("xscreensaver -no-splash")
+run_once("mpd")
 
 -- battery warning
 -- created by bpdp

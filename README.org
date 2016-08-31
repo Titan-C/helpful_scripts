@@ -16,6 +16,14 @@ Need the fonts to work on the terminal
 #+BEGIN_SRC shell
   yaourt -Syua powerline powerline-fonts
 #+END_SRC
+** Screen saver and lock
+#+BEGIN_SRC shell
+yaourt -S xscreensaver
+#+END_SRC
+** Music
+#+BEGIN_SRC shell
+yaourt -S mpd sonata
+#+END_SRC
 * Emacs Configuration
 My current configuration for everyday use.
 
