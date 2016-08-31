@@ -408,8 +408,8 @@ disable other completions.
       "oe" 'org-todo)
 
   ;; Launch day agenda
-  (org-agenda-list 1)
-  (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
+  ;;(org-agenda-list 1)
+  ;;(setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
 
   (use-package org-pdfview
     :init
