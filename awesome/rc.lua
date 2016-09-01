@@ -166,6 +166,7 @@ mytextclock = awful.widget.textclock()
  			         { "", awesompd.MOUSE_RIGHT, musicwidget:command_show_menu() },
                                  { "", "XF86AudioLowerVolume", musicwidget:command_volume_down() },
                                  { "", "XF86AudioRaiseVolume", musicwidget:command_volume_up() },
+                                 { "", "XF86AudioPlay", musicwidget:command_playpause() },
                                  { modkey, "Pause", musicwidget:command_playpause() } })
   musicwidget:run() -- After all configuration is done, run the widget
 
