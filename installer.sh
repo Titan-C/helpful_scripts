@@ -37,6 +37,7 @@ mkdir -p ~/.config/termite
 ln -s $PWD/termite.conf ~/.config/termite/config
 
 ln -s $PWD/awesome/ ~/.config/awesome
+ln -s $PWD/mpd/ ~/.config/mpd
 
 source ~/.bashrc
 echo "set show-all-if-unmodified on" >> ~/.inputrc

@@ -23,6 +23,7 @@ yaourt -S xscreensaver
 ** Music
 #+BEGIN_SRC shell
 yaourt -S mpd sonata
+yaourt -S alsa-utils
 #+END_SRC
 * Emacs Configuration
 My current configuration for everyday use.
