@@ -857,12 +857,30 @@ This is to set the reminders of calendar events to desktop notify
 
 * RSS
 #+BEGIN_SRC emacs-lisp
+  ;; functions to support syncing .elfeed
+  ;; makes sure elfeed reads index from disk before launching
+  ;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
+
+  (defun bjm/elfeed-load-db-and-open ()
+    "Wrapper to load the elfeed db from disk before opening"
+    (interactive)
+    (elfeed-db-load)
+    (elfeed)
+    (elfeed-search-update--force))
+
+  ;;write to disk when quiting
+  (defun bjm/elfeed-save-db-and-bury ()
+    "Wrapper to save the elfeed db to disk before burying buffer"
+    (interactive)
+    (elfeed-db-save)
+    (quit-window))
+
   (use-package elfeed
-      :commands elfeed
       :bind (:map elfeed-search-mode-map
               ("r" . next-line)
               ("t" . previous-line)
               ("n" . elfeed-search-untag-all-unread)
+              ("q" . bjm/elfeed-save-db-and-bury)
              :map elfeed-show-mode-map
              ("r" . elfeed-show-next)
              ("t" . elfeed-show-prev)
