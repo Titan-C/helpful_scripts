@@ -23,9 +23,12 @@
 #+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme
-   :config
-   (load-theme 'zenburn t))
+  (use-package zenburn-theme)
+
+  (use-package material-theme
+    :config
+    (load-theme 'material t))
+
   (use-package spaceline-config
   :ensure spaceline
   :config
