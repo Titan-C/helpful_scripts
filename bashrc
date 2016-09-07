@@ -12,7 +12,7 @@ aactivate() {
     anacondainit
     source activate $1
     # Local libraries
-    export LD_LIBRARY_PATH=$CONDA_ENV_PATH/lib:$CONDA_ENV_PATH/lib64
+    export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
     export OPENBLAS_NUM_THREADS=1
 }
 
@@ -37,7 +37,7 @@ alias dir="dir --color=auto"
 alias grep="grep --color=auto"
 alias dmesg='dmesg --color'
 
-# Git branch in prompt.
+# Git branch inprompt.
 parse_git_branch() {
 git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }

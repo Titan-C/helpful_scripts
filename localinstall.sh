@@ -47,7 +47,7 @@ cmakev=cmake-3.4.1
 wget --no-check-certificate http://www.cmake.org/files/v3.4/${cmakev}.tar.gz || return 1
 tar -xf ${cmakev}.tar.gz
 cd ${cmakev}
-./bootstrap --parallel=4 --prefix=${CONDA_ENV_PATH}
+./bootstrap --parallel=4 --prefix=${CONDA_PREFIX}
 make ${MAKEFLAGS}
 make install
 cd ${BUILD_DIR}
@@ -59,7 +59,7 @@ binutilsv=binutils-2.25.1
 wget http://ftp.gnu.org/gnu/binutils/${binutilsv}.tar.gz
 tar -xf ${binutilsv}.tar.gz
 cd ${binutilsv}
-./configure --prefix=${CONDA_ENV_PATH}
+./configure --prefix=${CONDA_PREFIX}
 make
 make install
 cd ${BUILD_DIR}
@@ -71,7 +71,7 @@ boostv=boost_1_58_0
 wget http://sourceforge.net/projects/boost/files/boost/1.58.0/${boostv}.tar.gz
 tar -xf ${boostv}.tar.gz
 cd ${boostv}
-./bootstrap.sh --prefix=${CONDA_ENV_PATH} --with-toolset=gcc --with-icu
+./bootstrap.sh --prefix=${CONDA_PREFIX} --with-toolset=gcc --with-icu
 echo "using mpi ;" >> project-config.jam
 ./b2 \
       variant=release \
@@ -92,7 +92,7 @@ hdf5v=hdf5-1.8.16
 wget ftp://ftp.hdfgroup.org/HDF5/current/src/${hdf5v}.tar.bz2
 tar -xf ${hdf5v}.tar.bz2
 cd ${hdf5v}
-./configure --prefix=${CONDA_ENV_PATH} --disable-static \
+./configure --prefix=${CONDA_PREFIX} --disable-static \
     --enable-hl \
     --enable-threadsafe \
     --enable-linux-lfs \
@@ -112,7 +112,7 @@ fftwv=fftw-3.3.4
 wget http://www.fftw.org/${fftwv}.tar.gz
 tar -xf ${fftwv}.tar.gz
 cd ${fftwv}
-./configure --prefix=${CONDA_ENV_PATH} --enable-openmp --enable-mpi --enable-shared --enable-threads --enable-sse2 --enable-avx CFLAGS="-O2"
+./configure --prefix=${CONDA_PREFIX} --enable-openmp --enable-mpi --enable-shared --enable-threads --enable-sse2 --enable-avx CFLAGS="-O2"
 make ${MAKEFLAGS}
 make install
 cd ${BUILD_DIR}
@@ -125,8 +125,8 @@ wget http://github.com/xianyi/OpenBLAS/archive/v${op_ver}.tar.gz
 tar -xf v${op_ver}.tar.gz
 cd OpenBLAS-${op_ver}
 make DYNAMIC_ARCH=1
-make PREFIX=${CONDA_ENV_PATH} install
-cd ${CONDA_ENV_PATH}/lib/
+make PREFIX=${CONDA_PREFIX} install
+cd ${CONDA_PREFIX}/lib/
 ln -sf libopenblas.so libblas.so
 ln -sf libopenblas.so liblapack.so
 cd ${BUILD_DIR}
@@ -138,7 +138,7 @@ gslv=gsl-2.1
 wget http://mirror.ibcp.fr/pub/gnu/gsl/${gslv}.tar.gz
 tar -xf ${gslv}.tar.gz
 cd ${gslv}
-./configure --prefix=${CONDA_ENV_PATH}
+./configure --prefix=${CONDA_PREFIX}
 make ${MAKEFLAGS}
 make install
 cd ${BUILD_DIR}
@@ -183,7 +183,7 @@ tar -xf ${alpsv}.tar.gz
 cd ${alpsv}
 mkdir build
 cd build
-cmake ../alps/ -DCMAKE_INSTALL_PREFIX=${CONDA_ENV_PATH} \
+cmake ../alps/ -DCMAKE_INSTALL_PREFIX=${CONDA_PREFIX} \
           -DCMAKE_BUILD_TYPE=Release
 make ${MAKEFLAGS}
 make test
@@ -218,7 +218,7 @@ inst_mpipy () {
 DIR=~/miniconda/envs/dev/lib/python2.7/site-packages/boost
 mkdir -vp ${DIR}
 cp -v mpi_py_init.py ${DIR}/__init__.py
-cp -v ${CONDA_ENV_PATH}lib/mpi.so ${DIR}/
+cp -v ${CONDA_PREFIX}lib/mpi.so ${DIR}/
 }
 
 # install gmp
@@ -227,7 +227,7 @@ gmpv=gmp-6.1.0
 wget https://gmplib.org/download/gmp/${gmpv}.tar.bz2
 tar jxf ${gmpv}.tar.bz2
 cd ${gmpv}
-./configure --prefix=${CONDA_ENV_PATH} --enable-cxx
+./configure --prefix=${CONDA_PREFIX} --enable-cxx
 make ${MAKEFLAGS}
 make check
 make install
@@ -240,7 +240,7 @@ mpfrv=mpfr-3.1.3
 wget http://www.mpfr.org/mpfr-current/${mpfrv}.tar.bz2
 tar -xf ${mpfrv}.tar.bz2
 cd ${mpfrv}
-./configure --prefix=${CONDA_ENV_PATH} --with-gmp=${CONDA_ENV_PATH}
+./configure --prefix=${CONDA_PREFIX} --with-gmp=${CONDA_PREFIX}
 make ${MAKEFLAGS} && make check && make install
 cd ${BUILD_DIR}
 }
@@ -251,7 +251,7 @@ mpcv=mpc-1.0.3
 wget ftp://ftp.gnu.org/gnu/mpc/${mpcv}.tar.gz
 tar -xf ${mpcv}.tar.gz
 cd ${mpcv}
-./configure --prefix=${CONDA_ENV_PATH} --with-gmp=${CONDA_ENV_PATH}
+./configure --prefix=${CONDA_PREFIX} --with-gmp=${CONDA_PREFIX}
 make ${MAKEFLAGS} && make check && make install
 cd ${BUILD_DIR}
 }
@@ -262,7 +262,7 @@ islv=isl-0.14
 wget http://isl.gforge.inria.fr/${islv}.tar.bz2
 tar -xf ${islv}.tar.bz2
 cd ${islv}
-./configure --prefix=${CONDA_ENV_PATH} --with-gmp-prefix=${CONDA_ENV_PATH}
+./configure --prefix=${CONDA_PREFIX} --with-gmp-prefix=${CONDA_PREFIX}
 make ${MAKEFLAGS} && make check && make install
 cd ${BUILD_DIR}
 }
@@ -278,7 +278,7 @@ patch ./contrib/download_prerequisites $HOME/dev/helpful_scripts/gcc_prereq.patc
 ./contrib/download_prerequisites
 cd ..
 mkdir build_${gccv} && cd build_${gccv}
-../${gccv}/configure --prefix=${CONDA_ENV_PATH} --enable-checking=release --disable-multilib \
+../${gccv}/configure --prefix=${CONDA_PREFIX} --enable-checking=release --disable-multilib \
    --enable-languages=c,c++,fortran
 make ${MAKEFLAGS} && make install
 cd ${BUILD_DIR}
@@ -290,7 +290,7 @@ ompiv=openmpi-1.10.1
 wget http://www.open-mpi.org/software/ompi/v1.10/downloads/${ompiv}.tar.bz2
 tar -xf ${ompiv}.tar.bz2
 cd ${ompiv}
-./configure --prefix=${CONDA_ENV_PATH}
+./configure --prefix=${CONDA_PREFIX}
 make ${MAKEFLAGS} && make all install
 cd ${BUILD_DIR}
 }
