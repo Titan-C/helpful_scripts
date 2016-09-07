@@ -9,6 +9,7 @@ anacondainit() {
 }
 
 aactivate() {
+    export LC_ALL=en_US.UTF-8
     anacondainit
     source activate $1
     # Local libraries
