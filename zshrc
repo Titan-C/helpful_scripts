@@ -61,6 +61,8 @@ plugins=(git archlinux python ssh-agent)
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 export PATH="$HOME/dev/helpful_scripts:$PATH"
+PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 
 source $ZSH/oh-my-zsh.sh
 
