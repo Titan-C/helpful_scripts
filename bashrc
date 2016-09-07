@@ -14,6 +14,7 @@ aactivate() {
     # Local libraries
     export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
     export OPENBLAS_NUM_THREADS=1
+    [ -f $CONDA_PREFIX/bin/zsh ] && exec $CONDA_PREFIX/bin/zsh -l
 }
 
 # load environment if on cluster
