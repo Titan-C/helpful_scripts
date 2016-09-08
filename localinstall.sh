@@ -300,14 +300,26 @@ wget http://ftp.gnu.org/gnu/autoconf/autoconf-latest.tar.gz
 
 }
 
-
 #install emacs
 inst_emacs () {
 emacsv=emacs-24.5
 wget ftp://ftp.gnu.org/pub/gnu/emacs/${emacsv}.tar.gz
 tar -xf ${emacsv}.tar.gz
 cd ${emacsv}
-./configure --prefix=${CONDA_ENV_PATH}
+./configure --prefix=${CONDA_PREFIX}
 make ${MAKEFLAGS} && make all install
+cd ${BUILD_DIR}
+}
+
+#install zsh
+inst_zsh () {
+zshv=zsh-5.2
+wget http://www.zsh.org/pub/${zshv}.tar.gz
+tar -xf ${zshv}.tar.gz
+cd ${zshv}
+./configure --prefix=${CONDA_PREFIX}
+make ${MAKEFLAGS}
+make check || return 1
+make install
 cd ${BUILD_DIR}
 }
