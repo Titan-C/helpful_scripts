@@ -798,6 +798,14 @@ This is to set the reminders of calendar events to desktop notify
                     '("-deleted")
                     '("+deleted" "-inbox" "-unread")))))
 
+      (setq notmuch-saved-searches
+          '((:name "inbox" :query "tag:inbox" :key "i")
+          (:name "to-me" :query "tag:tome" :key "l")
+          (:name "unread" :query "tag:unread" :key "u")
+          (:name "flagged" :query "tag:flagged" :key "f")
+          (:name "sent" :query "tag:sent" :key "t")
+          (:name "drafts" :query "tag:draft" :key "d")
+          (:name "all mail" :query "*" :key "a")))
   )
   (zenburn-with-color-variables
     (setq notmuch-search-line-faces `(("deleted" . (:strike-through t))
