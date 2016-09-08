@@ -4,7 +4,7 @@
 * Awesome window manager
 ** Some dependencies
 #+BEGIN_SRC shell
-  yaourt -Syua termite terminus-font
+  yaourt -Syua termite terminus-font ttf-ubuntu-font-family
   yaourt -Syua zsh zsh-completions
   yaourt -Syua compton
   yaourt -Syua conky

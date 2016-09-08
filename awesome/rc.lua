@@ -538,7 +538,7 @@ run_once("owncloud")
 run_once("nm-applet")
 run_once("dropbox")
 run_once("compton")
-run_once("conky -q -d -c /home/oscar/seamod/conkyrc.lua")
+run_once("conky -q -d -c /home/oscar/dev/conky-seamod/conkyrc.lua")
 run_once("xscreensaver -no-splash")
 run_once("mpd")
 
