@@ -262,8 +262,6 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 #+END_SRC
 ** Add-ons
 #+BEGIN_SRC emacs-lisp
-  (use-package ssh
-  :ensure t)
   (use-package exec-path-from-shell
     :config
     (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
