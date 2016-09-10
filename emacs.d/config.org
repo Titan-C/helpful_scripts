@@ -772,6 +772,8 @@ This is to set the reminders of calendar events to desktop notify
           ("n" . notmuch-show-reply-sender)
           ("r" . notmuch-show-next-message)
           ("t" . notmuch-show-previous-message)
+          ("M-r" . notmuch-show-next-thread-show)
+          ("M-t" . notmuch-show-previous-thread-show)
           )
     :config
       (require 'org-notmuch)
