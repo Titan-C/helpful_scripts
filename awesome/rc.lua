@@ -12,8 +12,11 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 
 -- Setup laptop screen
-awful.util.spawn_with_shell("xrandr --output eDP1 --mode 1920x1080 --output DP1 --mode 1920x1080 --above eDP1 --primary")
-awful.util.spawn_with_shell("xinput --set-prop 18 \"Synaptics Two-Finger Scrolling\" 1 1")
+if "titan-arch-m" == io.popen("uname -n"):read() then
+    awful.util.spawn_with_shell("xrandr --output eDP1 --mode 1920x1080 --output DP1 --mode 1920x1080 --above eDP1 --primary")
+    awful.util.spawn_with_shell("xinput --set-prop 18 \"Synaptics Two-Finger Scrolling\" 1 1")
+end
+
 awful.util.spawn_with_shell("$HOME/dev/helpful_scripts/autostart.sh")
 
 -- {{{ Error handling
@@ -534,14 +537,15 @@ function run_once(cmd)
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 
-run_once("owncloud")
-run_once("nm-applet")
+-- run_once("owncloud")
 run_once("dropbox")
 run_once("compton")
 run_once("conky -q -d -c /home/oscar/dev/conky-seamod/conkyrc.lua")
 run_once("xscreensaver -no-splash")
 run_once("mpd")
 
+if "titan-arch-m" == io.popen("uname -n"):read() then
+run_once("nm-applet")
 -- battery warning
 -- created by bpdp
 -- http://bpdp.blogspot.fr/2013/06/battery-warning-notification-for.html
@@ -552,8 +556,8 @@ end
 
 local function bat_notification()
 
-  local f_capacity = assert(io.open("/sys/class/power_supply/BAT0/capacity", "r"))
-  local f_status = assert(io.open("/sys/class/power_supply/BAT0/status", "r"))
+  local f_capacity = assert(io.open("/sys/class/power_supply/BAT1/capacity", "r"))
+  local f_status = assert(io.open("/sys/class/power_supply/BAT1/status", "r"))
 
   local bat_capacity = tonumber(f_capacity:read("*all"))
   local bat_status = trim(f_status:read("*all"))
@@ -574,3 +578,4 @@ battimer:connect_signal("timeout", bat_notification)
 battimer:start()
 
 -- end here for battery warning
+end
