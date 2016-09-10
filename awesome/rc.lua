@@ -123,7 +123,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
-
+local orglendar = require('orglendar')
+orglendar.files = { "/home/oscar/Dropbox/org/schedule.org",
+                    "/home/oscar/Dropbox/org/todo.org" }
+orglendar.register(mytextclock)
 -- mpd widget
   local awesompd = require("awesompd/awesompd")
   musicwidget = awesompd:create() -- Create awesompd widget
