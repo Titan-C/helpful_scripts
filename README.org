@@ -11,6 +11,13 @@
   yaourt -Syua network-manager-applet
   yaourt -Syua mpd
 #+END_SRC
+** Widgets
+the weather widget is from [[https://github.com/RingOV/gis-weather][Gis Weather]].
+Get the dependencies
+#+BEGIN_SRC shell
+  yaourt -Syua python-cairo
+#+END_SRC
+Clone that repo and the awesome launcher takes care then
 * zsh
 Need the fonts to work on the terminal
 #+BEGIN_SRC shell
