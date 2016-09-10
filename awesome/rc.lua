@@ -5,6 +5,7 @@ awful.rules = require("awful.rules")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
+local lain = require("lain")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
@@ -176,6 +177,22 @@ orglendar.register(mytextclock)
                                  { modkey, "Pause", musicwidget:command_playpause() } })
   musicwidget:run() -- After all configuration is done, run the widget
 
+-- Battery
+markup = lain.util.markup
+gray   = "#9E9C9A"
+batwidget = lain.widgets.bat({
+    battery = "BAT1",
+    ac = "ACAD",
+    settings = function()
+        bat_header = " Bat "
+        bat_p      = bat_now.perc .. "% "
+        if bat_now.ac_status == 1 then
+            bat_p = bat_p .. "AC "
+        end
+        widget:set_markup(markup(gray, bat_header) .. bat_p)
+    end
+})
+
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -255,9 +272,10 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(batwidget)
+    right_layout:add(musicwidget.widget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
-    right_layout:add(musicwidget.widget)
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
