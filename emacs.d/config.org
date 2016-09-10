@@ -20,10 +20,15 @@
   (electric-pair-mode)
   (add-hook 'text-mode-hook 'visual-line-mode) ;; word-wrap
   (setq safe-local-variable-values '((ispell-dictionary . "spanish")))
-
-  ;; this make ediff open the comand buffer in the same frame is better when using
-  ;; the tiling WM awesome
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+#+END_SRC
+** ediff
+#+BEGIN_SRC emacs-lisp
+  (use-package ediff
+    :config
+    ;; this make ediff open the comand buffer in the same frame is better when using
+    ;; the tiling WM awesome
+    (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  )
 #+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
