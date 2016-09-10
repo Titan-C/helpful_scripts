@@ -266,6 +266,7 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
     :config
     (exec-path-from-shell-copy-env "SSH_AUTH_SOCK")
     (exec-path-from-shell-copy-env "SSH_AGENT_PID"))
+  (setq browse-url-browser-function 'browse-url-chromium)
 #+END_SRC
 * Helm
 #+BEGIN_SRC emacs-lisp
