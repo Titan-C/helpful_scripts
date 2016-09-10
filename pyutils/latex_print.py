@@ -37,12 +37,12 @@ def ket(base, names=[r"\uparrow", r"\downarrow"]):
     """
 
     binary_base = "{{:0{}b}}".format(len(names)).format(base)
-    ket = r"|"
+    ketstr = r"|"
 
     for state, name in zip(binary_base[::-1], names):
         if int(state):
-            ket += name + " "
+            ketstr += name + " "
     if base == 0:
-        ket += r"\emptyset"
+        ketstr += r"\emptyset"
 
-    return ket + r"\rangle"
+    return ketstr + r"\rangle"
