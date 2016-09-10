@@ -1,7 +1,6 @@
 # -*- mode: shell-script; -*-
 # Path to your oh-my-zsh installation.
 export ZSH=/home/oscar/.oh-my-zsh
-#export TERM="xterm-256color"
 export TERM="xterm-termite"
 
 # Set name of the theme to load.
@@ -11,6 +10,12 @@ export TERM="xterm-termite"
 ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir anaconda vcs)
 DEFAULT_USER="oscar"
+
+# load environment if on cluster
+if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
+    ZSH_THEME="bira"
+    export TERM="xterm-256color"
+fi
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"

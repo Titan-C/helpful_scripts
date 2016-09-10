@@ -18,9 +18,13 @@ aactivate() {
     [ -f $CONDA_PREFIX/bin/zsh ] && exec $CONDA_PREFIX/bin/zsh -l
 }
 
+# Colorful TERM
+export TERM=xterm-termite
+
 # load environment if on cluster
 if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
     aactivate hpc2
+    export TERM=xterm-256color
 fi
 
 # If not running interactively, finish here
@@ -30,8 +34,6 @@ fi
 if [[ "$SSH_AGENT_PID" == "" && -f $HOME/.ssh/environment-$HOSTNAME ]]; then
     eval $(<$HOME/.ssh/environment-$HOSTNAME)
 fi
-# Colorful TERM
-export TERM=xterm-256color
 
 #Colorful output
 alias ls='ls --color=auto'
