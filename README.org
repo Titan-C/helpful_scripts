@@ -1,36 +1,10 @@
 #+TITLE: Helpful Scripts and dotfiles
 #+AUTHOR: Óscar Nájera
 
-* Awesome window manager
-** Some dependencies
-#+BEGIN_SRC shell
-  yaourt -Syua termite terminus-font ttf-ubuntu-font-family
-  yaourt -Syua zsh zsh-completions
-  yaourt -Syua compton
-  yaourt -Syua conky
-  yaourt -Syua network-manager-applet
-  yaourt -Syua mpd
-#+END_SRC
-** Widgets
-the weather widget is from [[https://github.com/RingOV/gis-weather][Gis Weather]].
-Get the dependencies
-#+BEGIN_SRC shell
-  yaourt -Syua python-cairo
-#+END_SRC
-Clone that repo and the awesome launcher takes care then
 * zsh
 Need the fonts to work on the terminal
 #+BEGIN_SRC shell
   yaourt -Syua powerline powerline-fonts
-#+END_SRC
-** Screen saver and lock
-#+BEGIN_SRC shell
-yaourt -S xscreensaver
-#+END_SRC
-** Music
-#+BEGIN_SRC shell
-yaourt -S mpd sonata
-yaourt -S alsa-utils
 #+END_SRC
 * Emacs Configuration
 My current configuration for everyday use.
