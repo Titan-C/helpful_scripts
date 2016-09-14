@@ -10,9 +10,4 @@ chmod 600 /tmp/.Xdbus
 env | grep DBUS_SESSION_BUS_ADDRESS > /tmp/.Xdbus
 echo 'export DBUS_SESSION_BUS_ADDRESS' >> /tmp/.Xdbus
 
-# ssh-agent environment variables
-if ! pgrep -u $USER ssh-agent > /dev/null; then
-    ssh-agent > $HOME/.ssh/environment-$HOSTNAME
-fi
-
-python /home/oscar/dev/gis-weather/gis-weather.py
+#python /home/oscar/dev/gis-weather/gis-weather.py

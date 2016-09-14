@@ -30,10 +30,6 @@ fi
 # If not running interactively, finish here
 [[ $- != *i* ]] && return
 
-# Load the ssh agent variables
-if [[ "$SSH_AGENT_PID" == "" && -f $HOME/.ssh/environment-$HOSTNAME ]]; then
-    eval $(<$HOME/.ssh/environment-$HOSTNAME)
-fi
 
 #Colorful output
 alias ls='ls --color=auto'
