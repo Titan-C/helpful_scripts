@@ -559,12 +559,20 @@ This is to set the reminders of calendar events to desktop notify
 #+END_SRC
 ** Bibliography references
 #+BEGIN_SRC emacs-lisp
+  (use-package bibtex
+    :config
+    (setq bibtex-autokey-year-length 4
+          bibtex-autokey-titlewords 5
+          bibtex-autokey-titleword-length nil))
+
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
   (use-package helm-bibtex
     :init
     (evil-leader/set-key
       "hb" 'helm-bibtex))
     :config
-    (setq bibtex-completion-bibliography '("~/Documents/zotero.bib" "~/Dropbox/arxiv.bib" "~/Documents/library.bib"))
+    (setq bibtex-completion-bibliography '("~/Dropbox/biblio/papers.bib" "~/Documents/zotero.bib" "~/Dropbox/biblio/arxiv.bib" "~/Documents/library.bib"))
     (setq bibtex-completion-pdf-field "file")
     (setq bibtex-completion-library-path "~/Dropbox/bibtex-pdf/")
     (setq bibtex-completion-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
