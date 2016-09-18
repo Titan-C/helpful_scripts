@@ -355,6 +355,23 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
   (use-package yasnippet
   :config (yas-global-mode t))
 #+END_SRC
+* Ivy
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+    :config
+    (setq swiper-action-recenter t)
+    (define-key swiper-map (kbd "<ESC>") 'minibuffer-keyboard-quit)
+    :bind (("C-s" . swiper)
+           :map evil-normal-state-map
+                ("/" . swiper)
+                ("?" . swiper)))
+
+  (use-package ivy
+    :bind (:map ivy-minibuffer-map
+                ("C-r" . ivy-next-line)
+                ("C-t" . ivy-previous-line)
+                ("C-n" . ivy-reverse-i-search)))
+#+END_SRC
 * shell
 Zsh is great and it's completion too. Use a compatible term and
 disable other completions.
