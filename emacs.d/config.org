@@ -167,26 +167,28 @@
 
 ** Evil-mode
 #+BEGIN_SRC emacs-lisp
-  (unless (fboundp 'evil-leader-mode)
-  (package-install 'evil-leader))
-  (global-evil-leader-mode)
-  (setq evil-search-module 'evil-search)
-  (require 'evil)
-  (evil-mode 1)
-  (evil-leader/set-leader "<SPC>")
-  (evil-leader/set-key
-      "x" 'helm-M-x
-      "f" 'helm-find-files
-      "p" 'helm-projectile
-      "t" 'magit-status
-      "m" 'notmuch-hello
-      "s" 'multi-term
-      "q" 'kill-this-buffer
-      "Q" 'kill-buffer-and-window
-      "oa" 'org-agenda
-      "r" 'avy-goto-char
-      "c" 'avy-goto-word-1
-      "g" 'helm-mini)
+  (use-package evil
+    :config
+    (evil-mode 1))
+
+  (use-package evil-leader
+    :init
+    (global-evil-leader-mode)
+    (evil-leader/set-leader "<SPC>")
+    (evil-leader/set-key
+        "x" 'helm-M-x
+        "f" 'helm-find-files
+        "p" 'helm-projectile
+        "t" 'magit-status
+        "m" 'notmuch-hello
+        "s" 'multi-term
+        "q" 'kill-this-buffer
+        "Q" 'kill-buffer-and-window
+        "oa" 'org-agenda
+        "r" 'avy-goto-char
+        "c" 'avy-goto-word-1
+        "g" 'helm-mini)
+  )
 
   ;;(global-set-key [escape] 'keyboard-quit)
   (global-set-key [escape] 'helm-keyboard-quit)
@@ -201,7 +203,7 @@
       (key-chord-mode 1))
 
   (use-package avy
-  :ensure t )
+    :ensure t )
 #+END_SRC
 
 ** Key Bindings
@@ -781,6 +783,13 @@ This is to set the reminders of calendar events to desktop notify
 ** Lua
 #+BEGIN_SRC emacs-lisp
   (use-package lua-mode)
+#+END_SRC
+** clojure
+#+BEGIN_SRC emacs-lisp
+  (use-package cider)
+  (use-package flycheck-clojure
+    :config
+    (flycheck-clojure-setup))
 #+END_SRC
 * Email
 ** Notmuch client
