@@ -470,6 +470,7 @@ This is to set the reminders of calendar events to desktop notify
   ;; http://orgmode.org/worg/org-tutorials/org-latex-export.html
   (add-to-list 'org-latex-packages-alist '("" "minted" nil))
   (setq org-latex-listings 'minted)
+  (setq org-export-initial-scope 'subtree)
   (setq org-latex-custom-lang-environments
         '(
          (emacs-lisp "common-lispcode")
