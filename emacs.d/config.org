@@ -19,6 +19,7 @@
   (setq-default indent-tabs-mode nil)
   (electric-pair-mode)
   (add-hook 'text-mode-hook 'visual-line-mode) ;; word-wrap
+  (add-hook 'text-mode-hook 'flyspell-mode) ;; spell-check
   (setq safe-local-variable-values '((ispell-dictionary . "spanish")))
 #+END_SRC
 ** ediff
