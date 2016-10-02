@@ -48,7 +48,7 @@ other_email=oscar.najera-ocampo@u-psud.fr;
 #		in the mail store.
 #
 [new]
-tags=unread;inbox;tome;
+tags=unread;inbox;
 ignore=.uidvalidity;.mbsyncstate;.directory
 
 # Search configuration
