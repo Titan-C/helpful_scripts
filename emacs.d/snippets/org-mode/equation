@@ -3,7 +3,7 @@
 # key: eq
 # --
 
-\begin{${1:$$(yas-choose-value '("equation" "eqnarray"))}}
+\begin{${1:$$(yas-choose-value '("equation" "align"))}}
 \label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
 $0
 \end{$1}
