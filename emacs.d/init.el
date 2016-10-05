@@ -2,6 +2,7 @@
 (setq gc-cons-threshold 100000000)
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
+(add-to-list 'default-frame-alist '(alpha . (95 . 70)))
 
 (require 'package)
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")
