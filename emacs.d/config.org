@@ -999,3 +999,16 @@ see this feature integrated.
     (pdf-tools-install)
     (evil-set-initial-state 'pdf-view-mode 'emacs))
 #+END_SRC
+* Music
+#+BEGIN_SRC emacs-lisp
+  (use-package emms
+    :init
+    (evil-set-initial-state 'emms-browser-mode 'emacs)
+    :config
+    (setq emms-source-file-default-directory "~/Music/")
+    (emms-all)
+    (emms-default-players)
+    (add-to-list 'emms-info-functions 'emms-info-mpd)
+    (add-to-list 'emms-player-list 'emms-player-mpd)
+    (setq emms-player-mpd-music-directory "~/Music"))
+#+END_SRC
