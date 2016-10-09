@@ -1,11 +1,6 @@
 #+TITLE: Helpful Scripts and dotfiles
 #+AUTHOR: Óscar Nájera
 
-* zsh
-Need the fonts to work on the terminal
-#+BEGIN_SRC shell
-  yaourt -Syua powerline powerline-fonts
-#+END_SRC
 * Emacs Configuration
 My current configuration for everyday use.
 
