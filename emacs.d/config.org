@@ -628,6 +628,7 @@ This is to set the reminders of calendar events to desktop notify
         (message "No PDF found for %s" key))))
 
   (setq org-ref-open-pdf-function 'my/org-ref-open-pdf-at-point)
+  (key-chord-define bibtex-mode-map "jj" 'org-ref-bibtex-hydra/body)
   )
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
