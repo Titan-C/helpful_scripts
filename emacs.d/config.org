@@ -182,7 +182,7 @@
         "p" 'helm-projectile
         "t" 'magit-status
         "m" 'notmuch-hello
-        "s" 'multi-term
+        "s" 'eshell
         "q" 'kill-this-buffer
         "Q" 'kill-buffer-and-window
         "oa" 'org-agenda
@@ -376,13 +376,22 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
                 ("C-n" . ivy-reverse-i-search)))
 #+END_SRC
 * shell
+** Zsh
 Zsh is great and it's completion too. Use a compatible term and
-disable other completions.
+disable other completions. But it looks a disaster inside emacs
 #+BEGIN_SRC emacs-lisp
 (use-package multi-term
   :config
   (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1)))
   (setq company-global-modes '(not term-mode)))
+#+END_SRC
+
+** Eshell
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'exec-path "~/dev/helpful_scripts")
+  (use-package eshell-git-prompt
+    :config
+    (eshell-git-prompt-use-theme 'powerline))
 #+END_SRC
 * Orgmode
 ** Main Behavior
@@ -469,7 +478,7 @@ This is to set the reminders of calendar events to desktop notify
   (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
   ;; code syntax highlighting. See section 12
   ;; http://orgmode.org/worg/org-tutorials/org-latex-export.html
-  (add-to-list 'org-latex-packages-alist '("" "minted" nil))
+  ;;(add-to-list 'org-latex-packages-alist '("" "minted" nil))
   (setq org-latex-listings 'minted)
   (setq org-export-initial-scope 'subtree)
   (setq org-latex-custom-lang-environments
