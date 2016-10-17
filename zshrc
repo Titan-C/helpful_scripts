@@ -1,4 +1,7 @@
 # -*- mode: shell-script; -*-
+# If emacs tramp or eshell, don't execute any of this
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 # Path to your oh-my-zsh installation.
 export ZSH=/home/oscar/.oh-my-zsh
 export TERM="xterm-termite"
