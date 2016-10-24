@@ -31,28 +31,8 @@ if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
     [ -f $CONDA_PREFIX/bin/zsh ] && exec $CONDA_PREFIX/bin/zsh -l
 fi
 
-#Colorful output
-alias ls='ls --color=auto'
-alias dir="dir --color=auto"
-alias grep="grep --color=auto"
-alias dmesg='dmesg --color'
-
 # Git branch inprompt.
 parse_git_branch() {
 git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $"
-
-#Custom PATHS
-PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
-export GEM_HOME=$(ruby -e 'print Gem.user_dir')
-export PATH=~/dev/helpful_scripts:$PATH
-
-alias ipyn='jupyter notebook --no-browser&'
-alias sshipy='ssh -N -f ipyt'
-alias vact='source activate'
-alias opbs1='export OPENBLAS_NUM_THREADS=1'
-alias isrun='ps -ae | grep'
-alias qstatf='qstat -f | grep theo-ox -A 1'
-alias gdrives='rclone sync --drive-formats ods,odt gdrive: gdrive '
-alias condup='conda update --all --yes'
