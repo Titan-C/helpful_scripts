@@ -4,7 +4,6 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH=/home/oscar/.oh-my-zsh
-export TERM="xterm-termite"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -14,9 +13,8 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir anaconda vcs)
 DEFAULT_USER="oscar"
 
-# load environment if on cluster
+# colorful terminal on cluster
 if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
-    ZSH_THEME="bira"
     export TERM="xterm-256color"
 fi
 

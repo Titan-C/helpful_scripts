@@ -15,21 +15,21 @@ aactivate() {
     # Local libraries
     export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
     export OPENBLAS_NUM_THREADS=1
-    [ -f $CONDA_PREFIX/bin/zsh ] && exec $CONDA_PREFIX/bin/zsh -l
 }
 
-# Colorful TERM
-export TERM=xterm-termite
-
-# load environment if on cluster
+# load conda environment if on cluster
 if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
     aactivate hpc2
-    export TERM=xterm-256color
 fi
 
 # If not running interactively, finish here
 [[ $- != *i* ]] && return
 
+
+# interactive zsh on cluster
+if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
+    [ -f $CONDA_PREFIX/bin/zsh ] && exec $CONDA_PREFIX/bin/zsh -l
+fi
 
 #Colorful output
 alias ls='ls --color=auto'
