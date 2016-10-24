@@ -39,6 +39,9 @@
     :config
     (load-theme 'material t))
 
+  ;; font size
+  (set-face-attribute 'default nil :height 115)
+
   (use-package spaceline-config
   :ensure spaceline
   :config
