@@ -40,7 +40,7 @@
     (load-theme 'material t))
 
   ;; font size
-  (set-face-attribute 'default nil :height 115)
+  (set-face-attribute 'default nil :font "Liberation Mono-13")
 
   (use-package spaceline-config
   :ensure spaceline
