@@ -41,6 +41,8 @@ parser.add_argument('-cp', '--cpus', default=12, type=int)
 parser.add_argument('-p', '--priority', default=-10, type=int)
 parser.add_argument('-q', '--queue', choices=['theo-ox.q', 'shared.q'],
                     default='theo-ox.q', help='(default: %(default)s)')
+parser.add_argument('-nd', '--nodes', default=['!compute-0-88'],
+                    help='list of nodes to use or avoid(prefix !)')
 parser.add_argument('-mpi', action='store_const', default='',
                     const='mpirun -np $NSLOTS ', help='Use mpirun')
 parser.add_argument('executable', nargs='+', help='executable instruction')
@@ -53,6 +55,9 @@ command = ' '.join(args.executable) + ' '
 if args.queue == 'shared.q':
     dargs['queue'] = 'shared.q\n#$ -l hostname=compute-0-19'
     dargs['cpus'] = 20
+if args.nodes:
+    nodes_string = '|'.join(args.nodes)
+    dargs['queue'] = args.queue + '\n#$ -l hostname={}'.format(nodes_string)
 
 for loop in args.loop:
     # Open a pipe to the qsub command.
@@ -60,11 +65,10 @@ for loop in args.loop:
                            stdin=subprocess.PIPE,
                            stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE,
-                          )
+                           )
     # Customize your options here
     dargs['command'] = command + loop
     job_string = JOB_STRING.format(loop, **dargs)
-
 
     # Send job_string to qsub
     stdout, stderr = job.communicate(job_string)
