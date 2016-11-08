@@ -456,8 +456,8 @@ disable other completions. But it looks a disaster inside emacs
   (use-package org-pdfview
     :init
     (delete '("\\.pdf\\'" . default) org-file-apps)
-    (add-to-list 'org-file-apps '("\\.pdf\\'" . org-pdfview-open))
-    (add-to-list 'org-file-apps '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
+    (add-to-list 'org-file-apps '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open file))))
+    (add-to-list 'org-file-apps '("\\.pdf::\\([[:digit:]]+\\)\\'" . (lambda (file link) (org-pdfview-open file))))
     )
 #+END_SRC
 
