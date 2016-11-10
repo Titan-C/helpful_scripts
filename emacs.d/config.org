@@ -484,10 +484,6 @@ This is to set the reminders of calendar events to desktop notify
   ;;(add-to-list 'org-latex-packages-alist '("" "minted" nil))
   (setq org-latex-listings 'minted)
   (setq org-export-initial-scope 'subtree)
-  (setq org-latex-custom-lang-environments
-        '(
-         (emacs-lisp "common-lispcode")
-          ))
   (setq org-latex-minted-options
         '(("frame" "lines")
           ("fontsize" "\\scriptsize")
