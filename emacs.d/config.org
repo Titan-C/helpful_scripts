@@ -236,8 +236,14 @@
 ;; end and begining of lines
 (define-key evil-motion-state-map "-" 'evil-end-of-line)
 (define-key evil-motion-state-map "0" 'evil-beginning-of-line)
-#+END_SRC
 
+;; scrolling
+(define-key evil-motion-state-map (kbd "C-i") 'evil-scroll-up)
+(define-key evil-normal-state-map (kbd "C-r") nil)
+(define-key evil-motion-state-map (kbd "C-r") 'evil-scroll-line-down)
+(define-key evil-normal-state-map (kbd "C-t") nil)
+(define-key evil-motion-state-map (kbd "C-t") 'evil-scroll-line-up)
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
