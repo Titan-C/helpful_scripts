@@ -252,6 +252,17 @@
     (setq which-key-idle-delay 0.5)
     (which-key-mode))
 #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (defun my-save-if-bufferfilename ()
+      (if (buffer-file-name)
+          (progn
+          (save-buffer)
+          )
+      (message "no file is associated to this buffer: do nothing")
+      )
+  )
+  (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
+#+END_SRC
 ** Dired
 #+BEGIN_SRC emacs-lisp
 ;; modify dired keys
