@@ -28,7 +28,16 @@ def platex(*args):
 
 
 def ket(base, names=[r"\uparrow", r"\downarrow"]):
-    """Trasforms a binary number into its Ket form
+    r"""Trasforms a binary number into its Ket form
+
+    A binary representation is a number and grows from right to left
+    despite reading being from left to right. Names ordering represent
+    that order. Thus ket(1)=\downarrow, because that's the first state
+    of the two digit entry. ket(2)=\uparrow, because it's the second
+    state, and in binary is 10. ket(3)=\uparrow\downarrow, since
+    \dwarrow is created first then \uparrow and I keep the fermionic
+    sign convention.
+
     Parameters:
         base (int): number representing the state
         names (list): names of individual basis states
@@ -39,9 +48,10 @@ def ket(base, names=[r"\uparrow", r"\downarrow"]):
     binary_base = "{{:0{}b}}".format(len(names)).format(base)
     ketstr = r"|"
 
-    for state, name in zip(binary_base[::-1], names):
-        if int(state):
-            ketstr += name + " "
+    state_vector = [name
+                    for state, name in zip(binary_base, names)
+                    if int(state)]
+    ketstr += " ".join(state_vector)
     if base == 0:
         ketstr += r"\emptyset"
 
