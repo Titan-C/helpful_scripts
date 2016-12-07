@@ -3,4 +3,4 @@
 # key: bib
 # --
 bibliographystyle:${1:$$(yas-choose-value '("unsrt" "apsrev"))}
-bibliography:~/Documents/library.bib,~/Documents/zotero.bib
+bibliography:~/Documents/library.bib,~/Documents/zotero.bib,~/Dropbox/biblio/papers.bib

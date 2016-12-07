@@ -2,9 +2,9 @@
 # name: subfigurefloats
 # key: subfig
 # --
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT latex
 \begin{figure}\centering
 \subfloat{\includegraphics[width=${2:0.4}\textwidth]{${1:filepath}}}
 \caption{$0\label{fig:${1:$(f-filename (file-name-sans-extension yas-text))}}}
 \end{figure}
-#+END_LaTeX
+#+END_EXPORT
