@@ -12,6 +12,6 @@ mbsync -aV
 notmuch new
 notmuch tag +clusjobs -inbox from:root@local.u-psud.fr or from:root@orlando.u-psud.fr subject:Job tag:inbox
 notmuch tag +coding -inbox from:github.com or from:bitbucket.org or from:gitlab.com tag:inbox
-notmuch tag +ci -inbox from:travis-ci.com or from:travis-ci.org tag:inbox
+notmuch tag +ci -inbox from:travis-ci.com or from:travis-ci.org or from:appveyor.com tag:inbox
 notmuch tag +LPS -inbox subject:tous.lps tag:inbox
 notmuch tag +LPSPHD -inbox subject:tousthesards.lps tag:inbox
