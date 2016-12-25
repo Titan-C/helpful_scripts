@@ -146,17 +146,14 @@ cd ${BUILD_DIR}
 
 
 ## Anaconda
-python_pack='matplotlib hdf5 h5py ipython
-    jinja2 pep8 pillow pyflakes pytest cython numba
-    sphinx spyder coverage nose rope tornado jsonschema numpydoc mistune
-    joblib pylint flake8 jupyter line_profiler pandas sympy'
-python_pip='mako pytest-cov mpi4py importmagic yapf autopep8'
+python_pack='matplotlib ipython jinja2 pep8 pillow pyflakes pytest cython numba sphinx coverage nose rope tornado jsonschema numpydoc mistune joblib pylint jupyter line_profiler pandas sympy numpy scipy jedi'
+python_pip='mako pytest-cov mpi4py importmagic yapf autopep8 flake8'
 
 inst_anaconda() {
 wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
 chmod +x miniconda.sh
 ./miniconda.sh -b
-export PATH=~/miniconda3/bin:$PATH
+#export PATH=~/miniconda3/bin:$PATH
 }
 
 inst_new_pyenv() {
@@ -164,9 +161,10 @@ conda update --yes conda
 conda create --yes -n $1 python=$2 pip
 source activate $1
 conda install ${python_pack}
-pip install gnureadline
+#pip install gnureadline
 echo "remember to delete the venv openblas to use local one"
 echo "then reinstall numpy & scipy from source with local blas"
+echo "keep track of pip installing h5py"
 }
 
 inst_numpy_or_scipy() {
