@@ -62,6 +62,30 @@ Create Both
 SyncState *
 Expunge Both
 
+###############################################################################
+# Personal
+IMAPAccount hi_pers
+Host mail.najera.pw
+User hi@oscarnajera.com
+PassCmd "echo ${PASSWORD:-$(gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | sed -n 's,^machine mail.najera.pw login hi@oscarnajera.com .*password \\([^ ]*\\).*,\\1,p')}"
+AuthMechs LOGIN
+SSLType IMAPS
+
+IMAPStore hi_pers-remote
+Account hi_pers
+
+MaildirStore hi_pers-local
+Path ~/.mail/hi_pers/
+Inbox ~/.mail/hi_pers/Inbox
+
+Channel hi_pers
+Master :hi_pers-remote:
+Slave :hi_pers-local:
+Patterns *
+Create Both
+SyncState *
+Expunge Both
+
 # Local Variables:
 # mode: conf-unix
 # End:

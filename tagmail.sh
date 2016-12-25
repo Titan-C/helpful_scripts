@@ -15,3 +15,7 @@ notmuch tag +coding -inbox from:github.com or from:bitbucket.org or from:mg.gitl
 notmuch tag +ci -inbox from:travis-ci.com or from:travis-ci.org or from:appveyor.com or from:circleci.com tag:inbox
 notmuch tag +LPS -inbox subject:tous.lps tag:inbox
 notmuch tag +LPSPHD -inbox subject:tousthesards.lps tag:inbox
+
+# Open Source projects
+notmuch tag +awesomeWM subject:awesomeWM tag:coding
+notmuch tag +sphinx-gallery subject:sphinx-gallery tag:coding
