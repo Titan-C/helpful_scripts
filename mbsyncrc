@@ -57,7 +57,7 @@ Inbox ~/.mail/upsud/Inbox
 Channel upsud
 Master :upsud-remote:
 Slave :upsud-local:
-Patterns *
+Patterns * !*Contacts
 Create Both
 SyncState *
 Expunge Both
