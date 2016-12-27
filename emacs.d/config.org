@@ -881,12 +881,16 @@ This is to set the reminders of calendar events to desktop notify
           (:name "sent" :query "tag:sent" :key "t")
           (:name "drafts" :query "tag:draft" :key "d")
           (:name "all mail" :query "*" :key "a")))
-  )
+
+      (setq notmuch-crypto-process-mime t)
+
   (zenburn-with-color-variables
     (setq notmuch-search-line-faces `(("deleted" . (:strike-through t))
                                       ("flagged" 'notmuch-search-flagged-face)
                                       ("unread" . (:background ,zenburn-bg-1
                                                    :foreground ,zenburn-green)))))
+  )
+
   (use-package helm-notmuch
     :ensure t)
 #+END_SRC
@@ -937,10 +941,30 @@ This is to set the reminders of calendar events to desktop notify
 #+BEGIN_SRC emacs-lisp
   (setq send-mail-function 'smtpmail-send-it
         message-send-mail-function 'message-smtpmail-send-it
-        smtpmail-smtp-server "smtp.googlemail.com"
-        smtpmail-smtp-service 587)
-#+END_SRC
+  )
 
+  (defconst smtp-from-server-alist
+    '(("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls))
+      ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
+      ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl))
+      ))
+
+  (defun set-smtp-server ()
+    (let* ((smtp-conf (cdr (assoc (save-restriction
+                                (message-narrow-to-headers)
+                                (message-fetch-field "from"))
+                                  smtp-from-server-alist)))
+           (server (nth 0 smtp-conf))
+           (port (nth 1 smtp-conf))
+           (protocol (nth 2 smtp-conf)))
+      (unless server (setq server "mail.najera.pw"
+                           port 587))
+      (setq smtpmail-smtp-server server
+            smtpmail-smtp-service port
+            smtpmail-stream-type protocol)
+      (message "SMTP server changed to %s in port %s by %s" server port protocol)))
+  (add-hook 'message-send-mail-hook 'set-smtp-server)
+#+END_SRC
 * RSS
 #+BEGIN_SRC emacs-lisp
   ;; functions to support syncing .elfeed
