@@ -882,6 +882,10 @@ This is to set the reminders of calendar events to desktop notify
           (:name "drafts" :query "tag:draft" :key "d")
           (:name "all mail" :query "*" :key "a")))
 
+      (setq notmuch-fcc-dirs '(("hi@oscarnajera.com" . "hi_pers/Sent")
+                               (".*@gmail" . nil)
+                               (".*@u-psud.fr" . "upsud/Sent")))
+
       (setq notmuch-crypto-process-mime t)
 
   (zenburn-with-color-variables
