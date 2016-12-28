@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rawkeyboardmap>
+<rawkeymap version="1.0">
+<mapping keycode="66" note="23"/>
+<mapping keycode="94" note="24"/>
+<mapping keycode="50" note="24"/>
+<mapping keycode="38" note="25"/>
+<mapping keycode="52" note="26"/>
+<mapping keycode="39" note="27"/>
+<mapping keycode="53" note="28"/>
+<mapping keycode="40" note="29"/>
+<mapping keycode="54" note="30"/>
+<mapping keycode="41" note="31"/>
+<mapping keycode="55" note="32"/>
+<mapping keycode="42" note="33"/>
+<mapping keycode="56" note="34"/>
+
+<mapping keycode="43" note="35"/>
+<mapping keycode="57" note="36"/>
+<mapping keycode="44" note="37"/>
+<mapping keycode="58" note="38"/>
+<mapping keycode="45" note="39"/>
+<mapping keycode="59" note="40"/>
+<mapping keycode="46" note="41"/>
+<mapping keycode="60" note="42"/>
+<mapping keycode="47" note="43"/>
+<mapping keycode="61" note="44"/>
+<mapping keycode="48" note="45"/>
+<mapping keycode="62" note="46"/>
+</rawkeymap>
