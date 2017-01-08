@@ -444,6 +444,7 @@ disable other completions. But it looks a disaster inside emacs
 
     ;; Agenda files
     (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
+                                "~/Dropbox/org/gcal.org"
                                 "~/Dropbox/org/journal.org"
                                 "~/Dropbox/org/todo.org"))
     (setq org-agenda-start-on-weekday 0)
@@ -493,6 +494,19 @@ This is to set the reminders of calendar events to desktop notify
   ;; update appt each time agenda opened
   (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt)
 #+END_SRC
+** Calendar
+#+BEGIN_SRC emacs-lisp
+  (use-package org-gcal
+    :config
+    (setq org-gcal-client-id (car (auth-source-user-and-password "googlecalapi"))
+          org-gcal-client-secret (cadr (auth-source-user-and-password "googlecalapi"))
+          org-gcal-file-alist '(("najera.oscar@gmail.com" . "~/Dropbox/org/gcal.org")))
+  )
+
+  (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+  (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+#+END_SRC
+
 ** Latex
 #+BEGIN_SRC emacs-lisp
   (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
