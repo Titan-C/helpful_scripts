@@ -492,7 +492,7 @@ this new window.
   (display-time)                 ;; time display is required for this...
 
   ;; update appt each time agenda opened
-  (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt)
+  (add-hook 'org-agenda-finalize-hook 'org-agenda-to-appt)
 #+END_SRC
 ** Calendar
 #+BEGIN_SRC emacs-lisp
