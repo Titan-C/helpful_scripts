@@ -480,10 +480,10 @@ disable other completions. But it looks a disaster inside emacs
 #+END_SRC
 
 ** Alerts
-This is to set the reminders of calendar events to desktop notify
-*** WAIT Find notifications setup org-alert is too annoying
-    - State "WAIT"       from "TODO"       [2016-05-28 Sat 12:44] \\
-      Testing how it works using appt
+This is to set the reminders of calendar events.
+Using appt is quite fine. I get a remainder just above the minibuffer
+There is no loud sound or anything disturbing, just the appearance of
+this new window.
 #+BEGIN_SRC emacs-lisp
   (setq
     appt-display-mode-line t     ;; show in the modeline
