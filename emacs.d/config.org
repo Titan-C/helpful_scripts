@@ -631,7 +631,12 @@ this new window.
     (evil-leader/set-key
       "hb" 'helm-bibtex)
     :config
-    (setq bibtex-completion-bibliography '("~/Dropbox/biblio/papers.bib" "~/Documents/zotero.bib" "~/Dropbox/biblio/arxiv.bib" "~/Documents/library.bib" "~/Dropbox/biblio/books.bib"))
+    (setq bibtex-completion-bibliography '("~/Dropbox/biblio/papers.bib"
+                                           "~/Documents/zotero.bib"
+                                           "~/Dropbox/biblio/arxiv.bib"
+                                           "~/Documents/library.bib"
+                                           "~/Dropbox/biblio/books.bib"
+                                           "~/Dropbox/biblio/slides_talks.bib"))
     (setq bibtex-completion-pdf-field "file")
     (setq bibtex-completion-library-path "~/Dropbox/bibtex-pdf/")
     (setq bibtex-completion-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org"))
