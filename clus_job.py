@@ -41,8 +41,10 @@ parser.add_argument('-cp', '--cpus', default=12, type=int)
 parser.add_argument('-p', '--priority', default=-10, type=int)
 parser.add_argument('-q', '--queue', choices=['theo-ox.q', 'shared.q'],
                     default='theo-ox.q', help='(default: %(default)s)')
-parser.add_argument('-nd', '--nodes', default=['!compute-0-88'],
-                    help='list of nodes to use or avoid(prefix !)')
+parser.add_argument('-nd', '--nodes', default=[85, 88], type=int, nargs='+',
+                    help='list of nodes to use or avoid')
+parser.add_argument('-pn', '--pick_node', action='store_true',
+                    help='Whether to pick the listed nodes (default :avoid)')
 parser.add_argument('-mpi', action='store_const', default='',
                     const='mpirun -np $NSLOTS ', help='Use mpirun')
 parser.add_argument('executable', nargs='+', help='executable instruction')
@@ -56,7 +58,11 @@ if args.queue == 'shared.q':
     dargs['queue'] = 'shared.q\n#$ -l hostname=compute-0-19'
     dargs['cpus'] = 20
 if args.nodes:
-    nodes_string = '|'.join(args.nodes)
+    avoid_nodes = "!"
+    if args.pick_node:
+        avoid_nodes = ""
+    nodes_string = "|".join(['{}compute-0-{}'.format(avoid_nodes, node)
+                             for node in args.nodes])
     dargs['queue'] = args.queue + '\n#$ -l hostname={}'.format(nodes_string)
 
 for loop in args.loop:
