@@ -9,7 +9,6 @@ anacondainit() {
 }
 
 aactivate() {
-    export LC_ALL=en_US.UTF-8
     anacondainit
     source activate $1
     # Local libraries
@@ -28,7 +27,9 @@ fi
 
 # interactive zsh on cluster
 if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
-    [ -f $CONDA_PREFIX/bin/zsh ] && exec $CONDA_PREFIX/bin/zsh -l
+    export LC_ALL=en_US.UTF-8
+    export PATH=$HOME/local/bin:$PATH
+    [ -f ~/local/bin/zsh ] && exec ~/local/bin/zsh -l
 fi
 
 # Git branch inprompt.
