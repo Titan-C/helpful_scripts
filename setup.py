@@ -15,4 +15,5 @@ setup(name=package,
       author="Óscar Nájera",
       author_email='najera.oscar@gmail.com',
       license="GNU General Public License v3 (GPLv3)",
-      url='not yet')
+      install_requires=['sympy'],
+      url="https://github.com/Titan-C/helpful_scripts")
