@@ -165,6 +165,7 @@ conda install ${python_pack}
 echo "remember to delete the venv openblas to use local one"
 echo "then reinstall numpy & scipy from source with local blas"
 echo "keep track of pip installing h5py"
+echo "pip install --no-binary :all: h5py"
 }
 
 inst_numpy_or_scipy() {
@@ -194,7 +195,7 @@ cd ${BUILD_DIR}
 inst_triqs() {
 mkdir -p buildtriqs
 cd buildtriqs
-cmake -DCMAKE_INSTALL_PREFIX=${CONDA_PREFIX} -DUSE_CPP14=ON ~/dev/triqs/ || return 1
+cmake -DCMAKE_INSTALL_PREFIX=${CONDA_PREFIX} ~/dev/triqs/ || return 1
 make ${MAKEFLAGS} || return 1
 make test || return 1
 make install || return 1
