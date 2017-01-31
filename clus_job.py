@@ -58,11 +58,11 @@ if args.queue == 'shared.q':
     dargs['queue'] = 'shared.q\n#$ -l hostname=compute-0-19'
     dargs['cpus'] = 20
 if args.nodes:
-    avoid_nodes = "!"
-    if args.pick_node:
-        avoid_nodes = ""
-    nodes_string = "|".join(['{}compute-0-{}'.format(avoid_nodes, node)
+    nodes_string = "|".join(['compute-0-{}'.format(node)
                              for node in args.nodes])
+    if not args.pick_node:
+        nodes_string = "!({})".format(nodes_string)
+
     dargs['queue'] = args.queue + '\n#$ -l hostname={}'.format(nodes_string)
 
 for loop in args.loop:
@@ -79,3 +79,4 @@ for loop in args.loop:
     # Send job_string to qsub
     stdout, stderr = job.communicate(job_string)
     print('qsub out: ', stdout, 'qsub err: ', stderr)
+    print("job ", job_string)
