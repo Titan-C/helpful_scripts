@@ -15,5 +15,5 @@ setup(name=package,
       author="Óscar Nájera",
       author_email='najera.oscar@gmail.com',
       license="GNU General Public License v3 (GPLv3)",
-      install_requires=['sympy'],
+      install_requires=['numpy', 'ipython', 'sympy'],
       url="https://github.com/Titan-C/helpful_scripts")
