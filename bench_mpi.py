@@ -25,3 +25,4 @@ else:
 comm.Bcast(data, root=0)
 
 assert np.allclose(data, np.arange(N, dtype='f'))
+print(rank)

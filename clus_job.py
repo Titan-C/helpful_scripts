@@ -28,7 +28,7 @@ JOB_STRING = """
 
 export OPENBLAS_NUM_THREADS={blasth}
 
-{mpi}{command}
+time {mpi}{command}
 """
 
 parser = argparse.ArgumentParser(description='Job submission script')
