@@ -21,7 +21,7 @@ JOB_STRING = """
 
 #$ -q {queue}
 #$ -p {priority}
-#$ -pe mpich {cpus}
+#$ -pe orte {cpus}
 #$ -N "{job_name}{0}"
 #$ -M oscar.najera-ocampo@u-psud.fr
 #$ -m abe # (a = abort, b = begin, e = end)
@@ -46,7 +46,7 @@ parser.add_argument('-nd', '--nodes', default=[85, 88], type=int, nargs='+',
 parser.add_argument('-pn', '--pick_node', action='store_true',
                     help='Whether to pick the listed nodes (default :avoid)')
 parser.add_argument('-mpi', action='store_const', default='',
-                    const='mpirun -np $NSLOTS ', help='Use mpirun')
+                    const='mpiexec ', help='Use mpirun')
 parser.add_argument('executable', nargs='+', help='executable instruction')
 args = parser.parse_args()
 dargs = vars(args)
