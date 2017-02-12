@@ -2,6 +2,8 @@
 # ~/.bashrc
 #
 
+export PATH=$HOME/local/bin:$PATH
+
 # Set up local Anaconda virtual environments
 anacondainit() {
     export PATH=$HOME/miniconda3/bin:$PATH
@@ -28,7 +30,6 @@ fi
 # interactive zsh on cluster
 if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
     export LC_ALL=en_US.UTF-8
-    export PATH=$HOME/local/bin:$PATH
     [ -f ~/local/bin/zsh ] && exec ~/local/bin/zsh -l
 fi
 
