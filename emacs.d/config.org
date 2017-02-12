@@ -409,6 +409,7 @@ disable other completions. But it looks a disaster inside emacs
 ** Eshell
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'exec-path "~/dev/helpful_scripts")
+  (add-to-list 'exec-path "~/.cargo/bin")
   (use-package eshell-git-prompt
     :config
     (eshell-git-prompt-use-theme 'powerline))
@@ -824,6 +825,29 @@ this new window.
            ("\\.cmake\\'" . cmake-mode)))
 #+END_SRC
 
+** Rust
+#+BEGIN_SRC emacs-lisp
+  (use-package rust-mode
+    :config
+    (rust-enable-format-on-save))
+
+  (use-package cargo
+    :config
+    (setq cargo-process--custom-path-to-bin "~/.cargo/bin/")
+    (add-hook 'rust-mode-hook 'cargo-minor-mode))
+
+  (use-package flycheck-rust
+    :ensure t
+    :mode (("\\.rs\\'" . rust-mode))
+    :init
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
+  (use-package racer
+    :config
+    (add-hook 'rust-mode-hook #'racer-mode)
+    (add-hook 'racer-mode-hook #'eldoc-mode)
+    (add-hook 'racer-mode-hook #'company-mode))
+#+END_SRC
 ** Docker
 #+BEGIN_SRC emacs-lisp
   (use-package dockerfile-mode
