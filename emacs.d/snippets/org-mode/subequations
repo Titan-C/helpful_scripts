@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: subequations
+# key: subeq
+# --
+
+\begin{subequations}
+\label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+\begin{align}
+$0
+\end{align}
+\end{subequations}
