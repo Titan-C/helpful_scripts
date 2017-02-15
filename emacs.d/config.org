@@ -1105,13 +1105,14 @@ see this feature integrated.
 * Music
 #+BEGIN_SRC emacs-lisp
   (use-package emms
-    :init
-    (evil-set-initial-state 'emms-browser-mode 'emacs)
     :config
     (setq emms-source-file-default-directory "~/Music/")
     (emms-all)
     (emms-default-players)
     (add-to-list 'emms-info-functions 'emms-info-mpd)
     (add-to-list 'emms-player-list 'emms-player-mpd)
+    (setq emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
+    (add-to-list 'emms-info-functions 'emms-info-mp3info)
+    (evil-set-initial-state 'emms-browser 'emacs)
     (setq emms-player-mpd-music-directory "~/Music"))
 #+END_SRC
