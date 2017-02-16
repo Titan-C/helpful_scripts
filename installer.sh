@@ -36,6 +36,9 @@ ln -s $PWD/conky.conf ~/.config/conky/conky.conf
 mkdir -p ~/.config/termite
 ln -s $PWD/termite.conf ~/.config/termite/config
 
+mkdir -p ~/.config/matplotlib/
+ln -s $PWD/matplotlibrc ~/.config/matplotlib/matplotlibrc
+
 ln -s $PWD/awesome/ ~/.config/awesome
 ln -s $PWD/mpd/ ~/.config/mpd
 
