@@ -163,10 +163,7 @@
               (setq this-command 'winner-undo))
        )
        (":" winner-redo)
-       ("SPC" nil)
-       )
-    ;; Launch this Hydra with Space+w
-    (key-chord-define-global " w" 'hydra-window/body))
+       ("SPC" nil)))
 #+END_SRC
 
 ** Evil-mode
@@ -243,6 +240,7 @@
 (define-key evil-motion-state-map (kbd "C-r") 'evil-scroll-line-down)
 (define-key evil-normal-state-map (kbd "C-t") nil)
 (define-key evil-motion-state-map (kbd "C-t") 'evil-scroll-line-up)
+(define-key evil-normal-state-map (kbd "C-w") 'hydra-window/body)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
