@@ -1,5 +1,5 @@
 #+TITLE: Emacs Configuration
-#+AUTHOR: Oscar Najera
+#+AUTHOR: Óscar Nájera
 
 * Personal Information
 #+BEGIN_SRC emacs-lisp
@@ -278,6 +278,7 @@
 ** Spelling
 About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 #+BEGIN_SRC emacs-lisp
+  (setq ispell-personal-dictionary "~/dev/helpful_scripts/emacs.d/personal_dict")
   (setq-default ispell-program-name (executable-find "hunspell"))
   ;;(setq ispell-really-hunspell t)
 
