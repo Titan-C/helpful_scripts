@@ -451,6 +451,10 @@ disable other completions. But it looks a disaster inside emacs
 
     ;; Text editing
     (setq org-hide-emphasis-markers t)
+    ;;; emphasis markers can span upto 3 lines
+    (setf (nth 4 org-emphasis-regexp-components) 3)
+    (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
+
     (add-hook 'org-mode-hook 'auto-fill-mode)
     (add-hook 'org-mode-hook 'flyspell-mode))
 
