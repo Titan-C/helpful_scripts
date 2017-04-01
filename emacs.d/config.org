@@ -764,6 +764,11 @@ this new window.
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 #+END_SRC
 * Coding
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :init
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+END_SRC
 ** Linting
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
