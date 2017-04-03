@@ -665,19 +665,35 @@ this new window.
    (require 'doi-utils)
    (setq doi-utils-download-pdf nil
          doi-utils-make-notes nil)
-   (defun my/org-ref-open-pdf-at-point ()
-    "Open the pdf for bibtex key under point if it exists."
-    (interactive)
-    (let* ((results (org-ref-get-bibtex-key-and-file))
-           (key (car results))
-           (pdf-file (car (bibtex-completion-find-pdf key))))
-      (if (file-exists-p pdf-file)
-          (org-open-file pdf-file)
-        (message "No PDF found for %s" key))))
-
-  (setq org-ref-open-pdf-function 'my/org-ref-open-pdf-at-point)
   (key-chord-define bibtex-mode-map "jj" 'org-ref-bibtex-hydra/body)
   )
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (defun org-ref-bibtex-assoc-pdf-sup-with-entry (&optional prefix)
+    "Prompt for supplementary pdf associated with entry at point and
+  rename it.  Check whether a pdf already exists in
+  `org-ref-pdf-directory' with the name '[bibtexkey]_sup.pdf'. If the
+  file does not exist, rename it to '[bibtexkey]_sup.pdf' using
+  `org-ref-bibtex-assoc-pdf-with-entry-move-function' and place it in
+  `org-ref-pdf-directory'. Finally set the file field in the bibtex to
+  include main pdf and supplementary pdf file locations"
+    (interactive "P")
+    (save-excursion
+      (bibtex-beginning-of-entry)
+      (let* ((file (read-file-name "Select file associated with entry: "))
+	     (bibtex-expand-strings t)
+             (entry (bibtex-parse-entry t))
+             (key (reftex-get-bib-field "=key=" entry))
+             (mainpdf (concat org-ref-pdf-directory key ".pdf"))
+             (suppdf (concat org-ref-pdf-directory key "_sup.pdf"))
+             (key-files (concat ":" mainpdf ":PDF;:" suppdf ":PDF"))
+	     (file-move-func (org-ref-bibtex-get-file-move-func prefix)))
+        (if (file-exists-p suppdf)
+	    (message (format "A file named %s already exists" pdf))
+	  (progn
+	    (funcall file-move-func file suppdf)
+            (bibtex-set-field "file" key-files)
+	    (message (format "Created file %s" suppdf)))))))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   (defhydra helm-org-ref-insert-link ()
