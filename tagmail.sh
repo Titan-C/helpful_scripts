@@ -13,6 +13,7 @@ notmuch new
 notmuch tag +clusjobs -inbox from:root@local.u-psud.fr or from:root@orlando.u-psud.fr subject:Job tag:inbox
 notmuch tag +coding -inbox from:github.com or from:bitbucket.org or from:mg.gitlab.com tag:inbox
 notmuch tag +ci -inbox from:travis-ci.com or from:travis-ci.org or from:appveyor.com or from:circleci.com tag:inbox
+notmuch tag +ci -coding from:mg.gitlab.com and subject:Pipeline tag:coding
 notmuch tag +LPS -inbox subject:tous.lps tag:inbox
 notmuch tag +LPSPHD -inbox subject:tousthesards.lps tag:inbox
 
