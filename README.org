@@ -32,3 +32,8 @@ packages are available. I'm no HPC expert, but I'm getting forward
 into getting my work to execute on those nodes.
 
 See [[file:localinstall.sh][Local package manager]]
+* Fonts
+I use nerd-fonts from AUR
+#+BEGIN_SRC bash
+  yaourt nerd-fonts-complete
+#+END_SRC

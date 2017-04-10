@@ -111,5 +111,6 @@ alias gdrives='rclone sync --drive-formats ods,odt gdrive: gdrive '
 alias lconda='export PATH=$HOME/miniconda3/bin:$PATH'
 alias condup='conda update --all --yes'
 alias vact='source activate'
+alias gdimg='git difftool -t image_diff'
 
 alias -g G='| grep'

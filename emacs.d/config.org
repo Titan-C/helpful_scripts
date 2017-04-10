@@ -787,7 +787,7 @@ this new window.
           (add-hook 'python-mode-hook 'elpy-mode)
       :config
           (elpy-enable)
-          (pyvenv-activate "~/miniconda3/envs/hpc3/")
+          (pyvenv-activate "~/.virtualenvs/dev3/")
           (setq elpy-rpc-backend "jedi")
           (remove-hook 'elpy-modules 'elpy-module-flymake)
           (elpy-use-ipython)
