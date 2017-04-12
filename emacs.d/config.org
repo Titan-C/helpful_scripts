@@ -3,7 +3,7 @@
 
 * Personal Information
 #+BEGIN_SRC emacs-lisp
-  (setq user-mail-address "najera.oscar@gmail.com"
+  (setq user-mail-address "hello@oscarnajera.com"
         user-full-name    "Óscar Nájera")
 #+END_SRC
 
@@ -946,12 +946,13 @@ this new window.
           (:name "drafts" :query "tag:draft" :key "d")
           (:name "all mail" :query "*" :key "a")))
 
-      (setq notmuch-fcc-dirs '(("hi@oscarnajera.com" . "hi_pers/Sent")
-                               (".*@gmail" . nil)
+      (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
+                               (".*@gmail.com" . "gmail/[Gmail]/.Sent Mail")
                                (".*@u-psud.fr" . "upsud/Sent")))
 
       (setq notmuch-crypto-process-mime t)
       (setq message-kill-buffer-on-exit t)
+
 
   (zenburn-with-color-variables
     (setq notmuch-search-line-faces `(("deleted" . (:strike-through t))
@@ -1017,8 +1018,9 @@ this new window.
   )
 
   (defconst smtp-from-server-alist
-    '(("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls))
+    '(("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
       ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
+      ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls))
       ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl))
       ))
 
