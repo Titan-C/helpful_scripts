@@ -3,11 +3,12 @@
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
 (add-to-list 'default-frame-alist '(alpha . (95 . 70)))
+(setq tls-checktrust t)
+(setq gnutls-verify-error t)
 
 (require 'package)
-(setq package-archives '(("melpa" . "http://melpa.org/packages/")
-                         ("org" . "http://orgmode.org/elpa/")
-                         ("gnu" . "http://elpa.gnu.org/packages/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
