@@ -1000,11 +1000,15 @@ this new window.
 #+END_SRC
 ** twitter
 #+BEGIN_SRC emacs-lisp
-(use-package twittering-mode
-:init
-(setq twittering-use-master-password t)
-(setq twittering-icon-mode t)
-(setq twittering-use-icon-storage t))
+  (use-package twittering-mode
+    :init
+    (setq twittering-use-master-password t)
+    (setq twittering-icon-mode t)
+    (setq twittering-use-icon-storage t)
+
+    :bind (:map twittering-mode-map
+           ("r" . twittering-goto-next-status)
+           ("t" . twittering-goto-previous-status)))
 #+END_SRC
 ** Send
 #+BEGIN_SRC emacs-lisp
