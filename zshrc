@@ -12,7 +12,7 @@ export ZSH=/home/oscar/.oh-my-zsh
 ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_PYTHON_ICON='\ue606'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv anaconda vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs virtualenv anaconda)
 DEFAULT_USER="oscar"
 
 # colorful terminal on cluster
@@ -114,3 +114,4 @@ alias vact='source activate'
 alias gdimg='git difftool -t image_diff'
 
 alias -g G='| grep'
+alias lar='ls -lahrt'
