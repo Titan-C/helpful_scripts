@@ -6,3 +6,7 @@
 *** http://planet.emacsen.org/atom.xml
 ** ArchLinux                                                      :archlinux:
 *** https://www.archlinux.org/feeds/news/
+*** https://planet.archlinux.org/atom.xml
+** [[http://www.amarun.net/index.php/forum/topics/mode-latest?format=feed][Amarun]]
+** Rust
+*** https://this-week-in-rust.org/atom.xml
