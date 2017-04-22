@@ -1018,6 +1018,8 @@ this new window.
     (setq twittering-use-master-password t)
     (setq twittering-icon-mode t)
     (setq twittering-use-icon-storage t)
+    :config
+    (add-hook 'twittering-edit-mode-hook (lambda () (ispell-minor-mode) (flyspell-mode)))
 
     :bind (:map twittering-mode-map
            ("r" . twittering-goto-next-status)
