@@ -13,11 +13,8 @@
         `((".*" . ,temporary-file-directory)))
   (setq vc-follow-symlinks t)
   (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-  (show-paren-mode t)
-  (setq show-paren-delay 0.0)
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
-  (electric-pair-mode)
   (add-hook 'text-mode-hook 'visual-line-mode) ;; word-wrap
   (add-hook 'text-mode-hook 'flyspell-mode) ;; spell-check
   (setq safe-local-variable-values '((ispell-dictionary . "spanish")))
@@ -296,6 +293,21 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
     :config
     (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
   (setq browse-url-browser-function 'browse-url-firefox)
+#+END_SRC
+** Parenthesis
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode t)
+  (setq show-paren-delay 0.0)
+  (use-package smartparens
+    :diminish smartparens-mode
+    :bind (:map smartparens-mode-map
+          ("C-)" . sp-forward-slurp-sexp)
+          ("C-(" . sp-backward-slurp-sexp)
+          ("C-M-)" . sp-forward-barf-sexp)
+          ("C-M-(" . sp-backward-barf-sexp))
+    :init
+      (require 'smartparens-config)
+      (smartparens-global-mode t))
 #+END_SRC
 * Helm
 #+BEGIN_SRC emacs-lisp
