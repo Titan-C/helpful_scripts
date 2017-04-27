@@ -35,6 +35,8 @@
 
 (define-abbrev-table 'calendar-mode-abbrev-table '())
 
+(define-abbrev-table 'cargo-process-mode-abbrev-table '())
+
 (define-abbrev-table 'change-log-mode-abbrev-table '())
 
 (define-abbrev-table 'cider-browse-ns-mode-abbrev-table '())
@@ -44,6 +46,8 @@
 (define-abbrev-table 'cider-docview-mode-abbrev-table '())
 
 (define-abbrev-table 'cider-inspector-mode-abbrev-table '())
+
+(define-abbrev-table 'cider-repl-history-mode-abbrev-table '())
 
 (define-abbrev-table 'cider-repl-mode-abbrev-table '())
 
@@ -81,6 +85,8 @@
 
 (define-abbrev-table 'edit-abbrevs-mode-abbrev-table '())
 
+(define-abbrev-table 'ein:inspector-mode-abbrev-table '())
+
 (define-abbrev-table 'ein:ipdb-mode-abbrev-table '())
 
 (define-abbrev-table 'ein:notebook-multilang-mode-abbrev-table '())
@@ -92,6 +98,8 @@
 (define-abbrev-table 'ein:notebooklist-mode-abbrev-table '())
 
 (define-abbrev-table 'ein:pager-mode-abbrev-table '())
+
+(define-abbrev-table 'ein:shared-output-mode-abbrev-table '())
 
 (define-abbrev-table 'ein:traceback-mode-abbrev-table '())
 
@@ -122,6 +130,8 @@
 (define-abbrev-table 'flycheck-error-list-mode-abbrev-table '())
 
 (define-abbrev-table 'fundamental-mode-abbrev-table '())
+
+(define-abbrev-table 'gfm-mode-abbrev-table '())
 
 (define-abbrev-table 'global-abbrev-table '())
 
@@ -171,6 +181,8 @@
 
 (define-abbrev-table 'log-edit-mode-abbrev-table '())
 
+(define-abbrev-table 'log4e-mode-abbrev-table '())
+
 (define-abbrev-table 'lua-mode-abbrev-table
   '(
    ))
@@ -205,6 +217,8 @@
 
 (define-abbrev-table 'magit-status-mode-abbrev-table '())
 
+(define-abbrev-table 'markdown-mode-abbrev-table '())
+
 (define-abbrev-table 'message-mode-abbrev-table '())
 
 (define-abbrev-table 'messages-buffer-mode-abbrev-table '())
@@ -231,10 +245,7 @@
 
 (define-abbrev-table 'org-export-stack-mode-abbrev-table '())
 
-(define-abbrev-table 'org-mode-abbrev-table
-  '(
-    ("t" "the" nil 6)
-   ))
+(define-abbrev-table 'org-mode-abbrev-table '())
 
 (define-abbrev-table 'outline-mode-abbrev-table '())
 
@@ -262,9 +273,13 @@
   '(
    ))
 
+(define-abbrev-table 'racer-help-mode-abbrev-table '())
+
 (define-abbrev-table 'rst-mode-abbrev-table '())
 
 (define-abbrev-table 'rst-toc-mode-abbrev-table '())
+
+(define-abbrev-table 'rust-mode-abbrev-table '())
 
 (define-abbrev-table 'scss-mode-abbrev-table '())
 
@@ -296,10 +311,7 @@
 
 (define-abbrev-table 'tex-shell-abbrev-table '())
 
-(define-abbrev-table 'text-mode-abbrev-table
-  '(
-    (" t" " the" nil 0)
-   ))
+(define-abbrev-table 'text-mode-abbrev-table '())
 
 (define-abbrev-table 'twittering-edit-mode-abbrev-table '())
 
