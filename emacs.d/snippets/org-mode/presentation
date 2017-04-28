@@ -1,0 +1,38 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: presentation
+# key: presentation
+# --
+#+TITLE:  ${1:`(replace-regexp-in-string "-" " " (capitalize (file-name-nondirectory (file-name-sans-extension (buffer-file-name)))))`}
+#+AUTHOR: `(user-full-name)`
+#+EMAIL: `user-mail-address`
+#+DATE: $2
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+STARTUP: hideblocks
+#+OPTIONS: toc:1 H:2
+#+REVEAL_PLUGINS: (notes)
+#+REVEAL_TRANS: slide
+#+REVEAL_THEME: serif
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_EXTRA_CSS: https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css
+#+REVEAL_EXTRA_CSS: css/style.css
+# #+OPTIONS: reveal_width:1920 reveal_height:1440
+#+OPTIONS: reveal_width:1600 reveal_height:1200
+# #+OPTIONS: reveal_width:1200 reveal_height:900
+#+BEGIN_SRC emacs-lisp :results silent :exports none
+  (setq org-reveal-title-slide "
+
+  <h2 class=\\"title\\">%t</h2>
+  <h3 class=\\"subtitle\\">%s</h3>
+
+  <h3 class=\\"authors\\"><u><b>%s</b></u><sup>1</sup></h3>
+  <h3><i class=\\"fa fa-envelope\\" aria-hidden=\\"true\\"></i> %e / <a href=\\"http://github.com/Titan-C\\">
+  <i class=\\"fa fa-github\\" aria-hidden=\\"true\\"></i>
+  Titan-C</a></h3>
+
+    <h5 class=\\"affiliation\\">
+      <sup>1</sup> Laboratoire de Physique des Solides, CNRS-UMR8502, Université Paris-Sud, Orsay 91405, France</br></h5>
+
+  <h3>%d</h3>")
+  (org-reveal-export-to-html)
+#+END_SRC
+$0
