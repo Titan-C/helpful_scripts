@@ -24,7 +24,7 @@ JOB_STRING = """
 #$ -pe orte {cpus}
 #$ -N "{job_name}{0}"
 #$ -M oscar.najera-ocampo@u-psud.fr
-#$ -m abe # (a = abort, b = begin, e = end)
+#$ -m ae # (a = abort, b = begin, e = end)
 
 export OPENBLAS_NUM_THREADS={blasth}
 
