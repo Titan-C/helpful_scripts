@@ -9,6 +9,12 @@
 
 * Editor
 #+BEGIN_SRC emacs-lisp
+  ;;http://emacs-fu.blogspot.fr/2011/01/setting-frame-title.html
+  (setq frame-title-format
+    '("" invocation-name ": "(:eval (if (buffer-file-name)
+                (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+
   (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq vc-follow-symlinks t)
