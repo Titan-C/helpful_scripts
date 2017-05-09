@@ -6,9 +6,13 @@
 # -*- coding: utf-8 -*-
 r"""
 ${1:docstring}
+${1:$(make-string (string-width yas-text) ?\=)}
+
+${2:Goal of the script}
 """
-# Created ${2:`(current-time-string)`}
+# Created: ${3:`(current-time-string)`}
 # Author: Óscar Nájera
+# License: ${4:$$(yas-choose-value '("3-clause BSD" "GPL-3"))}
 
 from __future__ import division, absolute_import, print_function
 
