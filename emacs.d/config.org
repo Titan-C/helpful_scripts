@@ -723,6 +723,11 @@ this new window.
   (key-chord-define org-mode-map "jj" 'helm-org-ref-insert-link/body)
 #+END_SRC
 ** Key Bindings
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-structure-template-alist '("e" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+  (add-to-list 'org-structure-template-alist '("p" "#+BEGIN_SRC python\n?\n#+END_SRC"))
+  (add-to-list 'org-structure-template-alist '("C" "#+CAPTION: ?"))
+#+END_SRC
 *** normal & insert state shortcuts.
 #+BEGIN_SRC emacs-lisp
   (mapc (lambda (state)
