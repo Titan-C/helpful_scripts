@@ -382,7 +382,7 @@ axes.grid           : True   # display grid or not
 #xtick.color          : k      # color of the tick labels
 #xtick.labelsize      : medium # fontsize of the tick labels
 #xtick.direction      : out    # direction: in, out, or inout
-#xtick.minor.visible  : False  # visibility of minor ticks on x-axis
+xtick.minor.visible  : True  # visibility of minor ticks on x-axis
 #xtick.major.top      : True   # draw x axis top major ticks
 #xtick.major.bottom   : True   # draw x axis bottom major ticks
 #xtick.minor.top      : True   # draw x axis top minor ticks
@@ -399,7 +399,7 @@ axes.grid           : True   # display grid or not
 #ytick.color          : k      # color of the tick labels
 #ytick.labelsize      : medium # fontsize of the tick labels
 #ytick.direction      : out    # direction: in, out, or inout
-#ytick.minor.visible  : False  # visibility of minor ticks on y-axis
+ytick.minor.visible  : True  # visibility of minor ticks on y-axis
 #xtick.major.left     : True   # draw y axis left major ticks
 #xtick.major.right    : True   # draw y axis right major ticks
 #xtick.minor.left     : True   # draw y axis left minor ticks
