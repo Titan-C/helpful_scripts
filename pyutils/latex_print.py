@@ -10,21 +10,24 @@ from __future__ import division, absolute_import, print_function
 import sympy
 
 
-def platex(*args):
+def platex(*args, environment='equation', **settings):
     """Call sympy latex print over arguments
 
     Parameters
     ----------
     *args: as many sympy expressions as wanted is the same latex
        equation environment
+    environment: wrap expression in an environment block
+    **settings: settings for sympy latex
     """
 
-    print(r'\begin{equation}')
+    new_arguments = [sympy.latex(arg, **settings) for arg in args]
+    latex_block = r"""\begin{{{environment}}}
+{}
+\end{{{environment}}}
+""".format("\n".join(new_arguments), environment=environment)
 
-    new_arguments = [sympy.latex(arg) for arg in args]
-
-    print(*new_arguments)
-    print(r'\end{equation}')
+    return latex_block
 
 
 def ket(base, names=[r"\uparrow", r"\downarrow"]):
