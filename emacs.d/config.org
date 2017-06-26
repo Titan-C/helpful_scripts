@@ -531,7 +531,6 @@ this new window.
 
 ** Latex
 #+BEGIN_SRC emacs-lisp
-  (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
   ;; code syntax highlighting. See section 12
   ;; http://orgmode.org/worg/org-tutorials/org-latex-export.html
   ;;(add-to-list 'org-latex-packages-alist '("" "minted" nil))
@@ -542,6 +541,14 @@ this new window.
           ("fontsize" "\\scriptsize")
           ("linenos" "")))
   (setq org-highlight-latex-and-related '(latex script entities))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package org-edit-latex
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'org-edit-latex-mode)
+    (plist-put org-format-latex-options :scale 1.5)
+    (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -602,6 +609,7 @@ this new window.
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
+     (latex . t)
      (shell . t)
      (python . t)))
 #+END_SRC
