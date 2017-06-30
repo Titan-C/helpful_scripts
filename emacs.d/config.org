@@ -288,6 +288,8 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXPORT latex" . "#\\+END_SRC"))
+  (add-to-list 'ispell-skip-region-alist '("[^\\]\\$" . "[^\\]\\$"))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   (use-package langtool
