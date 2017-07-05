@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: matsubara_freq
+# key: iw
+# --
+i\omega_n $0

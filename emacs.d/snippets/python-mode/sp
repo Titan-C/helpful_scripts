@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: sp
+# key: sp
+# --
+import sympy as sp
+$0
