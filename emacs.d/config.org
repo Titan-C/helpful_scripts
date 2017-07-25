@@ -993,8 +993,6 @@ this new window.
                                                    :foreground ,zenburn-green)))))
   )
 
-  (use-package helm-notmuch
-    :ensure t)
 #+END_SRC
 ** BBDB
 #+BEGIN_SRC emacs-lisp
