@@ -495,12 +495,6 @@ disable other completions. But it looks a disaster inside emacs
   ;;(org-agenda-list 1)
   ;;(setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
 
-  (use-package org-pdfview
-    :init
-    (delete '("\\.pdf\\'" . default) org-file-apps)
-    (add-to-list 'org-file-apps '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open file))))
-    (add-to-list 'org-file-apps '("\\.pdf::\\([[:digit:]]+\\)\\'" . (lambda (file link) (org-pdfview-open file))))
-    )
 #+END_SRC
 
 ** Alerts
@@ -1153,6 +1147,7 @@ see this feature integrated.
 * Pdf-Reading
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
+    :ensure t
     :mode (("\\.pdf$" . pdf-view-mode))
     :bind (:map pdf-view-mode-map
                 ("r" . pdf-view-scroll-up-or-next-page)
@@ -1164,6 +1159,13 @@ see this feature integrated.
     :config
     (pdf-tools-install)
     (evil-set-initial-state 'pdf-view-mode 'emacs))
+
+  (use-package org-pdfview
+    :init
+    (delete '("\\.pdf\\'" . default) org-file-apps)
+    (add-to-list 'org-file-apps '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open file))))
+    (add-to-list 'org-file-apps '("\\.pdf::\\([[:digit:]]+\\)\\'" . (lambda (file link) (org-pdfview-open file))))
+    )
 #+END_SRC
 * Music
 #+BEGIN_SRC emacs-lisp
