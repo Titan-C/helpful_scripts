@@ -10,3 +10,5 @@
 ** [[http://www.amarun.net/index.php/forum/topics/mode-latest?format=feed][Amarun]]
 ** Rust
 *** https://this-week-in-rust.org/atom.xml
+** [[http://blog.fefe.de/rss.xml][fefe CCC]]
+** [[https://hboeck.de/rss.xml][Hanno Boeck]]
