@@ -57,11 +57,10 @@
     (list user password auth-info)))
 
 ;;(erc-tls :server "irc.oftc.net" :port "6697" :nick "titan-c")
-;; password : you expect memory?
 ;;(erc-tls :server "chat.freenode.net" :port "6697" :nick (car (auth-source-user-and-password "chat.freenode.net")) :password  (cadr (auth-source-user-and-password "chat.freenode.net")))
 ;;(erc-tls :server "irc.mozilla.org" :port "6697" :nick "titan-c")
 
-;;(erc-tls :server "irc.gitter.im" :port 6697 :password "e7fd6d3a1a52794a456ee9215018558520b94f11" :nick "Titan-C")
+;;(erc-tls :server "irc.gitter.im" :port 6697 :password (cadr (auth-source-user-and-password "irc.gitter.im")) :nick (car (auth-source-user-and-password "irc.gitter.im")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
