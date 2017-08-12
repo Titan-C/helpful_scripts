@@ -55,10 +55,10 @@
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package relative-line-numbers
-    :init
-    (add-hook 'prog-mode-hook 'relative-line-numbers-mode)
-    (setq relative-line-numbers-motion-function 'forward-visible-line))
+  (use-package nlinum-relative
+    :config
+    (nlinum-relative-setup-evil)
+    (add-hook 'prog-mode-hook 'nlinum-relative-mode))
 #+END_SRC
 
 ** Window Management
