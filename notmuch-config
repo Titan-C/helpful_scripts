@@ -1,6 +1,6 @@
 # .notmuch-config - Configuration file for the notmuch mail system
 #
-# For more information about notmuch, see http://notmuchmail.org
+# For more information about notmuch, see https://notmuchmail.org
 
 # Database configuration
 #
@@ -30,8 +30,8 @@ path=/home/oscar/.mail/
 #
 [user]
 name=Oscar Najera
-primary_email=najera.oscar@gmail.com
-other_email=hi@oscarnajera.com;oscar.najera-ocampo@u-psud.fr;
+primary_email=hello@oscarnajera.com
+other_email=najera.oscar@gmail.com;oscar.najera-ocampo@u-psud.fr;
 
 # Configuration for "notmuch new"
 #
@@ -89,10 +89,12 @@ synchronize_flags=true
 
 # Cryptography related configuration
 #
-# The following option is supported here:
+# The following *deprecated* option is currently supported:
 #
 #	gpg_path
 #		binary name or full path to invoke gpg.
+#		NOTE: In a future build, this option will be ignored.
+#		Setting $PATH is a better approach.
 #
 [crypto]
 gpg_path=gpg
