@@ -187,7 +187,7 @@
         "f" 'helm-find-files
         "p" 'helm-projectile
         "t" 'magit-status
-        "m" 'notmuch-hello
+        "m" 'notmuch
         "s" 'eshell
         "q" 'kill-this-buffer
         "Q" 'kill-buffer-and-window
@@ -945,6 +945,7 @@ this new window.
           ("M-t" . notmuch-show-previous-thread-show)
           )
     :config
+      (add-to-list 'load-path "~/.emacs.d/lisp/")
       (require 'org-notmuch)
       (define-key notmuch-tree-mode-map "n"
         (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
