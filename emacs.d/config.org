@@ -438,7 +438,7 @@ disable other completions. But it looks a disaster inside emacs
 * Orgmode
 ** Main Behavior
 #+BEGIN_SRC emacs-lisp
-  (use-package org-plus-contrib
+  (use-package org
     :bind (("\C-ca" . org-agenda)
            ("\C-cc" . org-capture)
            ("\C-cl" . org-store-link))
@@ -607,7 +607,7 @@ this new window.
    'org-babel-load-languages
    '((emacs-lisp . t)
      (latex . t)
-     (shell . t)
+     (sh . t)
      (python . t)))
 #+END_SRC
 
@@ -1021,7 +1021,6 @@ this new window.
   (add-hook 'message-mode-hook 'turn-on-orgtbl)
   (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
   (use-package org-mime
-    :ensure org-plus-contrib
     :defer t
     :commands (org-mime-htmlize org-mime-org-buffer-htmlize))
 #+END_SRC
