@@ -64,6 +64,8 @@ fi
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git archlinux python virtualenvwrapper)
 
+source $ZSH/oh-my-zsh.sh
+
 # User configuration
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
