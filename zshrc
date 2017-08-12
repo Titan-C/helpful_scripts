@@ -3,7 +3,7 @@
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/oscar/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -77,8 +77,11 @@ export GPG_TTY=$(tty)
 export PATH="$HOME/dev/helpful_scripts:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/local/bin/:$PATH"
-PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
-export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+
+if (( $+commads[ruby] )); then
+    PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+    export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+fi
 
 source $ZSH/oh-my-zsh.sh
 
