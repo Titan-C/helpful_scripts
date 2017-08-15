@@ -783,6 +783,7 @@ this new window.
   (add-hook 'git-commit-mode-hook 'evil-insert-state)
   :config
   (setq magit-diff-refine-hunk t)
+  (setq magit-repository-directories '("~/dev"))
   (define-key magit-mode-map "t" 'magit-section-backward)
   (define-key magit-mode-map "\M-t" 'magit-section-backward-sibling)
   (define-key magit-mode-map "r" 'magit-section-forward)
