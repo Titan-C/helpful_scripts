@@ -659,10 +659,9 @@ this new window.
       "hb" 'helm-bibtex)
     :config
     (setq bibtex-completion-bibliography '("~/Dropbox/biblio/papers.bib"
-                                           "~/Documents/zotero.bib"
+                                           "~/Dropbox/biblio/zotero.bib"
                                            "~/Dropbox/biblio/arxiv.bib"
-                                           "~/Documents/library.bib"
-                                           "~/Dropbox/biblio/books.bib"
+                                           "~/Dropbox/biblio/library.bib"
                                            "~/Dropbox/biblio/slides_talks.bib"))
     (setq bibtex-completion-pdf-field "file")
     (setq bibtex-completion-library-path "~/Dropbox/bibtex-pdf/")
