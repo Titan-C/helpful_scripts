@@ -1,0 +1,37 @@
+# in anaconda & pip
+coverage
+cython
+ipython
+jedi
+jinja2
+joblib
+jsonschema
+jupyter
+line_profiler
+matplotlib
+mistune
+nose
+numba
+numpy
+numpydoc
+pandas
+pep8
+pillow
+pyflakes
+pylint
+pytest
+pyqt5
+rope
+scipy
+sphinx
+sympy
+tornado
+
+# in pip only
+autopep8
+flake8
+importmagic
+mako
+mpi4py
+pytest-cov
+yapf
