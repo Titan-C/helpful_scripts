@@ -679,6 +679,9 @@ this new window.
 #+BEGIN_SRC emacs-lisp
   (use-package org-ref
    :init
+   (key-chord-define bibtex-mode-map "jj" 'org-ref-bibtex-hydra/body)
+   :config
+   (setq org-ref-show-broken-links nil)
    (setq org-ref-bibliography-notes bibtex-completion-notes-path)
    (setq org-ref-default-bibliography bibtex-completion-bibliography)
    (setq org-ref-pdf-directory bibtex-completion-library-path)
@@ -688,7 +691,6 @@ this new window.
    (require 'doi-utils)
    (setq doi-utils-download-pdf nil
          doi-utils-make-notes nil)
-  (key-chord-define bibtex-mode-map "jj" 'org-ref-bibtex-hydra/body)
   )
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
