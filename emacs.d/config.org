@@ -544,6 +544,7 @@ this new window.
     :config
     (add-hook 'org-mode-hook 'org-edit-latex-mode)
     (plist-put org-format-latex-options :scale 1.5)
+    (setq org-preview-latex-default-process 'imagemagick)
     (key-chord-define org-src-mode-map ".." 'org-edit-latex-preview-at-point)
     (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment))
 #+END_SRC
