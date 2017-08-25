@@ -4,6 +4,7 @@
 *** http://sachachua.com/blog/feed/
 *** http://www.howardism.org/index.xml
 *** http://planet.emacsen.org/atom.xml
+*** http://kitchingroup.cheme.cmu.edu/blog/feed/index.xml
 ** ArchLinux                                                      :archlinux:
 *** https://www.archlinux.org/feeds/news/
 *** https://planet.archlinux.org/atom.xml
@@ -12,3 +13,4 @@
 *** https://this-week-in-rust.org/atom.xml
 ** [[http://blog.fefe.de/rss.xml][fefe CCC]]
 ** [[https://hboeck.de/rss.xml][Hanno Boeck]]
+** [[http://feeds.feedburner.com/TroyHunt?format=xml][Troy Hunt]]
