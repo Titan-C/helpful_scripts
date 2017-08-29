@@ -296,6 +296,7 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
     :config
     (setq langtool-java-classpath "/usr/share/languagetool:/usr/share/java/languagetool/*"
           langtool-mother-tongue "es"
+          langtool-default-language "en-US"
           langtool-disabled-rules '("WHITESPACE_RULE")))
 #+END_SRC
 ** Add-ons
@@ -537,6 +538,7 @@ this new window.
           ("fontsize" "\\scriptsize")
           ("linenos" "")))
   (setq org-highlight-latex-and-related '(latex script entities))
+  (setq org-latex-pdf-process '("latexmk -g -pdf -pdflatex=\"%latex\" -outdir=%o %f"))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   (use-package org-edit-latex
@@ -562,7 +564,6 @@ this new window.
        (add-to-list 'company-math-allow-latex-symbols-in-faces 'org-latex-and-related)
   )
 #+END_SRC
-
 #+BEGIN_SRC emacs-lisp
   ;; ** <<APS journals>>
   (require 'ox-latex)
@@ -581,13 +582,6 @@ this new window.
        \[DEFAULT-PACKAGES]
        \[PACKAGES]
        \[EXTRA]"))
-#+END_SRC
-*** bibtex
-#+BEGIN_SRC emacs-lisp
-  (setq org-latex-pdf-process '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                                "bibtex %b"
-                                "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                                "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 #+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp
