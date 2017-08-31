@@ -968,13 +968,13 @@ this new window.
                     '("+deleted" "-inbox" "-unread")))))
 
       (setq notmuch-saved-searches
-          '((:name "inbox" :query "tag:inbox" :key "i")
-          (:name "to-me" :query "tag:tome" :key "l")
-          (:name "unread" :query "tag:unread" :key "u")
-          (:name "flagged" :query "tag:flagged" :key "f")
-          (:name "sent" :query "tag:sent" :key "t")
-          (:name "drafts" :query "tag:draft" :key "d")
-          (:name "all mail" :query "*" :key "a")))
+          '((:name "inbox" :query "tag:inbox" :key "i" :search-type tree)
+            (:name "flagged" :query "tag:flagged" :key "f")
+            (:name "unread" :query "tag:unread" :key "u")
+            (:name "drafts" :query "tag:draft" :key "d")))
+
+      (setq notmuch-show-all-tags-list t
+            notmuch-hello-tag-list-make-query "tag:unread")
 
       (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
                                (".*@gmail.com" . "gmail/[Gmail]/.Sent Mail")
