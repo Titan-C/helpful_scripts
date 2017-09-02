@@ -967,6 +967,15 @@ this new window.
                     '("-deleted")
                     '("+deleted" "-inbox" "-unread")))))
 
+      (define-key notmuch-tree-mode-map "d"
+         (lambda ()
+         "delete message"
+            (interactive)
+            (notmuch-tree-tag
+               (if (member "deleted" (notmuch-tree-get-tags))
+                    '("-deleted")
+                    '("+deleted" "-inbox" "-unread")))))
+
       (setq notmuch-saved-searches
           '((:name "inbox" :query "tag:inbox" :key "i" :search-type tree)
             (:name "flagged" :query "tag:flagged" :key "f")
