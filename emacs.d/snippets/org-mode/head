@@ -16,5 +16,10 @@
 #+LaTeX_HEADER: \usepackage{minted}
 #+LaTeX_HEADER: \usemintedstyle{friendly}
 #+LaTeX_HEADER: \newminted{common-lisp}{fontsize=\footnotesize}
+#+NAME: commit
+#+BEGIN_SRC emacs-lisp :exports none :tangle no
+  (shell-command-to-string "git rev-parse HEAD")
+#+END_SRC
+This corresponds to git commit call_commit().
 
 $0
