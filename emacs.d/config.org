@@ -942,8 +942,6 @@ this new window.
           ("M-t" . notmuch-show-previous-thread-show)
           )
     :config
-      (add-to-list 'load-path "~/.emacs.d/lisp/")
-      (require 'org-notmuch)
       (define-key notmuch-tree-mode-map "n"
         (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
       (define-key notmuch-tree-mode-map "N"
@@ -1000,6 +998,11 @@ this new window.
                                                    :foreground ,zenburn-green)))))
   )
 
+#+END_SRC
+Load org-notmuch independently to open links from org files
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(require 'org-notmuch)
 #+END_SRC
 ** BBDB
 #+BEGIN_SRC emacs-lisp
