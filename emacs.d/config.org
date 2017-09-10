@@ -602,7 +602,7 @@ this new window.
    'org-babel-load-languages
    '((emacs-lisp . t)
      (latex . t)
-     (sh . t)
+     (shell . t)
      (python . t)))
 #+END_SRC
 
