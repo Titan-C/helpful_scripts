@@ -1,3 +1,4 @@
+# -*- mode: conf-unix -*-
 # .notmuch-config - Configuration file for the notmuch mail system
 #
 # For more information about notmuch, see https://notmuchmail.org
@@ -48,7 +49,8 @@ other_email=najera.oscar@gmail.com;oscar.najera-ocampo@u-psud.fr;
 #		in the mail store.
 #
 [new]
-tags=unread;inbox;
+#tags=unread;inbox;
+tags=new;
 ignore=.uidvalidity;.mbsyncstate;.directory
 
 # Search configuration

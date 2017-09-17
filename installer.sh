@@ -39,6 +39,8 @@ ln -s $PWD/matplotlibrc ~/.config/matplotlib/matplotlibrc
 
 ln -s $PWD/mpd/ ~/.config/mpd
 
+ln -s $PWD/afew/ ~/.config/afew
+
 source ~/.bashrc
 echo "set show-all-if-unmodified on" >> ~/.inputrc
 

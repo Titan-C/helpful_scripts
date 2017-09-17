@@ -75,7 +75,7 @@ export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
 export GPG_TTY=$(tty)
 
 export PATH="$HOME/dev/helpful_scripts:$PATH"
-export PATH="$HOME/local/bin/:$PATH"
+export PATH="$HOME/.local/bin/:$PATH"
 
 if (( $+commads[ruby] )); then
     PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"

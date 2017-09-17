@@ -1,0 +1,15 @@
+# -*- mode: conf-unix -*-
+# This is the default filter chain
+[SpamFilter]
+[KillThreadsFilter]
+[ListMailsFilter]
+[SentMailsFilter]
+sent_tag = sent
+[ArchiveSentMailsFilter]
+
+[Filter.1]
+message = "Tag jobs from the cluster"
+query = from:root@local.u-psud.fr or from:root@orlando.u-psud.fr subject:Job
+tags = +clusjobs
+
+[InboxFilter]
