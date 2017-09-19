@@ -458,10 +458,14 @@ disable other completions. But it looks a disaster inside emacs
     (setq org-directory "~/Dropbox/org")
 
     ;; Refile
-    (setq org-refile-targets (quote ((nil :maxlevel . 2)
+    (setq org-refile-targets (quote ((nil :maxlevel . 3)
                                   ("~/Dropbox/org/journal.org" :maxlevel . 3)
                                   ("~/Dropbox/org/todo.org" :maxlevel . 2))))
-    (setq org-refile-use-outline-path nil)
+    (setq org-refile-use-outline-path t)
+    (setq org-outline-path-complete-in-steps nil)
+
+    ;;imenu
+    (setq org-imenu-depth 4)
 
     ;; Agenda files
     (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
