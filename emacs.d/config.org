@@ -469,6 +469,7 @@ disable other completions. But it looks a disaster inside emacs
 
     ;; Agenda files
     (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
+                                 "~/dissertation/thesis.org"
                                 "~/Dropbox/org/gcal.org"
                                 "~/Dropbox/org/journal.org"
                                 "~/Dropbox/org/todo.org"))
