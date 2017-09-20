@@ -15,4 +15,4 @@ notmuch tag +ci -inbox -- from:travis-ci.com or from:travis-ci.org or from:appve
 notmuch tag +ci -coding -- from:mg.gitlab.com and subject:Pipeline tag:coding
 
 # afew tagging
-afew -t -n -vv
+$HOME/.local/bin/afew -t -n -vv
