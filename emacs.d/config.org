@@ -1191,3 +1191,16 @@ see this feature integrated.
     (evil-set-initial-state 'emms-browser 'emacs)
     (setq emms-player-mpd-music-directory "~/Music"))
 #+END_SRC
+* Test
+#+BEGIN_SRC emacs-lisp
+  (use-package mediawiki
+    :defer t
+    :config
+    (setq mediawiki-site-alist
+          '(("Wikipedia" "https://en.wikipedia.org/w/" "Titan-cerberus" "" nil "User:Titan-cerberus")
+            ("clusterorlando" "https://www.stem.lps.u-psud.fr/cluster/" "oscar" "" nil "Accueil")
+            ("SHAWIKI" "https://wiki.sha2017.org/" "oscar" "" nil "Accueil")
+            ("ArchWiki" "https://wiki.archlinux.org/" "" "" nil "Main page"))))
+#+END_SRC
+
+#+RESULTS:
