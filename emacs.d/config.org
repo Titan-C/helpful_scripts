@@ -536,13 +536,12 @@ this new window.
   ;; http://orgmode.org/worg/org-tutorials/org-latex-export.html
   ;;(add-to-list 'org-latex-packages-alist '("" "minted" nil))
   (setq org-latex-listings 'minted)
-  (setq org-export-initial-scope 'subtree)
   (setq org-latex-minted-options
         '(("frame" "lines")
           ("fontsize" "\\scriptsize")
           ("linenos" "")))
   (setq org-highlight-latex-and-related '(latex script entities))
-  (setq org-latex-pdf-process '("latexmk -g -pdf -pdflatex=\"%latex\" -outdir=%o %f"))
+  (setq org-latex-pdf-process '("latexmk -g -pdf -outdir=%o %f"))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   (use-package org-edit-latex
@@ -607,6 +606,7 @@ this new window.
    '((emacs-lisp . t)
      (latex . t)
      (shell . t)
+     (dot . t)
      (python . t)))
 #+END_SRC
 
@@ -1001,7 +1001,6 @@ this new window.
                                       ("unread" . (:background ,zenburn-bg-1
                                                    :foreground ,zenburn-green)))))
   )
-
 #+END_SRC
 Load org-notmuch independently to open links from org files
 #+BEGIN_SRC emacs-lisp
