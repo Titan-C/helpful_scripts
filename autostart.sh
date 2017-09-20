@@ -2,7 +2,6 @@
 
 SCRIPTS=$HOME/dev/helpful_scripts
 $SCRIPTS/keymaps.sh
-$SCRIPTS/keylogger.sh
 
 # save dbus session info so I can source it from mbsyncrc cronjob
 touch /tmp/.Xdbus
