@@ -951,7 +951,7 @@ this new window.
         (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
       (define-key notmuch-tree-mode-map "N"
         (notmuch-tree-close-message-pane-and #'notmuch-show-reply))
-      (setq notmuch-search-oldest-first nil)
+      (setq notmuch-search-oldest-first t)
       (evil-set-initial-state 'notmuch-tree-mode 'emacs)
 
       (define-key notmuch-show-mode-map "d"
@@ -989,7 +989,7 @@ this new window.
             notmuch-hello-tag-list-make-query "tag:unread and not tag:killed")
 
       (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
-                               (".*@gmail.com" . "gmail/[Gmail]/.Sent Mail")
+                               (".*@gmail.com" . "\"gmail/[Gmail]/.Sent Mail\"")
                                (".*@u-psud.fr" . "upsud/Sent")))
 
       (setq notmuch-crypto-process-mime t)
