@@ -77,7 +77,7 @@ export GPG_TTY=$(tty)
 export PATH="$HOME/dev/helpful_scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
-if (( $+commads[ruby] )); then
+if (( $+commands[ruby] )); then
     PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
     export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 fi
