@@ -1,0 +1,17 @@
+# Insert your preferred key mappings here.
+
+map R scrollDown
+map T scrollUp
+map N scrollLeft
+map S scrollRight
+map r scrollPageDown
+map t scrollPageUp
+map n goBack
+map s goForward
+map l performFind
+map L performBackwardsFind
+map h reload
+map c createTab
+
+# Characters for link hints
+iretonasdlpc
