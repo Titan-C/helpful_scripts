@@ -1169,9 +1169,14 @@ see this feature integrated.
                 ("t" . pdf-view-scroll-down-or-previous-page)
                 ("T" . pdf-view-previous-page-command)
                 ("C-s" . isearch-forward)
-)
+           :map pdf-annot-list-mode-map
+                ("r" . next-line)
+                ("t" . previous-line)
+                ("M" . tablist-toggle-marks)
+    )
     :config
     (pdf-tools-install)
+    (evil-set-initial-state 'pdf-annot-list-mode 'emacs)
     (evil-set-initial-state 'pdf-view-mode 'emacs))
 
   (use-package org-pdfview
