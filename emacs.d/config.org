@@ -948,7 +948,8 @@ this new window.
           )
     :init
       (setq message-directory "~/.mail/"
-            message-auto-save-directory "/tmp/")
+            message-auto-save-directory "/tmp/"
+            org-email-link-description-format "%c: %s")
     :config
       (define-key notmuch-tree-mode-map "n"
         (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
