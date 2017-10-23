@@ -285,12 +285,23 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
   (setq ispell-personal-dictionary "~/dev/helpful_scripts/emacs.d/personal_dict")
   (setq-default ispell-program-name (executable-find "hunspell"))
   ;;(setq ispell-really-hunspell t)
-
-  (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
-  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
-  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXPORT latex" . "#\\+END_SRC"))
+  (setq ispell-skip-region-alist nil)
+  ;;(setq ispell-skip-region-alist (car ispell-tex-skip-alists))
+  ;;(add-to-list 'ispell-skip-region-alist )
+  (add-to-list 'ispell-skip-region-alist '(org-property-drawer-re))
+  ;;(add-to-list 'ispell-skip-region-alist '("^#\\+.*?:[^$]" . "$"))
+  (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_SRC" . "^#\\+END_SRC"))
+  ;; avoid latex enviromnents in general. May be dangerous
+  (add-to-list 'ispell-skip-region-alist '("^#\\+BEGIN_EXPORT latex" . "^#\\+END_EXPORT"))
   (add-to-list 'ispell-skip-region-alist '("[^\\]\\$" . "[^\\]\\$"))
+  (add-to-list 'ispell-skip-region-alist '("^\\\\begin" . "^\\\\end"))
+  ;; this next line approximately ignores org-ref-links
+  (add-to-list 'ispell-skip-region-alist '("cite:" . "[[:space:]]"))
+  (add-to-list 'ispell-skip-region-alist '("label:" . "[[:space:]]"))
+  (add-to-list 'ispell-skip-region-alist '("ref:" . "[[:space:]]"))
+
 #+END_SRC
+
 #+BEGIN_SRC emacs-lisp
   (use-package langtool
     :config
@@ -469,7 +480,6 @@ disable other completions. But it looks a disaster inside emacs
 
     ;; Agenda files
     (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
-                                 "~/dissertation/thesis.org"
                                 "~/Dropbox/org/gcal.org"
                                 "~/Dropbox/org/journal.org"
                                 "~/Dropbox/org/todo.org"))
