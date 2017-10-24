@@ -552,7 +552,7 @@ this new window.
           ("fontsize" "\\scriptsize")
           ("linenos" "")))
   (setq org-highlight-latex-and-related '(latex script entities))
-  (setq org-latex-pdf-process '("latexmk -g -pdf -outdir=%o %f"))
+  (setq org-latex-pdf-process '("latexmk -g -pdf -shell-escape -outdir=%o %f"))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   (use-package org-edit-latex
