@@ -889,6 +889,18 @@ this new window.
     :mode (("CMakeLists\\.txt\\'" . cmake-mode)
            ("\\.cmake\\'" . cmake-mode)))
 #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package
+    rtags
+    :config
+    (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running))
+
+  (use-package
+    flycheck-rtags
+    :ensure rtags)
+
+  (use-package dumb-jump)
+#+END_SRC
 
 ** Rust
 #+BEGIN_SRC emacs-lisp
