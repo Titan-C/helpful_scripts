@@ -1006,7 +1006,7 @@ this new window.
                     '("+deleted" "-inbox" "-unread")))))
 
       (setq notmuch-saved-searches
-          '((:name "inbox" :query "tag:inbox" :key "i")
+          '((:name "inbox" :query "tag:inbox" :key "i" :sort-order newest-first)
             (:name "flagged" :query "tag:flagged" :key "f")
             (:name "unread" :query "tag:unread" :key "u")
             (:name "drafts" :query "tag:draft" :key "d")))
