@@ -54,13 +54,6 @@
         powerline-default-separator 'wave))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (use-package nlinum-relative
-    :config
-    (nlinum-relative-setup-evil)
-    (add-hook 'prog-mode-hook 'nlinum-relative-mode))
-#+END_SRC
-
 ** Window Management
 #+BEGIN_SRC emacs-lisp
   (setq split-width-threshold 150)
