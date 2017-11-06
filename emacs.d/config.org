@@ -875,6 +875,7 @@ this new window.
 #+BEGIN_SRC emacs-lisp
   (use-package scss-mode
    :ensure t)
+  (use-package ox-hugo)
 #+END_SRC
 ** C++
 #+BEGIN_SRC emacs-lisp
