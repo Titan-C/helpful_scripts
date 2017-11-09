@@ -33,6 +33,13 @@
     ;; this make ediff open the comand buffer in the same frame is better when using
     ;; the tiling WM awesome
     (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+    (defun ora-ediff-prepare-buffer ()
+      "shows all contents of org file when ediffing"
+      (when (memq major-mode '(org-mode emacs-lisp-mode))
+      (outline-show-all)))
+
+    (add-hook 'ediff-prepare-buffer-hook 'ora-ediff-prepare-buffer)
   )
 #+END_SRC
 ** Style
