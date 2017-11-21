@@ -12,11 +12,11 @@ Makefile.in
 /install-sh
 /missing
 *#
-!/emacs.d/
-emacs.d/*
-!emacs.d/lisp/
-!emacs.d/snippets/
 .directory
 hub
 *~
 *.pyc
+
+# emacs
+/emacs.d/config.el
+/emacs.d/elpa/
