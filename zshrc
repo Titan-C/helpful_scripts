@@ -15,10 +15,8 @@ POWERLEVEL9K_PYTHON_ICON='\ue606'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs virtualenv anaconda)
 DEFAULT_USER="oscar"
 
-# colorful terminal on cluster
-if [[ $HOSTNAME == 'orla'* || $HOSTNAME == 'compute'* ]]; then
-    export TERM="xterm-256color"
-fi
+# colorful terminal
+export TERM="xterm-256color"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
