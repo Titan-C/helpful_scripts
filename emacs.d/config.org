@@ -1027,11 +1027,11 @@ this new window.
       (setq message-kill-buffer-on-exit t)
 
 
-  (zenburn-with-color-variables
-    (setq notmuch-search-line-faces `(("deleted" . (:strike-through t))
-                                      ("flagged" 'notmuch-search-flagged-face)
-                                      ("unread" . (:background ,zenburn-bg-1
-                                                   :foreground ,zenburn-green)))))
+      (setq notmuch-search-line-faces
+            `(("deleted" . (:strike-through t))
+              ("flagged" 'notmuch-search-flagged-face)
+              ("unread" . (:foreground "#81d4fa"
+                           :weight bold))))
   )
 #+END_SRC
 Load org-notmuch independently to open links from org files
