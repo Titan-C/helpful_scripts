@@ -1,22 +1,4 @@
 set nocompatible
-filetype off
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" Vundle manages Vundle
-Plugin 'VundleVim/Vundle.vim'
-
-" bundles installed here
-Plugin 'tpope/vim-fugitive'
-"Plugin 'klen/python-mode'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'jceb/vim-orgmode'
-Plugin 'tpope/vim-speeddating'
-
-call vundle#end()
-filetype plugin indent on
 
 " automatically reload vimrc when it's saved
 au BufWritePost .vimrc so ~/.vimrc
