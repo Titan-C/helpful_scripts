@@ -10,7 +10,6 @@ from __future__ import division, absolute_import, print_function
 import ctypes
 import numpy as np
 from IPython import get_ipython
-np.__config__.show()
 
 
 def num_threads(cores):
@@ -41,9 +40,16 @@ def run_bench(threads=None):
         print("Matrix multiplication N=" + str(N))
         get_ipython().magic('time c = np.dot(a, a)')
 
-print('\n On system default thread numbers')
-run_bench()
-print('\n\n Forced to single thread')
-run_bench(1)
-print('\n\n Forced to two threads')
-run_bench(2)
+
+def main():
+    np.__config__.show()
+    print('\n On system default thread numbers')
+    run_bench()
+    print('\n\n Forced to single thread')
+    run_bench(1)
+    print('\n\n Forced to two threads')
+    run_bench(2)
+
+
+if __name__ == '__main__':
+    main()
