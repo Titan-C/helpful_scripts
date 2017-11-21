@@ -44,8 +44,6 @@
 #+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme)
-
   (use-package material-theme
     :config
     (load-theme 'material t))
@@ -558,14 +556,17 @@ this new window.
   (setq org-latex-pdf-process '("latexmk -g -pdf -shell-escape -outdir=%o %f"))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-  (use-package org-edit-latex
-    :ensure t
-    :config
-    (add-hook 'org-mode-hook 'org-edit-latex-mode)
     (plist-put org-format-latex-options :scale 1.5)
     (setq org-preview-latex-default-process 'imagemagick)
     (key-chord-define org-src-mode-map ".." 'org-edit-latex-preview-at-point)
-    (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment))
+    (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package org-edit-latex
+    :disabled
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'org-edit-latex-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -620,6 +621,7 @@ this new window.
    '((emacs-lisp . t)
      (latex . t)
      (shell . t)
+     (C . t)
      (dot . t)
      (python . t)))
 #+END_SRC
@@ -905,7 +907,6 @@ this new window.
 
   (use-package dumb-jump)
 #+END_SRC
-
 ** Rust
 #+BEGIN_SRC emacs-lisp
   (use-package rust-mode
@@ -1228,3 +1229,6 @@ Load org-notmuch independently to open links from org files
 #+END_SRC
 
 #+RESULTS:
+#+BEGIN_SRC emacs-lisp
+(use-package ox-rst)
+#+END_SRC
