@@ -916,6 +916,8 @@ Captured On: %U\nWebsite: %l \n%?")
   (use-package cmake-mode
     :mode (("CMakeLists\\.txt\\'" . cmake-mode)
            ("\\.cmake\\'" . cmake-mode)))
+  (use-package cmake-ide
+    :config (cmake-ide-setup))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   (use-package

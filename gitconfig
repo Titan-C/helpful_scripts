@@ -17,7 +17,7 @@
 [diff "pdf"]
       textconv = pdfinfo
 [difftool "image_diff"]
-      cmd = compare $REMOTE $LOCAL png:- | montage -tile 3x -geometry 400x -label "reference" $LOCAL -label "diff" - -label "current--%f" $REMOTE x:
+      cmd = compare $REMOTE $LOCAL png:- | montage -font Liberation-Sans -tile 3x -geometry 400x -label "reference" $LOCAL -label "diff" - -label "current--%f" $REMOTE x:
       #cmd = compare $LOCAL $REMOTE png:- | display -title "$REMOTE" -
       #cmd = composite $LOCAL $REMOTE -compose difference x:
 
