@@ -483,6 +483,7 @@ disable other completions. But it looks a disaster inside emacs
                                 "~/Dropbox/org/todo.org"))
     (setq org-agenda-start-on-weekday 0)
     (setq org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 4)))
+    (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
 
     ;; Text editing
     (setq org-hide-emphasis-markers t)
@@ -491,7 +492,8 @@ disable other completions. But it looks a disaster inside emacs
     (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
     ;; Org tags
     (setq org-tags-column -55)
-
+    (setq org-adapt-indentation nil
+          org-edit-src-content-indentation 0)
 
     (add-hook 'org-mode-hook 'auto-fill-mode)
     (add-hook 'org-mode-hook 'flyspell-mode))
@@ -603,16 +605,35 @@ this new window.
 #+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp
-  (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
   (setq org-capture-templates
       '(("t" "Task" entry (file "~/Dropbox/org/todo.org")
-          "* TODO %?\n  %U\n  %i\n  %a" :clock-in t :clock-resume t)
+          "* TODO %?\n  %U\n%a\n%i" :clock-in t :clock-resume t)
         ("j" "Journal Entry" entry (file+olp+datetree "~/Dropbox/org/journal.org")
-          "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
-        ("l" "Lab Journal Entry" entry (file+olp+datetree "~/Dropbox/org/PHD_Journal.org")
-          "* %(format-time-string \"%H:%M\") %?\n  %i\n  %a" :clock-in t :clock-resume t)
+         "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
+         :clock-in t :clock-resume t)
+        ("l" "Lab Journal Entry" entry
+              (file+olp+datetree "~/Dropbox/org/PHD_Journal.org")
+              "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
+              :clock-in t :clock-resume t)
+
+        ("p" "Protocol" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Inbox")
+          "* %a \nCaptured On: %U \nWebsite: %l\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE")
+
+        ("L" "chii" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "index")
+         "* %a
+  :PROPERTIES:
+  :CREATED: %U
+  :END:\n
+Captured On: %U\nWebsite: %l \n%?")
+
         ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
           "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; to interact from external sources
+(require 'org-protocol)
+(server-start)
 #+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
@@ -831,6 +852,7 @@ this new window.
 ** Python
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
+      :defer t
       :init
           (add-hook 'python-mode-hook 'flyspell-prog-mode)
           (add-hook 'python-mode-hook 'elpy-mode)
