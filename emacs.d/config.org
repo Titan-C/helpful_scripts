@@ -616,24 +616,27 @@ this new window.
               "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
               :clock-in t :clock-resume t)
 
-        ("p" "Protocol" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Inbox")
+        ("p" "Web site quote" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Inbox")
           "* %a \nCaptured On: %U \nWebsite: %l\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE")
 
-        ("L" "chii" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "index")
+        ("L" "Website Link" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "index")
          "* %a
   :PROPERTIES:
   :CREATED: %U
   :END:\n
 Captured On: %U\nWebsite: %l \n%?")
-
         ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
           "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 ;; to interact from external sources
-(require 'org-protocol)
 (server-start)
+(require 'org-protocol)
+
+;; to capture the website HTML
+(add-to-list 'load-path "~/dev/org-protocol-capture-html/")
+(require 'org-protocol-capture-html)
 #+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
@@ -1044,7 +1047,7 @@ Captured On: %U\nWebsite: %l \n%?")
             notmuch-hello-tag-list-make-query "tag:unread and not tag:killed")
 
       (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
-                               (".*@gmail.com" . "\"gmail/[Gmail]/.Sent Mail\"")
+                               ;;(".*@gmail.com" . "\"gmail/[Gmail]/.Sent Mail\"")
                                (".*@u-psud.fr" . "upsud/Sent")))
 
       (setq notmuch-crypto-process-mime t)
