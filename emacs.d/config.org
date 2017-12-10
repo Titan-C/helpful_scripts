@@ -948,7 +948,6 @@ Don't need to define html on org-babel-load-languages.
 
   (use-package cargo
     :config
-    (setq cargo-process--custom-path-to-bin "~/.cargo/bin/")
     (add-hook 'rust-mode-hook 'cargo-minor-mode))
 
   (use-package flycheck-rust
