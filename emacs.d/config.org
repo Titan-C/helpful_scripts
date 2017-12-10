@@ -650,6 +650,12 @@ Captured On: %U\nWebsite: %l \n%?")
      (python . t)))
 #+END_SRC
 
+For html export try https://emacs.stackexchange.com/questions/5669/can-org-babel-replace-code-with-code-output-on-html-export
+Don't need to define html on org-babel-load-languages.
+#+begin_src emacs-lisp :exports none
+  (defun org-babel-execute:html (body params) body)
+#+end_src
+
 #+BEGIN_SRC emacs-lisp
   (setq org-src-fontify-natively t);; sintax highligting of codeblock in org
   (setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
