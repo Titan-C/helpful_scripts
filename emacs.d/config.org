@@ -486,7 +486,7 @@ disable other completions. But it looks a disaster inside emacs
     (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
 
     ;; Text editing
-    (setq org-hide-emphasis-markers t)
+    ;; (setq org-hide-emphasis-markers nil) ;; default is nil
     ;;; emphasis markers can span upto 3 lines
     (setf (nth 4 org-emphasis-regexp-components) 3)
     (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
