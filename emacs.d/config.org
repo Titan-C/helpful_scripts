@@ -619,7 +619,7 @@ this new window.
         ("p" "Web site quote" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Inbox")
           "* %a \nCaptured On: %U \nWebsite: %l\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE")
 
-        ("L" "Website Link" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "index")
+        ("L" "Website Link" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Index")
          "* %a
   :PROPERTIES:
   :CREATED: %U
@@ -660,8 +660,8 @@ Don't need to define html on org-babel-load-languages.
   (setq org-src-fontify-natively t);; sintax highligting of codeblock in org
   (setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
   ;;; display/update images in the buffer after I evaluate
-  (setq org-image-actual-width '(500))
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+  ;;(setq org-image-actual-width '(500))
+  ;;(add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 #+END_SRC
 *** Python
 #+BEGIN_SRC emacs-lisp
@@ -685,6 +685,8 @@ Don't need to define html on org-babel-load-languages.
 *** RevealJS
 #+BEGIN_SRC emacs-lisp
 (use-package ox-reveal
+:load-path "~/dev/org-reveal"
+:ensure manual
 :init
 (setq org-reveal-root "file:///home/oscar/dev/reveal.js"))
 #+END_SRC
