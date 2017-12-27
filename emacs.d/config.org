@@ -25,6 +25,9 @@
   (add-hook 'text-mode-hook 'visual-line-mode) ;; word-wrap
   (add-hook 'text-mode-hook 'flyspell-mode) ;; spell-check
   (setq safe-local-variable-values '((ispell-dictionary . "spanish")))
+  ;; my lisps or from other sources
+  (add-to-list 'load-path "~/.emacs.d/lisp/")
+
 #+END_SRC
 ** ediff
 #+BEGIN_SRC emacs-lisp
@@ -602,6 +605,8 @@ this new window.
        \[DEFAULT-PACKAGES]
        \[PACKAGES]
        \[EXTRA]"))
+
+(eval-after-load 'ox '(require 'ox-koma-letter))
 #+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp
@@ -1070,7 +1075,6 @@ Don't need to define html on org-babel-load-languages.
 #+END_SRC
 Load org-notmuch independently to open links from org files
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/lisp/")
 (require 'org-notmuch)
 #+END_SRC
 ** BBDB
