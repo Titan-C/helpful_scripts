@@ -12,4 +12,19 @@ message = "Tag jobs from the cluster"
 query = from:root@local.u-psud.fr or from:root@orlando.u-psud.fr subject:Job
 tags = +clusjobs
 
+[Filter.2]
+message = "Tag meetups info mails"
+query = from:info@meetup.com
+tags = +meetups;-new
+
+[Filter.3]
+message = "Tag reporst alina"
+query = from:postmaster@najera.pw or from:root@najera.pw
+tags = +alina;-new
+
+[Filter.4]
+message = "Tag the syndicate.vc"
+query = from:thesyndicate.vc
+tags = +syndicatevc;-new
+
 [InboxFilter]
