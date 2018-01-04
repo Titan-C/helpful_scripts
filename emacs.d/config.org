@@ -444,6 +444,7 @@ disable other completions. But it looks a disaster inside emacs
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'exec-path "~/dev/helpful_scripts")
   (add-to-list 'exec-path "~/.cargo/bin")
+  (add-to-list 'exec-path "~/.local/bin")
   (use-package eshell-git-prompt
     :config
     (eshell-git-prompt-use-theme 'powerline))
