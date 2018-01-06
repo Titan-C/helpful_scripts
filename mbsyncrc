@@ -5,11 +5,8 @@ IMAPAccount gmail
 # Address to connect to
 Host imap.gmail.com
 User najera.oscar@gmail.com
-PassCmd "echo ${PASSWORD:-$(gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | sed -n 's,^machine imap.googlemail.com .*password \\([^ ]*\\).*,\\1,p')}"
+PassCmd "pass show google/2Fnajera.oscar"
 AuthMechs LOGIN
-# To store the password in an encrypted file use PassCmd instead of Pass
-# PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
-#
 # Use SSL
 SSLType IMAPS
 # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
@@ -44,7 +41,7 @@ Expunge Both
 IMAPAccount upsud
 Host zimbra.u-psud.fr
 User oscar.najera-ocampo@u-psud.fr
-PassCmd "echo ${PASSWORD:-$(gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | sed -n 's,^machine zimbra.u-psud.fr .*password \\([^ ]*\\).*,\\1,p')}"
+PassCmd "pass show Science/sas.u-psud.fr/oscar.najera-ocampo"
 AuthMechs LOGIN
 SSLType IMAPS
 
@@ -68,7 +65,7 @@ Expunge Both
 IMAPAccount hi_pers
 Host mail.najera.pw
 User hi@oscarnajera.com
-PassCmd "echo ${PASSWORD:-$(gpg -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | sed -n 's,^machine mail.najera.pw login hi@oscarnajera.com .*password \\([^ ]*\\).*,\\1,p')}"
+PassCmd "pass show Correos/hi@oscarnajera.com"
 AuthMechs LOGIN
 SSLType IMAPS
 
@@ -82,6 +79,30 @@ Inbox ~/.mail/hi_pers/Inbox
 Channel hi_pers
 Master :hi_pers-remote:
 Slave :hi_pers-local:
+Patterns *
+Create Both
+SyncState *
+Expunge Both
+
+###############################################################################
+# Personal
+IMAPAccount salsa
+Host mail.najera.pw
+User salsa@najera.pw
+PassCmd "pass show Correos/salsa@najera.pw"
+AuthMechs LOGIN
+SSLType IMAPS
+
+IMAPStore salsa-remote
+Account salsa
+
+MaildirStore salsa-local
+Path ~/.mail/salsa/
+Inbox ~/.mail/salsa/Inbox
+
+Channel salsa
+Master :salsa-remote:
+Slave :salsa-local:
 Patterns *
 Create Both
 SyncState *
