@@ -12,3 +12,15 @@ borg create --verbose --stats --compression=lz4 \
      --exclude '*.pyc' \
     $REPOSITORY::'{hostname}-{user}-{utcnow:%Y-%m-%dT%H:%M:%S}' \
     ~/dev ~/.mail/ ~/Documents/ ~/Dropbox/ ~/ownCloud/ ~/MEGA/
+
+# Pull Backup from alina
+echo "Creating Backups from alina ..."
+pass=$(pass show alina/borgbackup)
+
+REPOSITORY=ssh://me@localhost:10022//scratch/Backups/smal
+
+ssh -R 10022:localhost:22 alina "sudo BORG_PASSPHRASE=$pass \
+borg create --verbose --stats \
+     --exclude '*.pyc' \
+    $REPOSITORY::'{hostname}-{user}-{utcnow:%Y-%m-%dT%H:%M:%S}' \
+     /decrypted /var/www /root /home /etc/letsencrypt"
