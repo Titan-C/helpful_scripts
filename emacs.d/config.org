@@ -411,6 +411,8 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 
   (use-package yasnippet
   :config (yas-global-mode t))
+
+  (use-package yasnippet-snippets)
 #+END_SRC
 * Ivy
 #+BEGIN_SRC emacs-lisp
