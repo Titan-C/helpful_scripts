@@ -333,6 +333,23 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
       (require 'smartparens-config)
       (smartparens-global-mode t))
 #+END_SRC
+** Pass
+#+BEGIN_SRC emacs-lisp
+(use-package pass
+    :bind (:map pass-mode-map
+           ("r" . pass-next-entry)
+           ("t" . pass-prev-entry)
+           ("R" . pass-next-directory)
+           ("T" . pass-prev-directory)
+           ("s" . swiper)
+           ("d" . pass-kill)
+           ("c" . pass-copy)
+           ("n" . pass-rename))
+     :config
+      (evil-set-initial-state 'pass-mode 'emacs))
+
+(use-package helm-pass)
+#+END_SRC
 * Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
