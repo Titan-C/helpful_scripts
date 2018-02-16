@@ -1,7 +1,5 @@
 #! /bin/bash
 
-rsync -av --del ~/Documents ~/Dropbox ~/MEGA /scratch/oscar/
-
 # external program to supply the passphrase:
 export BORG_PASSCOMMAND='pass show borgbackup'
 
@@ -9,7 +7,7 @@ export BORG_PASSCOMMAND='pass show borgbackup'
 echo $( date ) "Creating Local Backups ..."
 REPOSITORY=/scratch/Backups/code_dev
 borg create --verbose --stats --compression=lz4 \
-     --exclude '*.pyc' \
+     --progress --exclude '*.pyc' \
     $REPOSITORY::'{hostname}-{user}-{utcnow:%Y-%m-%dT%H:%M:%S}' \
     ~/dev ~/.mail/ ~/Documents/ ~/Dropbox/ ~/ownCloud/ ~/MEGA/
 
@@ -31,7 +29,7 @@ echo $( date ) "Opening connection ..."
 ssh -R 10022:localhost:22 alina "echo 'starting borg ...'; \
 sudo BORG_PASSPHRASE=$pass \
 borg create --verbose --stats \
-     --exclude '*.pyc' \
+     --progress --exclude '*.pyc' \
     $REPOSITORY::'{hostname}-{user}-{utcnow:%Y-%m-%dT%H:%M:%S}' \
      /decrypted /var/www /root /home /etc/letsencrypt"
 
