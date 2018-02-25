@@ -37,3 +37,10 @@ I use nerd-fonts from AUR
 #+BEGIN_SRC bash
   yaourt nerd-fonts-complete
 #+END_SRC
+* Change dates in images
+Using exiftool I can change/shift the date information of a foto. This is
+helpful since I forget to update the camera clock.
+#+BEGIN_SRC sh
+#                    Y:MM:DD HH:M:S
+exiftool "-alldates+=6:11:12 14:0:0" photo.jpg
+#+END_SRC
