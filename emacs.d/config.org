@@ -350,6 +350,14 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 
 (use-package helm-pass)
 #+END_SRC
+*** Foreign languages
+Documents can be set to default to certain languages that differ from my
+default. This makes them save values.
+#+BEGIN_SRC emacs-lisp
+(setq safe-local-variable-values
+      '((ispell-dictionary . "es_EC")
+        (ispell-dictionary . "fr_FR")))
+#+END_SRC
 * Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
