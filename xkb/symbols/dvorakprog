@@ -62,7 +62,7 @@ xkb_symbols "dvorakoscar" {
     key <AB07> { [ l, L, euro ] };
     key <AB08> { [ BackSpace,    dead_diaeresis, dead_grave, dead_circumflex ] };
     key <AB09> { [ v, V						] };
-    key <AB10> { [ Shift_R ] };
+    key <AB10> { [ z, Z ] };
 
     modifier_map Shift {<RTSH>};
     // The modifiers are reordered
