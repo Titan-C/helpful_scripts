@@ -348,6 +348,11 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
      :config
       (evil-set-initial-state 'pass-mode 'emacs))
 
+;; this will be integrated in Emacs 26 under auth-source-pass
+(use-package auth-password-store
+  :init
+    (auth-pass-enable))
+
 (use-package helm-pass)
 #+END_SRC
 *** Foreign languages
