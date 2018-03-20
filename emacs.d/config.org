@@ -515,6 +515,7 @@ disable other completions. But it looks a disaster inside emacs
     ;; Agenda files
     (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
                                 "~/Dropbox/org/gcal.org"
+                                "~/ownCloud/caldav.org"
                                 "~/Dropbox/org/journal.org"
                                 "~/Dropbox/org/todo.org"))
     (setq org-agenda-start-on-weekday 0)
@@ -571,8 +572,8 @@ this new window.
 #+BEGIN_SRC emacs-lisp
   (use-package org-gcal
     :config
-    (setq org-gcal-client-id (car (auth-source-user-and-password "googlecalapi"))
-          org-gcal-client-secret (cadr (auth-source-user-and-password "googlecalapi"))
+    (setq org-gcal-client-id (password-store-get "google/emacs-gcal-client")
+          org-gcal-client-secret (password-store-get "google/emacs-gcal-client-secret")
           org-gcal-file-alist '(("najera.oscar@gmail.com" . "~/Dropbox/org/gcal.org")))
   )
 
