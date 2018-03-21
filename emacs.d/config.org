@@ -355,6 +355,7 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 ;; this will be integrated in Emacs 26 under auth-source-pass
 (use-package auth-password-store
   :init
+    (setq auth-source-debug t)
     (setq auth-sources '(password-store)))
 
 (use-package helm-pass)
@@ -1183,10 +1184,10 @@ Load org-notmuch independently to open links from org files
   )
 
   (defconst smtp-from-server-alist
-    '(("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
-      ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
-      ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls))
-      ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl))
+    '(("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
+      ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
+      ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))
+      ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl "oscar.najera-ocampo"))
       ))
 
   (defun set-smtp-server ()
@@ -1196,12 +1197,16 @@ Load org-notmuch independently to open links from org files
                                   smtp-from-server-alist)))
            (server (nth 0 smtp-conf))
            (port (nth 1 smtp-conf))
-           (protocol (nth 2 smtp-conf)))
+           (protocol (nth 2 smtp-conf))
+           (user (nth 3 smtp-conf)))
       (unless server (setq server "mail.najera.pw"
-                           port 587))
+                           port 587
+                           protocol starttls
+                           user "hi"))
       (setq smtpmail-smtp-server server
             smtpmail-smtp-service port
-            smtpmail-stream-type protocol)
+            smtpmail-stream-type protocol
+            smtpmail-smtp-user user)
       (message "SMTP server changed to %s in port %s by %s" server port protocol)))
   (add-hook 'message-send-mail-hook 'set-smtp-server)
 #+END_SRC
