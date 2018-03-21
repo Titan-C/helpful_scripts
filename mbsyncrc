@@ -5,7 +5,7 @@ IMAPAccount gmail
 # Address to connect to
 Host imap.gmail.com
 User najera.oscar@gmail.com
-PassCmd "pass show google/2Fnajera.oscar"
+PassCmd "pass show google/googlemail.com"
 AuthMechs LOGIN
 # Use SSL
 SSLType IMAPS
@@ -41,7 +41,7 @@ Expunge Both
 IMAPAccount upsud
 Host zimbra.u-psud.fr
 User oscar.najera-ocampo@u-psud.fr
-PassCmd "pass show Science/sas.u-psud.fr/oscar.najera-ocampo"
+PassCmd "pass show Correos/u-psud.fr"
 AuthMechs LOGIN
 SSLType IMAPS
 
@@ -65,7 +65,7 @@ Expunge Both
 IMAPAccount hi_pers
 Host mail.najera.pw
 User hi@oscarnajera.com
-PassCmd "pass show Correos/hi@oscarnajera.com"
+PassCmd "pass show Correos/mail.najera.pw"
 AuthMechs LOGIN
 SSLType IMAPS
 
