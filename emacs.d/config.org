@@ -518,9 +518,7 @@ disable other completions. But it looks a disaster inside emacs
     (setq org-imenu-depth 4)
 
     ;; Agenda files
-    (setq org-agenda-files (list "~/Dropbox/org/schedule.org"
-                                "~/Dropbox/org/gcal.org"
-                                "~/ownCloud/caldav.org"
+    (setq org-agenda-files (list "~/ownCloud/caldav.org"
                                 "~/Dropbox/org/journal.org"
                                 "~/Dropbox/org/todo.org"))
     (setq org-agenda-start-on-weekday 0)
@@ -574,18 +572,6 @@ this new window.
   (add-hook 'org-agenda-finalize-hook 'org-agenda-to-appt)
 #+END_SRC
 ** Calendar
-#+BEGIN_SRC emacs-lisp
-  (use-package org-gcal
-    :config
-    (setq org-gcal-client-id (password-store-get "google/emacs-gcal-client")
-          org-gcal-client-secret (password-store-get "google/emacs-gcal-client-secret")
-          org-gcal-file-alist '(("najera.oscar@gmail.com" . "~/Dropbox/org/gcal.org")))
-  )
-
-  (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-  (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
-#+END_SRC
-
 #+BEGIN_SRC emacs-lisp
 (use-package org-caldav)
 (setq org-icalendar-timezone "Europe/Berlin")
@@ -686,7 +672,7 @@ this new window.
 Captured On: %U\nWebsite: %l \n%?"
             :clock-in t :clock-resume t)
 
-        ("e" "Event" entry (file "~/Dropbox/org/schedule.org")
+        ("e" "Event" entry (file "~/ownCloud/caldav.org")
           "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
 #+END_SRC
 
