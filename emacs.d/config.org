@@ -1312,4 +1312,8 @@ Load org-notmuch independently to open links from org files
 #+RESULTS:
 #+BEGIN_SRC emacs-lisp
 (use-package ox-rst)
+* Ledger
+Emacs mode for managing ledger text files
+#+BEGIN_SRC emacs-lisp
+(use-package ledger-mode)
 #+END_SRC
