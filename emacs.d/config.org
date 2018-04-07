@@ -518,7 +518,7 @@ disable other completions. But it looks a disaster inside emacs
     (setq org-imenu-depth 4)
 
     ;; Agenda files
-    (setq org-agenda-files (list "~/ownCloud/caldav.org"
+    (setq org-agenda-files (list "~/nextcloud/caldav.org"
                                 "~/Dropbox/org/journal.org"
                                 "~/Dropbox/org/todo.org"))
     (setq org-agenda-start-on-weekday 0)
@@ -565,6 +565,7 @@ this new window.
   (setq
     appt-display-mode-line t     ;; show in the modeline
     appt-display-format 'window) ;; use our func
+  (run-at-time "5 minutes" 3600 'org-agenda-to-appt)
   (appt-activate 1)              ;; active appt (appointment notification)
   (display-time)                 ;; time display is required for this...
 
@@ -573,7 +574,8 @@ this new window.
 #+END_SRC
 ** Calendar
 #+BEGIN_SRC emacs-lisp
-(use-package org-caldav)
+(use-package org-caldav
+  :load-path "~/dev/org-caldav/")
 (setq org-icalendar-timezone "Europe/Berlin")
 (setq org-caldav-url "https://oscar@nextcloud.najera.pw/remote.php/dav/calendars/oscar")
 (setq org-caldav-calendar-id "personal")
