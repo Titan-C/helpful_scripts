@@ -990,25 +990,27 @@ Don't need to define html on org-babel-load-languages.
 #+END_SRC
 ** Rust
 #+BEGIN_SRC emacs-lisp
-  (use-package rust-mode
-    :config
-    (rust-enable-format-on-save))
+(use-package rust-mode
+  :config
+  (rust-enable-format-on-save))
 
-  (use-package cargo
-    :config
-    (add-hook 'rust-mode-hook 'cargo-minor-mode))
+(use-package cargo
+  :config
+  (add-hook 'rust-mode-hook 'cargo-minor-mode))
 
-  (use-package flycheck-rust
-    :ensure t
-    :mode (("\\.rs\\'" . rust-mode))
-    :init
-    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+(use-package flycheck-rust
+  :ensure t
+  :mode (("\\.rs\\'" . rust-mode))
+  :init
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
-  (use-package racer
-    :config
-    (add-hook 'rust-mode-hook #'racer-mode)
-    (add-hook 'racer-mode-hook #'eldoc-mode)
-    (add-hook 'racer-mode-hook #'company-mode))
+(use-package racer
+  :config
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode))
+
+(use-package ob-rust)
 #+END_SRC
 ** Docker
 #+BEGIN_SRC emacs-lisp
