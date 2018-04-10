@@ -579,8 +579,8 @@ this new window.
 (setq org-icalendar-timezone "Europe/Berlin")
 (setq org-caldav-url "https://oscar@nextcloud.najera.pw/remote.php/dav/calendars/oscar")
 (setq org-caldav-calendar-id "personal")
-(setq org-caldav-inbox "~/ownCloud/caldav.org")
-(setq org-caldav-files '("~/ownCloud/input.org"))
+(setq org-caldav-inbox "~/nextcloud/caldav.org")
+(setq org-caldav-files '("~/nextcloud/input.org"))
 (setq org-caldav-debug-level 2)
 #+END_SRC
 ** Latex
@@ -671,10 +671,9 @@ this new window.
 Captured On: %U\nWebsite: %l \n%?"
             :clock-in t :clock-resume t)
 
-        ("e" "Event" entry (file "~/ownCloud/caldav.org")
+        ("e" "Event" entry (file "~/nextcloud/caldav.org")
           "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
 #+END_SRC
-
 #+BEGIN_SRC emacs-lisp
 ;; to interact from external sources
 (server-start)
