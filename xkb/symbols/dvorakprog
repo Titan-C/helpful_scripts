@@ -53,7 +53,7 @@ xkb_symbols "dvorakoscar" {
 
     key <LSGT> { [ Shift_L ] };
     key <AB01> { [ w,      W, bar] };
-    key <AB02> { [ q,      Q, z, Z ] };
+    key <AB02> { [ q,      Q  ] };
     key <AB03> { [ Return, Return, k, K ] };
     key <AB04> { [ d,      D, minus, underscore        ] };
     key <AB05> { [ x, X,   multiply, division			] };
