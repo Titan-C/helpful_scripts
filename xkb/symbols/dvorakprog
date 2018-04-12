@@ -5,20 +5,21 @@ xkb_symbols "dvorakoscar" {
 
     //             Unmodified       Shift           AltGr            Shift+AltGr
     // symbols row, left side
-    key <TLDE> { [ dollar,          degree, ordfeminine] };
-    key <AE01> { [ ampersand,       percent	] };
+    key <TLDE> { [ dollar,          percent     ] };
+    key <AE01> { [ ampersand,       9	        ] };
     key <AE02> { [ bracketleft,     7		] };
     key <AE03> { [ braceleft,       5		] };
-    key <AE04> { [ braceright,      3		] };
-    key <AE05> { [ parenleft,       1		] };
-    key <AE06> { [ equal,           9		] };
+    key <AE04> { [ parenleft,       3		] };
+    key <AE05> { [ asterisk,        1		] };
 
     // symbols row, right side
-    key <AE07> { [ asterisk,        0		] };
-    key <AE08> { [ parenright,      2		] };
-    key <AE09> { [ plus,            4		] };
-    key <AE10> { [ bracketright,    6		] };
-    key <AE11> { [ exclam,          8,	exclamdown] };
+    key <AE06> { [ equal,           0		] };
+    key <AE07> { [ parenright,      2		] };
+    key <AE08> { [ braceright,      4		] };
+    key <AE09> { [ bracketright,    6		] };
+    key <AE10> { [ plus,            8,          underscore] };
+    key <AE11> { [ minus,           exclam,	exclamdown] };
+
     key <AE12> { [ numbersign,      at		] };
     key <BKSP> { [ BackSpace,       BackSpace	] };
 
