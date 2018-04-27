@@ -3,7 +3,7 @@
 
 * Personal Information
 #+BEGIN_SRC emacs-lisp
-  (setq user-mail-address "hello@oscarnajera.com"
+  (setq user-mail-address "hi@oscarnajera.com"
         user-full-name    "Óscar Nájera")
 #+END_SRC
 
@@ -1170,8 +1170,9 @@ Load org-notmuch independently to open links from org files
   )
 
   (defconst smtp-from-server-alist
-    '(("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
-      ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
+    '(
+      ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
+      ("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
       ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))
       ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl "oscar.najera-ocampo"))
       ))

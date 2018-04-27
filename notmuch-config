@@ -31,8 +31,8 @@ path=/home/oscar/.mail/
 #
 [user]
 name=Oscar Najera
-primary_email=hello@oscarnajera.com
-other_email=najera.oscar@gmail.com;oscar.najera-ocampo@u-psud.fr;
+primary_email=hi@oscarnajera.com
+other_email=hello@oscarnajera.com;najera.oscar@gmail.com;oscar.najera-ocampo@u-psud.fr;
 
 # Configuration for "notmuch new"
 #
