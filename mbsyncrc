@@ -5,7 +5,7 @@ IMAPAccount gmail
 # Address to connect to
 Host imap.gmail.com
 User najera.oscar@gmail.com
-PassCmd "pass show google/googlemail.com"
+PassCmd "pass show google/googlemail.com/najera.oscar"
 AuthMechs LOGIN
 # Use SSL
 SSLType IMAPS
@@ -41,7 +41,7 @@ Expunge Both
 IMAPAccount upsud
 Host zimbra.u-psud.fr
 User oscar.najera-ocampo@u-psud.fr
-PassCmd "pass show Correos/u-psud.fr"
+PassCmd "pass show Correos/oscar.najera-ocampo@u-psud.fr"
 AuthMechs LOGIN
 SSLType IMAPS
 
@@ -75,6 +75,7 @@ Account hi_pers
 MaildirStore hi_pers-local
 Path ~/.mail/hi_pers/
 Inbox ~/.mail/hi_pers/Inbox
+SubFolders Verbatim
 
 Channel hi_pers
 Master :hi_pers-remote:
