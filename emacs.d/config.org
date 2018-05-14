@@ -1028,6 +1028,12 @@ Don't need to define html on org-babel-load-languages.
     :config
     (flycheck-clojure-setup))
 #+END_SRC
+** Scala
+#+BEGIN_SRC emacs-lisp
+(use-package scala-mode
+  :interpreter
+  ("scala" . scala-mode))
+#+END_SRC
 * Email
 ** Notmuch client
 #+BEGIN_SRC emacs-lisp
