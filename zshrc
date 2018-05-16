@@ -13,7 +13,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_PYTHON_ICON='\ue606'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs virtualenv anaconda)
-DEFAULT_USER="oscar"
+DEFAULT_USER=$USER
 
 # colorful terminal
 export TERM="xterm-256color"
@@ -60,9 +60,9 @@ export TERM="xterm-256color"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+export WORKON_HOME=$HOME/.virtualenvs
 plugins=(git archlinux python virtualenvwrapper)
 
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -75,10 +75,10 @@ export GPG_TTY=$(tty)
 export PATH="$HOME/dev/helpful_scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
-if (( $+commands[ruby] )); then
-    PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+lruby() {
+    export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
     export GEM_HOME=$(ruby -e 'print Gem.user_dir')
-fi
+}
 
 source $ZSH/oh-my-zsh.sh
 
