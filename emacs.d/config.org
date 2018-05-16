@@ -963,6 +963,10 @@ Don't need to define html on org-babel-load-languages.
 #+END_SRC
 ** Web
 #+BEGIN_SRC emacs-lisp
+(use-package web-mode
+  :mode (("\\.html?" . web-mode)))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
   (use-package scss-mode
    :ensure t)
   (use-package ox-hugo)
