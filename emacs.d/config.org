@@ -980,16 +980,20 @@ Don't need to define html on org-babel-load-languages.
     :config (cmake-ide-setup))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-  (use-package
-    rtags
-    :config
-    (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running))
+(load "/usr/share/clang/clang-format.el")
+(add-hook 'c-mode-common-hook
+          (lambda () (add-hook 'before-save-hook 'clang-format-buffer nil t)))
 
-  (use-package
-    flycheck-rtags
-    :ensure rtags)
+(use-package rtags
+  :config
+    (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
+    ;; Shutdown rdm when leaving emacs.
+    (add-hook 'kill-emacs-hook 'rtags-quit-rdm)
+)
 
-  (use-package dumb-jump)
+(use-package flycheck-rtags
+  :ensure rtags)
+(use-package dumb-jump)
 #+END_SRC
 ** Rust
 #+BEGIN_SRC emacs-lisp
