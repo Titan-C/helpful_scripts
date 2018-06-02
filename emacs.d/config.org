@@ -659,20 +659,14 @@ this new window.
               "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
               :clock-in t :clock-resume t)
 
-        ("p" "Web site quote" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Inbox")
-            "* %a \nCaptured On: %U \nWebsite: %l\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE"
+        ("p" "Web site" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Inbox")
+            "* %a\nCaptured On: %U\nWebsite: %l\n\n%i\n%?"
             :clock-in t :clock-resume t)
 
-        ("L" "Website Link" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Index")
-         "* %a
-:PROPERTIES:
-:CREATED: %U
-:END:\n
-Captured On: %U\nWebsite: %l \n%?"
-            :clock-in t :clock-resume t)
+        ("m" "meetup" entry (file "~/nextcloud/caldav.org") "* %?%:description \n%i\n%l")
 
         ("e" "Event" entry (file "~/nextcloud/caldav.org")
-          "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
+        "* %?\n  %^T\n  %i\n  %a" :clock-in t :clock-resume t)))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
 ;; to interact from external sources
