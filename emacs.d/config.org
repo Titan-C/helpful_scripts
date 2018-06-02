@@ -1072,7 +1072,7 @@ Don't need to define html on org-babel-load-languages.
         (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
       (define-key notmuch-tree-mode-map "N"
         (notmuch-tree-close-message-pane-and #'notmuch-show-reply))
-      (setq notmuch-search-oldest-first t)
+      (setq notmuch-search-oldest-first nil)
       (evil-set-initial-state 'notmuch-tree-mode 'emacs)
 
       (define-key notmuch-show-mode-map "d"
