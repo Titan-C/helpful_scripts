@@ -6,7 +6,7 @@ fi
 notmuch search --output=files tag:deleted | xargs  -I {} rm -v "{}"
 
 # Mail download
-mbsync -aV
+mbsync -a
 
 # Notmuch tagging
 notmuch new
