@@ -575,13 +575,15 @@ this new window.
 ** Calendar
 #+BEGIN_SRC emacs-lisp
 (use-package org-caldav
-  :load-path "~/dev/org-caldav/")
-(setq org-icalendar-timezone "Europe/Berlin")
-(setq org-caldav-url "https://oscar@nextcloud.najera.pw/remote.php/dav/calendars/oscar")
-(setq org-caldav-calendar-id "personal")
-(setq org-caldav-inbox "~/nextcloud/caldav.org")
-(setq org-caldav-files '("~/nextcloud/input.org"))
-(setq org-caldav-debug-level 2)
+  ;:load-path "~/dev/org-caldav/")
+  :commands (org-caldav-sync)
+  :config
+  (setq org-icalendar-timezone "Europe/Berlin"
+     org-caldav-url "https://nextcloud.najera.pw/remote.php/dav/calendars/oscar"
+     org-caldav-calendar-id "personal"
+     org-caldav-inbox "~/nextcloud/caldav.org"
+     org-caldav-files '("~/nextcloud/input.org")
+     org-caldav-debug-level 2))
 #+END_SRC
 ** Latex
 #+BEGIN_SRC emacs-lisp
