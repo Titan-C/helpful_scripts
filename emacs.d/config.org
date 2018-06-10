@@ -973,6 +973,13 @@ Don't need to define html on org-babel-load-languages.
 (load "/usr/share/clang/clang-format.el")
 (add-hook 'c-mode-common-hook
           (lambda () (add-hook 'before-save-hook 'clang-format-buffer nil t)))
+(setq
+ ;; use gdb-many-windows by default
+ gdb-many-windows t
+
+ ;; Non-nil means display source file containing the main routine at startup
+ gdb-show-main t
+ )
 
 (use-package rtags
   :config
