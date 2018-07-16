@@ -27,4 +27,14 @@ message = "Tag the syndicate.vc"
 query = from:thesyndicate.vc
 tags = +syndicatevc;-new
 
+[Filter.5]
+message = "Fail2ban report"
+query = subject:Fail2Ban from:najera.pw
+tags = +fail2ban;-new
+
+[Filter.6]
+message = "Tag the fringe.fm"
+query = from:fringe.fm
+tags = +fringe.fm;-new
+
 [InboxFilter]
