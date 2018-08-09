@@ -24,7 +24,6 @@
   (setq-default fill-column 75)
   (add-hook 'text-mode-hook 'visual-line-mode) ;; word-wrap
   (add-hook 'text-mode-hook 'flyspell-mode) ;; spell-check
-  (setq safe-local-variable-values '((ispell-dictionary . "spanish")))
   ;; my lisps or from other sources
   (add-to-list 'load-path "~/.emacs.d/lisp/")
 
@@ -52,7 +51,7 @@
     (load-theme 'material t))
 
   ;; font size
-  (set-face-attribute 'default nil :font "DejaVuSansMono Nerd Font-11")
+  (set-face-attribute 'default nil :font "DejaVuSansMono Nerd Font-13")
 
   (use-package spaceline-config
   :ensure spaceline
@@ -524,6 +523,7 @@ disable other completions. But it looks a disaster inside emacs
     (setq org-agenda-start-on-weekday 0)
     (setq org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 4)))
     (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
+    (setq org-log-reschedule 'note)
 
     ;; Text editing
     ;; (setq org-hide-emphasis-markers nil) ;; default is nil
@@ -551,8 +551,8 @@ disable other completions. But it looks a disaster inside emacs
       "oe" 'org-todo)
 
   ;; Launch day agenda
-  ;;(org-agenda-list 1)
-  ;;(setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
+  (org-agenda-list 1)
+  (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
 
 #+END_SRC
 
@@ -660,7 +660,7 @@ this new window.
             "* %a\nCaptured On: %U\nWebsite: %l\n\n%i\n%?"
             :clock-in t :clock-resume t)
 
-        ("m" "meetup" entry (file "~/nextcloud/caldav.org") "* %?%:description \n%i\n%l")
+        ("m" "meetup" entry (file "~/nextcloud/caldav.org") "* %?%:description \n%i")
 
         ("e" "Event" entry (file "~/nextcloud/caldav.org") "* %?\n%^T\n%i\n%a")))
 #+END_SRC
