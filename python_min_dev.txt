@@ -4,9 +4,8 @@ importmagic
 ipython
 ipdb
 jedi
-line_profiler
+#line_profiler
 pep8
-pdb
 pyflakes
 pylint
 pytest
@@ -14,3 +13,4 @@ pytest-cov
 rope
 sphinx
 yapf
+black
