@@ -8,13 +8,8 @@
 #+END_SRC
 
 * Editor
+** Basic behavior settings
 #+BEGIN_SRC emacs-lisp
-  ;;http://emacs-fu.blogspot.fr/2011/01/setting-frame-title.html
-  (setq frame-title-format
-    '("" invocation-name ": "(:eval (if (buffer-file-name)
-                (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
-
   (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq vc-follow-symlinks t)
@@ -24,9 +19,18 @@
   (setq-default fill-column 75)
   (add-hook 'text-mode-hook 'visual-line-mode) ;; word-wrap
   (add-hook 'text-mode-hook 'flyspell-mode) ;; spell-check
-  ;; my lisps or from other sources
+#+END_SRC
+** Frame title includes file being used
+#+BEGIN_SRC emacs-lisp
+  ;;http://emacs-fu.blogspot.fr/2011/01/setting-frame-title.html
+  (setq frame-title-format
+    '("" invocation-name ": "(:eval (if (buffer-file-name)
+                (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+#+END_SRC
+** My lisp source or from other sources
+#+BEGIN_SRC emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/lisp/")
-
 #+END_SRC
 ** ediff
 #+BEGIN_SRC emacs-lisp
