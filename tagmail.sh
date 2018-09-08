@@ -11,8 +11,8 @@ mbsync -a
 # Notmuch tagging
 notmuch new
 
-notmuch tag +ci -inbox -- from:travis-ci.com or from:travis-ci.org or from:appveyor.com or from:circleci.com tag:inbox
-notmuch tag +ci -inbox -- from:mg.gitlab.com and subject:Pipeline tag:inbox
+notmuch tag +ci -new -- from:travis-ci.com or from:travis-ci.org or from:appveyor.com or from:circleci.com
+notmuch tag +ci -new -- from:mg.gitlab.com and subject:Pipeline
 
 # afew tagging
-$HOME/.local/bin/afew -t -n -v
+$HOME/.local/bin/afew --tag --new -v
