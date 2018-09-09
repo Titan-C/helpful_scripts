@@ -69,10 +69,9 @@
   (setq split-width-threshold 150)
 
   (use-package ace-window
-    :bind (("M-p" . ace-window))
+    :bind (("s-c" . ace-window))
     :config (setq aw-keys '(?a ?o ?e ?i ?r ?t ?n ?s)))
 #+END_SRC
-
 #+BEGIN_SRC emacs-lisp
   (require 'windmove)
 
@@ -254,7 +253,7 @@
 (define-key evil-normal-state-map (kbd "C-t") nil)
 (define-key evil-motion-state-map (kbd "C-t") 'evil-scroll-line-up)
 
-(global-set-key (kbd "C-w") 'hydra-window/body)
+(global-set-key (kbd "s-w") 'hydra-window/body)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -397,7 +396,7 @@ default. This makes them save values.
                            (interactive)
                            (exwm-workspace-switch-create ,i))))
   ;; 's-&': Launch application
-  (exwm-input-set-key (kbd "s-&")
+  (exwm-input-set-key (kbd "s-l")
                       (lambda (command)
                         (interactive (list (read-shell-command "$ ")))
                         (start-process-shell-command command nil command)))
