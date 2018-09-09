@@ -799,7 +799,8 @@ this new window.
 #+BEGIN_SRC emacs-lisp
 ;; to interact from external sources
 (server-start)
-(require 'org-protocol)
+(use-package org-protocol
+  :after org)
 
 ;; to capture the website HTML
 ;;(add-to-list 'load-path "~/dev/org-protocol-capture-html/")
@@ -807,6 +808,9 @@ this new window.
 #+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
+(use-package org
+  :after org
+  :config
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -816,11 +820,11 @@ this new window.
      (C . t)
      (scala . t)
      (dot . t)
-     (python . t)))
+     (python . t))))
 
 (use-package plantuml-mode
-:config
-(setq org-plantuml-jar-path "/opt/plantuml/plantuml.jar"))
+  :config
+  (setq org-plantuml-jar-path "/opt/plantuml/plantuml.jar"))
 #+END_SRC
 
 For html export try https://emacs.stackexchange.com/questions/5669/can-org-babel-replace-code-with-code-output-on-html-export
@@ -897,10 +901,8 @@ Don't need to define html on org-babel-load-languages.
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-ref
-   :defer t
-   :init
-   (key-chord-define bibtex-mode-map "jj" 'org-ref-bibtex-hydra/body)
    :config
+   (key-chord-define bibtex-mode-map "jj" 'org-ref-bibtex-hydra/body)
    (setq org-ref-show-broken-links nil)
    (setq org-ref-bibliography-notes bibtex-completion-notes-path)
    (setq org-ref-default-bibliography bibtex-completion-bibliography)
@@ -1018,7 +1020,6 @@ Don't need to define html on org-babel-load-languages.
 ** Python
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
-      :defer t
       :init
           (add-hook 'python-mode-hook 'flyspell-prog-mode)
           (add-hook 'python-mode-hook 'elpy-mode)
@@ -1101,7 +1102,6 @@ Don't need to define html on org-babel-load-languages.
 
 (use-package rtags
   :pin melpast
-  :defer t
   :config
     (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
     (evil-define-key 'motion c-mode-base-map "gd" 'rtags-find-symbol-at-point)
@@ -1264,11 +1264,12 @@ Don't need to define html on org-babel-load-languages.
 #+END_SRC
 Load org-notmuch independently to open links from org files
 #+BEGIN_SRC emacs-lisp
-(require 'org-notmuch)
+;(require 'org-notmuch)
 #+END_SRC
 ** BBDB
 #+BEGIN_SRC emacs-lisp
 (use-package bbdb
+  :disabled
   :init
   (setq bbdb-file "~/Dropbox/ bbdb"
         bbdb-offer-save 'auto
@@ -1292,7 +1293,6 @@ Load org-notmuch independently to open links from org files
   (add-hook 'message-mode-hook 'turn-on-orgtbl)
   (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
   (use-package org-mime
-    :defer t
     :commands (org-mime-htmlize org-mime-org-buffer-htmlize))
 #+END_SRC
 ** twitter
@@ -1406,6 +1406,7 @@ Load org-notmuch independently to open links from org files
 
   (use-package org-pdfview
     :commands org-pdfview-open
+    :after org
     :init
     (delete '("\\.pdf\\'" . default) org-file-apps)
     (add-to-list 'org-file-apps '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open file))))
@@ -1444,12 +1445,17 @@ Load org-notmuch independently to open links from org files
       "+" 'emms-volume-raise
       "-" 'emms-volume-lower
      )
+
+    (require 'emms-info-libtag)
+    (setq emms-info-functions '(emms-info-libtag))
    )
 #+END_SRC
+** TODO save & anotations
+http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
 * Test
 #+BEGIN_SRC emacs-lisp
   (use-package mediawiki
-    :defer t
+
     :config
     (setq mediawiki-site-alist
           '(("Wikipedia" "https://en.wikipedia.org/w/" "Titan-cerberus" "" nil "User:Titan-cerberus")
@@ -1461,8 +1467,40 @@ Load org-notmuch independently to open links from org files
 #+RESULTS:
 #+BEGIN_SRC emacs-lisp
 (use-package ox-rst)
+(use-package mastodon
+:config
+(setq mastodon-instance-url "https://cybre.space"))
+#+END_SRC
+
+#+RESULTS:
+* TODO packages to check
+read win-point. It keeps track where the window was. So looking the same
+file on separate windows is traceable
+
+Save-place
+
+org-dynamic blocks
+column view
+* android
+#+BEGIN_SRC emacs-lisp
+(use-package android-mode
+  :init (setq android-mode-sdk-dir "~/Android/Sdk"))
+#+END_SRC
+
 * Ledger
 Emacs mode for managing ledger text files
 #+BEGIN_SRC emacs-lisp
 (use-package ledger-mode)
+#+END_SRC
+* Circe
+#+BEGIN_SRC emacs-lisp
+(use-package circe
+    :config
+    (setq circe-default-user "Titan-C"
+          )
+    (setq circe-network-options
+      '(("Freenode"
+         :tls t
+         :nick "Titan-C"
+         :channels ("#emacs-circe" "#clojure")))))
 #+END_SRC
