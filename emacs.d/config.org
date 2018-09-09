@@ -61,9 +61,13 @@
   :config
   (spaceline-spacemacs-theme)
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
-        powerline-default-separator 'wave))
+        powerline-default-separator 'arrow))
 #+END_SRC
-
+#+BEGIN_SRC emacs-lisp
+(setq display-time-24hr-format t)
+(setq display-time-format "%H:%M - %d %b %Y")
+(display-time-mode 1)
+#+END_SRC
 ** Window Management
 #+BEGIN_SRC emacs-lisp
   (setq split-width-threshold 150)
@@ -252,8 +256,6 @@
 (define-key evil-motion-state-map (kbd "C-r") 'evil-scroll-line-down)
 (define-key evil-normal-state-map (kbd "C-t") nil)
 (define-key evil-motion-state-map (kbd "C-t") 'evil-scroll-line-up)
-
-(global-set-key (kbd "s-w") 'hydra-window/body)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -277,14 +279,12 @@
 ** Dired
 #+BEGIN_SRC emacs-lisp
 ;; modify dired keys
-(progn
 (require 'dired )
 (evil-set-initial-state 'dired-mode 'emacs)
 (define-key dired-mode-map "t" 'dired-previous-line)
 (define-key dired-mode-map "r" 'dired-next-line)
 (define-key dired-mode-map "p" 'dired-toggle-marks)
 (setq-default dired-listing-switches "-alh")
-)
 #+END_SRC
 ** Spelling
 About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
@@ -395,7 +395,9 @@ default. This makes them save values.
                         `(lambda ()
                            (interactive)
                            (exwm-workspace-switch-create ,i))))
-  ;; 's-&': Launch application
+  ;; 's-p': Manage windows
+  (global-set-key (kbd "s-p") 'hydra-window/body)
+  ;; 's-l': Launch application
   (exwm-input-set-key (kbd "s-l")
                       (lambda (command)
                         (interactive (list (read-shell-command "$ ")))
