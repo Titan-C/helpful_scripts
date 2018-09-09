@@ -409,20 +409,22 @@ default. This makes them save values.
         '(([?\C-b] . [left])
           ([?\C-k] . [S-end delete])))
   ;; Enable EXWM
+  (fringe-mode 1)
   (exwm-enable))
 
 (use-package exwm
   :if (string= (getenv "DESKTOP_SESSION") "/usr/share/xsessions/emacs")
   :config
+  ;; setup my custom keymaps
+  (start-process "keymaps" nil "~/dev/helpful_scripts/keymaps.sh")
 
   (require 'exwm-randr)
-  (setq exwm-randr-workspace-output-plist '())
+  (setq exwm-randr-workspace-output-plist '(0 "HDMI2"))
   (add-hook 'exwm-randr-screen-change-hook
             (lambda ()
               (start-process-shell-command
-               "xrandr" nil "xrandr --output eDP1 --mode 1920x1080 --output HDMI2 --mode 1920x1080 --right-of eDP1 --primary")))
+               "xrandr" nil "xrandr --output eDP1 --mode 1920x1080 --output HDMI2 --primary --mode 1920x1080 --right-of eDP1")))
   (exwm-randr-enable)
-  (exwm-enable)
 
   (require 'exwm-systemtray)
   (exwm-systemtray-enable)
