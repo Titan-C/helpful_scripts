@@ -6,7 +6,6 @@
   (setq user-mail-address "hi@oscarnajera.com"
         user-full-name    "Óscar Nájera")
 #+END_SRC
-
 * Editor
 ** Basic behavior settings
 #+BEGIN_SRC emacs-lisp
@@ -372,7 +371,89 @@ default. This makes them save values.
       '((ispell-dictionary . "es_EC")
         (ispell-dictionary . "fr_FR")))
 #+END_SRC
-* Helm
+* EXWM
+#+BEGIN_SRC emacs-lisp
+(defun on/exwm-config ()
+  "Default configuration of EXWM."
+  ;; Set the initial workspace number.
+  (setq exwm-workspace-number 4)
+  ;; Make class name the buffer name
+  (add-hook 'exwm-update-class-hook
+            (lambda ()
+              (exwm-workspace-rename-buffer exwm-class-name)))
+  ;; 's-l': Reset
+  (exwm-input-set-key (kbd "s-l") #'exwm-reset)
+  ;; 's-w': Switch workspace
+  (exwm-input-set-key (kbd "s-w") #'exwm-workspace-switch)
+  ;; 's-N': Switch to certain workspace
+  (dotimes (i 10)
+    (exwm-input-set-key (kbd (format "s-%d" i))
+                        `(lambda ()
+                           (interactive)
+                           (exwm-workspace-switch-create ,i))))
+  ;; 's-&': Launch application
+  (exwm-input-set-key (kbd "s-&")
+                      (lambda (command)
+                        (interactive (list (read-shell-command "$ ")))
+                        (start-process-shell-command command nil command)))
+
+
+  ;; Movement keys
+  (exwm-input-set-key (kbd "s-n") #'windmove-left)
+  (exwm-input-set-key (kbd "s-r") #'windmove-down)
+  (exwm-input-set-key (kbd "s-t") #'windmove-up)
+  (exwm-input-set-key (kbd "s-s") #'windmove-right)
+
+  ;; Line-editing shortcuts
+  (setq exwm-input-simulation-keys
+        '(([?\C-b] . [left])
+          ([?\C-k] . [S-end delete])))
+  ;; Enable EXWM
+  (exwm-enable))
+
+(use-package exwm
+  :if (string= (getenv "DESKTOP_SESSION") "/usr/share/xsessions/emacs")
+  :config
+
+  (require 'exwm-randr)
+  (setq exwm-randr-workspace-output-plist '())
+  (add-hook 'exwm-randr-screen-change-hook
+            (lambda ()
+              (start-process-shell-command
+               "xrandr" nil "xrandr --output eDP1 --mode 1920x1080 --output HDMI2 --mode 1920x1080 --right-of eDP1 --primary")))
+  (exwm-randr-enable)
+  (exwm-enable)
+
+  (require 'exwm-systemtray)
+  (exwm-systemtray-enable)
+
+  (evil-set-initial-state 'exwm-mode 'emacs)
+
+  (on/exwm-config))
+#+END_SRC
+* Completion
+#+BEGIN_SRC emacs-lisp
+(global-set-key "\M-/" 'hippie-expand)
+
+(use-package company
+  :bind (:map company-active-map
+            ("C-r" . company-select-next)
+            ("C-t" . company-select-previous)
+         :map company-search-map
+            ("C-r" . company-select-next)
+            ("C-t" . company-select-previous))
+    :init
+    (add-hook 'after-init-hook 'global-company-mode)
+    (setq company-idle-delay 0.2
+          company-selection-wrap-around t)
+    )
+
+(use-package yasnippet
+:config (yas-global-mode t))
+
+(use-package yasnippet-snippets)
+#+END_SRC
+** Helm
 #+BEGIN_SRC emacs-lisp
   (use-package helm
       :bind (("M-x" . helm-M-x)
@@ -429,31 +510,7 @@ default. This makes them save values.
       ;;(key-chord-define helm-map "jk" 'helm-like-unite/body)
   )
 #+END_SRC
-** Completion
-#+BEGIN_SRC emacs-lisp
-  (global-set-key "\M-/" 'hippie-expand)
-
-  (use-package company
-    :bind (:map company-active-map
-              ("C-r" . company-select-next)
-              ("C-t" . company-select-previous)
-           :map company-search-map
-              ("C-r" . company-select-next)
-              ("C-t" . company-select-previous))
-      :init
-      (add-hook 'after-init-hook 'global-company-mode)
-      (setq company-idle-delay 0.2
-            company-selection-wrap-around t)
-      )
-
-
-
-  (use-package yasnippet
-  :config (yas-global-mode t))
-
-  (use-package yasnippet-snippets)
-#+END_SRC
-* Ivy
+** Ivy
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
     :config
