@@ -18,6 +18,7 @@
   (setq-default fill-column 75)
   (add-hook 'text-mode-hook 'visual-line-mode) ;; word-wrap
   (add-hook 'text-mode-hook 'flyspell-mode) ;; spell-check
+  (setq inhibit-startup-screen t)
 #+END_SRC
 ** Frame title includes file being used
 #+BEGIN_SRC emacs-lisp
@@ -444,6 +445,7 @@ default. This makes them save values.
 (global-set-key "\M-/" 'hippie-expand)
 
 (use-package company
+  :diminish company-mode
   :bind (:map company-active-map
             ("C-r" . company-select-next)
             ("C-t" . company-select-previous)
@@ -463,60 +465,60 @@ default. This makes them save values.
 #+END_SRC
 ** Helm
 #+BEGIN_SRC emacs-lisp
-  (use-package helm
-      :bind (("M-x" . helm-M-x)
-             ("C-x g" . helm-mini))
-      :config
-      (require 'helm-config)
-      (define-key helm-map (kbd "C-p") 'helm-toggle-resplit-and-swap-windows)
+(use-package helm
+  :diminish helm-mode
+  :bind (("M-x" . helm-M-x)
+         ("C-x g" . helm-mini))
+  :config
+  (require 'helm-config)
+  (define-key helm-map (kbd "C-p") 'helm-toggle-resplit-and-swap-windows)
 
-      (evil-leader/set-key
-          "hs" 'helm-semantic-or-imenu
-          "hd" 'helm-show-kill-ring
-          "hl" 'helm-locate)
+  (evil-leader/set-key
+      "hs" 'helm-semantic-or-imenu
+      "hd" 'helm-show-kill-ring
+      "hl" 'helm-locate)
 
-      (helm-mode 1))
+  (helm-mode 1))
 
-  (use-package helm-ag
-      :ensure t
-      :config
-      (evil-leader/set-key "ho" 'helm-do-ag-this-file)
-  )
+(use-package helm-ag
+    :config
+    (evil-leader/set-key "ho" 'helm-do-ag-this-file)
+)
 
-  (use-package helm-projectile
-      :config
-      (projectile-global-mode)
-      (setq projectile-completion-system 'helm)
-      (helm-projectile-on)
-      (evil-leader/set-key "ha" 'helm-projectile-ag)
-  )
+(use-package helm-projectile
+    :config
+    (projectile-global-mode)
+    (setq projectile-completion-system 'helm)
+    (helm-projectile-on)
+    (evil-leader/set-key "ha" 'helm-projectile-ag)
+)
 
-  (use-package hydra
-      ;; Hydra to enter in vim normal state like
-      ;; for speed key bindings
-      :init
-      (defhydra helm-vim-normal ()
-          ("?" helm-help "help")
-          ("<escape>" keyboard-escape-quit "exit")
-          ("q" keyboard-escape-quit "exit")
-          ("<SPC>" helm-toggle-visible-mark "mark")
-          ("m" helm-toggle-all-marks "(un)mark all")
-          ("l" helm-execute-persistent-action "persistent")
-          ("g" helm-beginning-of-buffer "top")
-          ("G" helm-end-of-buffer "bottom")
-          ("c" helm-find-files-up-one-level "Dir up")
-          ("f" helm-find-files-down-last-level "Dir down")
-          ("r" helm-next-line "down")
-          ("t" helm-previous-line "up")
-          ("n" helm-previous-source "prev src")
-          ("s" helm-next-source "next src")
-          ("w" helm-toggle-resplit-and-swap-windows "swap windows")
-          ("i" nil "cancel"))
+(use-package hydra
+    ;; Hydra to enter in vim normal state like
+    ;; for speed key bindings
+    :init
+    (defhydra helm-vim-normal ()
+        ("?" helm-help "help")
+        ("<escape>" keyboard-escape-quit "exit")
+        ("q" keyboard-escape-quit "exit")
+        ("<SPC>" helm-toggle-visible-mark "mark")
+        ("m" helm-toggle-all-marks "(un)mark all")
+        ("l" helm-execute-persistent-action "persistent")
+        ("g" helm-beginning-of-buffer "top")
+        ("G" helm-end-of-buffer "bottom")
+        ("c" helm-find-files-up-one-level "Dir up")
+        ("f" helm-find-files-down-last-level "Dir down")
+        ("r" helm-next-line "down")
+        ("t" helm-previous-line "up")
+        ("n" helm-previous-source "prev src")
+        ("s" helm-next-source "next src")
+        ("w" helm-toggle-resplit-and-swap-windows "swap windows")
+        ("i" nil "cancel"))
 
-      (define-key helm-map (kbd "<escape>") 'helm-vim-normal/body)
+    (define-key helm-map (kbd "<escape>") 'helm-vim-normal/body)
 
-      ;;(key-chord-define helm-map "jk" 'helm-like-unite/body)
-  )
+    ;;(key-chord-define helm-map "jk" 'helm-like-unite/body)
+)
 #+END_SRC
 ** Ivy
 #+BEGIN_SRC emacs-lisp
