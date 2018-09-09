@@ -753,25 +753,28 @@ this new window.
   (add-to-list 'company-math-allow-latex-symbols-in-faces 'org-latex-and-related))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-  ;; ** <<APS journals>>
-  (require 'ox-latex)
+(use-package ox-latex
+  :after org
+  :config
+  ;; APS journals
   (add-to-list 'org-latex-classes '("revtex4-1"
-                                    "\\documentclass{revtex4-1}
-  [PACKAGES]
-  [EXTRA]"
-                                     ("\\section{%s}" . "\\section*{%s}")
-                                     ("\\subsection{%s}" . "\\subsection*{%s}")
-                                     ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                                     ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                                     ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+        "\\documentclass{revtex4-1}
+        [PACKAGES]
+        [EXTRA]"
+        ("\\section{%s}" . "\\section*{%s}")
+        ("\\subsection{%s}" . "\\subsection*{%s}")
+        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+        ("\\paragraph{%s}" . "\\paragraph*{%s}")
+        ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
   (add-to-list 'org-latex-classes '("letter"
-                      "\\documentclass{letter}
+       "\\documentclass{letter}
        \[DEFAULT-PACKAGES]
        \[PACKAGES]
        \[EXTRA]"))
 
-(eval-after-load 'ox '(require 'ox-koma-letter))
+  (eval-after-load 'ox
+    '(require 'ox-koma-letter)))
 #+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp
