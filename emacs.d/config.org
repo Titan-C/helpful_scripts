@@ -662,7 +662,7 @@ this new window.
          :clock-in t :clock-resume t)
 
         ("l" "Web site" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Inbox")
-            "* %a\nCaptured On: %U\nWebsite: %l\n\n%i\n%?"
+            "* %a\nCaptured On: %U\nWebsite: %l\n%?\n%i\n"
             :clock-in t :clock-resume t)
 
         ("m" "meetup" entry (file "~/nextcloud/caldav.org") "* %?%:description \n%i")
