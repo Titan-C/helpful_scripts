@@ -7,7 +7,6 @@
 (setq tls-checktrust t)
 (setq gnutls-verify-error t)
 
-
 ;;; Load the config
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 

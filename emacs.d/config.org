@@ -589,7 +589,7 @@ disable other completions. But it looks a disaster inside emacs
     :config
     (eshell-git-prompt-use-theme 'powerline))
 #+END_SRC
-* Orgmode
+* Org mode
 ** Main Behavior
 #+BEGIN_SRC emacs-lisp
 (use-package org
@@ -648,6 +648,11 @@ disable other completions. But it looks a disaster inside emacs
             (kbd "M-S") 'org-shiftmetaright
             ))
         '(normal insert))
+
+  ;; when writting org-mode latex make this count as words to block
+  ;; expansion
+  (modify-syntax-entry ?_ "w" org-mode-syntax-table)
+  (modify-syntax-entry ?^ "w" org-mode-syntax-table)
 )
 
 ;; leader shortcuts
@@ -729,10 +734,10 @@ this new window.
   (setq org-latex-pdf-process '("latexmk -g -pdf -shell-escape -outdir=%o %f"))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-    (plist-put org-format-latex-options :scale 1.5)
+    ;(plist-put org-format-latex-options :scale 1.5)
     (setq org-preview-latex-default-process 'imagemagick)
-    (key-chord-define org-src-mode-map ".." 'org-edit-latex-preview-at-point)
-    (key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
+    ;(key-chord-define org-src-mode-map ".." 'org-edit-latex-preview-at-point)
+    ;(key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   (use-package org-edit-latex
@@ -957,10 +962,6 @@ Don't need to define html on org-babel-load-languages.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'text-mode-hook (lambda () (abbrev-mode 1)))
-;; when writting org-mode latex make this count as words to block
-;; expansion
-(modify-syntax-entry ?_ "w" org-mode-syntax-table)
-(modify-syntax-entry ?^ "w" org-mode-syntax-table)
 #+END_SRC
 ** Markdown
 #+BEGIN_SRC emacs-lisp
