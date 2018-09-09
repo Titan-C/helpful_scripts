@@ -109,6 +109,31 @@ Create Both
 SyncState *
 Expunge Both
 
+###############################################################################
+# Personal
+IMAPAccount kindle
+Host mail.najera.pw
+User kindle@oscarnajera.com
+PassCmd "pass show Correos/kindle@oscarnajera.com"
+AuthMechs LOGIN
+SSLType IMAPS
+
+IMAPStore kindle-remote
+Account kindle
+
+MaildirStore kindle-local
+Path ~/.mail/kindle/
+Inbox ~/.mail/kindle/Inbox
+SubFolders Verbatim
+
+Channel kindle
+Master :kindle-remote:
+Slave :kindle-local:
+Patterns *
+Create Both
+SyncState *
+Expunge Both
+
 # Local Variables:
 # mode: conf-unix
 # End:
