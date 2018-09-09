@@ -991,8 +991,10 @@ Don't need to define html on org-babel-load-languages.
  )
 
 (use-package rtags
+  :pin melpast
   :config
     (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
+    (evil-define-key 'motion c-mode-base-map "gd" 'rtags-find-symbol-at-point)
     ;; Shutdown rdm when leaving emacs.
     (add-hook 'kill-emacs-hook 'rtags-quit-rdm)
 )
