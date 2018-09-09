@@ -1260,12 +1260,12 @@ Don't need to define html on org-babel-load-languages.
               ("flagged" 'notmuch-search-flagged-face)
               ("unread" . (:foreground "#81d4fa"
                            :weight bold))))
+
+      ;;Load org-notmuch independently to open links from org files
+      (require 'org-notmuch)
   )
 #+END_SRC
-Load org-notmuch independently to open links from org files
-#+BEGIN_SRC emacs-lisp
-;(require 'org-notmuch)
-#+END_SRC
+
 ** BBDB
 #+BEGIN_SRC emacs-lisp
 (use-package bbdb
