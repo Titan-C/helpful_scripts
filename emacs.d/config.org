@@ -1039,11 +1039,16 @@ Don't need to define html on org-babel-load-languages.
 #+END_SRC
 ** clojure
 #+BEGIN_SRC emacs-lisp
-  (use-package cider
-    :pin melpast)
-  (use-package flycheck-clojure
-    :config
-    (flycheck-clojure-setup))
+(use-package cider
+  :pin melpast)
+
+(use-package clj-refactor
+  :config
+  (clj-refactor-mode 1))
+
+(use-package flycheck-clojure
+  :config
+  (flycheck-clojure-setup))
 #+END_SRC
 ** Scala
 #+BEGIN_SRC emacs-lisp
