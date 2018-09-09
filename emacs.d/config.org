@@ -78,13 +78,15 @@ Make sure =use-package= is installed as it administers all packages
 
   ;; font size
   (set-face-attribute 'default nil :font "DejaVuSansMono Nerd Font-13")
+#+END_SRC
 
-  (use-package spaceline-config
-  :ensure spaceline
-  :config
-  (spaceline-spacemacs-theme)
+#+BEGIN_SRC emacs-lisp
+(use-package spaceline
+  :init
   (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
-        powerline-default-separator 'arrow))
+        powerline-default-separator 'wave)
+  (require 'spaceline-config)
+  (spaceline-spacemacs-theme))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
 (setq display-time-24hr-format t)
