@@ -732,9 +732,8 @@ Don't need to define html on org-babel-load-languages.
 #+BEGIN_SRC emacs-lisp
 (use-package ox-reveal
 :load-path "~/dev/org-reveal"
-:ensure manual
 :init
-(setq org-reveal-root "file:///home/oscar/dev/reveal.js"))
+(setq org-reveal-root "file:///home/me/dev/reveal.js"))
 #+END_SRC
 ** Bibliography references
 #+BEGIN_SRC emacs-lisp
