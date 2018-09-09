@@ -109,7 +109,6 @@ Hydra allows to configure sets of keybindings.
         "x" 'helm-M-x
         "f" 'helm-find-files
         "p" 'helm-projectile
-        "t" 'magit-status
         "m" 'notmuch
         "s" 'eshell
         "q" 'kill-this-buffer
@@ -489,9 +488,11 @@ default. This makes them save values.
     )
 
 (use-package yasnippet
-:config (yas-global-mode t))
+  :defer t
+  :config (yas-global-mode t))
 
-(use-package yasnippet-snippets)
+(use-package yasnippet-snippets
+  :defer t)
 #+END_SRC
 ** Helm
 #+BEGIN_SRC emacs-lisp
@@ -499,6 +500,7 @@ default. This makes them save values.
   :diminish helm-mode
   :bind (("M-x" . helm-M-x)
          ("C-x g" . helm-mini))
+
   :config
   (require 'helm-config)
   (define-key helm-map (kbd "C-p") 'helm-toggle-resplit-and-swap-windows)
@@ -511,7 +513,8 @@ default. This makes them save values.
   (helm-mode 1))
 
 (use-package helm-ag
-  :config (evil-leader/set-key "ho" 'helm-do-ag-this-file))
+  :commands helm-do-age-this-file
+  :init (evil-leader/set-key "ho" 'helm-do-ag-this-file))
 
 (use-package helm-projectile
   :config
@@ -708,17 +711,17 @@ this new window.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-    (use-package company-math
-      :ensure company-math
-      :config
-      (defun my-latex-mode-setup ()
-      (setq-local company-backends
-                  (append '((company-math-symbols-latex company-latex-commands))
-                          company-backends)))
+(use-package company-math
+  :defer t
+  :config
+  ;; from https://github.com/vspinu/company-math#activation
+  (defun my-latex-mode-setup ()
+    (setq-local company-backends
+                (append '((company-math-symbols-latex
+                           company-latex-commands)) company-backends)))
+  (add-hook 'org-mode-hook 'my-latex-mode-setup)
 
-       (add-hook 'org-mode-hook 'my-latex-mode-setup)
-       (add-to-list 'company-math-allow-latex-symbols-in-faces 'org-latex-and-related)
-  )
+  (add-to-list 'company-math-allow-latex-symbols-in-faces 'org-latex-and-related))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   ;; ** <<APS journals>>
@@ -765,8 +768,8 @@ this new window.
 (require 'org-protocol)
 
 ;; to capture the website HTML
-(add-to-list 'load-path "~/dev/org-protocol-capture-html/")
-(require 'org-protocol-capture-html)
+;;(add-to-list 'load-path "~/dev/org-protocol-capture-html/")
+;;(require 'org-protocol-capture-html)
 #+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
@@ -836,9 +839,9 @@ Don't need to define html on org-babel-load-languages.
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   (use-package helm-bibtex
+    :commands helm-bibtex
     :init
-    (evil-leader/set-key
-      "hb" 'helm-bibtex)
+    (evil-leader/set-key "hb" 'helm-bibtex)
     :config
     (setq bibtex-completion-bibliography '("~/Dropbox/biblio/papers.bib"
                                            "~/Dropbox/biblio/zotero.bib"
@@ -847,7 +850,7 @@ Don't need to define html on org-babel-load-languages.
                                            "~/Dropbox/biblio/slides_talks.bib"))
     (setq bibtex-completion-pdf-field "file")
     (setq bibtex-completion-library-path "~/Dropbox/bibtex-pdf/")
-    (setq bibtex-completion-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org"))
+    (setq bibtex-completion-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
 
     (defun bibtex-completion-open-notes-and-pdf (keys)
          (bibtex-completion-open-pdf keys)
@@ -855,11 +858,12 @@ Don't need to define html on org-babel-load-languages.
 
     (helm-bibtex-helmify-action bibtex-completion-open-notes-and-pdf helm-bibtex-open-notes-and-pdf)
     ;(helm-delete-action-from-source "Edit notes with PDF" helm-source-bibtex)
-    (helm-add-action-to-source "Edit notes with PDF" 'helm-bibtex-open-notes-and-pdf helm-source-bibtex 1)
+    (helm-add-action-to-source "Edit notes with PDF" 'helm-bibtex-open-notes-and-pdf helm-source-bibtex 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-ref
+   :defer t
    :init
    (key-chord-define bibtex-mode-map "jj" 'org-ref-bibtex-hydra/body)
    :config
@@ -961,10 +965,12 @@ Don't need to define html on org-babel-load-languages.
 * Magit
 #+BEGIN_SRC emacs-lisp
 (use-package magit
-  :init
+  :commands magit-status
+  :init (evil-leader/set-key "t" 'magit-status)
+  :config
     (add-hook 'git-commit-mode-hook 'flyspell-mode)
     (add-hook 'git-commit-mode-hook 'evil-insert-state)
-  :config
+
     (setq magit-diff-refine-hunk t)
     (setq magit-repository-directories '("~/dev"))
     (define-key magit-mode-map "t" 'magit-section-backward)
@@ -976,6 +982,7 @@ Don't need to define html on org-babel-load-languages.
     (define-key magit-mode-map "n" 'magit-rebase-popup))
 
 (use-package magit-gh-pulls
+  :commands turn-on-magit-gh-pulls
   :init
     (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 #+END_SRC
@@ -1028,7 +1035,7 @@ Don't need to define html on org-babel-load-languages.
 *** IPython Notebook
 #+BEGIN_SRC emacs-lisp
   (use-package ein
-      :ensure t
+      :commands ein:notebooklist-open
       :init (evil-leader/set-key "ipn" 'ein:notebooklist-open)
       :config
       (require 'ein-multilang)
@@ -1081,6 +1088,7 @@ Don't need to define html on org-babel-load-languages.
 
 (use-package rtags
   :pin melpast
+  :defer t
   :config
     (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
     (evil-define-key 'motion c-mode-base-map "gd" 'rtags-find-symbol-at-point)
@@ -1088,8 +1096,10 @@ Don't need to define html on org-babel-load-languages.
     (add-hook 'kill-emacs-hook 'rtags-quit-rdm)
 )
 
-(use-package flycheck-rtags)
-(use-package dumb-jump)
+(use-package flycheck-rtags
+  :defer t)
+(use-package dumb-jump
+  :defer t)
 #+END_SRC
 ** Rust
 #+BEGIN_SRC emacs-lisp
@@ -1128,13 +1138,16 @@ Don't need to define html on org-babel-load-languages.
 ** clojure
 #+BEGIN_SRC emacs-lisp
 (use-package cider
+  :defer t
   :pin melpast)
 
 (use-package clj-refactor
+  :defer t
   :config
   (clj-refactor-mode 1))
 
 (use-package flycheck-clojure
+  :defer t
   :config
   (flycheck-clojure-setup))
 #+END_SRC
@@ -1152,7 +1165,8 @@ Don't need to define html on org-babel-load-languages.
 #+END_SRC
 ** JavaScript
 #+BEGIN_SRC emacs-lisp
-(use-package indium)
+(use-package indium
+  :defer t)
 #+END_SRC
 * Email
 ** Notmuch client
@@ -1247,20 +1261,19 @@ Load org-notmuch independently to open links from org files
 #+END_SRC
 ** BBDB
 #+BEGIN_SRC emacs-lisp
-  (use-package bbdb
+(use-package bbdb
   :init
-  (setq bbdb-file "~/Dropbox/bbdb"
-          bbdb-offer-save 'auto
-          bbdb-notice-auto-save-file t
-          bbdb-expand-mail-aliases t
-          bbdb-canonicalize-redundant-nets-p t
-          bbdb-always-add-addresses t
-          bbdb-complete-name-allow-cycling t
-  )
-  (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-  :config
-  (bbdb-initialize 'gnus 'message)
-  (bbdb-insinuate-message))
+  (setq bbdb-file "~/Dropbox/ bbdb"
+        bbdb-offer-save 'auto
+        bbdb-notice-auto-save-file t
+
+        bbdb-expand-mail-aliases t
+        bbdb-canonicalize-redundant-nets-p t
+
+        bbdb-always-add-addresses t
+        bbdb-complete-name-allow-cycling t)
+
+  :config (bbdb-insinuate-message))
 #+END_SRC
 ** Composer
 #+BEGIN_SRC emacs-lisp
@@ -1325,37 +1338,36 @@ Load org-notmuch independently to open links from org files
 #+END_SRC
 * RSS
 #+BEGIN_SRC emacs-lisp
-  ;; functions to support syncing .elfeed
-  ;; makes sure elfeed reads index from disk before launching
-  ;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
+;; functions to support syncing .elfeed
+;; makes sure elfeed reads index from disk before launching
+;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
 
-  (defun bjm/elfeed-load-db-and-open ()
-    "Wrapper to load the elfeed db from disk before opening"
-    (interactive)
-    (elfeed-db-load)
-    (elfeed)
-    (elfeed-search-update--force))
+(defun bjm/elfeed-load-db-and-open ()
+  "Wrapper to load the elfeed db from disk before opening"
+  (interactive)
+  (elfeed-db-load)
+  (elfeed)
+  (elfeed-search-update--force))
 
-  ;;write to disk when quiting
-  (defun bjm/elfeed-save-db-and-bury ()
-    "Wrapper to save the elfeed db to disk before burying buffer"
-    (interactive)
-    (elfeed-db-save)
-    (quit-window))
+;;write to disk when quiting
+(defun bjm/elfeed-save-db-and-bury ()
+  "Wrapper to save the elfeed db to disk before burying buffer"
+  (interactive)
+  (elfeed-db-save)
+  (quit-window))
 
-  (use-package elfeed
-      :bind (:map elfeed-search-mode-map
+(use-package elfeed
+  :bind (:map elfeed-search-mode-map
               ("r" . next-line)
               ("t" . previous-line)
               ("n" . elfeed-search-untag-all-unread)
               ("q" . bjm/elfeed-save-db-and-bury)
-             :map elfeed-show-mode-map
-             ("r" . elfeed-show-next)
-             ("t" . elfeed-show-prev)
-             )
-    :config
-      (evil-set-initial-state 'elfeed-show-mode 'emacs)
-      (evil-set-initial-state 'elfeed-search-mode 'emacs))
+         :map elfeed-show-mode-map
+              ("r" . elfeed-show-next)
+              ("t" . elfeed-show-prev))
+  :config
+  (evil-set-initial-state 'elfeed-show-mode 'emacs)
+  (evil-set-initial-state 'elfeed-search-mode 'emacs))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
   (use-package elfeed-org
@@ -1366,7 +1378,6 @@ Load org-notmuch independently to open links from org files
 * Pdf-Reading
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
-    :ensure t
     :mode (("\\.pdf$" . pdf-view-mode))
     :bind (:map pdf-view-mode-map
                 ("r" . pdf-view-scroll-up-or-next-page)
@@ -1387,6 +1398,7 @@ Load org-notmuch independently to open links from org files
     (evil-set-initial-state 'pdf-view-mode 'emacs))
 
   (use-package org-pdfview
+    :commands org-pdfview-open
     :init
     (delete '("\\.pdf\\'" . default) org-file-apps)
     (add-to-list 'org-file-apps '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open file))))
