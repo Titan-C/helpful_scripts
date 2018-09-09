@@ -69,120 +69,11 @@
 (setq display-time-format "%H:%M - %d %b %Y")
 (display-time-mode 1)
 #+END_SRC
-** Window Management
+** Hydra
+Hydra allows to configure sets of keybindings.
 #+BEGIN_SRC emacs-lisp
-  (setq split-width-threshold 150)
-
-  (use-package ace-window
-    :bind (("s-c" . ace-window))
-    :config (setq aw-keys '(?a ?o ?e ?i ?r ?t ?n ?s)))
+(use-package hydra)
 #+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (require 'windmove)
-
-  (defun hydra-move-splitter-left (arg)
-    "Move window splitter left."
-    (interactive "p")
-    (if (let ((windmove-wrap-around))
-          (windmove-find-other-window 'right))
-        (shrink-window-horizontally arg)
-      (enlarge-window-horizontally arg)))
-
-  (defun hydra-move-splitter-right (arg)
-    "Move window splitter right."
-    (interactive "p")
-    (if (let ((windmove-wrap-around))
-          (windmove-find-other-window 'right))
-        (enlarge-window-horizontally arg)
-      (shrink-window-horizontally arg)))
-
-  (defun hydra-move-splitter-up (arg)
-    "Move window splitter up."
-    (interactive "p")
-    (if (let ((windmove-wrap-around))
-          (windmove-find-other-window 'up))
-        (enlarge-window arg)
-      (shrink-window arg)))
-
-  (defun hydra-move-splitter-down (arg)
-    "Move window splitter down."
-    (interactive "p")
-    (if (let ((windmove-wrap-around))
-          (windmove-find-other-window 'up))
-        (shrink-window arg)
-      (enlarge-window arg)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(winner-mode 1)
-
-(defun split-right-and-follow ()
-  (interactive)
-  (split-window-right)
-  (windmove-right))
-(global-set-key (kbd "C-x 3") 'split-right-and-follow)
-
-(defun split-below-and-follow ()
-  (interactive)
-  (split-window-below)
-  (windmove-down))
-(global-set-key (kbd "C-x 2") 'split-below-and-follow)
-
-(use-package hydra
-  :init
-  (defhydra hydra-window ()
-     "
-  Movement^^        ^Split^         ^Switch^      ^Resize^
-  ----------------------------------------------------------------
-  _n_ ←         _d_ vertical      _g_ buffer      _N_ ←
-  _r_ ↓         _q_ horizontal    _f_ind files    _R_ ↓
-  _t_ ↑         _._ undo          _c_ ace 1       _T_ ↑
-  _s_ →         _:_ reset         _h_ swap        _S_ →
-  _F_ollow        _D_lt Other     _p_roject files _m_aximize
-  _SPC_ cancel    onl_y_ this     _x_ delete
-  "
-     ("r" windmove-down )
-     ("t" windmove-up )
-     ("n" windmove-left )
-     ("s" windmove-right )
-     ("N" hydra-move-splitter-left)
-     ("R" hydra-move-splitter-down)
-     ("T" hydra-move-splitter-up)
-     ("S" hydra-move-splitter-right)
-     ("g" helm-mini)
-     ("p" helm-projectile)
-     ("f" helm-find-files)
-     ("F" follow-mode)
-     ("c" (lambda ()
-            (interactive)
-            (ace-window 1)
-            (add-hook 'ace-window-end-once-hook
-                      'hydra-window/body))
-         )
-     ("d" (split-right-and-follow))
-     ("q" (split-below-and-follow))
-     ("h" (lambda ()
-            (interactive)
-            (ace-window 4)
-            (add-hook 'ace-window-end-once-hook
-                      'hydra-window/body)))
-     ("x" delete-window)
-     ("D" (lambda ()
-            (interactive)
-            (ace-window 16)
-            (add-hook 'ace-window-end-once-hook
-                      'hydra-window/body))
-         )
-     ("y" delete-other-windows)
-     ("m" ace-maximize-window)
-     ("." (progn
-            (winner-undo)
-            (setq this-command 'winner-undo))
-     )
-     (":" winner-redo)
-     ("SPC" nil)))
-#+END_SRC
-
 ** Evil-mode
 #+BEGIN_SRC emacs-lisp
   (use-package evil
@@ -276,6 +167,188 @@
       )
   )
   (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
+#+END_SRC
+** Window Management
+#+BEGIN_SRC emacs-lisp
+  (setq split-width-threshold 150)
+
+  (use-package ace-window
+    :bind (("s-c" . ace-window))
+    :config (setq aw-keys '(?a ?o ?e ?i ?r ?t ?n ?s)))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (require 'windmove)
+
+  (defun hydra-move-splitter-left (arg)
+    "Move window splitter left."
+    (interactive "p")
+    (if (let ((windmove-wrap-around))
+          (windmove-find-other-window 'right))
+        (shrink-window-horizontally arg)
+      (enlarge-window-horizontally arg)))
+
+  (defun hydra-move-splitter-right (arg)
+    "Move window splitter right."
+    (interactive "p")
+    (if (let ((windmove-wrap-around))
+          (windmove-find-other-window 'right))
+        (enlarge-window-horizontally arg)
+      (shrink-window-horizontally arg)))
+
+  (defun hydra-move-splitter-up (arg)
+    "Move window splitter up."
+    (interactive "p")
+    (if (let ((windmove-wrap-around))
+          (windmove-find-other-window 'up))
+        (enlarge-window arg)
+      (shrink-window arg)))
+
+  (defun hydra-move-splitter-down (arg)
+    "Move window splitter down."
+    (interactive "p")
+    (if (let ((windmove-wrap-around))
+          (windmove-find-other-window 'up))
+        (shrink-window arg)
+      (enlarge-window arg)))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(winner-mode 1)
+
+(defun split-right-and-follow ()
+  (interactive)
+  (split-window-right)
+  (windmove-right))
+
+(global-set-key (kbd "C-x 3") 'split-right-and-follow)
+
+(defun split-below-and-follow ()
+  (interactive)
+  (split-window-below)
+  (windmove-down))
+
+(global-set-key (kbd "C-x 2") 'split-below-and-follow)
+
+(defhydra hydra-window ()
+  "
+  Movement^^        ^Split^         ^Switch^      ^Resize^
+  ----------------------------------------------------------------
+  _n_ ←         _d_ vertical      _g_ buffer      _N_ ←
+  _r_ ↓         _q_ horizontal    _f_ind files    _R_ ↓
+  _t_ ↑         _._ undo          _c_ ace 1       _T_ ↑
+  _s_ →         _:_ reset         _h_ swap        _S_ →
+  _F_ollow      _D_lt Other       _p_roject files _m_aximize
+  _SPC_ cancel  onl_y_ this       _x_ delete      _l_aunch
+  "
+  ("r" windmove-down )
+  ("t" windmove-up )
+  ("n" windmove-left )
+  ("s" windmove-right )
+  ("N" hydra-move-splitter-left)
+  ("R" hydra-move-splitter-down)
+  ("T" hydra-move-splitter-up)
+  ("S" hydra-move-splitter-right)
+  ("g" helm-mini)
+  ("p" helm-projectile)
+  ("f" helm-find-files)
+  ("F" follow-mode)
+  ("c" (lambda ()
+         (interactive)
+         (ace-window 1)
+         (add-hook 'ace-window-end-once-hook 'hydra-window/body)))
+  ("d" (split-right-and-follow))
+  ("q" (split-below-and-follow))
+  ("h" (lambda ()
+         (interactive)
+         (ace-window 4)
+         (add-hook 'ace-window-end-once-hook 'hydra-window/body)))
+  ("x" delete-window)
+  ("D" (lambda ()
+         (interactive)
+         (ace-window 16)
+         (add-hook 'ace-window-end-once-hook 'hydra-window/body)))
+  ("y" delete-other-windows)
+  ("m" ace-maximize-window)
+  ("." (progn (winner-undo)
+              (setq this-command 'winner-undo)))
+  (":" winner-redo)
+  ("l" dmenu :exit t)
+  ("SPC" nil))
+#+END_SRC
+*** EXWM
+#+BEGIN_SRC emacs-lisp
+(defun on/exwm-config ()
+  "Default configuration of EXWM."
+  ;; Set the initial workspace number.
+  (setq exwm-workspace-number 4)
+  ;; Make class name the buffer name
+  (add-hook 'exwm-update-class-hook
+            (lambda ()
+              (exwm-workspace-rename-buffer exwm-class-name)))
+  ;; 's-l': Reset
+  (exwm-input-set-key (kbd "s-l") #'exwm-reset)
+  ;; 's-w': Switch workspace
+  (exwm-input-set-key (kbd "s-w") #'exwm-workspace-switch)
+  ;; 's-N': Switch to certain workspace
+  (dotimes (i 10)
+    (exwm-input-set-key (kbd (format "s-%d" i))
+                        `(lambda ()
+                           (interactive)
+                           (exwm-workspace-switch-create ,i))))
+  ;; 's-p': Manage windows
+  (exwm-input-set-key (kbd "s-p") 'hydra-window/body)
+  ;; 's-l': Launch application
+  (exwm-input-set-key (kbd "s-l")
+                      (lambda (command)
+                        (interactive (list (read-shell-command "$ ")))
+                        (start-process-shell-command command nil command)))
+
+
+  ;; Movement keys
+  (exwm-input-set-key (kbd "s-n") #'windmove-left)
+  (exwm-input-set-key (kbd "s-r") #'windmove-down)
+  (exwm-input-set-key (kbd "s-t") #'windmove-up)
+  (exwm-input-set-key (kbd "s-s") #'windmove-right)
+
+
+  ;; Line-editing shortcuts
+  (setq exwm-input-simulation-keys
+        '(;; cut/paste
+         ([?\C-w] . ?\C-x)
+         ([?\M-w] . ?\C-c)
+         ([?\C-y] . ?\C-v)))
+  ;; Enable EXWM
+  (fringe-mode 1)
+  (exwm-enable))
+
+(use-package exwm
+  :if (string= (getenv "DESKTOP_SESSION") "/usr/share/xsessions/emacs")
+  :config
+  ;; setup my custom keymaps
+  (start-process "keymaps" nil "~/dev/helpful_scripts/keymaps.sh")
+
+  (require 'exwm-randr)
+  (setq exwm-randr-workspace-output-plist '(0 "HDMI2"))
+  (add-hook 'exwm-randr-screen-change-hook
+            (lambda ()
+              (start-process-shell-command
+               "xrandr" nil "xrandr --output eDP1 --mode 1920x1080 --output HDMI2 --primary --mode 1920x1080 --right-of eDP1")))
+  (exwm-randr-enable)
+
+  (require 'exwm-systemtray)
+  (exwm-systemtray-enable)
+
+  (evil-set-initial-state 'exwm-mode 'emacs)
+
+  (on/exwm-config))
+#+END_SRC
+**** Dashboard
+#+BEGIN_SRC emacs-lisp
+;;(use-package dashboard
+  ;;:config
+    ;;(dashboard-setup-startup-hook)
+    ;;(setq dashboard-items '((agenda . 5)
+                            ;;(recent . 5)
+                            ;;(projects . 5))))
 #+END_SRC
 ** Dired
 #+BEGIN_SRC emacs-lisp
@@ -376,70 +449,6 @@ default. This makes them save values.
       '((ispell-dictionary . "es_EC")
         (ispell-dictionary . "fr_FR")))
 #+END_SRC
-* EXWM
-#+BEGIN_SRC emacs-lisp
-(defun on/exwm-config ()
-  "Default configuration of EXWM."
-  ;; Set the initial workspace number.
-  (setq exwm-workspace-number 4)
-  ;; Make class name the buffer name
-  (add-hook 'exwm-update-class-hook
-            (lambda ()
-              (exwm-workspace-rename-buffer exwm-class-name)))
-  ;; 's-l': Reset
-  (exwm-input-set-key (kbd "s-l") #'exwm-reset)
-  ;; 's-w': Switch workspace
-  (exwm-input-set-key (kbd "s-w") #'exwm-workspace-switch)
-  ;; 's-N': Switch to certain workspace
-  (dotimes (i 10)
-    (exwm-input-set-key (kbd (format "s-%d" i))
-                        `(lambda ()
-                           (interactive)
-                           (exwm-workspace-switch-create ,i))))
-  ;; 's-p': Manage windows
-  (global-set-key (kbd "s-p") 'hydra-window/body)
-  ;; 's-l': Launch application
-  (exwm-input-set-key (kbd "s-l")
-                      (lambda (command)
-                        (interactive (list (read-shell-command "$ ")))
-                        (start-process-shell-command command nil command)))
-
-
-  ;; Movement keys
-  (exwm-input-set-key (kbd "s-n") #'windmove-left)
-  (exwm-input-set-key (kbd "s-r") #'windmove-down)
-  (exwm-input-set-key (kbd "s-t") #'windmove-up)
-  (exwm-input-set-key (kbd "s-s") #'windmove-right)
-
-  ;; Line-editing shortcuts
-  (setq exwm-input-simulation-keys
-        '(([?\C-b] . [left])
-          ([?\C-k] . [S-end delete])))
-  ;; Enable EXWM
-  (fringe-mode 1)
-  (exwm-enable))
-
-(use-package exwm
-  :if (string= (getenv "DESKTOP_SESSION") "/usr/share/xsessions/emacs")
-  :config
-  ;; setup my custom keymaps
-  (start-process "keymaps" nil "~/dev/helpful_scripts/keymaps.sh")
-
-  (require 'exwm-randr)
-  (setq exwm-randr-workspace-output-plist '(0 "HDMI2"))
-  (add-hook 'exwm-randr-screen-change-hook
-            (lambda ()
-              (start-process-shell-command
-               "xrandr" nil "xrandr --output eDP1 --mode 1920x1080 --output HDMI2 --primary --mode 1920x1080 --right-of eDP1")))
-  (exwm-randr-enable)
-
-  (require 'exwm-systemtray)
-  (exwm-systemtray-enable)
-
-  (evil-set-initial-state 'exwm-mode 'emacs)
-
-  (on/exwm-config))
-#+END_SRC
 * Completion
 #+BEGIN_SRC emacs-lisp
 (global-set-key "\M-/" 'hippie-expand)
@@ -481,44 +490,37 @@ default. This makes them save values.
   (helm-mode 1))
 
 (use-package helm-ag
-    :config
-    (evil-leader/set-key "ho" 'helm-do-ag-this-file)
-)
+  :config (evil-leader/set-key "ho" 'helm-do-ag-this-file))
 
 (use-package helm-projectile
-    :config
-    (projectile-global-mode)
-    (setq projectile-completion-system 'helm)
-    (helm-projectile-on)
-    (evil-leader/set-key "ha" 'helm-projectile-ag)
-)
+  :config
+  (projectile-global-mode)
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on)
+  (evil-leader/set-key "ha" 'helm-projectile-ag))
 
-(use-package hydra
-    ;; Hydra to enter in vim normal state like
-    ;; for speed key bindings
-    :init
-    (defhydra helm-vim-normal ()
-        ("?" helm-help "help")
-        ("<escape>" keyboard-escape-quit "exit")
-        ("q" keyboard-escape-quit "exit")
-        ("<SPC>" helm-toggle-visible-mark "mark")
-        ("m" helm-toggle-all-marks "(un)mark all")
-        ("l" helm-execute-persistent-action "persistent")
-        ("g" helm-beginning-of-buffer "top")
-        ("G" helm-end-of-buffer "bottom")
-        ("c" helm-find-files-up-one-level "Dir up")
-        ("f" helm-find-files-down-last-level "Dir down")
-        ("r" helm-next-line "down")
-        ("t" helm-previous-line "up")
-        ("n" helm-previous-source "prev src")
-        ("s" helm-next-source "next src")
-        ("w" helm-toggle-resplit-and-swap-windows "swap windows")
-        ("i" nil "cancel"))
+;; Hydra to enter in vim normal state like
+;; for speed key bindings
+(defhydra helm-vim-normal ()
+  ("?" helm-help "help")
+  ("<escape>" keyboard-escape-quit "exit")
+  ("q" keyboard-escape-quit "exit")
+  ("<SPC>" helm-toggle-visible-mark "mark")
+  ("m" helm-toggle-all-marks "(un)mark all")
+  ("l" helm-execute-persistent-action "persistent")
+  ("g" helm-beginning-of-buffer "top")
+  ("G" helm-end-of-buffer "bottom")
+  ("c" helm-find-files-up-one-level "Dir up")
+  ("f" helm-find-files-down-last-level "Dir down")
+  ("r" helm-next-line "down")
+  ("t" helm-previous-line "up")
+  ("n" helm-previous-source "prev src")
+  ("s" helm-next-source "next src")
+  ("w" helm-toggle-resplit-and-swap-windows "swap windows")
+  ("i" nil "cancel"))
+(define-key helm-map (kbd "<escape>") 'helm-vim-normal/body)
 
-    (define-key helm-map (kbd "<escape>") 'helm-vim-normal/body)
-
-    ;;(key-chord-define helm-map "jk" 'helm-like-unite/body)
-)
+;;(key-chord-define helm-map "jk" 'helm-like-unite/body)
 #+END_SRC
 ** Ivy
 #+BEGIN_SRC emacs-lisp
