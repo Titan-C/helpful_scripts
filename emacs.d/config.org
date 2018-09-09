@@ -685,9 +685,15 @@ this new window.
    '((emacs-lisp . t)
      (latex . t)
      (shell . t)
+     (plantuml .t)
      (C . t)
+     (scala . t)
      (dot . t)
      (python . t)))
+
+(use-package plantuml-mode
+:config
+(setq org-plantuml-jar-path "/opt/plantuml/plantuml.jar"))
 #+END_SRC
 
 For html export try https://emacs.stackexchange.com/questions/5669/can-org-babel-replace-code-with-code-output-on-html-export
