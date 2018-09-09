@@ -9,11 +9,12 @@ Follow statistics of my keystrokes
 
 from __future__ import division, absolute_import, print_function
 import re
+import os
 import collections
 import argparse
 
 parser = argparse.ArgumentParser(description='Key press statistics')
-parser.add_argument('-file', default='/home/oscar/keylog',
+parser.add_argument('-file', default=os.path.expanduser('~/keylog'),
                     help='Key pressing log file')
 parser.add_argument('-txt', action='store_true',
                     help='is it a text file?')
