@@ -1052,9 +1052,15 @@ Don't need to define html on org-babel-load-languages.
 #+END_SRC
 ** Scala
 #+BEGIN_SRC emacs-lisp
+(use-package ensime)
+
 (use-package scala-mode
   :interpreter
   ("scala" . scala-mode))
+#+END_SRC
+** JavaScript
+#+BEGIN_SRC emacs-lisp
+(use-package indium)
 #+END_SRC
 * Email
 ** Notmuch client
