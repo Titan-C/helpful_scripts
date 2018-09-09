@@ -32,6 +32,27 @@
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/lisp/")
 #+END_SRC
+** Package management
+Declare the package archives to the emacs package manager.
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(setq package-archives '(("melpast" . "https://stable.melpa.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+#+END_SRC
+Make sure =use-package= is installed as it administers all packages
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'use-package)
+   (package-refresh-contents)
+   (package-install 'use-package))
+
+(eval-when-compile
+    (require 'use-package)
+    (setq use-package-verbose t
+          use-package-always-ensure t))
+#+END_SRC
 ** ediff
 #+BEGIN_SRC emacs-lisp
   (use-package ediff
@@ -1067,8 +1088,7 @@ Don't need to define html on org-babel-load-languages.
     (add-hook 'kill-emacs-hook 'rtags-quit-rdm)
 )
 
-(use-package flycheck-rtags
-  :ensure rtags)
+(use-package flycheck-rtags)
 (use-package dumb-jump)
 #+END_SRC
 ** Rust
@@ -1117,6 +1137,10 @@ Don't need to define html on org-babel-load-languages.
 (use-package flycheck-clojure
   :config
   (flycheck-clojure-setup))
+#+END_SRC
+** Emacs lisp
+#+BEGIN_SRC emacs-lisp
+(use-package elisp-format)
 #+END_SRC
 ** Scala
 #+BEGIN_SRC emacs-lisp
