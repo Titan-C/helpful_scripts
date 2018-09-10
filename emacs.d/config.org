@@ -343,10 +343,10 @@ Hydra allows to configure sets of keybindings.
 
 (use-package exwm
   :if (string= (getenv "DESKTOP_SESSION") "/usr/share/xsessions/emacs")
-  :config
+  :commands exwm-enable
+  :init
   ;; setup my custom keymaps
   (start-process "keymaps" nil "~/dev/helpful_scripts/keymaps.sh")
-
   (require 'exwm-randr)
   (setq exwm-randr-workspace-output-plist '(0 "HDMI2"))
   (add-hook 'exwm-randr-screen-change-hook
