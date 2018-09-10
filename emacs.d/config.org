@@ -570,16 +570,15 @@ default. This makes them save values.
                 ("C-n" . ivy-reverse-i-search)))
 #+END_SRC
 * shell
-** Zsh
-Zsh is great and it's completion too. Use a compatible term and
-disable other completions. But it looks a disaster inside emacs
+** Xonsh
+Trying to use Xonsh inside of emacs to access a pythonic terminal
 #+BEGIN_SRC emacs-lisp
 (use-package multi-term
   :config
   (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1)))
-  (setq company-global-modes '(not term-mode)))
+  (setq company-global-modes '(not term-mode))
+  (setq multi-term-program "/usr/bin/xonsh"))
 #+END_SRC
-
 ** Eshell
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'exec-path "~/dev/helpful_scripts")
