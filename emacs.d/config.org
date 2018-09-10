@@ -365,6 +365,9 @@ Hydra allows to configure sets of keybindings.
 
   (evil-set-initial-state 'exwm-mode 'emacs)
 
+  (use-package pinentry
+    :init (pinentry-start))
+
   (on/exwm-config))
 #+END_SRC
 **** Dashboard
