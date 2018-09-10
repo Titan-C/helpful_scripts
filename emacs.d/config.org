@@ -690,9 +690,9 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   (setq org-agenda-start-on-weekday 0)
   (setq org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 4)))
 
-;; Launch day agenda
-;;(org-agenda-list 1)
-;;(setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
+  ;; Launch day agenda
+  (org-agenda-list 1)
+  (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
 )
 #+END_SRC
 ** Alerts
