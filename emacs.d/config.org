@@ -20,6 +20,11 @@
   (add-hook 'text-mode-hook 'flyspell-mode) ;; spell-check
   (setq inhibit-startup-screen t)
 #+END_SRC
+
+Set SSH agent
+#+BEGIN_SRC emacs-lisp
+(setenv "SSH_AUTH_SOCK" (concat (getenv "XDG_RUNTIME_DIR")"/gnupg/S.gpg-agent.ssh"))
+#+END_SRC
 ** Frame title includes file being used
 #+BEGIN_SRC emacs-lisp
   ;;http://emacs-fu.blogspot.fr/2011/01/setting-frame-title.html
@@ -414,9 +419,6 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 #+END_SRC
 ** Add-ons
 #+BEGIN_SRC emacs-lisp
-  (use-package exec-path-from-shell
-    :config
-    (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
   (setq browse-url-browser-function 'browse-url-firefox)
 #+END_SRC
 ** Parenthesis
