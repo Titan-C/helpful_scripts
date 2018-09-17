@@ -347,7 +347,7 @@ Hydra allows to configure sets of keybindings.
   (exwm-enable))
 
 (use-package exwm
-  :if (string= (getenv "DESKTOP_SESSION") "/usr/share/xsessions/emacs")
+  :if (member (getenv "DESKTOP_SESSION") '("/usr/share/xsessions/emacs" "exwm"))
   :commands exwm-enable
   :init
   ;; setup my custom keymaps
