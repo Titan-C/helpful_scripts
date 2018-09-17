@@ -57,7 +57,7 @@ Make sure =use-package= is installed as it administers all packages
     (require 'use-package)
     (setq use-package-verbose t
           use-package-always-defer t
-          use-package-always-ensure nil))
+          use-package-always-ensure t))
 #+END_SRC
 ** ediff
 #+BEGIN_SRC emacs-lisp
@@ -676,6 +676,7 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
 #+BEGIN_SRC emacs-lisp
 (use-package org-agenda
   :after org
+  :ensure org
   :bind (:map org-agenda-mode-map
          ("T" . 'org-agenda-previous-line)
          ("t" . 'org-agenda-previous-item)
@@ -766,6 +767,7 @@ this new window.
 #+BEGIN_SRC emacs-lisp
 (use-package ox-latex
   :after org
+  :ensure org
   :config
   ;; APS journals
   (add-to-list 'org-latex-classes '("revtex4-1"
@@ -809,6 +811,7 @@ this new window.
 ;; to interact from external sources
 (server-start)
 (use-package org-protocol
+  :ensure org
   :after org)
 
 ;; to capture the website HTML
