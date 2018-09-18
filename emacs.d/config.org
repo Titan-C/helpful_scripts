@@ -996,6 +996,17 @@ Don't need to define html on org-babel-load-languages.
 
     (setq magit-diff-refine-hunk t)
     (setq magit-repository-directories '("~/dev"))
+
+    ;;https://emacs.stackexchange.com/questions/19672/magit-gerrit-push-to-other-branch
+    (defun magit-push-to-gerrit ()
+        (interactive)
+        (magit-git-command-topdir "git push origin HEAD:refs/for/master"))
+
+    (magit-define-popup-action 'magit-push-popup
+        ?m
+        "Push to gerrit"
+        'magit-push-to-gerrit)
+
     (define-key magit-mode-map "t" 'magit-section-backward)
     (define-key magit-mode-map "\M-t" 'magit-section-backward-sibling)
     (define-key magit-mode-map "r" 'magit-section-forward)
