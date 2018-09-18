@@ -357,7 +357,7 @@ Hydra allows to configure sets of keybindings.
   (add-hook 'exwm-randr-screen-change-hook
             (lambda ()
               (start-process-shell-command
-               "xrandr" nil "xrandr --output eDP1 --mode 1920x1080 --output HDMI2 --primary --mode 1920x1080 --right-of eDP1")))
+               "xrandr" nil "xrandr --output DP-1 --output LVDS-1 --off")))
   (exwm-randr-enable)
 
   (require 'exwm-systemtray)
