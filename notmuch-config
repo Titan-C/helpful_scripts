@@ -32,7 +32,7 @@ path=/home/me/.mail
 [user]
 name=Oscar Najera
 primary_email=hi@oscarnajera.com
-other_email=hello@oscarnajera.com;najera.oscar@gmail.com;oscar.najera-ocampo@u-psud.fr;
+other_email=hello@oscarnajera.com;najera.oscar@gmail.com;oscar.najera-ocampo@u-psud.fr;on@mathias-kettner.de
 
 # Configuration for "notmuch new"
 #

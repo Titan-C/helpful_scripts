@@ -134,6 +134,30 @@ Create Both
 SyncState *
 Expunge Both
 
+###############################################################################
+# Personal
+IMAPAccount work
+Host mail.mathias-kettner.de
+User on
+PassCmd "pass show Development/mathias-kettner.de/on"
+AuthMechs LOGIN
+SSLType IMAPS
+
+IMAPStore work-remote
+Account work
+
+MaildirStore work-local
+Path ~/.mail/work/
+Inbox ~/.mail/work/Inbox
+
+Channel work
+Master :work-remote:
+Slave :work-local:
+Patterns *
+Create Both
+SyncState *
+Expunge Both
+
 # Local Variables:
 # mode: conf-unix
 # End:
