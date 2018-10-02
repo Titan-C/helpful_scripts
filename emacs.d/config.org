@@ -299,6 +299,8 @@ Hydra allows to configure sets of keybindings.
   (":" winner-redo)
   ("l" dmenu :exit t)
   ("SPC" nil))
+
+  (global-set-key (kbd "s-p") 'hydra-window/body)
 #+END_SRC
 *** EXWM
 #+BEGIN_SRC emacs-lisp
@@ -675,8 +677,8 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
 (use-package org-agenda
-  :after org
   :ensure org
+  :after org
   :bind (:map org-agenda-mode-map
          ("T" . 'org-agenda-previous-line)
          ("t" . 'org-agenda-previous-item)
@@ -766,8 +768,8 @@ this new window.
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
 (use-package ox-latex
-  :after org
   :ensure org
+  :after org
   :config
   ;; APS journals
   (add-to-list 'org-latex-classes '("revtex4-1"
@@ -1338,6 +1340,7 @@ Don't need to define html on org-babel-load-languages.
     '(
       ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
       ("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
+      ("Oscar Najera <on@mathias-kettner.de>" . ("mail.mathias-kettner.de" 25 starttls))
       ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))
       ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl "oscar.najera-ocampo"))
       ))
