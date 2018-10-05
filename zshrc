@@ -74,6 +74,7 @@ export GPG_TTY=$(tty)
 
 export PATH="$HOME/dev/helpful_scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/git/zeug_cmk/bin:$PATH"
 
 lruby() {
     export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
