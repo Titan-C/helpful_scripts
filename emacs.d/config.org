@@ -466,7 +466,6 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 :init
 (setq auth-source-debug t
       auth-sources '(password-store))
-:config
 (auth-source-pass-enable))
 #+END_SRC
 *** Foreign languages

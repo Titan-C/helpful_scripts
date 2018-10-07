@@ -139,7 +139,7 @@ Expunge Both
 IMAPAccount work
 Host mail.mathias-kettner.de
 User on
-PassCmd "pass show Development/mathias-kettner.de/on"
+PassCmd "pass show Correos/on@mathias-kettner.de"
 AuthMechs LOGIN
 SSLType IMAPS
 
