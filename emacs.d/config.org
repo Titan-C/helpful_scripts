@@ -1527,3 +1527,10 @@ Emacs mode for managing ledger text files
          :nick "Titan-C"
          :channels ("#emacs-circe" "#clojure")))))
 #+END_SRC
+* Check_MK
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<f10>")
+                (lambda ()
+                  (interactive)
+                  (shell-command "~/git/zeug_cmk/bin/f12")))
+#+END_SRC
