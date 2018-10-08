@@ -1109,7 +1109,11 @@ Don't need to define html on org-babel-load-languages.
            ("\\.cmake\\'" . cmake-mode)))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-(load "/usr/share/clang/clang-format.el")
+(let ((clang-fmt-path  "/usr/share/clang/clang-format.el"))
+  (if (file-exists-p clang-fmt-path)
+      (load clang-fmt-path)
+    (load "/usr/share/emacs/site-lisp/clang-format-6.0/clang-format.el")))
+
 (add-hook 'c-mode-common-hook
           (lambda () (add-hook 'before-save-hook 'clang-format-buffer nil t)))
 (setq
@@ -1117,8 +1121,7 @@ Don't need to define html on org-babel-load-languages.
  gdb-many-windows t
 
  ;; Non-nil means display source file containing the main routine at startup
- gdb-show-main t
- )
+ gdb-show-main t)
 
 (use-package rtags
   :pin melpast
@@ -1126,8 +1129,7 @@ Don't need to define html on org-babel-load-languages.
     (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
     (evil-define-key 'motion c-mode-base-map "gd" 'rtags-find-symbol-at-point)
     ;; Shutdown rdm when leaving emacs.
-    (add-hook 'kill-emacs-hook 'rtags-quit-rdm)
-)
+    (add-hook 'kill-emacs-hook 'rtags-quit-rdm))
 
 (use-package flycheck-rtags)
 (use-package dumb-jump)
