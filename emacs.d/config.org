@@ -894,11 +894,11 @@ Don't need to define html on org-babel-load-languages.
     :init
     (evil-leader/set-key "hb" 'helm-bibtex)
     :config
-    (setq bibtex-completion-bibliography '("~/Dropbox/biblio/papers.bib"
-                                           "~/Dropbox/biblio/zotero.bib"
-                                           "~/Dropbox/biblio/arxiv.bib"
-                                           "~/Dropbox/biblio/library.bib"
-                                           "~/Dropbox/biblio/slides_talks.bib"))
+
+    (setq bibtex-completion-bibliography (map 'list (lambda (x)
+                                                      (concat "~/Dropbox/biblio/" x))
+                                              '("papers.bib" "zotero.bib" "arxiv.bib" "library.bib"
+                                                "slides_talks.bib")))
     (setq bibtex-completion-pdf-field "file")
     (setq bibtex-completion-library-path "~/Dropbox/bibtex-pdf/")
     (setq bibtex-completion-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
