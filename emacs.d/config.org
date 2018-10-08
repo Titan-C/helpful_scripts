@@ -604,12 +604,15 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
 
   :init
   ;; Work directories
-  (setq org-directory "~/Dropbox/org")
+  (if (string-equal (system-name) "titanroam")
+      (setq org-directory "~/Dropbox/org/")
+    (setq org-directory "~/org/"))
 
   ;; Refile
   (setq org-refile-targets (quote ((nil :maxlevel . 3)
-                                ("~/Dropbox/org/journal.org" :maxlevel . 3)
-                                ("~/Dropbox/org/todo.org" :maxlevel . 2))))
+                                ((concat org-directory "journal.org") :maxlevel . 3)
+                                ((concat org-directory "todo.org") :maxlevel . 2))))
+
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
 
@@ -617,9 +620,10 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   (setq org-imenu-depth 4)
 
   ;; Agenda files
-  (setq org-agenda-files (list "~/nextcloud/caldav.org"
-                              "~/Dropbox/org/journal.org"
-                              "~/Dropbox/org/todo.org"))
+  (setq org-agenda-files '("~/nextcloud/caldav.org"
+                           (concat org-directory "journal.org")
+                           (concat org-directory "todo.org")))
+
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
   (setq org-log-reschedule 'note)
 
@@ -793,10 +797,10 @@ this new window.
 ** Capture
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
-      '(("t" "Task" entry (file "~/Dropbox/org/todo.org")
+      '(("t" "Task" entry (file (lambda () (concat org-directory "todo.org")))
           "* TODO %?\n  %U\n%a\n%i" :clock-in t :clock-resume t)
 
-        ("j" "Journal Entry" entry (file+olp+datetree "~/Dropbox/org/journal.org")
+        ("j" "Journal Entry" entry (file+olp+datetree (file (lambda () (concat org-directory "journal.org")))
          "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
          :clock-in t :clock-resume t)
 
