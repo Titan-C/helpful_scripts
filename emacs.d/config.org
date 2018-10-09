@@ -605,13 +605,12 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   :init
   ;; Work directories
   (if (string-equal (system-name) "titanroam")
-      (setq org-directory "~/Dropbox/org/")
-    (setq org-directory "~/org/"))
+      (setq org-directory "~/Dropbox/org/"))
 
   ;; Refile
-  (setq org-refile-targets (quote ((nil :maxlevel . 3)
-                                ((concat org-directory "journal.org") :maxlevel . 3)
-                                ((concat org-directory "todo.org") :maxlevel . 2))))
+  (setq org-refile-targets `(((nil :maxlevel . 3)
+                             (,(expand-file-name "journal.org" org-directory) :maxlevel . 3)
+                             (,(expand-file-name "todo.org" org-directory) :maxlevel . 2))))
 
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
@@ -620,9 +619,9 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   (setq org-imenu-depth 4)
 
   ;; Agenda files
-  (setq org-agenda-files '("~/nextcloud/caldav.org"
-                           (concat org-directory "journal.org")
-                           (concat org-directory "todo.org")))
+  (setq org-agenda-files (list
+                          (expand-file-name "journal.org" org-directory)
+                          (expand-file-name "todo.org" org-directory)))
 
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
   (setq org-log-reschedule 'note)
@@ -797,14 +796,14 @@ this new window.
 ** Capture
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
-      '(("t" "Task" entry (file (lambda () (concat org-directory "todo.org")))
+      `(("t" "Task" entry (file ,(concat org-directory "todo.org"))
           "* TODO %?\n  %U\n%a\n%i" :clock-in t :clock-resume t)
 
-        ("j" "Journal Entry" entry (file+olp+datetree (file (lambda () (concat org-directory "journal.org")))
+        ("j" "Journal Entry" entry (file+olp+datetree (file ,(concat org-directory "journal.org")))
          "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
          :clock-in t :clock-resume t)
 
-        ("l" "Web site" entry (file+headline (lambda () (concat org-directory "/webnotes.org")) "Inbox")
+        ("l" "Web site" entry (file+headline ,(concat org-directory "/webnotes.org") "Inbox")
             "* %a\nCaptured On: %U\nWebsite: %l\n%?\n%i\n"
             :clock-in t :clock-resume t)
 
