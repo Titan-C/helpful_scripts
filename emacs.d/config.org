@@ -608,9 +608,9 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
       (setq org-directory "~/Dropbox/org/"))
 
   ;; Refile
-  (setq org-refile-targets `(((nil :maxlevel . 3)
+  (setq org-refile-targets `((nil :maxlevel . 3)
                              (,(expand-file-name "journal.org" org-directory) :maxlevel . 3)
-                             (,(expand-file-name "todo.org" org-directory) :maxlevel . 2))))
+                             (,(expand-file-name "todo.org" org-directory) :maxlevel . 2)))
 
   (setq org-refile-use-outline-path t)
   (setq org-outline-path-complete-in-steps nil)
@@ -796,10 +796,10 @@ this new window.
 ** Capture
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
-      `(("t" "Task" entry (file ,(concat org-directory "todo.org"))
+      `(("t" "Task" entry (file ,(expand-file-name "todo.org" org-directory))
           "* TODO %?\n  %U\n%a\n%i" :clock-in t :clock-resume t)
 
-        ("j" "Journal Entry" entry (file+olp+datetree (file ,(concat org-directory "journal.org")))
+        ("j" "Journal Entry" entry (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
          "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
          :clock-in t :clock-resume t)
 
