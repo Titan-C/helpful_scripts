@@ -3,8 +3,10 @@
 
 * Personal Information
 #+BEGIN_SRC emacs-lisp
-  (setq user-mail-address "hi@oscarnajera.com"
-        user-full-name    "Óscar Nájera")
+(setq user-full-name "Óscar Nájera"
+      user-mail-address (if (string-equal (system-name) "klappbier")
+                             "on@mathias-kettner.de"
+                           "hi@oscarnajera.com"))
 #+END_SRC
 * Editor
 ** Basic behavior settings
@@ -1273,6 +1275,7 @@ Don't need to define html on org-babel-load-languages.
             notmuch-hello-tag-list-make-query "tag:unread and not tag:killed")
 
       (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
+                               ("on@mathias-kettner.de" . "work/Sent")
                                ;;(".*@gmail.com" . "\"gmail/[Gmail]/.Sent Mail\"")
                                (".*@u-psud.fr" . "upsud/Sent")))
 
@@ -1344,7 +1347,7 @@ Don't need to define html on org-babel-load-languages.
     '(
       ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
       ("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
-      ("Oscar Najera <on@mathias-kettner.de>" . ("mail.mathias-kettner.de" 25 starttls))
+      ("Oscar Najera <on@mathias-kettner.de>" . ("mail.mathias-kettner.de" 25 starttls "on"))
       ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))
       ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl "oscar.najera-ocampo"))
       ))
