@@ -1205,93 +1205,94 @@ Don't need to define html on org-babel-load-languages.
 * Email
 ** Notmuch client
 #+BEGIN_SRC emacs-lisp
-  (use-package notmuch
-    :bind (:map notmuch-hello-mode-map
-          ("l" . notmuch-jump-search)
-          ("/" . notmuch-tree)
-          :map notmuch-search-mode-map
-          ("r" . notmuch-search-next-thread)
-          ("N" . notmuch-search-reply-to-thread)
-          ("t" . notmuch-search-previous-thread)
-          ("f" . notmuch-search-filter-by-tag)
-          ("/" . notmuch-tree)
-          :map notmuch-tree-mode-map
-          ("r" . notmuch-tree-next-matching-message)
-          ("t" . notmuch-tree-prev-matching-message)
-          ("R" . notmuch-tree-next-message)
-          ("T" . notmuch-tree-prev-message)
-          :map notmuch-show-mode-map
-          ("N" . notmuch-show-reply)
-          ("n" . notmuch-show-reply-sender)
-          ("r" . notmuch-show-next-message)
-          ("t" . notmuch-show-previous-message)
-          ("M-r" . notmuch-show-next-thread-show)
-          ("M-t" . notmuch-show-previous-thread-show)
-          )
-    :init
-      (setq message-directory "~/.mail/"
-            message-auto-save-directory "/tmp/"
-            org-email-link-description-format "%c: %s")
-    :config
-      (define-key notmuch-tree-mode-map "n"
-        (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
-      (define-key notmuch-tree-mode-map "N"
-        (notmuch-tree-close-message-pane-and #'notmuch-show-reply))
-      (setq notmuch-search-oldest-first nil)
-      (evil-set-initial-state 'notmuch-tree-mode 'emacs)
+(use-package notmuch
+  :bind (:map notmuch-hello-mode-map
+        ("l" . notmuch-jump-search)
+        ("/" . notmuch-tree)
+        :map notmuch-search-mode-map
+        ("r" . notmuch-search-next-thread)
+        ("N" . notmuch-search-reply-to-thread)
+        ("t" . notmuch-search-previous-thread)
+        ("f" . notmuch-search-filter-by-tag)
+        ("/" . notmuch-tree)
+        :map notmuch-tree-mode-map
+        ("r" . notmuch-tree-next-matching-message)
+        ("t" . notmuch-tree-prev-matching-message)
+        ("R" . notmuch-tree-next-message)
+        ("T" . notmuch-tree-prev-message)
+        :map notmuch-show-mode-map
+        ("N" . notmuch-show-reply)
+        ("n" . notmuch-show-reply-sender)
+        ("r" . notmuch-show-next-message)
+        ("t" . notmuch-show-previous-message)
+        ("M-r" . notmuch-show-next-thread-show)
+        ("M-t" . notmuch-show-previous-thread-show)
+        )
+  :init
+    (setq message-directory "~/.mail/"
+          message-auto-save-directory "/tmp/"
+          org-email-link-description-format "%c: %s")
+  :config
+    (define-key notmuch-tree-mode-map "n"
+      (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
+    (define-key notmuch-tree-mode-map "N"
+      (notmuch-tree-close-message-pane-and #'notmuch-show-reply))
+    (setq notmuch-search-oldest-first nil)
+    (evil-set-initial-state 'notmuch-tree-mode 'emacs)
 
-      (define-key notmuch-show-mode-map "d"
-         (lambda ()
-            (interactive)
-            (notmuch-show-tag-message
-               (if (member "deleted" (notmuch-show-get-tags))
-                  "-deleted" "+deleted"))))
+    (define-key notmuch-show-mode-map "d"
+       (lambda ()
+          (interactive)
+          (notmuch-show-tag-message
+             (if (member "deleted" (notmuch-show-get-tags))
+                "-deleted" "+deleted"))))
 
-      (define-key notmuch-search-mode-map "d"
-         (lambda ()
-         "delete message"
-            (interactive)
-            (notmuch-search-tag
-               (if (member "deleted" (notmuch-search-get-tags))
-                    '("-deleted")
-                    '("+deleted" "-inbox" "-unread")))))
-
-      (define-key notmuch-tree-mode-map "d"
-         (lambda ()
-         "delete message"
-            (interactive)
-            (notmuch-tree-tag
-               (if (member "deleted" (notmuch-tree-get-tags))
-                    '("-deleted")
-                    '("+deleted" "-inbox" "-unread")))))
-
-      (setq notmuch-saved-searches
-          '((:name "inbox" :query "tag:inbox" :key "i" :sort-order newest-first)
-            (:name "flagged" :query "tag:flagged" :key "f")
-            (:name "unread" :query "tag:unread" :key "u")
-            (:name "drafts" :query "tag:draft" :key "d")))
-
-      (setq notmuch-show-all-tags-list t
-            notmuch-hello-tag-list-make-query "tag:unread and not tag:killed")
-
-      (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
-                               ("on@mathias-kettner.de" . "work/Sent")
-                               ;;(".*@gmail.com" . "\"gmail/[Gmail]/.Sent Mail\"")
-                               (".*@u-psud.fr" . "upsud/Sent")))
-
-      (setq notmuch-crypto-process-mime t)
-      (setq message-kill-buffer-on-exit t)
+    (define-key notmuch-search-mode-map "d"
+       (lambda ()
+       "delete message"
+          (interactive)
+          (notmuch-search-tag
+             (if (member "deleted" (notmuch-search-get-tags))
+                  '("-deleted")
+                  '("+deleted" "-inbox" "-unread")))))
 
 
-      (setq notmuch-search-line-faces
-            `(("deleted" . (:strike-through t))
-              ("flagged" 'notmuch-search-flagged-face)
-              ("unread" . (:foreground "#81d4fa"
-                           :weight bold))))
+    (define-key notmuch-tree-mode-map "d"
+       (lambda ()
+       "delete message"
+          (interactive)
+          (notmuch-tree-tag
+             (if (member "deleted" (notmuch-tree-get-tags))
+                  '("-deleted")
+                  '("+deleted" "-inbox" "-unread")))))
 
-      ;;Load org-notmuch independently to open links from org files
-      (require 'org-notmuch)
-  )
+    (setq notmuch-saved-searches
+        '((:name "inbox" :query "tag:inbox" :key "i" :sort-order newest-first)
+          (:name "flagged" :query "tag:flagged" :key "f")
+          (:name "unread" :query "tag:unread" :key "u")
+          (:name "drafts" :query "tag:draft" :key "d")))
+
+    (setq notmuch-show-all-tags-list t
+          notmuch-hello-tag-list-make-query "tag:unread and not tag:killed")
+
+    (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
+                             ("on@mathias-kettner.de" . "work/Sent")
+                             ;;(".*@gmail.com" . "\"gmail/[Gmail]/.Sent Mail\"")
+                             (".*@u-psud.fr" . "upsud/Sent")))
+
+    (setq notmuch-crypto-process-mime t)
+    (setq message-kill-buffer-on-exit t)
+
+
+    (setq notmuch-search-line-faces
+          `(("deleted" . (:strike-through t))
+            ("flagged" 'notmuch-search-flagged-face)
+            ("unread" . (:foreground "#81d4fa"
+                         :weight bold))))
+
+    ;;Load org-notmuch independently to open links from org files
+    (require 'org-notmuch)
+)
 #+END_SRC
 
 ** BBDB
