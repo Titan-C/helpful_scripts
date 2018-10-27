@@ -1207,54 +1207,70 @@ Don't need to define html on org-babel-load-languages.
 #+BEGIN_SRC emacs-lisp
 (use-package notmuch
   :bind (:map notmuch-hello-mode-map
-        ("l" . notmuch-jump-search)
-        ("/" . notmuch-tree)
-        :map notmuch-search-mode-map
-        ("r" . notmuch-search-next-thread)
-        ("N" . notmuch-search-reply-to-thread)
-        ("t" . notmuch-search-previous-thread)
-        ("f" . notmuch-search-filter-by-tag)
-        ("/" . notmuch-tree)
-        :map notmuch-tree-mode-map
-        ("r" . notmuch-tree-next-matching-message)
-        ("t" . notmuch-tree-prev-matching-message)
-        ("R" . notmuch-tree-next-message)
-        ("T" . notmuch-tree-prev-message)
-        :map notmuch-show-mode-map
-        ("N" . notmuch-show-reply)
-        ("n" . notmuch-show-reply-sender)
-        ("r" . notmuch-show-next-message)
-        ("t" . notmuch-show-previous-message)
-        ("M-r" . notmuch-show-next-thread-show)
-        ("M-t" . notmuch-show-previous-thread-show)
+          ("l" . notmuch-jump-search)
+          ("/" . notmuch-tree)
+         :map notmuch-search-mode-map
+          ("r" . notmuch-search-next-thread)
+          ("N" . notmuch-search-reply-to-thread)
+          ("t" . notmuch-search-previous-thread)
+          ("f" . notmuch-search-filter-by-tag)
+          ("/" . notmuch-tree)
+          ("d" . notmuch-search-delete-thread)
+          ("D" . notmuch-search-delete-all)
+         :map notmuch-tree-mode-map
+          ("r" . notmuch-tree-next-matching-message)
+          ("t" . notmuch-tree-prev-matching-message)
+          ("R" . notmuch-tree-next-message)
+          ("T" . notmuch-tree-prev-message)
+         :map notmuch-show-mode-map
+          ("N" . notmuch-show-reply)
+          ("n" . notmuch-show-reply-sender)
+          ("r" . notmuch-show-next-message)
+          ("t" . notmuch-show-previous-message)
+          ("M-r" . notmuch-show-next-thread-show)
+          ("M-t" . notmuch-show-previous-thread-show)
+          ("d" . notmuch-show-delete-message)
+          ("D" . notmuch-show-delete-thread-then-exit)
         )
-  :init
+  :config
     (setq message-directory "~/.mail/"
           message-auto-save-directory "/tmp/"
           org-email-link-description-format "%c: %s")
-  :config
+
     (define-key notmuch-tree-mode-map "n"
       (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
     (define-key notmuch-tree-mode-map "N"
       (notmuch-tree-close-message-pane-and #'notmuch-show-reply))
-    (setq notmuch-search-oldest-first nil)
+    (setq notmuch-search-oldest-first nil
+          notmuch-archive-tags '("-inbox" "-unread"))
     (evil-set-initial-state 'notmuch-tree-mode 'emacs)
 
-    (define-key notmuch-show-mode-map "d"
-       (lambda ()
-          (interactive)
-          (notmuch-show-tag-message
-             (if (member "deleted" (notmuch-show-get-tags))
-                "-deleted" "+deleted"))))
+    (defun notmuch-show-delete-message ()
+      "Delete current message if already marked as deleted undo."
+      (interactive)
+      (notmuch-show-tag-message
+         (if (member "deleted" (notmuch-show-get-tags))
+            "-deleted" "+deleted")))
 
-    (define-key notmuch-search-mode-map "d"
-       (lambda ()
-       "delete message"
-          (interactive)
-          (notmuch-search-tag
-             (if (member "deleted" (notmuch-search-get-tags))
-                  '("-deleted")
-                  '("+deleted" "-inbox" "-unread")))))
+    (defun notmuch-show-delete-thread-then-exit ()
+      "Delete all messages in the current buffer, then exit back to search results."
+      (interactive)
+      (notmuch-show-tag-all '("+deleted"))
+      (notmuch-show-next-thread))
+
+    (defun notmuch-search-delete-thread()
+      "Delete all messages in the current thread or undelete"
+       (interactive)
+       (notmuch-search-tag
+          (if (member "deleted" (notmuch-search-get-tags))
+               '("-deleted")
+               '("+deleted" "-inbox" "-unread"))))
+
+     (defun notmuch-search-delete-all()
+       "Delete all messages in the current buffer"
+        (interactive)
+        (notmuch-search-tag-all
+           '("+deleted" "-inbox" "-unread")))
 
 
     (define-key notmuch-tree-mode-map "d"
@@ -1285,7 +1301,7 @@ Don't need to define html on org-babel-load-languages.
 
 
     (setq notmuch-search-line-faces
-          `(("deleted" . (:strike-through t))
+          `(("deleted" . (:strike-through "red"))
             ("flagged" 'notmuch-search-flagged-face)
             ("unread" . (:foreground "#81d4fa"
                          :weight bold))))
