@@ -593,7 +593,7 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   (add-to-list 'exec-path "~/.cargo/bin")
   (add-to-list 'exec-path "~/.local/bin")
   (use-package eshell-git-prompt
-    :config
+    :init
     (eshell-git-prompt-use-theme 'powerline))
 #+END_SRC
 * Org mode
@@ -663,6 +663,11 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   ;; expansion
   (modify-syntax-entry ?_ "w" org-mode-syntax-table)
   (modify-syntax-entry ?^ "w" org-mode-syntax-table)
+
+
+  ;; to interact from external sources
+  (server-start)
+  (setq org-modules (quote (org-protocol)))
 )
 
 ;; leader shortcuts
@@ -814,12 +819,6 @@ this new window.
         ("e" "Event" entry (file "~/nextcloud/caldav.org") "* %?\n%^T\n%i\n%a")))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-;; to interact from external sources
-(server-start)
-(use-package org-protocol
-  :ensure org
-  :after org)
-
 ;; to capture the website HTML
 ;;(add-to-list 'load-path "~/dev/org-protocol-capture-html/")
 ;;(require 'org-protocol-capture-html)
