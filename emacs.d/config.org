@@ -1234,7 +1234,7 @@ Don't need to define html on org-babel-load-languages.
   :config
     (setq message-directory "~/.mail/"
           message-auto-save-directory "/tmp/"
-          message-signature "Oscar Najera\nMathias Kettner GmbH\nKellerstraße 29, 81667 München, Germany\nRegistergericht: Amtsgericht München,  HRB 165902\nGeschäftsführer: Jan Justus, Mathias Kettner\nhttps://mathias-kettner.de\nTel. +49 89 9982 097-00\nFax. +49 89 9982 097-29"
+          message-signature "Oscar Najera\nSoftware Developer\n\nMathias Kettner GmbH — The Check_MK Company\non@mathias-kettner.de | Phone: +49 89 9982 097 00 | www.mathias-kettner.com\n\nKellerstraße 29, 81667 München, Germany\nAmtsgericht München, HRB 165902\nGeschäftsführer: Jan Justus, Mathias Kettner"
           org-email-link-description-format "%c: %s")
 
     (define-key notmuch-tree-mode-map "n"
