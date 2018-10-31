@@ -139,7 +139,7 @@ Expunge Both
 IMAPAccount work
 Host mx.tribe29.com
 User on
-PassCmd "pass show Correos/on@mathias-kettner.de"
+PassCmd "pass show Correos/mx.tribe29.com"
 AuthMechs LOGIN
 SSLType IMAPS
 
