@@ -622,6 +622,8 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
 
   ;; Agenda files
   (setq org-agenda-files (list
+                          (expand-file-name "caldav.org" org-directory)
+                          (expand-file-name "work_journal.org" org-directory)
                           (expand-file-name "journal.org" org-directory)
                           (expand-file-name "todo.org" org-directory)))
 
