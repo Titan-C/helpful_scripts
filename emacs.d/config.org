@@ -623,8 +623,8 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   ;; Agenda files
   (setq org-agenda-files (list
                           (expand-file-name "caldav.org" org-directory)
-                          (expand-file-name "work_journal.org" org-directory)
                           (expand-file-name "journal.org" org-directory)
+                          (expand-file-name "work_journal.org" org-directory)
                           (expand-file-name "todo.org" org-directory)))
 
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
@@ -809,6 +809,10 @@ this new window.
           "* TODO %?\n  %U\n%a\n%i" :clock-in t :clock-resume t)
 
         ("j" "Journal Entry" entry (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
+         "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
+         :clock-in t :clock-resume t)
+
+        ("h" "Work Journal Entry" entry (file+olp+datetree ,(expand-file-name "work_journal.org" org-directory))
          "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
          :clock-in t :clock-resume t)
 
@@ -1366,7 +1370,7 @@ Don't need to define html on org-babel-load-languages.
     '(
       ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
       ("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
-      ("Oscar Najera <on@mathias-kettner.de>" . ("mx.tribe29.com" 587 starttls))
+      ("Oscar Najera <on@mathias-kettner.de>" . ("mx.tribe29.com" 587 starttls "on"))
       ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))
       ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl "oscar.najera-ocampo"))
       ))
