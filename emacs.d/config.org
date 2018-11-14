@@ -621,11 +621,10 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   (setq org-imenu-depth 4)
 
   ;; Agenda files
-  (setq org-agenda-files (list
-                          (expand-file-name "caldav.org" org-directory)
-                          (expand-file-name "journal.org" org-directory)
-                          (expand-file-name "work_journal.org" org-directory)
-                          (expand-file-name "todo.org" org-directory)))
+  (setq org-agenda-files (mapcar (lambda (file)
+                                   (expand-file-name file org-directory))
+                                 '("caldav.org" "journal.org" "work_journal.org" "todo.org"
+                                   "mk_cal.org")))
 
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
   (setq org-log-reschedule 'note)
