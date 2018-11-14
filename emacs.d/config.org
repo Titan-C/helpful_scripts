@@ -734,8 +734,8 @@ this new window.
   (setq org-icalendar-timezone "Europe/Berlin"
      org-caldav-url "https://nextcloud.najera.pw/remote.php/dav/calendars/oscar"
      org-caldav-calendar-id "personal"
-     org-caldav-inbox "~/nextcloud/caldav.org"
-     org-caldav-files '("~/nextcloud/input.org")
+     org-caldav-inbox "/tmp/from_calendar.org"
+     org-caldav-files (list (expand-file-name "caldav.org" org-directory))
      org-caldav-debug-level 2))
 #+END_SRC
 ** Latex
@@ -820,9 +820,9 @@ this new window.
             "* %a\nCaptured On: %U\nWebsite: %l\n%?\n%i\n"
             :clock-in t :clock-resume t)
 
-        ("m" "meetup" entry (file "~/nextcloud/caldav.org") "* %?%:description \n%i")
+        ("m" "meetup" entry (file ,(expand-file-name "caldav.org" org-directory)) "* %?%:description \n%i")
 
-        ("e" "Event" entry (file "~/nextcloud/caldav.org") "* %?\n%^T\n%i\n%a")))
+        ("e" "Event" entry (file ,(expand-file-name "caldav.org" org-directory)) "* %?\n%^T\n%i\n%a")))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
 ;; to capture the website HTML
