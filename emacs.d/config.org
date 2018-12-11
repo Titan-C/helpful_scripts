@@ -596,6 +596,12 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
     :init
     (eshell-git-prompt-use-theme 'powerline))
 #+END_SRC
+** Tramp
+Tramp is amazing to edit remote files, but you can also edit inside docker
+containers where you don't even have an editor.
+#+BEGIN_SRC emacs-lisp
+(use-package docker-tramp)
+#+END_SRC
 * Org mode
 ** Main Behavior
 #+BEGIN_SRC emacs-lisp
