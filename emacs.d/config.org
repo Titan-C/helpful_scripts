@@ -811,23 +811,39 @@ this new window.
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
       `(("t" "Task" entry (file ,(expand-file-name "todo.org" org-directory))
-          "* TODO %?\n  %U\n%a\n%i" :clock-in t :clock-resume t)
+         "* TODO %?\n  %U\n%a\n%i" :clock-in t :clock-resume t)
 
-        ("j" "Journal Entry" entry (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
+        ("j" "Journal" entry (file+olp+datetree ,(expand-file-name
+                                                  "journal.org"
+                                                  org-directory))
          "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
          :clock-in t :clock-resume t)
 
-        ("h" "Work Journal Entry" entry (file+olp+datetree ,(expand-file-name "work_journal.org" org-directory))
+        ("h" "Work Journal" entry (file+olp+datetree ,(expand-file-name
+                                                       "work_journal.org"
+                                                       org-directory))
          "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
          :clock-in t :clock-resume t)
 
-        ("l" "Web site" entry (file+headline ,(concat org-directory "/webnotes.org") "Inbox")
-            "* %a\nCaptured On: %U\nWebsite: %l\n%?\n%i\n"
+        ("l" "Web site" entry (file+headline ,(concat
+                                               org-directory
+                                               "/webnotes.org")
+                                             "Inbox")
+         "* %a\nCaptured On: %U\nWebsite: %l\n%?\n%i\n"
             :clock-in t :clock-resume t)
 
-        ("m" "meetup" entry (file ,(expand-file-name "caldav.org" org-directory)) "* %?%:description \n%i")
+        ("m" "meetup" entry (file ,(expand-file-name
+                                    "caldav.org" org-directory))
+         "* %?%:description \n%i")
 
-        ("e" "Event" entry (file ,(expand-file-name "caldav.org" org-directory)) "* %?\n%^T\n%i\n%a")))
+        ("e" "Event" entry (file ,(expand-file-name
+                                   "caldav.org" org-directory))
+         "* %?\n%^T\n%i\n%a")
+        ("p" "Ledger Cash Expense" plain (file "~/ledger/journal.ledger")
+         "%(org-read-date) * %^{Payee}
+    Expenses:%^{Account}%?  %^{Amount} EUR
+    Expenses:Cash" :empty-lines 1)
+))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
 ;; to capture the website HTML
