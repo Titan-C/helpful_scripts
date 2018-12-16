@@ -1547,7 +1547,13 @@ column view
 * Ledger
 Emacs mode for managing ledger text files
 #+BEGIN_SRC emacs-lisp
-(use-package ledger-mode)
+(use-package
+  ledger-mode
+  :config
+
+  (add-hook 'ledger-mode-hook (lambda ()
+                                (add-hook 'before-save-hook 'ledger-mode-clean-buffer nil t)))
+)
 #+END_SRC
 * Circe
 #+BEGIN_SRC emacs-lisp
