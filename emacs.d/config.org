@@ -887,16 +887,6 @@ Don't need to define html on org-babel-load-languages.
 *** Python
 #+BEGIN_SRC emacs-lisp
   (setq org-babel-python-command "ipython --simple-prompt --pprint")
-  ;; use %cpaste to paste code into ipython in org mode
-  ;; from http://emacs.stackexchange.com/questions/3859/working-setup-for-ipython-in-babel
-  (defadvice org-babel-python-evaluate-session
-      (around org-python-use-cpaste
-              (session body &optional result-type result-params) activate)
-      "add a %cpaste and '--' to the body, so that ipython does the right thing."
-      (setq body (concat "%cpaste -q \n" body "\n--"))
-      ad-do-it
-  )
-
   (setq org-babel-default-header-args:python
         '((:session . "Python")
           (:tangle . "yes")
