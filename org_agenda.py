@@ -10,7 +10,6 @@ Goal of the script
 # Author: Óscar Nájera
 # License:GPL-3
 
-
 # TODO Accumulate calendars
 
 import os
@@ -21,7 +20,7 @@ import logging
 
 import requests
 from icalendar import Calendar
-import ical2orgpy
+import ical2org
 
 
 def passwordstore(address: str) -> str:
@@ -64,18 +63,19 @@ def main():
     config = get_config()
     defaults = config.pop("defaults")
 
-    convertor = ical2orgpy.Convertor()
     events = []
     for calendar in config:
         logger.info("Downloading Calendar: %s", calendar)
         ical = get_icalendar(config[calendar])
-        events.append(convertor.create_org_calendar(ical))
+        events += [
+            ical2org.orgEntry(entry) for entry in ical.walk()
+            if entry.name == 'VEVENT'
+        ]
 
     outfile = os.path.expanduser(defaults["outfile"])
     with open(outfile, "w") as fid:
         logger.info("Writing calendars to: %s", outfile)
-        for cal in events:
-            fid.write("".join(cal))
+        fid.write("\n\n".join([str(x).strip() for x in events if str(x)]))
 
 
 if __name__ == "__main__":
