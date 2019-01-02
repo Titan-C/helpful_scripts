@@ -37,30 +37,6 @@ SyncState *
 Expunge Both
 
 ###############################################################################
-# U-PSud
-IMAPAccount upsud
-Host zimbra.u-psud.fr
-User oscar.najera-ocampo@u-psud.fr
-PassCmd "pass show Correos/oscar.najera-ocampo@u-psud.fr"
-AuthMechs LOGIN
-SSLType IMAPS
-
-IMAPStore upsud-remote
-Account upsud
-
-MaildirStore upsud-local
-Path ~/.mail/upsud/
-Inbox ~/.mail/upsud/Inbox
-
-Channel upsud
-Master :upsud-remote:
-Slave :upsud-local:
-Patterns * !*Contacts
-Create Both
-SyncState *
-Expunge Both
-
-###############################################################################
 # Personal
 IMAPAccount hi_pers
 Host mail.najera.pw
