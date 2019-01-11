@@ -396,9 +396,10 @@ Hydra allows to configure sets of keybindings.
 ** Spelling
 About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 #+BEGIN_SRC emacs-lisp
-  (setq ispell-personal-dictionary "~/dev/helpful_scripts/emacs.d/personal_dict")
-  (setq-default ispell-program-name (executable-find "hunspell"))
+  ; hunspell is deactivated in my arch machine because somehow version 1.7 does not work with emacs
+  ;(setq ispell-program-name (executable-find "hunspell"))
   ;;(setq ispell-really-hunspell t)
+  ;(setq ispell-personal-dictionary "~/dev/helpful_scripts/emacs.d/personal_dict")
   (setq ispell-skip-region-alist nil)
   ;;(setq ispell-skip-region-alist (car ispell-tex-skip-alists))
   ;;(add-to-list 'ispell-skip-region-alist )
@@ -694,7 +695,6 @@ containers where you don't even have an editor.
 #+BEGIN_SRC emacs-lisp
 (use-package org-agenda
   :ensure org
-  :after org
   :bind (:map org-agenda-mode-map
          ("T" . 'org-agenda-previous-line)
          ("t" . 'org-agenda-previous-item)
@@ -733,7 +733,8 @@ this new window.
 ** Calendar
 #+BEGIN_SRC emacs-lisp
 (use-package org-caldav
-  ;:load-path "~/dev/org-caldav/")
+  ;:load-path "~/dev/org-caldav/"
+  :after notmuch
   :commands (org-caldav-sync)
   :config
   (setq org-icalendar-timezone "Europe/Berlin"
@@ -816,7 +817,12 @@ this new window.
         ("j" "Journal" entry (file+olp+datetree ,(expand-file-name
                                                   "journal.org"
                                                   org-directory))
-         "* %(format-time-string \"%H:%M\") %?\n%a\n%i"
+         "* %(format-time-string \"%H:%M\") %?\n%a\n%i
+- I am grateful for
+- What would make today great
+- Daily affirmations
+- Amazing things that happened today
+- How could I have made today even better?"
          :clock-in t :clock-resume t)
 
         ("h" "Work Journal" entry (file+olp+datetree ,(expand-file-name

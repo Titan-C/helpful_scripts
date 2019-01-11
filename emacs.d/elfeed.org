@@ -15,3 +15,4 @@
 ** [[http://feeds.feedburner.com/TroyHunt?format=xml][Troy Hunt]]
 ** [[https://blog.torproject.org/rss.xml][Tor blog]]
 ** [[https://cyberwardog.blogspot.com/feeds/posts/default][CyberWardog]]
+** [[https://paulstamatiou.com/posts.xml][paulstamatiou]]
