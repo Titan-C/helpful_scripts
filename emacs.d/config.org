@@ -1307,6 +1307,7 @@ Don't need to define html on org-babel-load-languages.
 
     (setq notmuch-saved-searches
         '((:name "inbox" :query "tag:inbox" :key "i" :sort-order newest-first)
+          (:name "CMK" :query "(tag:CMK-JIRA or tag:lists/gerrit-check_mk) and tag:unread" :key "c")
           (:name "flagged" :query "tag:flagged" :key "f")
           (:name "unread" :query "tag:unread" :key "u")
           (:name "drafts" :query "tag:draft" :key "d")))
