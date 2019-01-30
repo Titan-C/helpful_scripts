@@ -1082,9 +1082,6 @@ Don't need to define html on org-babel-load-languages.
           (setq elpy-test-runner 'elpy-test-pytest-runner)
    )
 
-  (use-package py-autopep8
-      :config
-          (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
   (use-package sphinx-doc
     :diminish sphinx-doc-mode)
 
