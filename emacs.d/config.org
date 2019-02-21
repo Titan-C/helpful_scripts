@@ -1018,6 +1018,13 @@ Don't need to define html on org-babel-load-languages.
 (use-package magit
   :commands magit-status
   :init (evil-leader/set-key "t" 'magit-status)
+  :bind (:map magit-mode-map
+              ("t" . 'magit-section-backward)
+              ("\M-t" . 'magit-section-backward-sibling)
+              ("r" . 'magit-section-forward)
+              ("\M-r" . 'magit-section-forward-sibling)
+              ("p" . 'magit-tag)
+              ("n" . 'magit-rebase))
   :config
     (add-hook 'git-commit-mode-hook 'flyspell-mode)
     (add-hook 'git-commit-mode-hook 'evil-insert-state)
@@ -1027,26 +1034,10 @@ Don't need to define html on org-babel-load-languages.
 
     ;;https://emacs.stackexchange.com/questions/19672/magit-gerrit-push-to-other-branch
     (defun magit-push-to-gerrit ()
-        (interactive)
-        (magit-git-command-topdir "git push origin HEAD:refs/for/master"))
+      (interactive)
+      (magit-git-command-topdir "git push origin HEAD:refs/for/master"))
+    (transient-append-suffix 'magit-push "g" '("g" "Push to gerrit" magit-push-to-gerrit)))
 
-    (magit-define-popup-action 'magit-push-popup
-        ?m
-        "Push to gerrit"
-        'magit-push-to-gerrit)
-
-    (define-key magit-mode-map "t" 'magit-section-backward)
-    (define-key magit-mode-map "\M-t" 'magit-section-backward-sibling)
-    (define-key magit-mode-map "r" 'magit-section-forward)
-    (define-key magit-mode-map "\M-r" 'magit-section-forward-sibling)
-
-    (define-key magit-mode-map "p" 'magit-tag-popup)
-    (define-key magit-mode-map "n" 'magit-rebase-popup))
-
-(use-package magit-gh-pulls
-  :commands turn-on-magit-gh-pulls
-  :init
-    (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 #+END_SRC
 * Coding
 #+BEGIN_SRC emacs-lisp
