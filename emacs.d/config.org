@@ -744,6 +744,12 @@ this new window.
      org-caldav-files (list (expand-file-name "caldav.org" org-directory))
      org-caldav-debug-level 2))
 #+END_SRC
+#+BEGIN_SRC emacs-lisp
+(use-package org-trello
+:init
+(custom-set-variables '(org-trello-files '("~/Dropbox/org/toastmasters20aniv.org")))
+)
+#+END_SRC
 ** Latex
 #+BEGIN_SRC emacs-lisp
   ;; code syntax highlighting. See section 12
