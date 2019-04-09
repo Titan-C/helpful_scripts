@@ -1133,27 +1133,79 @@ Don't need to define html on org-babel-load-languages.
 (let ((clang-fmt-path  "/usr/share/clang/clang-format.el"))
   (if (file-exists-p clang-fmt-path)
       (load clang-fmt-path)
-    (load "/usr/share/emacs/site-lisp/clang-format-6.0/clang-format.el")))
+    (load "/usr/share/emacs/site-lisp/clang-format-7/clang-format.el")))
 
-(add-hook 'c-mode-common-hook
-          (lambda () (add-hook 'before-save-hook 'clang-format-buffer nil t)))
-(setq
- ;; use gdb-many-windows by default
- gdb-many-windows t
 
- ;; Non-nil means display source file containing the main routine at startup
- gdb-show-main t)
+(add-hook 'c-mode-common-hook (lambda ()
+                                (add-hook 'before-save-hook 'clang-format-buffer nil t)))
+
+(use-package company-c-headers
+  :defer t
+  :init (add-to-list 'company-backends 'company-c-headers))
+
+(use-package gdb-mi
+  :defer t
+  :init (setq
+         ;; use gdb-many-windows by default when `M-x gdb'
+         gdb-many-windows t
+         ;; Non-nil means display source file containing the main routine at startup
+         gdb-show-main t))
 
 (use-package rtags
   :pin melpast
-  :config
-    (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
-    (evil-define-key 'motion c-mode-base-map "gd" 'rtags-find-symbol-at-point)
-    ;; Shutdown rdm when leaving emacs.
-    (add-hook 'kill-emacs-hook 'rtags-quit-rdm))
+  :config (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
+  (evil-define-key 'motion c-mode-base-map "gd" 'rtags-find-symbol-at-point)
+  ;; Shutdown rdm when leaving emacs.
+  (add-hook 'kill-emacs-hook 'rtags-quit-rdm))
 
 (use-package flycheck-rtags)
 (use-package dumb-jump)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; Based on the Sarcasm/irony-mode compilation database code.
+(defun company-mode/find-clang-complete-file ()
+  (when buffer-file-name
+    (let ((dir (locate-dominating-file buffer-file-name ".clang_complete")))
+      (when dir
+        (concat (file-name-as-directory dir) ".clang_complete")))))
+
+;; Based on the Sarcasm/irony-mode compilation database code.
+(defun company-mode/load-clang-complete-file (cc-file)
+  "Load the flags from CC-FILE, one flag per line."
+  (let ((invocation-dir (expand-file-name (file-name-directory cc-file)))
+        (case-fold-search nil)
+        compile-flags)
+    (with-temp-buffer
+      (insert-file-contents cc-file)
+      ;; Replace relative paths with absolute paths (by @trishume)
+      ;; (goto-char (point-min))
+      (while (re-search-forward "\\(-I\\|-isystem\n\\)\\(\\S-+\\)" nil t)
+        (replace-match (format "%s%s" (match-string 1)
+                               (expand-file-name (match-string 2) invocation-dir))))
+      ;; Turn lines into a list
+      (setq compile-flags
+            ;; remove whitespaces at the end of each line, if any
+            (mapcar #'(lambda (line)
+                        (if (string-match "[ \t]+$" line)
+                            (replace-match "" t t line)
+                          line))
+                    (split-string (buffer-string) "\n" t))))
+    compile-flags))
+
+(defun c-c++/load-clang-args ()
+  "Sets the arguments for company-clang, the system paths for company-c-headers
+and the arguments for flyckeck-clang based on a project-specific text file."
+  (unless company-clang-arguments
+    (let* ((cc-file (company-mode/find-clang-complete-file))
+           (flags (if cc-file (company-mode/load-clang-complete-file cc-file) '()))
+           (dirs (mapcar (lambda (f) (substring f 2))
+                         (remove-if-not (lambda (f) (string-prefix-p "-I" f)) flags))))
+      (setq-local company-clang-arguments flags)
+      (setq-local company-c-headers-path-system (append '("/usr/include" "/usr/local/include") dirs))
+(setq-local flycheck-clang-args flags))))
+
+(add-hook 'c-mode-common-hook 'c-c++/load-clang-args)
 #+END_SRC
 ** Rust
 #+BEGIN_SRC emacs-lisp
@@ -1579,5 +1631,5 @@ Emacs mode for managing ledger text files
 (global-set-key (kbd "<f10>")
                 (lambda ()
                   (interactive)
-                  (shell-command "~/git/zeug_cmk/bin/f12")))
+                  (async-shell-command "~/git/zeug_cmk/bin/f12" "*f12*")))
 #+END_SRC
