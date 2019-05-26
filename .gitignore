@@ -20,3 +20,6 @@ hub
 # emacs
 /emacs.d/config.el
 /emacs.d/elpa/
+.tox/
+.mypy_cache/
+.pytest_cache/
