@@ -15,7 +15,7 @@ notmuch new
 
 notmuch tag +ci -new -- from:travis-ci.com or from:travis-ci.org or from:appveyor.com or from:circleci.com
 notmuch tag +ci -new -- from:mg.gitlab.com and subject:Pipeline
-notmuch tag +CMK-JIRA -new -- subject:\[CMK-JIRA\]
+notmuch tag +CMK-JIRA -new -- subject:\[CMK-JIRA\] or subject:\[tribe29 Jira\]
 notmuch tag +alle-mk -new -- to:alle@mathias-kettner.de
 notmuch tag +cmk-commits -new -- to:cmk-internal-commits@mathias-kettner.de and subject:\[cmk\]
 notmuch tag +mkde-commits -new -- to:cmk-internal-commits@mathias-kettner.de and subject:\[mkde\]
