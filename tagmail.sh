@@ -27,6 +27,7 @@ notmuch tag +immonews -new -- from:immobilienscout24.de and subject:Kontact
 notmuch tag +socialnews -new -- from:facebookmail.com or from:mail.instagram.com
 notmuch tag +linkedin +socialnews -new -- from:linkedin.com
 notmuch tag +promotions -- from:newsletter
+notmuch tag +toastmasters -- toastmaster NOT from:info@meetup.com
 
 notmuch tag +sms -inbox -- folder:hi_pers/SMS
 notmuch tag +calls -inbox -- folder:hi_pers/Calls

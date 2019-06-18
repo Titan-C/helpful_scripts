@@ -5,7 +5,7 @@
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Óscar Nájera"
       user-mail-address (if (string-equal (system-name) "klappbier")
-                             "on@mathias-kettner.de"
+                             "oscar.najera@tribe29.com"
                            "hi@oscarnajera.com"))
 #+END_SRC
 * Editor
@@ -1303,7 +1303,7 @@ and the arguments for flyckeck-clang based on a project-specific text file."
   :config
     (setq message-directory "~/.mail/"
           message-auto-save-directory "/tmp/"
-          message-signature "Oscar Najera\nSoftware Developer\n\nMathias Kettner GmbH — The Check_MK Company\non@mathias-kettner.de | Phone: +49 89 9982 097 00 | www.mathias-kettner.com\n\nKellerstraße 29, 81667 München, Germany\nAmtsgericht München, HRB 165902\nGeschäftsführer: Jan Justus, Mathias Kettner"
+          message-signature "Oscar Najera\nSoftware Developer\n\ntribe29 GmbH — The Check_MK Company\noscar.najera@tribe29.com | Phone: +49 89 9982 097 00 | https://tribe29.com\n\nKellerstraße 29, 81667 München, Germany\nAmtsgericht München, HRB 165902\nGeschäftsführer: Jan Justus, Mathias Kettner"
           org-email-link-description-format "%c: %s")
 
     (define-key notmuch-tree-mode-map "n"
@@ -1362,7 +1362,7 @@ and the arguments for flyckeck-clang based on a project-specific text file."
           notmuch-hello-tag-list-make-query "tag:unread and not tag:killed")
 
     (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
-                             ("on@mathias-kettner.de" . "work/Sent")
+                             ("oscar.najera@tribe29.com" . "work/Sent")
                              ;;(".*@gmail.com" . "\"gmail/[Gmail]/.Sent Mail\"")
                              (".*@u-psud.fr" . "upsud/Sent")))
 
@@ -1434,7 +1434,7 @@ and the arguments for flyckeck-clang based on a project-specific text file."
     '(
       ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
       ("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
-      ("Oscar Najera <on@mathias-kettner.de>" . ("mx.tribe29.com" 587 starttls "on"))
+      ("Oscar Najera <oscar.najera@tribe29.com>" . ("mx.tribe29.com" 587 starttls "on"))
       ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))
       ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl "oscar.najera-ocampo"))
       ))
