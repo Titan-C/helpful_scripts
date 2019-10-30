@@ -1,0 +1,13 @@
+cython
+joblib
+jupyter
+matplotlib
+numba
+numpy
+numpydoc
+pandas
+pillow
+pyqt5
+scipy
+sphinx
+sympy
