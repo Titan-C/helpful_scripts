@@ -1,10 +1,10 @@
 autopep8
+coverage
 flake8
 importmagic
-ipython
 ipdb
+ipython
 jedi
-#line_profiler
 pep8
 pyflakes
 pylint
@@ -13,4 +13,6 @@ pytest-cov
 rope
 sphinx
 yapf
-black
+
+#black
+#line_profiler
