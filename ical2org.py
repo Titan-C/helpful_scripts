@@ -33,18 +33,18 @@ def org_interval(start, duration, tz):
 
 
 def put_tz(date_time):
-    if not hasattr(date_time, 'hour'):
+    if not hasattr(date_time, "hour"):
         return datetime(
             year=date_time.year,
             month=date_time.month,
             day=date_time.day,
-            tzinfo=tz.tzlocal())
+            tzinfo=tz.tzlocal(),
+        )
     return date_time.astimezone(tz.tzlocal())
 
 
 class orgEntry:
     """Documentation for orgEntry"""
-
     def __init__(self, event):
         self.summary = event["SUMMARY"]
         self.dtstart = put_tz(event["DTSTART"].dt)
@@ -75,8 +75,8 @@ class orgEntry:
 
     @property
     def pbox(self):
-        props = "\n".join(
-            ":%s: %s" % (k.upper(), v) for k, v in self.properties.items())
+        props = "\n".join(":%s: %s" % (k.upper(), v)
+                          for k, v in self.properties.items())
         if props:
             return f""":PROPERTIES:\n{props}\n:END:\n"""
         return ""
