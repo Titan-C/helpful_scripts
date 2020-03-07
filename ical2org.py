@@ -57,8 +57,8 @@ class orgEntry:
         self.tz = get_localzone()
         self.properties = {}
         self._get_properties(event)
-        self.description = event[
-            'DESCRIPTION'] if 'DESCRIPTION' in event else ''
+        self.description = (event["DESCRIPTION"].replace(" \n", "\n")
+                            if "DESCRIPTION" in event else "")
 
         if "RRULE" in event:
 
