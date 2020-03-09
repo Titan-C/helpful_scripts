@@ -69,7 +69,7 @@ def main():
         ical = get_icalendar(config[calendar])
         events += [
             ical2org.orgEntry(entry) for entry in ical.walk()
-            if entry.name == 'VEVENT'
+            if entry.name == "VEVENT"
         ]
 
     outfile = os.path.expanduser(defaults["outfile"])

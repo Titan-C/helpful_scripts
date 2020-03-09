@@ -54,6 +54,12 @@ class orgEntry:
         else:
             self.duration = event["DURATION"].dt
 
+        self.tags = event.get("CATEGORIES", "")
+        if not isinstance(self.tags, str):
+            self.tags = (self.tags.to_ical().decode("utf-8").replace(
+                " ", "-").replace(",", ":"))
+            self.tags = f"  :{self.tags}:"
+
         self.tz = get_localzone()
         self.properties = {}
         self._get_properties(event)
@@ -106,7 +112,7 @@ class orgEntry:
     def __str__(self):
         events = self.dates
         if events:
-            return f"* {self.summary}\n{self.pbox}{events}{self.description}"
+            return f"* {self.summary}{self.tags}\n{self.pbox}{events}{self.description}"
         return ""
 
 
