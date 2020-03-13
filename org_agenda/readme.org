@@ -1,0 +1,7 @@
+#+TITLE:  Agenda utility
+
+* TODO Accumulate calendars
+* TODO deal with exceptions on dates
+* TODO deal with cancellations
+* TODO deal with reminders
+* TODO test using caldav library for downloading in desired times

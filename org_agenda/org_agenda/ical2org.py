@@ -8,10 +8,6 @@ from tzlocal import get_localzone
 # inspiration from
 # https://www.nylas.com/blog/calendar-events-rrules/
 
-# TODO deal with exceptions on dates
-# TODO deal with cancellations
-# TODO deal with reminders
-
 
 def orgDatetime(dt, tz):
     """Timezone aware datetime to YYYY-MM-DD DayofWeek HH:MM str in localtime.
@@ -116,10 +112,10 @@ class orgEntry:
         return ""
 
 
-#with open("/home/me/myevs.ics") as fid:
-#cal = Calendar.from_ical(fid.read())
+# with open("/home/me/myevs.ics") as fid:
+# cal = Calendar.from_ical(fid.read())
 ##
 #
-#for entry in cal.walk():
-#if entry.name == "VEVENT":
-#print(orgEntry(entry))
+# for entry in cal.walk():
+# if entry.name == "VEVENT":
+# print(orgEntry(entry))
