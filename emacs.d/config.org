@@ -631,8 +631,7 @@ containers where you don't even have an editor.
   ;; Agenda files
   (setq org-agenda-files (mapcar (lambda (file)
                                    (expand-file-name file org-directory))
-                                 '("caldav.org" "journal.org" "work_journal.org" "todo.org"
-                                   "mk_cal.org")))
+                                 '("caldav.org" "journal.org" "work_journal.org" "todo.org")))
 
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
   (setq org-log-reschedule 'note)
