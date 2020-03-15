@@ -50,6 +50,7 @@ class orgEntry:
         else:
             self.duration = event["DURATION"].dt
 
+        self.dates = ""
         self.tags = event.get("CATEGORIES", "")
         if not isinstance(self.tags, str):
             self.tags = (self.tags.to_ical().decode("utf-8").replace(
@@ -83,33 +84,30 @@ class orgEntry:
             return f""":PROPERTIES:\n{props}\n:END:\n"""
         return ""
 
-    @property
-    def dates(self):
+    def date_block(self, ahead=90, back=28):
 
         now = datetime.now(utc)
-        start = now - timedelta(28)
-        end = now + timedelta(90)
+        start = now - timedelta(back)
+        end = now + timedelta(ahead)
 
         if self.rule:
-            return self.repeting_dates(start, end)
+            self.dates = self.repeting_dates(start, end)
 
-        if self.dtstart < end and self.dtstart > start:
-            return org_interval(self.dtstart, self.duration, self.tz)
+        elif self.dtstart < end and self.dtstart > start:
+            self.dates = org_interval(self.dtstart, self.duration, self.tz)
+
+        return self.dates
 
     def repeting_dates(self, start, end):
 
         repetitions = self.rule.between(after=start, before=end)
-        dateblock = ""
-        for event_start in repetitions:
-            dateblock += org_interval(event_start, self.duration, self.tz)
-
-        return dateblock
+        return "".join(
+            org_interval(event_start, self.duration, self.tz)
+            for event_start in repetitions)
 
     def __str__(self):
-        events = self.dates
-        if events:
-            return f"* {self.summary}{self.tags}\n{self.pbox}{events}{self.description}"
-        return ""
+        return (f"* {self.summary}{self.tags}\n"
+                f"{self.pbox}{self.dates}{self.description}").strip()
 
 
 # with open("/home/me/myevs.ics") as fid:

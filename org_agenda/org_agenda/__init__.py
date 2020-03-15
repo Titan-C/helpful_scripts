@@ -98,6 +98,12 @@ def main():
         ]
 
     outfile = os.path.expanduser(defaults["outfile"])
+    ahead = int(defaults.get("ahead", 50))
+    back = int(defaults.get("back", 14))
+    filtered_events = map(str,
+                          (x for x in events if x.date_block(ahead, back)))
+
     with open(outfile, "w") as fid:
         logger.info("Writing calendars to: %s", outfile)
-        fid.write("\n\n".join([str(x).strip() for x in events if str(x)]))
+        fid.write("\n\n".join(filtered_events))
+        fid.write("\n")
