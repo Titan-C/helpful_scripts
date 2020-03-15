@@ -22,6 +22,13 @@ def orgDate(dt, tz):
 
 
 def org_interval(start, duration, tz):
+    if duration.total_seconds() % 86400 == 0:
+        datestr = "  {}".format(orgDate(start, tz))
+        if duration.total_seconds() / 86400 > 1:
+            datestr += "--{}".format(
+                orgDate(start + duration - timedelta(seconds=1), tz))
+        return datestr + "\n"
+
     return "  {}--{}\n".format(
         orgDatetime(start, tz),
         orgDatetime(start + duration, tz),
