@@ -9,11 +9,12 @@ Goal of the script
 # Author: Óscar Nájera
 # License:GPL-3
 
-import os
-import json
 import configparser
-import subprocess
+import hashlib
+import json
 import logging
+import os
+import subprocess
 
 import requests
 from icalendar import Calendar
@@ -23,19 +24,29 @@ from org_agenda import ical2org
 def passwordstore(address: str) -> str:
     """Get password from passwordstore address"""
 
-    process = subprocess.run(["pass", "show", address], stdout=subprocess.PIPE, check=True)
+    process = subprocess.run(["pass", "show", address],
+                             stdout=subprocess.PIPE,
+                             check=True)
     if process.returncode == 0:
         return process.stdout.split()[0]
 
 
 def get_icalendar(section):
+    url = section["url"]
+    hash_url = hashlib.sha1(url.encode("UTF-8")).hexdigest()[:10]
+    url_file = f"/tmp/agenda-{hash_url}"
+    if os.path.exists(url_file):
+        with open(url_file) as txt:
+            return Calendar.from_ical(txt.read())
+
     user = section["user"]
     password = passwordstore(section["passwordstore"])
-    url = section["url"]
 
     ical_reply = requests.get(url, auth=(user, password))
 
     if ical_reply.status_code == 200:
+        with open(url_file, 'w') as txt:
+            txt.write(ical_reply.text)
         return Calendar.from_ical(ical_reply.text)
 
 
