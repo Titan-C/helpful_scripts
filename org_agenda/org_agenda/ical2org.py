@@ -1,7 +1,6 @@
-from datetime import date, datetime, timedelta, tzinfo
-from pytz import timezone, utc, all_timezones
-from icalendar import Calendar
-from dateutil.rrule import rrulestr, rruleset
+from datetime import datetime, timedelta
+from pytz import utc
+from dateutil.rrule import rrulestr
 from dateutil import tz
 from tzlocal import get_localzone
 
@@ -9,29 +8,27 @@ from tzlocal import get_localzone
 # https://www.nylas.com/blog/calendar-events-rrules/
 
 
-def orgDatetime(dt, tz):
+def orgdatetime(datestamp, time_zone, time=True):
     """Timezone aware datetime to YYYY-MM-DD DayofWeek HH:MM str in localtime.
     """
-    return dt.astimezone(tz).strftime("<%Y-%m-%d %a %H:%M>")
+    hours = " %H:%M" if time else ""
+    str_format = f"<%Y-%m-%d %a{hours}>"
+
+    return datestamp.astimezone(time_zone).strftime(str_format)
 
 
-def orgDate(dt, tz):
-    """Timezone aware date to YYYY-MM-DD DayofWeek in localtime.
-    """
-    return dt.astimezone(tz).strftime("<%Y-%m-%d %a>")
-
-
-def org_interval(start, duration, tz):
+def org_interval(start, duration, time_zone):
     if duration.total_seconds() % 86400 == 0:
-        datestr = "  {}".format(orgDate(start, tz))
+        datestr = "  {}".format(orgdatetime(start, time_zone, False))
         if duration.total_seconds() / 86400 > 1:
             datestr += "--{}".format(
-                orgDate(start + duration - timedelta(seconds=1), tz))
+                orgdatetime(start + duration - timedelta(seconds=1), time_zone,
+                            False))
         return datestr + "\n"
 
     return "  {}--{}\n".format(
-        orgDatetime(start, tz),
-        orgDatetime(start + duration, tz),
+        orgdatetime(start, time_zone),
+        orgdatetime(start + duration, time_zone),
     )
 
 
@@ -46,8 +43,8 @@ def put_tz(date_time):
     return date_time.astimezone(tz.tzlocal())
 
 
-class orgEntry:
-    """Documentation for orgEntry"""
+class OrgEntry:
+    """Documentation for OrgEntry"""
     def __init__(self, event):
         self.summary = event["SUMMARY"]
         self.dtstart = put_tz(event["DTSTART"].dt)
@@ -64,7 +61,7 @@ class orgEntry:
                 " ", "-").replace(",", ":"))
             self.tags = f"  :{self.tags}:"
 
-        self.tz = get_localzone()
+        self.time_zone = get_localzone()
         self.properties = {}
         self._get_properties(event)
         self.description = (event["DESCRIPTION"].replace(" \n", "\n")
@@ -101,7 +98,8 @@ class orgEntry:
             self.dates = self.repeting_dates(start, end)
 
         elif self.dtstart < end and self.dtstart > start:
-            self.dates = org_interval(self.dtstart, self.duration, self.tz)
+            self.dates = org_interval(self.dtstart, self.duration,
+                                      self.time_zone)
 
         return self.dates
 
@@ -109,18 +107,9 @@ class orgEntry:
 
         repetitions = self.rule.between(after=start, before=end)
         return "".join(
-            org_interval(event_start, self.duration, self.tz)
+            org_interval(event_start, self.duration, self.time_zone)
             for event_start in repetitions)
 
     def __str__(self):
         return (f"* {self.summary}{self.tags}\n"
                 f"{self.pbox}{self.dates}{self.description}").strip()
-
-
-# with open("/home/me/myevs.ics") as fid:
-# cal = Calendar.from_ical(fid.read())
-##
-#
-# for entry in cal.walk():
-# if entry.name == "VEVENT":
-# print(orgEntry(entry))

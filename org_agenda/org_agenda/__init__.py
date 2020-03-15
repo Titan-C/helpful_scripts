@@ -93,7 +93,7 @@ def main():
     for calendar in config:
         ical = get_icalendar(calendar, config[calendar], args.force)
         events += [
-            ical2org.orgEntry(entry) for entry in ical.walk()
+            ical2org.OrgEntry(entry) for entry in ical.walk()
             if entry.name == "VEVENT"
         ]
 
