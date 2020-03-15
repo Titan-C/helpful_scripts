@@ -80,6 +80,11 @@ class OrgEntry:
         if "LOCATION" in event:
             self.properties.update({"location": event["LOCATION"].title()})
 
+        for comp in event.subcomponents:
+            if comp.name == 'VALARM':
+                trigger = int(-1 * comp['TRIGGER'].dt.total_seconds() / 60)
+                self.properties.update({'appt_warntime': str(trigger)})
+
     @property
     def pbox(self):
         props = "\n".join(":%s: %s" % (k.upper(), v)
