@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+r"""
+Convert icalendar elements into org-mode elements
+=================================================
+"""
+# Created: Thu Mar 19 12:48:59 2020
+# Author: Óscar Nájera
+# License: GPL-3
+
 from datetime import datetime, timedelta
 from dateutil import tz
 from dateutil.rrule import rrulestr
@@ -19,6 +28,7 @@ def orgdatetime(datestamp, time_zone, time=True):
 
 
 def org_interval(start, duration, time_zone):
+    "Write org interval"
     if duration.total_seconds() % 86400 == 0:
         datestr = "  {}".format(orgdatetime(start, time_zone, False))
         if duration.total_seconds() / 86400 > 1:
@@ -33,6 +43,7 @@ def org_interval(start, duration, time_zone):
 
 
 def put_tz(date_time):
+    "Given date or datetime enforce transformation to localtime"
     if not hasattr(date_time, "hour"):
         return datetime(
             year=date_time.year,
@@ -43,10 +54,25 @@ def put_tz(date_time):
     return date_time.astimezone(tz.tzlocal())
 
 
+def get_properties(event):
+    "Extract relevant properties"
+    if "LOCATION" in event:
+        yield "LOCATION", event["LOCATION"]
+
+    if "UID" in event:
+        yield "UID", event.get("UID")
+
+    for comp in event.subcomponents:
+        if comp.name == "VALARM":
+            trigger = int(-1 * comp["TRIGGER"].dt.total_seconds() / 60)
+            yield "APPT_WARNTIME", str(trigger)
+
+
 class OrgEntry:
     """Documentation for OrgEntry"""
 
     def __init__(self, event):
+        self.event = event
         self.summary = event["SUMMARY"]
         self.dtstart = put_tz(event["DTSTART"].dt)
         if "DTEND" in event:
@@ -56,81 +82,63 @@ class OrgEntry:
             self.duration = event["DURATION"].dt
 
         self.dates = ""
-        self.tags = event.get("CATEGORIES", "")
-        if not isinstance(self.tags, str):
-            self.tags = (
-                self.tags.to_ical().decode("utf-8").replace(" ", "-").replace(",", ":")
-            )
-            self.tags = f"  :{self.tags}:"
 
-        self.time_zone = get_localzone()
-        self.properties = {}
-        self._get_properties(event)
         self.description = (
             event["DESCRIPTION"].replace(" \n", "\n") if "DESCRIPTION" in event else ""
         )
 
-        self.rule = None
-        if "RRULE" in event:
-            self.rule = rrulestr(
-                event["RRULE"].to_ical().decode("utf-8"),
-                dtstart=self.dtstart,
-                forceset=True,
-            )
-            if "EXDATE" in event:
-                exdates = event["EXDATE"]
-                for dates in (exdates,) if not isinstance(exdates, list) else exdates:
-                    for date in dates.dts:
-                        self.rule.exdate(put_tz(date.dt))
-
-    def _get_properties(self, event):
-        if "LOCATION" in event:
-            self.properties.update({"location": event["LOCATION"]})
-
-        if "UID" in event:
-            self.properties.update({"UID": event.get("UID")})
-
-        for comp in event.subcomponents:
-            if comp.name == "VALARM":
-                trigger = int(-1 * comp["TRIGGER"].dt.total_seconds() / 60)
-                self.properties.update({"appt_warntime": str(trigger)})
+    @property
+    def tags(self):
+        "Tags"
+        tags = self.event.get("CATEGORIES")
+        if tags is not None:
+            tags = tags.to_ical().decode("utf-8").replace(" ", "-").replace(",", ":")
+            return f"  :{tags}:"
+        return ""
 
     @property
-    def pbox(self):
-        props = "\n".join(
-            ":%s: %s" % (k.upper(), v) for k, v in self.properties.items()
-        )
+    def properties(self):
+        "Property box"
+        props = "\n".join(":%s: %s" % (k, v) for k, v in get_properties(self.event))
         return f""":PROPERTIES:\n{props}\n:END:\n""" if props else ""
 
     def date_block(self, ahead=90, back=28):
+        "Evaluate which active dates the event has"
 
         now = datetime.now(utc)
         start = now - timedelta(back)
         end = now + timedelta(ahead)
 
-        if self.rule:
-            self.dates = self.repeting_dates(start, end)
+        if "RRULE" in self.event:
+            rule = rrulestr(
+                self.event["RRULE"].to_ical().decode("utf-8"),
+                dtstart=self.dtstart,
+                forceset=True,
+            )
+            exdates = self.event.get("EXDATE", [])
+            for dates in (exdates,) if not isinstance(exdates, list) else exdates:
+                for date in dates.dts:
+                    rule.exdate(put_tz(date.dt))
+
+            self.dates = "".join(
+                org_interval(event_start, self.duration, get_localzone())
+                for event_start in rule.between(after=start, before=end)
+            )
 
         elif self.dtstart < end and self.dtstart > start:
-            self.dates = org_interval(self.dtstart, self.duration, self.time_zone)
+            self.dates = org_interval(self.dtstart, self.duration, get_localzone())
 
         return self.dates
-
-    def repeting_dates(self, start, end):
-
-        return "".join(
-            org_interval(event_start, self.duration, self.time_zone)
-            for event_start in self.rule.between(after=start, before=end)
-        )
 
     def __str__(self):
         return (
             f"* {self.summary}{self.tags}\n"
-            f"{self.pbox}{self.dates}{self.description}"
+            f"{self.properties}{self.dates}{self.description}"
         ).strip()
 
 
 def org_events(calendars, ahead, back):
+    "Iterator of all events in calendars from [today-back;today+ahead]"
 
     events = (
         OrgEntry(entry)

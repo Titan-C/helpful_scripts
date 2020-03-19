@@ -30,8 +30,11 @@ def passwordstore(address: str) -> str:
     if process.returncode == 0:
         return process.stdout.split()[0]
 
+    raise ValueError("Unknown password address")
+
 
 def get_icalendar(calendar, section, force):
+    "Return calendar from download or cache"
     url = section["url"]
     hash_url = hashlib.sha1(url.encode("UTF-8")).hexdigest()[:10]
     url_file = f"/tmp/agenda-{hash_url}"
@@ -52,8 +55,11 @@ def get_icalendar(calendar, section, force):
             txt.write(ical_reply.text)
         return ical_reply.text
 
+    raise ValueError("Could not get calendar: %s" % calendar)
+
 
 def get_config():
+    "parse config file"
 
     config = configparser.ConfigParser()
 
@@ -62,10 +68,11 @@ def get_config():
     logger.info("Reading config from: %s", config_file)
     config.read([config_file])
 
-    return json.loads(json.dumps(config._sections))
+    return config
 
 
 def parse_arguments():
+    "Parse CLI"
     parser = argparse.ArgumentParser(description="Translate CalDav Agenda to orgfile")
     parser.add_argument(
         "-f", "--force", help="Force Download of Caldav files", action="store_true"
@@ -76,6 +83,7 @@ def parse_arguments():
 
 
 def main():
+    "Transform Calendars"
     args = parse_arguments()
 
     logger = logging.getLogger("Org_calendar")
@@ -84,15 +92,15 @@ def main():
     logger.setLevel(log_level)
 
     config = get_config()
-    defaults = config.pop("defaults")
 
     calendars = (
-        get_icalendar(calendar, config[calendar], args.force) for calendar in config
+        get_icalendar(calendar, config[calendar], args.force)
+        for calendar in config.sections()
     )
 
-    ahead = int(defaults.get("ahead", 50))
-    back = int(defaults.get("back", 14))
-    outfile = os.path.expanduser(defaults["outfile"])
+    ahead = int(config["DEFAULT"].get("ahead", 50))
+    back = int(config["DEFAULT"].get("back", 14))
+    outfile = os.path.expanduser(config["DEFAULT"]["outfile"])
     with open(outfile, "w") as fid:
         logger.info("Writing calendars to: %s", outfile)
         fid.write("\n\n".join(org_events(calendars, ahead, back)))
