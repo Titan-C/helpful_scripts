@@ -80,6 +80,9 @@ class OrgEntry:
         if "LOCATION" in event:
             self.properties.update({"location": event["LOCATION"].title()})
 
+        if "UID" in event:
+            self.properties.update({"UID": event.get("UID").title()})
+
         for comp in event.subcomponents:
             if comp.name == 'VALARM':
                 trigger = int(-1 * comp['TRIGGER'].dt.total_seconds() / 60)
