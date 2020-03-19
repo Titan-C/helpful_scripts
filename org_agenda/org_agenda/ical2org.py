@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
-from pytz import utc
-from dateutil.rrule import rrulestr
 from dateutil import tz
+from dateutil.rrule import rrulestr
+from icalendar import Calendar
+from pytz import utc
 from tzlocal import get_localzone
 
 # inspiration from
@@ -22,13 +23,12 @@ def org_interval(start, duration, time_zone):
         datestr = "  {}".format(orgdatetime(start, time_zone, False))
         if duration.total_seconds() / 86400 > 1:
             datestr += "--{}".format(
-                orgdatetime(start + duration - timedelta(seconds=1), time_zone,
-                            False))
+                orgdatetime(start + duration - timedelta(seconds=1), time_zone, False)
+            )
         return datestr + "\n"
 
     return "  {}--{}\n".format(
-        orgdatetime(start, time_zone),
-        orgdatetime(start + duration, time_zone),
+        orgdatetime(start, time_zone), orgdatetime(start + duration, time_zone),
     )
 
 
@@ -45,6 +45,7 @@ def put_tz(date_time):
 
 class OrgEntry:
     """Documentation for OrgEntry"""
+
     def __init__(self, event):
         self.summary = event["SUMMARY"]
         self.dtstart = put_tz(event["DTSTART"].dt)
@@ -57,28 +58,31 @@ class OrgEntry:
         self.dates = ""
         self.tags = event.get("CATEGORIES", "")
         if not isinstance(self.tags, str):
-            self.tags = (self.tags.to_ical().decode("utf-8").replace(
-                " ", "-").replace(",", ":"))
+            self.tags = (
+                self.tags.to_ical().decode("utf-8").replace(" ", "-").replace(",", ":")
+            )
             self.tags = f"  :{self.tags}:"
 
         self.time_zone = get_localzone()
         self.properties = {}
         self._get_properties(event)
-        self.description = (event["DESCRIPTION"].replace(" \n", "\n")
-                            if "DESCRIPTION" in event else "")
+        self.description = (
+            event["DESCRIPTION"].replace(" \n", "\n") if "DESCRIPTION" in event else ""
+        )
 
         if "RRULE" in event:
 
             self.rule = rrulestr(
-                event["RRULE"].to_ical().decode("utf-8"),
-                dtstart=self.dtstart,
+                event["RRULE"].to_ical().decode("utf-8"), dtstart=self.dtstart,
             )
             self.date_exceptions = []
             if "EXDATE" in event:
                 exdates = event["EXDATE"]
                 self.date_exceptions = [
-                    put_tz(date.dt) for dates in
-                    ((exdates, ) if not isinstance(exdates, list) else exdates)
+                    put_tz(date.dt)
+                    for dates in (
+                        (exdates,) if not isinstance(exdates, list) else exdates
+                    )
                     for date in dates.dts
                 ]
         else:
@@ -86,10 +90,10 @@ class OrgEntry:
 
     def _get_properties(self, event):
         if "LOCATION" in event:
-            self.properties.update({"location": event["LOCATION"].title()})
+            self.properties.update({"location": event["LOCATION"]})
 
         if "UID" in event:
-            self.properties.update({"UID": event.get("UID").title()})
+            self.properties.update({"UID": event.get("UID")})
 
         for comp in event.subcomponents:
             if comp.name == "VALARM":
@@ -98,11 +102,10 @@ class OrgEntry:
 
     @property
     def pbox(self):
-        props = "\n".join(":%s: %s" % (k.upper(), v)
-                          for k, v in self.properties.items())
-        if props:
-            return f""":PROPERTIES:\n{props}\n:END:\n"""
-        return ""
+        props = "\n".join(
+            ":%s: %s" % (k.upper(), v) for k, v in self.properties.items()
+        )
+        return f""":PROPERTIES:\n{props}\n:END:\n""" if props else ""
 
     def date_block(self, ahead=90, back=28):
 
@@ -114,19 +117,36 @@ class OrgEntry:
             self.dates = self.repeting_dates(start, end)
 
         elif self.dtstart < end and self.dtstart > start:
-            self.dates = org_interval(self.dtstart, self.duration,
-                                      self.time_zone)
+            self.dates = org_interval(self.dtstart, self.duration, self.time_zone)
 
         return self.dates
 
     def repeting_dates(self, start, end):
 
-        repetitions = (x for x in self.rule.between(after=start, before=end)
-                       if x not in self.date_exceptions)
+        repetitions = (
+            x
+            for x in self.rule.between(after=start, before=end)
+            if x not in self.date_exceptions
+        )
         return "".join(
             org_interval(event_start, self.duration, self.time_zone)
-            for event_start in repetitions)
+            for event_start in repetitions
+        )
 
     def __str__(self):
-        return (f"* {self.summary}{self.tags}\n"
-                f"{self.pbox}{self.dates}{self.description}").strip()
+        return (
+            f"* {self.summary}{self.tags}\n"
+            f"{self.pbox}{self.dates}{self.description}"
+        ).strip()
+
+
+def org_events(calendars, ahead, back):
+
+    events = (
+        OrgEntry(entry)
+        for ical in map(Calendar.from_ical, calendars)
+        for entry in ical.walk()
+        if entry.name == "VEVENT"
+    )
+
+    return map(str, (x for x in events if x.date_block(ahead, back)))

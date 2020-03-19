@@ -18,16 +18,15 @@ import os
 import subprocess
 
 import requests
-from icalendar import Calendar
-from org_agenda import ical2org
+from org_agenda.ical2org import org_events
 
 
 def passwordstore(address: str) -> str:
     """Get password from passwordstore address"""
 
-    process = subprocess.run(["pass", "show", address],
-                             stdout=subprocess.PIPE,
-                             check=True)
+    process = subprocess.run(
+        ["pass", "show", address], stdout=subprocess.PIPE, check=True
+    )
     if process.returncode == 0:
         return process.stdout.split()[0]
 
@@ -38,7 +37,7 @@ def get_icalendar(calendar, section, force):
     url_file = f"/tmp/agenda-{hash_url}"
     if not force and os.path.exists(url_file):
         with open(url_file) as txt:
-            return Calendar.from_ical(txt.read())
+            return txt.read()
 
     user = section["user"]
     password = passwordstore(section["passwordstore"])
@@ -51,7 +50,7 @@ def get_icalendar(calendar, section, force):
     if ical_reply.status_code == 200:
         with open(url_file, "w") as txt:
             txt.write(ical_reply.text)
-        return Calendar.from_ical(ical_reply.text)
+        return ical_reply.text
 
 
 def get_config():
@@ -67,12 +66,10 @@ def get_config():
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(
-        description="Translate CalDav Agenda to orgfile")
-    parser.add_argument("-f",
-                        "--force",
-                        help="Force Download of Caldav files",
-                        action="store_true")
+    parser = argparse.ArgumentParser(description="Translate CalDav Agenda to orgfile")
+    parser.add_argument(
+        "-f", "--force", help="Force Download of Caldav files", action="store_true"
+    )
     parser.add_argument("-v", "--verbose", action="count", default=0)
 
     return parser.parse_args()
@@ -89,21 +86,14 @@ def main():
     config = get_config()
     defaults = config.pop("defaults")
 
-    events = []
-    for calendar in config:
-        ical = get_icalendar(calendar, config[calendar], args.force)
-        events += [
-            ical2org.OrgEntry(entry) for entry in ical.walk()
-            if entry.name == "VEVENT"
-        ]
+    calendars = (
+        get_icalendar(calendar, config[calendar], args.force) for calendar in config
+    )
 
-    outfile = os.path.expanduser(defaults["outfile"])
     ahead = int(defaults.get("ahead", 50))
     back = int(defaults.get("back", 14))
-    filtered_events = map(str,
-                          (x for x in events if x.date_block(ahead, back)))
-
+    outfile = os.path.expanduser(defaults["outfile"])
     with open(outfile, "w") as fid:
         logger.info("Writing calendars to: %s", outfile)
-        fid.write("\n\n".join(filtered_events))
+        fid.write("\n\n".join(org_events(calendars, ahead, back)))
         fid.write("\n")
