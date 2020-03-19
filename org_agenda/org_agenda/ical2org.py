@@ -70,23 +70,18 @@ class OrgEntry:
             event["DESCRIPTION"].replace(" \n", "\n") if "DESCRIPTION" in event else ""
         )
 
+        self.rule = None
         if "RRULE" in event:
-
             self.rule = rrulestr(
-                event["RRULE"].to_ical().decode("utf-8"), dtstart=self.dtstart,
+                event["RRULE"].to_ical().decode("utf-8"),
+                dtstart=self.dtstart,
+                forceset=True,
             )
-            self.date_exceptions = []
             if "EXDATE" in event:
                 exdates = event["EXDATE"]
-                self.date_exceptions = [
-                    put_tz(date.dt)
-                    for dates in (
-                        (exdates,) if not isinstance(exdates, list) else exdates
-                    )
-                    for date in dates.dts
-                ]
-        else:
-            self.rule = ""
+                for dates in (exdates,) if not isinstance(exdates, list) else exdates:
+                    for date in dates.dts:
+                        self.rule.exdate(put_tz(date.dt))
 
     def _get_properties(self, event):
         if "LOCATION" in event:
@@ -123,14 +118,9 @@ class OrgEntry:
 
     def repeting_dates(self, start, end):
 
-        repetitions = (
-            x
-            for x in self.rule.between(after=start, before=end)
-            if x not in self.date_exceptions
-        )
         return "".join(
             org_interval(event_start, self.duration, self.time_zone)
-            for event_start in repetitions
+            for event_start in self.rule.between(after=start, before=end)
         )
 
     def __str__(self):
