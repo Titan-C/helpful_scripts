@@ -73,6 +73,14 @@ class OrgEntry:
                 event["RRULE"].to_ical().decode("utf-8"),
                 dtstart=self.dtstart,
             )
+            self.date_exceptions = []
+            if "EXDATE" in event:
+                exdates = event["EXDATE"]
+                self.date_exceptions = [
+                    put_tz(date.dt) for dates in
+                    ((exdates, ) if not isinstance(exdates, list) else exdates)
+                    for date in dates.dts
+                ]
         else:
             self.rule = ""
 
@@ -84,9 +92,9 @@ class OrgEntry:
             self.properties.update({"UID": event.get("UID").title()})
 
         for comp in event.subcomponents:
-            if comp.name == 'VALARM':
-                trigger = int(-1 * comp['TRIGGER'].dt.total_seconds() / 60)
-                self.properties.update({'appt_warntime': str(trigger)})
+            if comp.name == "VALARM":
+                trigger = int(-1 * comp["TRIGGER"].dt.total_seconds() / 60)
+                self.properties.update({"appt_warntime": str(trigger)})
 
     @property
     def pbox(self):
@@ -113,7 +121,8 @@ class OrgEntry:
 
     def repeting_dates(self, start, end):
 
-        repetitions = self.rule.between(after=start, before=end)
+        repetitions = (x for x in self.rule.between(after=start, before=end)
+                       if x not in self.date_exceptions)
         return "".join(
             org_interval(event_start, self.duration, self.time_zone)
             for event_start in repetitions)

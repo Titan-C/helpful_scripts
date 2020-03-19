@@ -1,5 +1,4 @@
 #+TITLE:  Agenda utility
 
-* TODO deal with exceptions on dates
 * TODO deal with cancellations
 * TODO test using caldav library for downloading in desired times
