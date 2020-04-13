@@ -1,21 +1,5 @@
 #! /bin/bash
 
-if [[ $# -ne 2 ]]
-then
-  echo "Usage: installer.sh 'Your name' your_email";
-  exit;
-fi
-USERNAME=$1
-USERMAIL=$2
-
-# Configuring git
-rm -f ~/.gitconfig
-git config --global user.name "$USERNAME"
-git config --global user.email $USERMAIL
-git config --global push.default simple
-cat gitconfig >> ~/.gitconfig
-
-
 #Make scripts executable
 for file in $(ls *.sh)
 do
@@ -23,7 +7,7 @@ do
 done
 
 # create symlinks from the homedir to the selected files in this directory specified in $files
-files="emacs.d mbsyncrc notmuch-config zshrc"
+files="emacs.d gitconfig mbsyncrc notmuch-config zshrc"
 for file in $files; do
     echo "Creating symlink to $file in home directory."
     rm ~/.$file

@@ -1,4 +1,11 @@
-#To be appended after .gitconfig for colors and shortcuts
+[user]
+	name = Óscar Nájera
+        email = hi@oscarnajera.com
+[pull]
+	rebase = true
+[push]
+	default = simple
+
 [color]
 	diff  = auto
 	status= auto
@@ -23,3 +30,6 @@
 
 [diff]
         algorithm = patience
+
+[includeIf "gitdir:~/git/"]
+    path = ~/git/.gitconfig
