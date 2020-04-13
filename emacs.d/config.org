@@ -733,19 +733,6 @@ this new window.
 #+END_SRC
 ** Calendar
 #+BEGIN_SRC emacs-lisp
-(use-package org-caldav
-  ;:load-path "~/dev/org-caldav/"
-  :after notmuch
-  :commands (org-caldav-sync)
-  :config
-  (setq org-icalendar-timezone "Europe/Berlin"
-     org-caldav-url "https://nextcloud.najera.pw/remote.php/dav/calendars/oscar"
-     org-caldav-calendar-id "personal"
-     org-caldav-inbox "/tmp/from_calendar.org"
-     org-caldav-files (list (expand-file-name "caldav.org" org-directory))
-     org-caldav-debug-level 2))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
 (use-package org-trello
 :init
 (custom-set-variables '(org-trello-files '("~/Dropbox/org/toastmasters20aniv.org")))
