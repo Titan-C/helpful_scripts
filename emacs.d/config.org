@@ -629,9 +629,10 @@ containers where you don't even have an editor.
   (setq org-imenu-depth 4)
 
   ;; Agenda files
-  (setq org-agenda-files (mapcar (lambda (file)
+  (setq org-agenda-files (append (mapcar (lambda (file)
                                    (expand-file-name file org-directory))
-                                 '("caldav.org" "journal.org" "work_journal.org" "todo.org")))
+                                   '("caldav.org" "journal.org" "work_journal.org" "todo.org"))
+                                 '("~/dev/metasyhabitos/oscar/log.org")))
 
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
   (setq org-log-reschedule 'note)
@@ -675,7 +676,7 @@ containers where you don't even have an editor.
 
   ;; to interact from external sources
   (server-start)
-  (setq org-modules (quote (org-protocol)))
+  (setq org-modules '(org-protocol org-habit))
 )
 
 ;; leader shortcuts
