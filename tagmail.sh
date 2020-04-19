@@ -8,7 +8,14 @@ fi
 notmuch search --output=files tag:deleted | xargs  -I {} rm -v "{}"
 
 # Mail download
-mbsync -a
+if [ -z "$1" ]
+then
+    echo "syncing all mailboxes"
+    mbsync -a
+else
+    echo "syncing $1 mailbox"
+    mbsync "$1"
+fi
 
 # Notmuch tagging
 notmuch new
