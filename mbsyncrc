@@ -135,6 +135,31 @@ Create Both
 SyncState *
 Expunge Both
 
+###############################################################################
+# Personal
+IMAPAccount delightfuldying
+Host mail.najera.pw
+User oscar.najera@delightfuldying.com
+PassCmd "pass show WebSites/delightfuldying.com/mailbox/julie"
+AuthMechs LOGIN
+SSLType IMAPS
+
+IMAPStore dd-remote
+Account delightfuldying
+
+MaildirStore dd-local
+Path ~/.mail/dd/
+Inbox ~/.mail/dd/Inbox
+SubFolders Verbatim
+
+Channel delightfuldying
+Master :dd-remote:
+Slave :dd-local:
+Patterns *
+Create Both
+SyncState *
+Expunge Both
+
 # Local Variables:
 # mode: conf-unix
 # End:
