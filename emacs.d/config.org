@@ -477,8 +477,9 @@ Documents can be set to default to certain languages that differ from my
 default. This makes them save values.
 #+BEGIN_SRC emacs-lisp
 (setq safe-local-variable-values
-      '((ispell-dictionary . "es_EC")
-        (ispell-dictionary . "fr_FR")))
+      '((ispell-local-dictionary . "es_EC")
+        (ispell-local-dictionary . "de_DE")
+        (ispell-local-dictionary . "fr_FR")))
 #+END_SRC
 * Completion
 #+BEGIN_SRC emacs-lisp
