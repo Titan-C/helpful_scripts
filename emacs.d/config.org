@@ -426,6 +426,26 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
           langtool-default-language "en-US"
           langtool-disabled-rules '("WHITESPACE_RULE")))
 #+END_SRC
+*** Foreign languages
+Documents can be set to default to certain languages that differ from my
+default. This makes them save values.
+#+BEGIN_SRC emacs-lisp
+(setq safe-local-variable-values
+      '((ispell-local-dictionary . "es_EC")
+        (ispell-local-dictionary . "de_DE")
+        (ispell-local-dictionary . "fr_FR")))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(use-package google-translate
+  :bind (("C-c t" . 'google-translate-smooth-translate))
+  :init
+  (require 'google-translate-smooth-ui)
+  (setq google-translate-translation-directions-alist
+        '(("en" . "de") ("de" . "en")
+          ("en" . "es") ("es" . "en")
+          ("en" . "fr") ("fr" . "en")))
+  (setq google-translate-pop-up-buffer-set-focus t))
+#+END_SRC
 ** Add-ons
 #+BEGIN_SRC emacs-lisp
   (setq browse-url-browser-function 'browse-url-firefox)
@@ -471,15 +491,6 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 (setq auth-source-debug t
       auth-sources '(password-store))
 (auth-source-pass-enable))
-#+END_SRC
-*** Foreign languages
-Documents can be set to default to certain languages that differ from my
-default. This makes them save values.
-#+BEGIN_SRC emacs-lisp
-(setq safe-local-variable-values
-      '((ispell-local-dictionary . "es_EC")
-        (ispell-local-dictionary . "de_DE")
-        (ispell-local-dictionary . "fr_FR")))
 #+END_SRC
 * Completion
 #+BEGIN_SRC emacs-lisp
