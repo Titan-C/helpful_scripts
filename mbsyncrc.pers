@@ -86,7 +86,7 @@ SyncState *
 Expunge Both
 
 ###############################################################################
-# Personal
+# AMZbooks
 IMAPAccount kindle
 Host mail.najera.pw
 User kindle@oscarnajera.com
@@ -111,32 +111,7 @@ SyncState *
 Expunge Both
 
 ###############################################################################
-# Personal
-IMAPAccount work
-Host mx.tribe29.com
-User on
-PassCmd "pass show Correos/mx.tribe29.com"
-AuthMechs LOGIN
-SSLType IMAPS
-
-IMAPStore work-remote
-Account work
-
-MaildirStore work-local
-Path ~/.mail/work/
-Inbox ~/.mail/work/Inbox
-SubFolders Verbatim
-
-Channel work
-Master :work-remote:
-Slave :work-local:
-Patterns *
-Create Both
-SyncState *
-Expunge Both
-
-###############################################################################
-# Personal
+# Startup
 IMAPAccount delightfuldying
 Host mail.najera.pw
 User oscar.najera@delightfuldying.com

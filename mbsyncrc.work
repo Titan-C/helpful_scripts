@@ -1,0 +1,28 @@
+###############################################################################
+# Work
+IMAPAccount work
+Host mx.tribe29.com
+User on
+PassCmd "pass show Correos/mx.tribe29.com"
+AuthMechs LOGIN
+SSLType IMAPS
+
+IMAPStore work-remote
+Account work
+
+MaildirStore work-local
+Path ~/.mail/work/
+Inbox ~/.mail/work/Inbox
+SubFolders Verbatim
+
+Channel work
+Master :work-remote:
+Slave :work-local:
+Patterns *
+Create Both
+SyncState *
+Expunge Both
+
+# Local Variables:
+# mode: conf-unix
+# End:
