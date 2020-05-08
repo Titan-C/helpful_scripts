@@ -52,7 +52,7 @@ def translate_bankstatement(filename):
 
 def convert_to_ledger():
     lo = shlex.split(
-        'ledger convert /tmp/exit -f ~/ledger/accout_setup.ledger --account "Assets:Commerzbank Vorteil" --invert --rich-data -y %Y-%m-%d'
+        'ledger convert /tmp/exit -f ~/dev/journal/accout_setup.ledger --account "Assets:Commerzbank Vorteil" --invert --rich-data -y %Y-%m-%d'
     )
     yo = subprocess.run(lo, capture_output=True)
     with open("/tmp/led", "wb") as fi:
