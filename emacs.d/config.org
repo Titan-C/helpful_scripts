@@ -747,13 +747,6 @@ this new window.
   ;; update appt each time agenda opened
   (add-hook 'org-agenda-finalize-hook 'org-agenda-to-appt)
 #+END_SRC
-** Calendar
-#+BEGIN_SRC emacs-lisp
-(use-package org-trello
-:init
-(custom-set-variables '(org-trello-files '("~/Dropbox/org/toastmasters20aniv.org")))
-)
-#+END_SRC
 ** Latex
 #+BEGIN_SRC emacs-lisp
   ;; code syntax highlighting. See section 12
