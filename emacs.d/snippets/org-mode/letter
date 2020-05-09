@@ -1,0 +1,22 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: letter
+# key: letter
+# --
+#+TITLE: $1
+#+LATEX_HEADER: \usepackage[top=2cm,bottom=2.5cm,left=3cm,right=3cm]{geometry}
+#+LATEX_HEADER: \usepackage{indentfirst}
+#+LATEX_CLASS_OPTIONS: [a4paper,12pt]
+#+LCO: DIN sender
+#+STARTUP: showall
+#+PLACE: ${2:r}
+#+OPTIONS: ':t
+#+language: ${3:de}
+
+* To-address of the company                      :to:
+$4
+
+* To whom it may concern,
+
+$0
+
+* Sincerery                   :closing:
