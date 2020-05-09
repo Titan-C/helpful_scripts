@@ -802,14 +802,11 @@ this new window.
         ("\\paragraph{%s}" . "\\paragraph*{%s}")
         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-  (add-to-list 'org-latex-classes '("letter"
-       "\\documentclass{letter}
-       \[DEFAULT-PACKAGES]
-       \[PACKAGES]
-       \[EXTRA]"))
-
   (eval-after-load 'ox
-    '(require 'ox-koma-letter)))
+    '(require 'ox-koma-letter))
+
+  (add-to-list 'org-latex-packages-alist '("AUTO" "babel" nil))
+)
 #+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp
