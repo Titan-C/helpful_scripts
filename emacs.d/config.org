@@ -629,6 +629,7 @@ containers where you don't even have an editor.
          ("\C-cl" . org-store-link))
 
   :init
+  (org-reload)
   ;; Work directories
   (if (string-equal (system-name) "titanroam")
       (setq org-directory "~/Dropbox/org/"))
