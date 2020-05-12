@@ -645,12 +645,6 @@ containers where you don't even have an editor.
   ;;imenu
   (setq org-imenu-depth 4)
 
-  ;; Agenda files
-  (setq org-agenda-files (append (mapcar (lambda (file)
-                                   (expand-file-name file org-directory))
-                                   '("caldav.org" "journal.org" "work_journal.org" "todo.org"))
-                                 '("~/dev/metasyhabitos/oscar/log.org")))
-
   (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)" "DEFERRED(f@)")))
   (setq org-log-reschedule 'note)
 
@@ -667,7 +661,6 @@ containers where you don't even have an editor.
   (add-hook 'org-mode-hook 'auto-fill-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
 
-  :config
   (add-to-list 'org-structure-template-alist '("m" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
   (add-to-list 'org-structure-template-alist '("p" "#+BEGIN_SRC python\n?\n#+END_SRC"))
   (add-to-list 'org-structure-template-alist '("C" "#+CAPTION: ?"))
@@ -691,9 +684,9 @@ containers where you don't even have an editor.
   (modify-syntax-entry ?^ "w" org-mode-syntax-table)
 
 
+  (add-to-list 'org-modules 'org-protocol)
   ;; to interact from external sources
   (server-start)
-  (setq org-modules '(org-protocol org-habit))
 )
 
 ;; leader shortcuts
@@ -723,6 +716,13 @@ containers where you don't even have an editor.
          ("p" . 'org-agenda-todo)
          ("P" . 'org-agenda-show-tags))
   :init
+  ;; Agenda files
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-agenda-files (append (mapcar (lambda (file)
+                                   (expand-file-name file org-directory))
+                                   '("caldav.org" "journal.org" "work_journal.org" "todo.org"))
+                                 '("~/dev/metasyhabitos/oscar/log.org")))
+
   (evil-leader/set-key "oa" 'org-agenda)
   (setq org-agenda-start-on-weekday 0)
   (setq org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 4)))
