@@ -79,6 +79,14 @@ lruby() {
 }
 
 source $ZSH/oh-my-zsh.sh
+# npm
+# NPM packages in homedir
+NPM_PACKAGES="$HOME/.npm-packages"
+
+# Tell our environment about user-installed node tools
+PATH="$NPM_PACKAGES/bin:$PATH"
+# Tell Node about these packages
+NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
