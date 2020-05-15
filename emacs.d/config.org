@@ -819,6 +819,8 @@ this new window.
                                                   "journal.org"
                                                   org-directory))
          "* %(format-time-string \"%H:%M\") %?\n%a\n%i
+- Timebox day
+
 - I am grateful for
 - What would make today great
 - Daily affirmations
