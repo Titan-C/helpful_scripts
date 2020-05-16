@@ -4,7 +4,7 @@
 * Personal Information
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Óscar Nájera"
-      user-mail-address (if (string-equal (system-name) "klappbier")
+      user-mail-address (if (string-equal (user-login-name) "on")
                              "oscar.najera@tribe29.com"
                            "hi@oscarnajera.com"))
 #+END_SRC
@@ -1366,7 +1366,7 @@ and the arguments for flyckeck-clang based on a project-specific text file."
     (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
                              ("oscar.najera@tribe29.com" . "work/Sent")
                              ;;(".*@gmail.com" . "\"gmail/[Gmail]/.Sent Mail\"")
-                             (".*@u-psud.fr" . "upsud/Sent")))
+                             ))
 
     (setq notmuch-crypto-process-mime t)
     (setq message-kill-buffer-on-exit t)
@@ -1437,9 +1437,7 @@ and the arguments for flyckeck-clang based on a project-specific text file."
       ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
       ("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
       ("Oscar Najera <oscar.najera@tribe29.com>" . ("mx.tribe29.com" 587 starttls "on"))
-      ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))
-      ("Oscar Najera <oscar.najera-ocampo@u-psud.fr>" . ("smtps.u-psud.fr" 465 ssl "oscar.najera-ocampo"))
-      ))
+      ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))))
 
   (defun set-smtp-server ()
     (let* ((smtp-conf (cdr (assoc (save-restriction
@@ -1577,7 +1575,6 @@ http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
     :config
     (setq mediawiki-site-alist
           '(("Wikipedia" "https://en.wikipedia.org/w/" "Titan-cerberus" "" nil "User:Titan-cerberus")
-            ("clusterorlando" "https://www.stem.lps.u-psud.fr/cluster/" "oscar" "" nil "Accueil")
             ("SHAWIKI" "https://wiki.sha2017.org/" "oscar" "" nil "Accueil")
             ("ArchWiki" "https://wiki.archlinux.org/" "" "" nil "Main page"))))
 #+END_SRC
