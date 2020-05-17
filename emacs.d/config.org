@@ -1131,7 +1131,7 @@ Don't need to define html on org-babel-load-languages.
 (let ((clang-fmt-path  "/usr/share/clang/clang-format.el"))
   (if (file-exists-p clang-fmt-path)
       (load clang-fmt-path)
-    (load "/usr/share/emacs/site-lisp/clang-format-7/clang-format.el")))
+    (load "/usr/share/emacs/site-lisp/clang-format-10/clang-format.el")))
 
 
 (add-hook 'c-mode-common-hook (lambda ()
