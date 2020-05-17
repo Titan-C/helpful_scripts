@@ -629,7 +629,6 @@ containers where you don't even have an editor.
          ("\C-cl" . org-store-link))
 
   :init
-  (org-reload)
   ;; Work directories
   (if (string-equal (system-name) "titanroam")
       (setq org-directory "~/Dropbox/org/"))
@@ -717,7 +716,9 @@ containers where you don't even have an editor.
          ("P" . 'org-agenda-show-tags))
   :init
   ;; Agenda files
-  (add-to-list 'org-modules 'org-habit)
+  (add-to-list 'org-modules 'org-habit t)
+
+  (org-reload)
   (setq org-agenda-files (append (mapcar (lambda (file)
                                    (expand-file-name file org-directory))
                                    '("caldav.org" "journal.org" "work_journal.org" "todo.org"))
