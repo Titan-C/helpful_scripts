@@ -6,7 +6,13 @@
 ;;(add-to-list 'default-frame-alist '(alpha . (95 . 70)))
 (setq tls-checktrust t)
 (setq gnutls-verify-error t)
-
+;Declare the package archives to the emacs package manager.
+(require 'package)
+(setq package-archives '(("melpast" . "https://stable.melpa.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
 ;;; Load the config
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 
