@@ -177,15 +177,11 @@ Hydra allows to configure sets of keybindings.
     (which-key-mode))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-  (defun my-save-if-bufferfilename ()
-      (if (buffer-file-name)
-          (progn
-          (save-buffer)
-          )
-      (message "no file is associated to this buffer: do nothing")
-      )
-  )
-  (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
+(defun my-save-if-bufferfilename ()
+  (if (buffer-file-name)
+      (save-buffer)
+    (message "no file is associated to this buffer: do nothing")))
+(add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
 #+END_SRC
 ** Window Management
 #+BEGIN_SRC emacs-lisp
@@ -614,9 +610,20 @@ containers where you don't even have an editor.
 ** Main Behavior
 #+BEGIN_SRC emacs-lisp
 (use-package org
+  :pin gnu
+  :ensure org
   :bind (("\C-ca" . org-agenda)
          ("\C-cc" . org-capture)
-         ("\C-cl" . org-store-link))
+         ("\C-cl" . org-store-link)
+         :map org-agenda-mode-map
+         ("T" . 'org-agenda-previous-line)
+         ("t" . 'org-agenda-previous-item)
+         ("R" . 'org-agenda-next-line)
+         ("r" . 'org-agenda-next-item)
+         ("n" . 'org-agenda-redo)
+         ("N" . 'org-agenda-clockreport-mode)
+         ("p" . 'org-agenda-todo)
+         ("P" . 'org-agenda-show-tags))
 
   :init
   ;; Work directories
@@ -650,9 +657,9 @@ containers where you don't even have an editor.
   (add-hook 'org-mode-hook 'auto-fill-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
 
-  (add-to-list 'org-structure-template-alist '("m" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-  (add-to-list 'org-structure-template-alist '("p" "#+BEGIN_SRC python\n?\n#+END_SRC"))
-  (add-to-list 'org-structure-template-alist '("C" "#+CAPTION: ?"))
+  (add-to-list 'org-modules 'org-tempo t)
+  (add-to-list 'org-structure-template-alist '("m" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("p" . "src python"))
 
   (mapc (lambda (state)
           (evil-define-key state org-mode-map
@@ -673,9 +680,46 @@ containers where you don't even have an editor.
   (modify-syntax-entry ?^ "w" org-mode-syntax-table)
 
 
-  (add-to-list 'org-modules 'org-protocol)
+  (add-to-list 'org-modules 'org-protocol t)
   ;; to interact from external sources
   (server-start)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (latex . t)
+     (shell . t)
+     (plantuml .t)
+     (C . t)
+     (dot . t)
+     (python . t)))
+  (setq org-src-fontify-natively t);; sintax highligting of codeblock in org
+  (setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
+  ;;; display/update images in the buffer after I evaluate
+  ;;(setq org-image-actual-width '(500))
+  ;;(add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+
+  ;; For html export try https://emacs.stackexchange.com/questions/5669/can-org-babel-replace-code-with-code-output-on-html-export
+  ;;Don't need to define html on org-babel-load-languages.
+  (defun org-babel-execute:html (body params) body)
+
+
+  ;; Agenda files
+  (with-eval-after-load 'org
+    (add-to-list 'org-modules 'org-habit t))
+
+  (setq org-agenda-files (append (mapcar (lambda (file)
+                                   (expand-file-name file org-directory))
+                                   '("caldav.org" "journal.org" "work_journal.org" "todo.org"))
+                                 '("~/dev/metasyhabitos/oscar/log.org")))
+
+  (evil-leader/set-key "oa" 'org-agenda)
+  (setq org-agenda-start-on-weekday 0)
+  (setq org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 4)))
+
+  ;; Launch day agenda
+  (org-agenda-list 1)
+  (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
 )
 
 ;; leader shortcuts
@@ -691,37 +735,6 @@ containers where you don't even have an editor.
     "oe" 'org-todo)
 
 
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-(use-package org-agenda
-  :ensure org
-  :bind (:map org-agenda-mode-map
-         ("T" . 'org-agenda-previous-line)
-         ("t" . 'org-agenda-previous-item)
-         ("R" . 'org-agenda-next-line)
-         ("r" . 'org-agenda-next-item)
-         ("n" . 'org-agenda-redo)
-         ("N" . 'org-agenda-clockreport-mode)
-         ("p" . 'org-agenda-todo)
-         ("P" . 'org-agenda-show-tags))
-  :init
-  ;; Agenda files
-  (add-to-list 'org-modules 'org-habit t)
-
-  (org-reload)
-  (setq org-agenda-files (append (mapcar (lambda (file)
-                                   (expand-file-name file org-directory))
-                                   '("caldav.org" "journal.org" "work_journal.org" "todo.org"))
-                                 '("~/dev/metasyhabitos/oscar/log.org")))
-
-  (evil-leader/set-key "oa" 'org-agenda)
-  (setq org-agenda-start-on-weekday 0)
-  (setq org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 4)))
-
-  ;; Launch day agenda
-  (org-agenda-list 1)
-  (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
-)
 #+END_SRC
 ** Alerts
 This is to set the reminders of calendar events.
@@ -794,12 +807,14 @@ this new window.
         ("\\paragraph{%s}" . "\\paragraph*{%s}")
         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-  (eval-after-load 'ox
-    '(require 'ox-koma-letter))
+  ;(eval-after-load 'ox
+    ;'(require 'ox-koma-letter))
 
   (add-to-list 'org-latex-packages-alist '("AUTO" "babel" nil))
 )
 #+END_SRC
+** ROAM
+
 ** Capture
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
@@ -852,37 +867,10 @@ this new window.
 #+END_SRC
 ** Babel
 #+BEGIN_SRC emacs-lisp
-(use-package org
+(use-package plantuml-mode
   :after org
   :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (latex . t)
-     (shell . t)
-     (plantuml .t)
-     (C . t)
-     (scala . t)
-     (dot . t)
-     (python . t))))
-
-(use-package plantuml-mode
-  :config
   (setq org-plantuml-jar-path "/opt/plantuml/plantuml.jar"))
-#+END_SRC
-
-For html export try https://emacs.stackexchange.com/questions/5669/can-org-babel-replace-code-with-code-output-on-html-export
-Don't need to define html on org-babel-load-languages.
-#+begin_src emacs-lisp :exports none
-  (defun org-babel-execute:html (body params) body)
-#+end_src
-
-#+BEGIN_SRC emacs-lisp
-  (setq org-src-fontify-natively t);; sintax highligting of codeblock in org
-  (setq org-confirm-babel-evaluate nil)   ;don't prompt me to confirm everytime I want to evaluate a block
-  ;;; display/update images in the buffer after I evaluate
-  ;;(setq org-image-actual-width '(500))
-  ;;(add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 #+END_SRC
 *** Python
 #+BEGIN_SRC emacs-lisp
@@ -895,10 +883,10 @@ Don't need to define html on org-babel-load-languages.
 #+END_SRC
 *** RevealJS
 #+BEGIN_SRC emacs-lisp
-(use-package ox-reveal
-:load-path "~/dev/org-reveal"
-:init
-(setq org-reveal-root "file:///home/me/dev/reveal.js"))
+;(use-package ox-reveal
+;:load-path "~/dev/org-reveal"
+;:init
+;(setq org-reveal-root "file:///home/me/dev/reveal.js"))
 #+END_SRC
 ** Bibliography references
 #+BEGIN_SRC emacs-lisp
@@ -1075,32 +1063,6 @@ Don't need to define html on org-babel-load-languages.
 
   (use-package yaml-mode :ensure t)
 #+END_SRC
-*** IPython Notebook
-#+BEGIN_SRC emacs-lisp
-  (use-package ein
-      :commands ein:notebooklist-open
-      :init (evil-leader/set-key "ipn" 'ein:notebooklist-open)
-      :config
-      (require 'ein-multilang)
-      (setq ein:complete-on-dot t
-            ein:use-auto-complete t)
-      (mapc (lambda (state)
-          (evil-define-key state ein:notebook-multilang-mode-map
-              (kbd "M-y") 'ein:worksheet-copy-cell
-              (kbd "M-p") 'ein:worksheet-yank-cell
-              (kbd "M-d") 'ein:worksheet-kill-cell
-              (kbd "M-o") 'ein:worksheet-insert-cell-below
-              (kbd "M-O") 'ein:worksheet-insert-cell-above
-
-              (kbd "M-r") 'ein:worksheet-goto-next-input
-              (kbd "M-t") 'ein:worksheet-goto-prev-input
-              (kbd "M-R") 'ein:worksheet-move-cell-down
-              (kbd "M-T") 'ein:worksheet-move-cell-up
-
-              (kbd "M-h") 'ein:worksheet-toggle-output
-              )) '(normal insert))
-  )
-#+END_SRC
 ** Web
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
@@ -1127,9 +1089,9 @@ Don't need to define html on org-babel-load-languages.
 (add-hook 'c-mode-common-hook (lambda ()
                                 (add-hook 'before-save-hook 'clang-format-buffer nil t)))
 
-(use-package company-c-headers
-  :defer t
-  :init (add-to-list 'company-backends 'company-c-headers))
+;(use-package company-c-headers
+  ;:defer t
+  ;:init (add-to-list 'company-backends 'company-c-headers))
 
 (use-package gdb-mi
   :defer t
@@ -1250,14 +1212,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 #+BEGIN_SRC emacs-lisp
 (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 (setq inferior-lisp-program "sbcl")
-#+END_SRC
-** Scala
-#+BEGIN_SRC emacs-lisp
-(use-package ensime)
-
-(use-package scala-mode
-  :interpreter
-  ("scala" . scala-mode))
 #+END_SRC
 ** JavaScript
 #+BEGIN_SRC emacs-lisp
@@ -1511,14 +1465,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
      "q" 'tablist-quit)
     (evil-set-initial-state 'pdf-view-mode 'emacs))
 
-  (use-package org-pdfview
-    :commands org-pdfview-open
-    :after org
-    :init
-    (delete '("\\.pdf\\'" . default) org-file-apps)
-    (add-to-list 'org-file-apps '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open file))))
-    (add-to-list 'org-file-apps '("\\.pdf::\\([[:digit:]]+\\)\\'" . (lambda (file link) (org-pdfview-open file))))
-    )
 #+END_SRC
 * Music
 #+BEGIN_SRC emacs-lisp

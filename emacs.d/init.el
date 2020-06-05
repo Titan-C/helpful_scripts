@@ -1,4 +1,8 @@
 ;;; Begin initialization
+
+;;; Avoid loading shipped org. It assumes I have a recent install in elpa folder for this to work
+(setq load-path (remove "/snap/emacs/current/usr/share/emacs/26.3/lisp/org" load-path))
+
 (setq gc-cons-threshold 100000000)
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
