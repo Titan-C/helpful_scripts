@@ -58,16 +58,13 @@ export TERM="xterm-256color"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 export WORKON_HOME=$HOME/.virtualenvs
-plugins=(git archlinux python virtualenvwrapper)
+plugins=(git archlinux python virtualenvwrapper gpg-agent)
 
 
 # User configuration
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
-# GPG agent for SSH
-export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
-export GPG_TTY=$(tty)
 
 export PATH="$HOME/dev/helpful_scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
