@@ -807,14 +807,25 @@ this new window.
         ("\\paragraph{%s}" . "\\paragraph*{%s}")
         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-  ;(eval-after-load 'ox
-    ;'(require 'ox-koma-letter))
+  (eval-after-load 'ox
+    '(require 'ox-koma-letter))
 
   (add-to-list 'org-latex-packages-alist '("AUTO" "babel" nil))
 )
 #+END_SRC
 ** ROAM
-
+#+begin_src emacs-lisp
+(use-package org-roam
+:hook (after-init . org-roam-mode)
+:custom (org-roam-directory "~/org/roam")
+:config
+(setq org-roam-capture-templates '(("d" "default" plain (function org-roam-capture--get-point)
+     "%?"
+     :file-name "%<%Y%m%d%H%M%S>-${slug}"
+     :head "#+title: ${title}\n#+CREATED: %U\n#+roam_tags:\n\n"
+     :unnarrowed t)))
+(require 'org-roam-protocol))
+#+end_src
 ** Capture
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
@@ -830,8 +841,8 @@ this new window.
 - I am grateful for
 - What would make today great
 - Daily affirmations
-- Amazing things that happened today
-- How could I have made today even better?"
+- Amazing things that happened yesterday
+- How could I have made yesterday even better?"
          :clock-in t :clock-resume t)
 
         ("h" "Work Journal" entry (file+olp+datetree ,(expand-file-name
@@ -904,7 +915,7 @@ this new window.
     (evil-leader/set-key "hb" 'helm-bibtex)
     :config
 
-    (setq bibtex-completion-bibliography (map 'list (lambda (x)
+    (setq bibtex-completion-bibliography (mapcar (lambda (x)
                                                       (concat "~/Dropbox/biblio/" x))
                                               '("papers.bib" "zotero.bib" "arxiv.bib" "library.bib"
                                                 "slides_talks.bib")))
@@ -1350,8 +1361,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
   ;; linebreak in message editing
   (add-hook 'message-mode-hook 'auto-fill-mode)
   (add-hook 'message-mode-hook 'flyspell-mode)
-  (add-hook 'message-mode-hook 'turn-on-orgstruct)
-  (add-hook 'message-mode-hook 'turn-on-orgstruct++)
   (add-hook 'message-mode-hook 'turn-on-orgtbl)
   (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
   (use-package org-mime
