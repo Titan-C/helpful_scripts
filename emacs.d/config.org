@@ -412,6 +412,11 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
           langtool-default-language "en-US"
           langtool-disabled-rules '("WHITESPACE_RULE")))
 #+END_SRC
+*** Definitions
+#+begin_src emacs-lisp
+(use-package sdcv
+  :bind (("C-c p" . 'sdcv-search-pointer)))
+#+end_src
 *** Foreign languages
 Documents can be set to default to certain languages that differ from my
 default. This makes them save values.
