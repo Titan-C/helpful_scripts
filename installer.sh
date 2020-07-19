@@ -14,6 +14,8 @@ for file in $files; do
     ln -s $PWD/$file ~/.$file
 done
 
+mkdir -p ~/.gnupg/
+cp -v $PWD/gpg-agent.conf ~/.gnupg/
 
 mkdir -p ~/.config/termite
 ln -s $PWD/termite.conf ~/.config/termite/config
