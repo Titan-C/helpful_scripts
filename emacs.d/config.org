@@ -1075,6 +1075,8 @@ this new window.
       :config
           (elpy-enable)
           (pyvenv-activate "~/.virtualenvs/dev3/")
+          (setq elpy-rpc-python-command "python3")
+          (setq elpy-rpc-timeout 60)
           (setq elpy-rpc-backend "jedi")
           (remove-hook 'elpy-modules 'elpy-module-flymake)
           (setq python-shell-interpreter "ipython")
