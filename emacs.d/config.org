@@ -487,6 +487,13 @@ default. This makes them save values.
       auth-sources '(password-store))
 (auth-source-pass-enable))
 #+END_SRC
+** Tramp
+Tramp is amazing to edit remote files, but you can also edit inside docker
+containers where you don't even have an editor.
+#+BEGIN_SRC emacs-lisp
+(use-package tramp)
+(use-package docker-tramp)
+#+END_SRC
 * Completion
 #+BEGIN_SRC emacs-lisp
 (global-set-key "\M-/" 'hippie-expand)
@@ -541,6 +548,7 @@ default. This makes them save values.
      "ha" 'helm-projectile-ag
      "p" 'helm-projectile)
   :config
+  (require 'tramp)
   (setq projectile-completion-system 'helm)
   (projectile-global-mode)
   (helm-projectile-on)
@@ -604,12 +612,6 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   (use-package eshell-git-prompt
     :init
     (eshell-git-prompt-use-theme 'powerline))
-#+END_SRC
-** Tramp
-Tramp is amazing to edit remote files, but you can also edit inside docker
-containers where you don't even have an editor.
-#+BEGIN_SRC emacs-lisp
-(use-package docker-tramp)
 #+END_SRC
 * Org mode
 ** Main Behavior
