@@ -7,12 +7,14 @@ do
 done
 
 # create symlinks from the homedir to the selected files in this directory specified in $files
-files="emacs.d gitconfig mbsyncrc notmuch-config zshrc"
+files="emacs.d gitconfig notmuch-config zshrc calendars.conf"
 for file in $files; do
     echo "Creating symlink to $file in home directory."
     rm ~/.$file
     ln -s $PWD/$file ~/.$file
 done
+
+ln -s $PWD/mbsyncrc.pers ~/.mbsyncrc
 
 mkdir -p ~/.gnupg/
 cp -v $PWD/gpg-agent.conf ~/.gnupg/
