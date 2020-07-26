@@ -39,9 +39,9 @@ Expunge Both
 ###############################################################################
 # Personal
 IMAPAccount hi_pers
-Host mail.najera.pw
+Host git.oscarnajera.com
 User hi@oscarnajera.com
-PassCmd "pass show Correos/mail.najera.pw"
+PassCmd "pass show Correos/mail.oscarnajera.com"
 AuthMechs LOGIN
 SSLType IMAPS
 
@@ -62,33 +62,9 @@ SyncState *
 Expunge Both
 
 ###############################################################################
-# Personal
-IMAPAccount salsa
-Host mail.najera.pw
-User salsa@najera.pw
-PassCmd "pass show Correos/salsa@najera.pw"
-AuthMechs LOGIN
-SSLType IMAPS
-
-IMAPStore salsa-remote
-Account salsa
-
-MaildirStore salsa-local
-Path ~/.mail/salsa/
-Inbox ~/.mail/salsa/Inbox
-
-Channel salsa
-Master :salsa-remote:
-Slave :salsa-local:
-Patterns *
-Create Both
-SyncState *
-Expunge Both
-
-###############################################################################
 # AMZbooks
 IMAPAccount kindle
-Host mail.najera.pw
+Host git.oscarnajera.com
 User kindle@oscarnajera.com
 PassCmd "pass show Correos/kindle@oscarnajera.com"
 AuthMechs LOGIN
@@ -113,7 +89,7 @@ Expunge Both
 ###############################################################################
 # Startup
 IMAPAccount delightfuldying
-Host mail.najera.pw
+Host git.oscarnajera.com
 User oscar.najera@delightfuldying.com
 PassCmd "pass show WebSites/delightfuldying.com/mailbox/julie"
 AuthMechs LOGIN
@@ -135,6 +111,30 @@ Create Both
 SyncState *
 Expunge Both
 
+###############################################################################
+# Startup
+IMAPAccount fallforward
+Host git.oscarnajera.com
+User sarah@fallforward.space
+PassCmd "pass show WebSites/fallforward.space/mailbox/sarah"
+AuthMechs LOGIN
+SSLType IMAPS
+
+IMAPStore ff-remote
+Account fallforward
+
+MaildirStore ff-local
+Path ~/.mail/ff/
+Inbox ~/.mail/ff/Inbox
+SubFolders Verbatim
+
+Channel fallforward
+Master :ff-remote:
+Slave :ff-local:
+Patterns *
+Create Both
+SyncState *
+Expunge Both
 # Local Variables:
 # mode: conf-unix
 # End:

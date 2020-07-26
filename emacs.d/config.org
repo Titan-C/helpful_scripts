@@ -1410,8 +1410,8 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 
   (defconst smtp-from-server-alist
     '(
-      ("Oscar Najera <hi@oscarnajera.com>" . ("mail.najera.pw" 587 starttls))
-      ("Oscar Najera <hello@oscarnajera.com>" . ("mail.najera.pw" 587 starttls "hi"))
+      ("Oscar Najera <hi@oscarnajera.com>" . ("mail.oscarnajera.com" 587 starttls))
+      ("Oscar Najera <hello@oscarnajera.com>" . ("mail.oscarnajera.com" 587 starttls "hi"))
       ("Oscar Najera <oscar.najera@tribe29.com>" . ("mx.tribe29.com" 587 starttls "on"))
       ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))))
 
