@@ -1406,6 +1406,7 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 #+BEGIN_SRC emacs-lisp
   (setq send-mail-function 'smtpmail-send-it
         message-send-mail-function 'message-smtpmail-send-it
+        smtpmail-local-domain "oscarnajera.com"
   )
 
   (defconst smtp-from-server-alist
@@ -1424,7 +1425,7 @@ and the arguments for flyckeck-clang based on a project-specific text file."
            (port (nth 1 smtp-conf))
            (protocol (nth 2 smtp-conf))
            (user (nth 3 smtp-conf)))
-      (unless server (setq server "mail.najera.pw"
+      (unless server (setq server "mail.oscarnajera.com"
                            port 587
                            protocol starttls
                            user "hi"))
