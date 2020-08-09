@@ -7,7 +7,7 @@ do
 done
 
 # create symlinks from the homedir to the selected files in this directory specified in $files
-files="emacs.d gitconfig"
+files="emacs.d"
 for file in $files; do
     echo "Creating symlink to $file in home directory."
     rm ~/.$file
