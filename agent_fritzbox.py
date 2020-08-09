@@ -36,6 +36,9 @@ import urllib.error
 import urllib.request
 import logging
 
+import requests
+from requests.auth import HTTPDigestAuth
+
 
 def parse_args():
 
@@ -70,12 +73,12 @@ class RequestError(Exception):
 def get_info(url, data, headers):
     logging.debug("Connecting URL: %s", url)
     logging.debug("SoapAction: %s", headers["SoapAction"])
-    req = urllib.request.Request(url, data.encode("utf-8"), headers)
-    handle = urllib.request.urlopen(req)
 
-    infos = handle.info()
+    handle = requests.post(url, data=data.encode("utf-8"), headers=headers, auth=auth)
+
+    infos = handle.raw.info()
     logging.debug("Server: %s", infos["SERVER"])
-    contents = handle.read().decode("utf-8")
+    contents = handle.text
     logging.debug(contents)
 
     return infos, contents
@@ -151,11 +154,16 @@ def main():
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
                 "GetCommonLinkProperties",
             ),
-            # (
-            # base_url + "upnp/control/wandslifconfig1",
-            # "'urn:dslforum-org:service:WANDSLInterfaceConfig:1",
-            # "GetStatusInfo",
-            # ),
+            (
+                base_url + "upnp/control/wancommonifconfig1",
+                "urn:dslforum-org:service:WANCommonInterfaceConfig:1",
+                "GetCommonLinkProperties",
+            ),
+            (
+                base_url + "upnp/control/wandslifconfig1",
+                "urn:dslforum-org:service:WANDSLInterfaceConfig:1",
+                "GetStatisticsTotal",
+            ),
         ]:
             try:
                 attrs = get_upnp_info(*configs)
@@ -192,3 +200,19 @@ if __name__ == "__main__":
     print(res)
     with open("fritz.txt", "a") as fid:
         fid.write(res + "\n")
+
+    res = ":".join(
+        map(
+            str,
+            (
+                time.time(),
+                result["NewATUCCRCErrors"],
+                result["NewCRCErrors"],
+                result["NewErroredSecs"],
+                result["NewSeverelyErroredSecs"],
+            ),
+        )
+    )
+    print(res)
+    with open("fritz.err.txt", "a") as fid:
+        fid.write(res+'\n')
