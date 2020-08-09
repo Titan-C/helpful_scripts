@@ -26,18 +26,16 @@
 # http://fritz.box:49000/igddslSCPD.xml
 # get_upnp_info('WANDSLLinkC1', 'urn:schemas-upnp-org:service:WANDSLLinkConfig:1', 'GetDSLLinkInfo')
 
-import os
-import time
-import re
-import sys
 import argparse
-import getopt
+import os
 import pprint
+import re
 import socket
+import time
+import traceback
 import urllib.error
 import urllib.request
-import traceback
-import rrdtool
+import logging
 
 
 def parse_args():
@@ -70,7 +68,7 @@ class RequestError(Exception):
     pass
 
 
-def get_upnp_info(control, namespace, action, base_urls, opt_debug):
+def get_upnp_info(control, namespace, action, base_urls):
     headers = {
         "User-agent": "Check_MK agent_fritzbox",
         "Content-Type": "text/xml",
@@ -92,10 +90,8 @@ def get_upnp_info(control, namespace, action, base_urls, opt_debug):
     for base_url in base_urls[:]:
         url = base_url + "/control/" + control
         try:
-            if opt_debug:
-                sys.stdout.write("============================\n")
-                sys.stdout.write("URL: %s\n" % url)
-                sys.stdout.write("SoapAction: %s\n" % headers["SoapAction"])
+            logging.debug("Connecting URL: %s", url)
+            logging.debug("SoapAction: %s", headers["SoapAction"])
             req = urllib.request.Request(url, data.encode("utf-8"), headers)
             handle = urllib.request.urlopen(req)
             break  # got a good response
@@ -108,10 +104,7 @@ def get_upnp_info(control, namespace, action, base_urls, opt_debug):
                 base_urls.reverse()
                 continue
         except Exception as e:
-            if opt_debug:
-                sys.stdout.write("----------------------------\n")
-                sys.stdout.write(traceback.format_exc())
-                sys.stdout.write("============================\n")
+            logging.debug(traceback.format_exc())
             raise RequestError("Error during UPNP call")
 
     infos = handle.info()
@@ -121,12 +114,8 @@ def get_upnp_info(control, namespace, action, base_urls, opt_debug):
     g_device = " ".join(parts[:-1])
     g_version = parts[-1]
 
-    if opt_debug:
-        sys.stdout.write("----------------------------\n")
-        sys.stdout.write("Server: %s\n" % infos["SERVER"])
-        sys.stdout.write("----------------------------\n")
-        sys.stdout.write(contents + "\n")
-        sys.stdout.write("============================\n")
+    logging.debug("Server: %s", infos["SERVER"])
+    logging.debug(contents)
 
     # parse the response body
     match = re.search(
@@ -141,14 +130,16 @@ def get_upnp_info(control, namespace, action, base_urls, opt_debug):
 
     attrs = dict(matches)
 
-    if opt_debug:
-        sys.stdout.write("Parsed: %s\n" % pprint.pformat(attrs))
+    logging.debug("Parsed: %s\n" % pprint.pformat(attrs))
 
     return attrs, g_device, g_version
 
 
-def main(sys_argv=None):
+def main():
     args = parse_args()
+
+    log_level = logging.DEBUG if args.debug else logging.WARNING
+    logging.basicConfig(level=log_level)
 
     socket.setdefaulttimeout(args.timeout)
     base_urls = [
@@ -173,7 +164,7 @@ def main(sys_argv=None):
         ]:
             try:
                 attrs, g_device, g_version = get_upnp_info(
-                    _control, _namespace, _action, base_urls, args.debug
+                    _control, _namespace, _action, base_urls
                 )
             except Exception:
                 if args.debug:
@@ -186,30 +177,17 @@ def main(sys_argv=None):
     except Exception:
         if args.debug:
             raise
-        sys.stderr.write("Unhandled error: %s" % traceback.format_exc())
+        logging.debug("Unhandled error: %s" % traceback.format_exc())
 
 
 if __name__ == "__main__":
 
-    data_file = "/var/lib/collectd/rrd/1u1/fritzbox/data_flow.rrd"
-    if not os.path.exists(data_file):
-        rrdtool.create(
-            [
-                "test.rrd",
-                "--step",
-                "60",
-                "DS:TotalBytesSent:COUNTER:20:U:U",
-                "DS:TotalBytesReceived:COUNTER:20:U:U",
-                "RRA:AVERAGE:0.5:1:1440",
-                "RRA:AVERAGE:0.5:60:1440",
-                "RRA:AVERAGE:0.5:1440:440",
-            ]
-        )
-
     result = main()
-    res = "N:%s:%s" % (
+    res = "%i:%s:%s\n" % (
+        time.time(),
         result["NewX_AVM_DE_TotalBytesSent64"],
         result["NewX_AVM_DE_TotalBytesReceived64"],
     )
     print(res)
-    rrdtool.update([data_file, "-d", "unix:/tmp/rrdcached.sock", res])
+    with open("fritz.txt", "a") as fid:
+        fid.write(res)
