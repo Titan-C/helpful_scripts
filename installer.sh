@@ -7,7 +7,7 @@ do
 done
 
 # create symlinks from the homedir to the selected files in this directory specified in $files
-files="emacs.d gitconfig notmuch-config zshrc calendars.conf"
+files="emacs.d gitconfig notmuch-config zshrc"
 for file in $files; do
     echo "Creating symlink to $file in home directory."
     rm ~/.$file
