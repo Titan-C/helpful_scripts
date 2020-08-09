@@ -182,11 +182,19 @@ def main():
 if __name__ == "__main__":
 
     result = main()
-    res = "%i:%s:%s\n" % (
-        time.time(),
-        result["NewX_AVM_DE_TotalBytesSent64"],
-        result["NewX_AVM_DE_TotalBytesReceived64"],
+    res = ":".join(
+        map(
+            str,
+            (
+                time.time(),
+                result["NewUptime"],
+                result["NewTotalBytesSent"],
+                result["NewTotalBytesReceived"],
+                result["NewX_AVM_DE_TotalBytesSent64"],
+                result["NewX_AVM_DE_TotalBytesReceived64"],
+            ),
+        )
     )
     print(res)
     with open("fritz.txt", "a") as fid:
-        fid.write(res)
+        fid.write(res + "\n")
