@@ -81,7 +81,8 @@ def get_info(url, data, headers):
     return infos, contents
 
 
-def get_upnp_info(control, namespace, action, base_urls):
+def get_upnp_info(url, namespace, action):
+
     headers = {
         "User-agent": "Check_MK agent_fritzbox",
         "Content-Type": "text/xml",
@@ -98,21 +99,7 @@ def get_upnp_info(control, namespace, action, base_urls):
     # Fritz!Box with firmware >= 6.0 use a new url. We try the newer one
     # first and try the other one, when the first one did not succeed.
 
-    for base_url in base_urls[:]:
-        url = base_url + "/control/" + control
-        try:
-            infos, contents = get_info(url, data, headers)
-        except urllib.error.HTTPError as e:
-            if e.code == 500:
-                # Is the result when the old URL can not be found, continue
-                # in this case and revert the order of base urls in the
-                # hope that the other url gets a successful result to have
-                # only one try on future requests during an agent execution
-                base_urls.reverse()
-                continue
-        except Exception:
-            logging.debug(traceback.format_exc())
-            raise RequestError("Error during UPNP call")
+    infos, contents = get_info(url, data, headers)
 
     parts = infos["SERVER"].split("UPnP/1.0 ")[1].split(" ")
     g_device = " ".join(parts[:-1])
@@ -144,27 +131,34 @@ def main():
     logging.basicConfig(level=log_level)
 
     socket.setdefaulttimeout(args.timeout)
-    base_urls = [
-        "http://%s:49000/igdupnp" % args.host_address,
-        "http://%s:49000/upnp" % args.host_address,
-    ]
+    base_url = "http://%s:49000/" % args.host_address
 
     try:
         status = {}
-        for _control, _namespace, _action in [
+        for configs in [
             (
-                "WANIPConn1",
+                base_url + "igdupnp/control/WANIPConn1",
                 "urn:schemas-upnp-org:service:WANIPConnection:1",
                 "GetStatusInfo",
             ),
             (
-                "WANCommonIFC1",
+                base_url + "igdupnp/control/WANCommonIFC1",
                 "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
                 "GetAddonInfos",
             ),
+            (
+                base_url + "igdupnp/control/WANCommonIFC1",
+                "urn:schemas-upnp-org:service:WANCommonInterfaceConfig:1",
+                "GetCommonLinkProperties",
+            ),
+            # (
+            # base_url + "upnp/control/wandslifconfig1",
+            # "'urn:dslforum-org:service:WANDSLInterfaceConfig:1",
+            # "GetStatusInfo",
+            # ),
         ]:
             try:
-                attrs = get_upnp_info(_control, _namespace, _action, base_urls)
+                attrs = get_upnp_info(*configs)
             except Exception:
                 if args.debug:
                     raise
