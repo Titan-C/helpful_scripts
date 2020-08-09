@@ -27,7 +27,6 @@
 # get_upnp_info('WANDSLLinkC1', 'urn:schemas-upnp-org:service:WANDSLLinkConfig:1', 'GetDSLLinkInfo')
 
 import argparse
-import os
 import pprint
 import re
 import socket
@@ -68,6 +67,20 @@ class RequestError(Exception):
     pass
 
 
+def get_info(url, data, headers):
+    logging.debug("Connecting URL: %s", url)
+    logging.debug("SoapAction: %s", headers["SoapAction"])
+    req = urllib.request.Request(url, data.encode("utf-8"), headers)
+    handle = urllib.request.urlopen(req)
+
+    infos = handle.info()
+    logging.debug("Server: %s", infos["SERVER"])
+    contents = handle.read().decode("utf-8")
+    logging.debug(contents)
+
+    return infos, contents
+
+
 def get_upnp_info(control, namespace, action, base_urls):
     headers = {
         "User-agent": "Check_MK agent_fritzbox",
@@ -75,47 +88,35 @@ def get_upnp_info(control, namespace, action, base_urls):
         "SoapAction": namespace + "#" + action,
     }
 
-    data = """<?xml version='1.0' encoding='utf-8'?>
+    data = f"""<?xml version='1.0' encoding='utf-8'?>
     <s:Envelope s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' xmlns:s='http://schemas.xmlsoap.org/soap/envelope/'>
         <s:Body>
-            <u:%s xmlns:u="%s" />
+            <u:{action} xmlns:u="{namespace}" />
         </s:Body>
-    </s:Envelope>""" % (
-        action,
-        namespace,
-    )
+    </s:Envelope>"""
 
-    # Fritz!Box with firmware >= 6.0 use a new url. We try the newer one first and
-    # try the other one, when the first one did not succeed.
+    # Fritz!Box with firmware >= 6.0 use a new url. We try the newer one
+    # first and try the other one, when the first one did not succeed.
+
     for base_url in base_urls[:]:
         url = base_url + "/control/" + control
         try:
-            logging.debug("Connecting URL: %s", url)
-            logging.debug("SoapAction: %s", headers["SoapAction"])
-            req = urllib.request.Request(url, data.encode("utf-8"), headers)
-            handle = urllib.request.urlopen(req)
-            break  # got a good response
+            infos, contents = get_info(url, data, headers)
         except urllib.error.HTTPError as e:
             if e.code == 500:
-                # Is the result when the old URL can not be found, continue in this
-                # case and revert the order of base urls in the hope that the other
-                # url gets a successful result to have only one try on future requests
-                # during an agent execution
+                # Is the result when the old URL can not be found, continue
+                # in this case and revert the order of base urls in the
+                # hope that the other url gets a successful result to have
+                # only one try on future requests during an agent execution
                 base_urls.reverse()
                 continue
-        except Exception as e:
+        except Exception:
             logging.debug(traceback.format_exc())
             raise RequestError("Error during UPNP call")
-
-    infos = handle.info()
-    contents = handle.read().decode("utf-8")
 
     parts = infos["SERVER"].split("UPnP/1.0 ")[1].split(" ")
     g_device = " ".join(parts[:-1])
     g_version = parts[-1]
-
-    logging.debug("Server: %s", infos["SERVER"])
-    logging.debug(contents)
 
     # parse the response body
     match = re.search(
@@ -129,10 +130,11 @@ def get_upnp_info(control, namespace, action, base_urls):
     matches = re.findall("<([^>]+)>([^<]+)<[^>]+>", response, re.M | re.S)
 
     attrs = dict(matches)
+    attrs.update({"device": g_device, "version": g_version})
 
     logging.debug("Parsed: %s\n" % pprint.pformat(attrs))
 
-    return attrs, g_device, g_version
+    return attrs
 
 
 def main():
@@ -143,10 +145,9 @@ def main():
 
     socket.setdefaulttimeout(args.timeout)
     base_urls = [
-        "http://%s:49000/upnp" % args.host_address,
         "http://%s:49000/igdupnp" % args.host_address,
+        "http://%s:49000/upnp" % args.host_address,
     ]
-    g_device, g_version = "", ""
 
     try:
         status = {}
@@ -163,9 +164,7 @@ def main():
             ),
         ]:
             try:
-                attrs, g_device, g_version = get_upnp_info(
-                    _control, _namespace, _action, base_urls
-                )
+                attrs = get_upnp_info(_control, _namespace, _action, base_urls)
             except Exception:
                 if args.debug:
                     raise
