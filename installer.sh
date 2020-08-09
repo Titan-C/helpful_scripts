@@ -16,9 +16,6 @@ done
 
 ln -s $PWD/mbsyncrc.pers ~/.mbsyncrc
 
-mkdir -p ~/.gnupg/
-cp -v $PWD/gpg-agent.conf ~/.gnupg/
-
 mkdir -p ~/.config/termite
 ln -s $PWD/termite.conf ~/.config/termite/config
 
@@ -28,10 +25,6 @@ ln -s $PWD/matplotlibrc ~/.config/matplotlib/matplotlibrc
 ln -s $PWD/mpd/ ~/.config/mpd
 
 ln -s $PWD/afew/ ~/.config/afew
-
-source ~/.bashrc
-echo "set show-all-if-unmodified on" >> ~/.inputrc
-
 
 # messages
 echo "Remember to set the auto start to the desktop environment"
