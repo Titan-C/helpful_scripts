@@ -19,7 +19,6 @@
 	lg = log --graph
 	d = diff
 [core]
-	editor = vim
 	attributesfile = ~/.gitattributes
 [diff "pdf"]
       textconv = pdfinfo
