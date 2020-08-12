@@ -2,7 +2,8 @@
 
 ;;; Avoid loading shipped org. It assumes I have a recent install in elpa folder for this to work
 (if (string= "archlive" (system-name))
-    (setq load-path (remove "/usr/share/emacs/27.1/lisp/org" load-path)))
+    (setq load-path (remove "/usr/share/emacs/27.1/lisp/org" load-path))
+  (setq load-path (remove "/snap/emacs/current/usr/share/emacs/27.1/lisp/org" load-path)))
 
 (setq gc-cons-threshold 100000000)
 (scroll-bar-mode 0)

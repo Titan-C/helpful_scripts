@@ -14,7 +14,8 @@
   (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq vc-follow-symlinks t)
-  (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+  (when (string-equal (user-login-name) "on")
+    (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
   (setq-default fill-column 75)
@@ -27,7 +28,9 @@
 
 Set SSH agent
 #+BEGIN_SRC emacs-lisp
-(setenv "SSH_AUTH_SOCK" (concat (getenv "XDG_RUNTIME_DIR")"/gnupg/S.gpg-agent.ssh"))
+(if (string-equal (user-login-name) "on")
+    (setenv "SSH_AUTH_SOCK" (concat "/run/user/1000/gnupg/S.gpg-agent.ssh"))
+  (setenv "SSH_AUTH_SOCK" (concat (getenv "XDG_RUNTIME_DIR")"/gnupg/S.gpg-agent.ssh")))
 #+END_SRC
 ** Frame title includes file being used
 #+BEGIN_SRC emacs-lisp
@@ -315,12 +318,14 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package langtool
-    :config
-    (setq langtool-java-classpath "/usr/share/languagetool:/usr/share/java/languagetool/*"
-          langtool-mother-tongue "es"
-          langtool-default-language "en-US"
-          langtool-disabled-rules '("WHITESPACE_RULE")))
+(use-package langtool
+  :config
+  (setq langtool-java-classpath (if (string-equal (user-login-name) "on")
+                                    "/home/on/LanguageTool-4.3/*"
+                                  "/usr/share/languagetool:/usr/share/java/languagetool/*")
+        langtool-mother-tongue "es"
+        langtool-default-language "en-US"
+        langtool-disabled-rules '("WHITESPACE_RULE")))
 #+END_SRC
 *** Definitions
 #+begin_src emacs-lisp
@@ -639,6 +644,10 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   ;; Launch day agenda
   (org-agenda-list 1)
   (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
+
+  (require 'org-contacts)
+  (setq org-contacs-files '("~/org/contacts.org"))
+
 )
 
 ;; leader shortcuts
@@ -982,7 +991,9 @@ this new window.
     :config
         (add-hook 'python-mode-hook 'flyspell-prog-mode)
         (add-hook 'python-mode-hook 'elpy-mode)
-        (pyvenv-activate "~/.virtualenvs/dev3/")
+        (if (string-equal (user-login-name) "on")
+            (pyvenv-activate "~/git/check_mk/.venv")
+            (pyvenv-activate "~/.virtualenvs/dev3/"))
         (setq elpy-rpc-python-command "python3")
         (setq elpy-rpc-timeout 60)
         (setq elpy-rpc-backend "jedi")
@@ -1276,23 +1287,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 )
 #+END_SRC
 
-** BBDB
-#+BEGIN_SRC emacs-lisp
-(use-package bbdb
-  :disabled
-  :init
-  (setq bbdb-file "~/Dropbox/ bbdb"
-        bbdb-offer-save 'auto
-        bbdb-notice-auto-save-file t
-
-        bbdb-expand-mail-aliases t
-        bbdb-canonicalize-redundant-nets-p t
-
-        bbdb-always-add-addresses t
-        bbdb-complete-name-allow-cycling t)
-
-  :config (bbdb-insinuate-message))
-#+END_SRC
 ** Composer
 #+BEGIN_SRC emacs-lisp
   ;; linebreak in message editing
@@ -1489,15 +1483,31 @@ Emacs mode for managing ledger text files
 #+END_SRC
 * Check_MK
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<f10>")
-                (lambda ()
-                  (interactive)
-                  (async-shell-command "~/git/zeug_cmk/bin/f12" "*f12*")))
+(when (string-equal (user-login-name) "on")
+  (global-set-key (kbd "<f10>")
+                  (lambda ()
+                    (interactive)
+                    (async-shell-command "WEBPACK_MODE=quick ~/git/zeug_cmk/bin/f12" "*f12*")))
+  (global-set-key (kbd "<f9>")
+                  (lambda ()
+                    (interactive)
+                    (async-shell-command "cd ~/git/check_mk/managed/ && ~/git/check_mk/managed/.f12" "*f12*"))))
 #+END_SRC
 ** Jira Issue management
 #+BEGIN_SRC emacs-lisp
-(use-package
-  org-jira
-  :config
-  (setq jiralib-url "https://jira.lan.tribe29.com"))
+(when (string-equal (user-login-name) "on")
+  (use-package
+    org-jira
+    :config
+    (setq jiralib-url "https://jira.lan.tribe29.com")))
 #+END_SRC
+** Gerrit review
+#+BEGIN_SRC emacs-lisp
+(when (string-equal (user-login-name) "on")
+(use-package magit-gerrit
+  :load-path "/home/on/git/magit-gerrit/"
+  :config
+  (require 'magit-gerrit)))
+#+END_SRC
+
+#+RESULTS:
