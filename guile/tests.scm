@@ -3,12 +3,14 @@
 !#
 
 (include "/home/titan/dev/helpful_scripts/bank.scm")
+(add-to-load-path "/home/titan/dev/helpful_scripts/guile/")
 
 (use-modules
  (ice-9 and-let-star)
  (language tree-il)
  (term ansi-color)
- (srfi srfi-64))
+ (srfi srfi-64)
+ (utils))
 
 (define (%test-write-result1 pair port)
   (format port (string-append (colorize-string  "  ~a: " 'BOLD) "~s~%")
@@ -48,3 +50,17 @@
 ;; Finish the testsuite, and report results.
 (test-equal "2020-10-16,RUN  last,-7.79 EUR\n" (reformat "foo;16.10.2020;bar;\"RUN, last\";-7,79;mo"))
 (test-end "parse bank csv")
+
+(test-begin "Thread macros")
+(test-equal '(+ 5 9) (tree-il->scheme (macroexpand '(-> 5 (+ 9)))))
+(test-equal '(+ 8) (tree-il->scheme (macroexpand '(-> 8 +))))
+(test-equal '(string-append (number->string (inc 8)) " EUR")
+  (tree-il->scheme (macroexpand '(-> 8 inc number->string (string-append " EUR")))))
+(test-equal "29 EUR" (-> 28 1+ number->string (string-append " EUR")))
+
+(test-equal '(2)
+    (-> (->> '(5 9 2) (cons 1) (filter even?))
+        macroexpand
+        tree-il->scheme))
+
+(test-end "Thread macros")
