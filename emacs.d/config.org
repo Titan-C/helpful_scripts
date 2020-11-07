@@ -21,6 +21,8 @@
   (add-hook 'text-mode-hook 'visual-line-mode) ;; word-wrap
   (add-hook 'text-mode-hook 'flyspell-mode) ;; spell-check
   (setq inhibit-startup-screen t)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'text-mode-hook (lambda () (abbrev-mode 1)))
 #+END_SRC
 
 Set SSH agent
@@ -913,18 +915,11 @@ this new window.
   ;;(key-chord-define org-mode-map "jj" 'helm-org-ref-insert-link/body)
 #+END_SRC
 * Text Editing
-#+BEGIN_SRC emacs-lisp
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(add-hook 'text-mode-hook (lambda () (abbrev-mode 1)))
-#+END_SRC
 ** Markdown
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
 :mode "\\.md//'"
-:init
+:config
 (add-hook 'markdown-mode-hook 'auto-fill-mode)
 (add-hook 'markdown-mode-hook 'flyspell-mode))
 #+END_SRC
@@ -932,7 +927,7 @@ this new window.
 #+BEGIN_SRC emacs-lisp
 (use-package tex-site
 :ensure auctex
-:init
+:config
 (setq LaTeX-command "latex -shell-escape"))
 #+END_SRC
 * Magit
@@ -963,47 +958,47 @@ this new window.
 #+END_SRC
 * Coding
 #+BEGIN_SRC emacs-lisp
-  (use-package rainbow-delimiters
-    :init
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+(use-package rainbow-delimiters
+  :commands rainbow-delimiters-mode
+  :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
 ** Linting
 #+BEGIN_SRC emacs-lisp
-  (use-package flycheck
+(use-package flycheck
+  :bind (:map evil-motion-state-map
+              ("gL" . flycheck-previous-error)
+              ("gl" . flycheck-next-error))
+
   :config
   (flycheck-add-next-checker 'python-flake8 'python-pylint)
-  :init
-  (define-key evil-motion-state-map "gL" 'flycheck-previous-error)
-  (define-key evil-motion-state-map "gl" 'flycheck-next-error)
   (add-hook 'prog-mode-hook 'flycheck-mode))
 #+END_SRC
 ** Python
 #+BEGIN_SRC emacs-lisp
-  (use-package elpy
-      :init
-          (add-hook 'python-mode-hook 'flyspell-prog-mode)
-          (add-hook 'python-mode-hook 'elpy-mode)
-      :config
-          (elpy-enable)
-          (pyvenv-activate "~/.virtualenvs/dev3/")
-          (setq elpy-rpc-python-command "python3")
-          (setq elpy-rpc-timeout 60)
-          (setq elpy-rpc-backend "jedi")
-          (remove-hook 'elpy-modules 'elpy-module-flymake)
-          (setq python-shell-interpreter "ipython")
-          (setq python-shell-interpreter-args "-i --simple-prompt --pprint")
-          (setq python-shell-completion-native-enable nil)
-          (evil-define-key 'motion python-mode-map "gd" 'elpy-goto-definition)
-          (setq elpy-test-runner 'elpy-test-pytest-runner)
-   )
+(use-package elpy
+    :init
+        (advice-add 'python-mode :before 'elpy-enable)
+    :config
+        (add-hook 'python-mode-hook 'flyspell-prog-mode)
+        (add-hook 'python-mode-hook 'elpy-mode)
+        (pyvenv-activate "~/.virtualenvs/dev3/")
+        (setq elpy-rpc-python-command "python3")
+        (setq elpy-rpc-timeout 60)
+        (setq elpy-rpc-backend "jedi")
+        (remove-hook 'elpy-modules 'elpy-module-flymake)
+        (setq python-shell-interpreter "ipython")
+        (setq python-shell-interpreter-args "-i --simple-prompt --pprint")
+        (setq python-shell-completion-native-enable nil)
+        (evil-define-key 'motion python-mode-map "gd" 'elpy-goto-definition)
+        (setq elpy-test-runner 'elpy-test-pytest-runner))
 
-  (use-package sphinx-doc
-    :diminish sphinx-doc-mode)
+(use-package sphinx-doc
+  :diminish sphinx-doc-mode)
 
-  (use-package cython-mode
-      :mode (("\\.pyx" . cython-mode)))
+(use-package cython-mode
+    :mode (("\\.pyx" . cython-mode)))
 
-  (use-package yaml-mode :ensure t)
+(use-package yaml-mode :ensure t)
 #+END_SRC
 ** Web
 #+BEGIN_SRC emacs-lisp
@@ -1456,40 +1451,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 #+END_SRC
 ** TODO save & anotations
 http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
-* Test
-#+BEGIN_SRC emacs-lisp
-  (use-package mediawiki
-
-    :config
-    (setq mediawiki-site-alist
-          '(("Wikipedia" "https://en.wikipedia.org/w/" "Titan-cerberus" "" nil "User:Titan-cerberus")
-            ("SHAWIKI" "https://wiki.sha2017.org/" "oscar" "" nil "Accueil")
-            ("ArchWiki" "https://wiki.archlinux.org/" "" "" nil "Main page"))))
-#+END_SRC
-
-#+RESULTS:
-#+BEGIN_SRC emacs-lisp
-(use-package ox-rst)
-(use-package mastodon
-:config
-(setq mastodon-instance-url "https://cybre.space"))
-#+END_SRC
-
-#+RESULTS:
-* TODO packages to check
-read win-point. It keeps track where the window was. So looking the same
-file on separate windows is traceable
-
-Save-place
-
-org-dynamic blocks
-column view
-* android
-#+BEGIN_SRC emacs-lisp
-(use-package android-mode
-  :init (setq android-mode-sdk-dir "~/Android/Sdk"))
-#+END_SRC
-
 * Ledger
 Emacs mode for managing ledger text files
 #+BEGIN_SRC emacs-lisp
