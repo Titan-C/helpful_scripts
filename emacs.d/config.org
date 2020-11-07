@@ -98,90 +98,81 @@ Hydra allows to configure sets of keybindings.
 #+END_SRC
 ** Evil-mode
 #+BEGIN_SRC emacs-lisp
-  (use-package evil
-    :config
-    (evil-mode 1))
+(use-package undo-tree
+  :init (global-undo-tree-mode))
 
-  (use-package evil-leader
-    :init
-    (global-evil-leader-mode)
-    (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key
-        "x" 'helm-M-x
-        "f" 'helm-find-files
-        "m" 'notmuch
-        "s" 'eshell
-        "q" 'kill-this-buffer
-        "Q" 'kill-buffer-and-window
-        "r" 'avy-goto-char
-        "c" 'avy-goto-word-1
-        "g" 'helm-mini)
-  )
+(use-package evil
+  :init
+  (setq evil-undo-system 'undo-tree)
+  (setq evil-want-keybinding nil)
 
-  ;;(global-set-key [escape] 'keyboard-quit)
-  (global-set-key [escape] 'helm-keyboard-quit)
+  :bind (:map evil-normal-state-map
+              ("r" . nil)
+              ("s" . nil)
+              ("h" . evil-replace)
+              ("k" . evil-redo)
+              :map evil-motion-state-map
+              ("r" . evil-next-line)
+              ("t" . evil-previous-line)
+              ("n" . evil-backward-char)
+              ("s" . evil-forward-char)
+              ("l" . evil-search-next)
+              ("L" . evil-search-previous)
+              ("k" . nil)
+              ("h" . evil-replace)
+              ("C-i" . evil-scroll-up)
+              :map evil-visual-state-map
+              ("h" . evil-replace))
+
+  :config
+  (evil-mode 1)
+
+  (defun my-save-if-bufferfilename ()
+    (if (buffer-file-name)
+        (save-buffer)
+      (message "no file is associated to this buffer: do nothing")))
+  (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
+  :after undo-tree)
+
+(use-package evil-leader
+  :init
+  (global-evil-leader-mode)
+  (evil-leader/set-leader "<SPC>")
+  (evil-leader/set-key
+      "x" 'helm-M-x
+      "f" 'helm-find-files
+      "m" 'notmuch
+      "s" 'eshell
+      "q" 'kill-this-buffer
+      "Q" 'kill-buffer-and-window
+      "r" 'avy-goto-char
+      "c" 'avy-goto-word-1
+      "g" 'helm-mini)
+)
+
+;;(global-set-key [escape] 'keyboard-quit)
+(global-set-key [escape] 'helm-keyboard-quit)
 
 
-  (use-package key-chord
-    :init
-      (setq key-chord-two-keys-delay 0.05)
-      (key-chord-define-global "ww" (lambda () (interactive) (save-buffer)
-                                               (evil-normal-state)))
-    :config
-      (key-chord-mode 1))
+(use-package key-chord
+  :init
+    (setq key-chord-two-keys-delay 0.05)
+    (key-chord-define-global "ww" (lambda () (interactive) (save-buffer)
+                                             (evil-normal-state)))
+  :config
+    (key-chord-mode 1))
 
-  (use-package avy
-    :ensure t )
+(use-package avy
+  :ensure t )
 #+END_SRC
 
 ** Key Bindings
-#+BEGIN_SRC emacs-lisp
-(define-key evil-normal-state-map "r" nil) ;; block replace
-(define-key evil-motion-state-map "n" 'evil-backward-char) ;; back
-(define-key evil-insert-state-map "\C-l" 'evil-delete-backward-char)
-(define-key evil-insert-state-map "\C-r" 'evil-delete-backward-word)
-
-(define-key evil-motion-state-map "r" 'evil-next-line) ;; next line
-(define-key evil-motion-state-map "l" 'evil-search-next) ;; next look up
-(define-key evil-motion-state-map "L" 'evil-search-previous)
-(define-key evil-motion-state-map "t" 'evil-previous-line) ;; top back up
-(define-key evil-normal-state-map "T" 'evil-join) ;; line together
-
-(define-key evil-normal-state-map "s" nil) ;; remove substitute
-(define-key evil-motion-state-map "s" 'evil-forward-char)  ;; moves right
-
-(define-key evil-normal-state-map "h" 'evil-replace)
-(define-key evil-visual-state-map "h" 'evil-replace) ;; because it seems to respect old motion
-(define-key evil-motion-state-map "j" 'evil-find-char-to)
-(define-key evil-motion-state-map "J" 'evil-find-char-to-backward)
-(define-key evil-normal-state-map "k" 'redo)
-(define-key evil-motion-state-map "k" nil) ;; to block old motion
-
-;; end and begining of lines
-(define-key evil-motion-state-map "-" 'evil-end-of-line)
-(define-key evil-motion-state-map "0" 'evil-beginning-of-line)
-
-;; scrolling
-(define-key evil-motion-state-map (kbd "C-i") 'evil-scroll-up)
-(define-key evil-normal-state-map (kbd "C-r") nil)
-(define-key evil-motion-state-map (kbd "C-r") 'evil-scroll-line-down)
-(define-key evil-normal-state-map (kbd "C-t") nil)
-(define-key evil-motion-state-map (kbd "C-t") 'evil-scroll-line-up)
-#+END_SRC
-
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
     :diminish which-key-mode
     :init
     (setq which-key-idle-delay 0.5)
     (which-key-mode))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-(defun my-save-if-bufferfilename ()
-  (if (buffer-file-name)
-      (save-buffer)
-    (message "no file is associated to this buffer: do nothing")))
-(add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
 #+END_SRC
 ** Window Management
 #+BEGIN_SRC emacs-lisp
@@ -447,18 +438,20 @@ default. This makes them save values.
 #+END_SRC
 ** Parenthesis
 #+BEGIN_SRC emacs-lisp
-  (show-paren-mode t)
-  (setq show-paren-delay 0.0)
-  (use-package smartparens
-    :diminish smartparens-mode
-    :bind (:map smartparens-mode-map
-          ("C-)" . sp-forward-slurp-sexp)
-          ("C-(" . sp-backward-slurp-sexp)
-          ("C-M-)" . sp-forward-barf-sexp)
-          ("C-M-(" . sp-backward-barf-sexp))
-    :init
-      (require 'smartparens-config)
-      (smartparens-global-mode t))
+(show-paren-mode t)
+(setq show-paren-delay 0.0)
+(use-package smartparens
+  :diminish smartparens-mode
+  :bind (:map smartparens-mode-map
+        ("C-)" . sp-forward-slurp-sexp)
+        ("C-(" . sp-backward-slurp-sexp)
+        ("C-M-)" . sp-forward-barf-sexp)
+        ("C-M-(" . sp-backward-barf-sexp))
+  :init
+    (require 'smartparens-config)
+    (smartparens-global-mode t))
+
+(use-package evil-smartparens)
 #+END_SRC
 ** Pass
 #+BEGIN_SRC emacs-lisp
@@ -1227,7 +1220,9 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 ** clojure
 #+BEGIN_SRC emacs-lisp
 (use-package cider
-  :pin melpast)
+  :pin melpast
+  :config
+  (evil-define-key 'motion clojure-mode-map "gd" 'cider-find-var))
 
 (use-package clj-refactor
   :config
