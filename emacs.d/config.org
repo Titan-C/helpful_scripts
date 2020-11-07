@@ -365,10 +365,9 @@ default. This makes them save values.
         ("C-M-)" . sp-forward-barf-sexp)
         ("C-M-(" . sp-backward-barf-sexp))
   :init
-    (require 'smartparens-config)
-    (smartparens-global-mode t))
-
-(use-package evil-smartparens)
+  (smartparens-global-mode)
+  (use-package evil-smartparens
+    :init (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)))
 #+END_SRC
 ** Pass
 #+BEGIN_SRC emacs-lisp
