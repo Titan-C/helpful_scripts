@@ -605,6 +605,7 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
+     (scheme . t)
      (latex . t)
      (shell . t)
      (plantuml .t)
