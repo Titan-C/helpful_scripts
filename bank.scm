@@ -1,5 +1,5 @@
 #!/usr/bin/guile \
---no-auto-compile -e main -s
+-L guile --no-auto-compile -e main -s
 !#
 
 (use-modules
@@ -7,7 +7,8 @@
  (ice-9 getopt-long)
  (ice-9 popen)
  (ice-9 regex)
- (ice-9 rdelim))
+ (ice-9 rdelim)
+ (utils))
 
 (define (reformat-date date-str)
   (strftime "%Y-%m-%d"
@@ -49,18 +50,6 @@
       (newline w-port))
     (close-pipe port)))
 
-(define (expand-file f)
-  ;; https://irreal.org/blog/?p=83
-  (cond ((char=? (string-ref f 0) #\/) f)
-        ((string=? (substring f 0 2) "~/")
-         (let ((prefix (passwd:dir (getpwuid (geteuid)))))
-           (string-append prefix (substring f 1 (string-length f)))))
-        ((char=? (string-ref f 0) #\~)
-         (let* ((user-end (string-index f #\/))
-                (user (substring f 1 user-end))
-                (prefix (passwd:dir (getpwnam user))))
-           (string-append prefix (substring f user-end (string-length f)))))
-        (else (string-append (getcwd) "/" f))))
 
 (define (main args)
   (let* ((option-spec '((version (single-char #\V) (value #f))
