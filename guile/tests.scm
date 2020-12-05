@@ -1,20 +1,18 @@
 #!/usr/bin/guile \
---no-auto-compile -e main -s
+-L . --no-auto-compile -s
 !#
-
-(include "/home/titan/dev/helpful_scripts/bank.scm")
-(add-to-load-path "/home/titan/dev/helpful_scripts/guile/")
 
 (use-modules
  (ice-9 and-let-star)
  (language tree-il)
  (term ansi-color)
  (srfi srfi-64)
+ (mail-tools)
  (utils))
 
 (define (%test-write-result1 pair port)
-  (format port (string-append (colorize-string  "  ~a: " 'BOLD) "~s~%")
-          (car pair) (cdr pair)))
+  (simple-format port (string-append (colorize-string  "  ~a: " 'BOLD) "~s~%")
+                 (car pair) (cdr pair)))
 
 (define (test-on-test-end-color runner)
   (let ((log (test-runner-aux-value runner))
@@ -41,15 +39,25 @@
      (test-runner-on-test-end! runner test-on-test-end-color)
      runner)))
 
-;; Initialize and give a name to a simple testsuite.
+(include "/home/titan/dev/helpful_scripts/bank.scm")
 (test-begin "parse bank csv")
 (test-equal "2020-12-08" (reformat-date "8.12.2020"))
 (test-equal "1966-07-02" (reformat-date "2.7.1966"))
 (test-equal "item 5.00 EUR" (replace "item 5,00 EUR" "," "."))
 (test-equal "First" (drop-edge-quotes "\"First\""))
-;; Finish the testsuite, and report results.
 (test-equal "2020-10-16,RUN  last,-7.79 EUR\n" (reformat "foo;16.10.2020;bar;\"RUN, last\";-7,79;mo"))
 (test-end "parse bank csv")
+
+(test-begin "Mail tools")
+(test-equal "mail/spam/cur/postU=5" (new-path "mail/inbox/cur/postU=5" "mail/spam"))
+(test-equal 60 (call-with-input-string "1595684247\n60\n" get-uidvalidity))
+(test-equal "Ha;S" (rename-higher "Ha,U=55;S" 5))
+(test-equal "Ha,U=20;S" (rename-higher "Ha,U=20;S" 55))
+(test-equal '("+one -new" "(from:first) and tag:new") (with-new '("+one" "from:first") #t))
+(test-equal '("+one" "from:first") (with-new '("+one" "from:first") #f))
+(test-equal '(" -new" "tag:new") (with-new '("" "*") #t))
+(test-equal '("" "*") (with-new '("" "*") #f))
+(test-end "Mail tools")
 
 (test-begin "Thread macros")
 (test-equal '(+ 5 9) (tree-il->scheme (macroexpand '(-> 5 (+ 9)))))

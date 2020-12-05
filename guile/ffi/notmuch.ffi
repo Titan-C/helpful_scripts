@@ -1,0 +1,4 @@
+(define-ffi-module (ffi notmuch)
+ ; #:pkg-config "notmuch"
+ #:library '("libnotmuch")
+  #:include '("notmuch.h"))
