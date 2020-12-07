@@ -14,7 +14,7 @@
   (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq vc-follow-symlinks t)
-  (when (string-equal (user-login-name) "on")
+  (unless (string-equal (user-login-name) "on")
     (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
@@ -1015,8 +1015,11 @@ this new window.
 ** Web
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
-  :mode (("\\.html?" . web-mode)))
+  :mode (("\\.html?" . web-mode)
+         ("\\.jsx\\'" . web-mode)
+         ("\\.tsx\\'" . web-mode)))
 #+END_SRC
+
 #+BEGIN_SRC emacs-lisp
 (use-package scss-mode)
 (use-package ox-hugo
@@ -1168,6 +1171,34 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 #+BEGIN_SRC emacs-lisp
 (use-package indium)
 #+END_SRC
+#+begin_src emacs-lisp
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
+(defun setup-tide-mode ()
+    (interactive)
+    (tide-setup)
+    (flycheck-mode +1)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled))
+    (eldoc-mode +1)
+    (tide-hl-identifier-mode +1)
+    ;; company is an optional dependency. You have to
+    ;; install it separately via package-install
+    ;; `M-x package-install [ret] company`
+    (company-mode +1))
+
+(use-package tide
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
+#+end_src
+
+#+RESULTS:
+| tide-format-before-save | delete-trailing-whitespace |
+
 * Email
 ** Notmuch client
 #+BEGIN_SRC emacs-lisp
