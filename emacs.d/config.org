@@ -1219,6 +1219,8 @@ and the arguments for flyckeck-clang based on a project-specific text file."
           ("t" . notmuch-tree-prev-matching-message)
           ("R" . notmuch-tree-next-message)
           ("T" . notmuch-tree-prev-message)
+          ("n" . notmuch-tree-reply-sender)
+          ("N" . notmuch-tree-reply)
          :map notmuch-show-mode-map
           ("N" . notmuch-show-reply)
           ("n" . notmuch-show-reply-sender)
@@ -1236,10 +1238,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
           message-signature "Oscar Najera\nSoftware Developer\n\ntribe29 GmbH — The Check_MK Company\noscar.najera@tribe29.com | Phone: +49 89 9982 097 00 | https://tribe29.com\n\nKellerstraße 29, 81667 München, Germany\nAmtsgericht München, HRB 165902\nGeschäftsführer: Jan Justus, Mathias Kettner"
           org-email-link-description-format "%c: %s")
 
-    (define-key notmuch-tree-mode-map "n"
-      (notmuch-tree-close-message-pane-and #'notmuch-show-reply-sender))
-    (define-key notmuch-tree-mode-map "N"
-      (notmuch-tree-close-message-pane-and #'notmuch-show-reply))
     (setq notmuch-search-oldest-first nil
           notmuch-archive-tags '("-inbox" "-unread"))
     (evil-set-initial-state 'notmuch-tree-mode 'emacs)
