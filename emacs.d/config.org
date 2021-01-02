@@ -1441,13 +1441,10 @@ and the arguments for flyckeck-clang based on a project-specific text file."
   (use-package emms
     :init
     (setq emms-source-file-default-directory "~/Music/")
-    (setq emms-player-mpd-music-directory "~/Music")
     :commands (emms-browser emms-smart-browse)
     :config
     (emms-all)
     (emms-default-players)
-    (add-to-list 'emms-info-functions 'emms-info-mpd)
-    (add-to-list 'emms-player-list 'emms-player-mpd)
     (setq emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
     (add-to-list 'emms-info-functions 'emms-info-mp3info)
 
