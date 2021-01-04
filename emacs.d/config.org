@@ -1438,37 +1438,15 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 #+END_SRC
 * Music
 #+BEGIN_SRC emacs-lisp
-  (use-package emms
-    :init
-    (setq emms-source-file-default-directory "~/Music/")
-    :commands (emms-browser emms-smart-browse)
-    :config
-    (emms-all)
-    (emms-default-players)
-    (setq emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
-    (add-to-list 'emms-info-functions 'emms-info-mp3info)
-
-
-    (evil-set-initial-state 'emms-playlist-mode 'emacs)
-    (evil-define-key 'normal emms-browser-mode-map
-      (kbd "<return>") 'emms-browser-add-tracks
-      (kbd "<tab>") 'emms-browser-toggle-subitems
-      "/" 'emms-isearch-buffer ; This shows hidden items during search.
-
-      "ga" 'emms-browse-by-artist
-      "gA" 'emms-browse-by-album
-      "gb" 'emms-browse-by-genre
-      "gy" 'emms-browse-by-year
-      "gc" 'emms-browse-by-composer
-      "gp" 'emms-browse-by-performer
-
-      "+" 'emms-volume-raise
-      "-" 'emms-volume-lower
-     )
-
-    (require 'emms-info-libtag)
-    (setq emms-info-functions '(emms-info-libtag))
-   )
+(use-package emms
+  :init
+  (setq emms-source-file-default-directory "~/Music/")
+  :commands (emms-browser emms-smart-browse)
+  :config
+  (emms-all)
+  (emms-default-players)
+  (setq emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
+  (setq emms-info-functions '(emms-info-exiftool)))
 #+END_SRC
 ** TODO save & anotations
 http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
