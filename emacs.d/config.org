@@ -549,10 +549,6 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
          ("P" . 'org-agenda-show-tags))
 
   :init
-  ;; Work directories
-  (if (string-equal (system-name) "titanroam")
-      (setq org-directory "~/Dropbox/org/"))
-
   ;; Refile
   (setq org-refile-targets `((nil :maxlevel . 3)
                              (,(expand-file-name "journal.org" org-directory) :maxlevel . 3)
@@ -850,27 +846,23 @@ this new window.
 
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
-  (use-package helm-bibtex
-    :commands helm-bibtex
-    :init
-    (evil-leader/set-key "hb" 'helm-bibtex)
-    :config
+(use-package helm-bibtex
+  :commands helm-bibtex
+  :init
+  (evil-leader/set-key "hb" 'helm-bibtex)
+  :config
 
-    (setq bibtex-completion-bibliography (mapcar (lambda (x)
-                                                      (concat "~/Dropbox/biblio/" x))
-                                              '("papers.bib" "zotero.bib" "arxiv.bib" "library.bib"
-                                                "slides_talks.bib")))
-    (setq bibtex-completion-pdf-field "file")
-    (setq bibtex-completion-library-path "~/Dropbox/bibtex-pdf/")
-    (setq bibtex-completion-notes-path "~/Dropbox/org/WorkPhys/literature_notes.org")
+  (setq bibtex-completion-bibliography (expand-file-name "biblio.bib" org-directory))
+  (setq bibtex-completion-pdf-field "file")
+  (setq bibtex-completion-library-path (expand-file-name "bibtex-pdf/" org-directory))
 
-    (defun bibtex-completion-open-notes-and-pdf (keys)
-         (bibtex-completion-open-pdf keys)
-         (bibtex-completion-edit-notes keys))
+  (defun bibtex-completion-open-notes-and-pdf (keys)
+       (bibtex-completion-open-pdf keys)
+       (bibtex-completion-edit-notes keys))
 
-    (helm-bibtex-helmify-action bibtex-completion-open-notes-and-pdf helm-bibtex-open-notes-and-pdf)
-    ;(helm-delete-action-from-source "Edit notes with PDF" helm-source-bibtex)
-    (helm-add-action-to-source "Edit notes with PDF" 'helm-bibtex-open-notes-and-pdf helm-source-bibtex 1))
+  (helm-bibtex-helmify-action bibtex-completion-open-notes-and-pdf helm-bibtex-open-notes-and-pdf)
+  ;(helm-delete-action-from-source "Edit notes with PDF" helm-source-bibtex)
+  (helm-add-action-to-source "Edit notes with PDF" 'helm-bibtex-open-notes-and-pdf helm-source-bibtex 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
