@@ -640,6 +640,9 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   ;; Launch day agenda
   (org-agenda-list 1)
   (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
+  (require 'cal-sync)
+  (setq cal-sync-url "https://cloud.oscarnajera.com/remote.php/dav/calendars/oscar"
+        cal-sync-calendar-id "personal")
 
   (require 'org-contacts)
   (setq org-contacs-files '("~/org/contacts.org"))
