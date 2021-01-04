@@ -16,7 +16,9 @@
             nm-header
             nm-count-messages
             nm-apply-tags
-            nm-iter))
+            nm-iter
+            with-nm-database
+            with-nm-query))
 
 (define (rename-higher name limit)
   (let ((mat (string-match ",U=[0-9]+" name)))
@@ -112,3 +114,13 @@
             (notmuch_message_remove_tag message tag)
             (notmuch_message_add_tag message tag)))
       (loop (cdr rest)))))
+
+(define-syntax-rule (with-nm-database (db path mode) body body* ...)
+  (let ((db (nm-open-database path mode)))
+    body body* ...
+    (notmuch_database_destroy db)))
+
+(define-syntax-rule (with-nm-query (db qobj query) body body* ...)
+  (let ((qobj (nm-query-db db query)))
+    body body* ...
+    (notmuch_query_destroy qobj)))
