@@ -1456,6 +1456,8 @@ Emacs mode for managing ledger text files
   :config
   (add-hook 'ledger-mode-hook (lambda ()
                                 (add-hook 'before-save-hook 'ledger-mode-clean-buffer nil t)))
+  (setq ledger-default-date-format ledger-iso-date-format)
+
 
   (defun on/ledger-link-invoice ()
     "Attach an invoice file to this posting."
