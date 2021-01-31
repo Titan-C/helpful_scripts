@@ -1245,9 +1245,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
           message-signature "Oscar Najera\nSoftware Developer\n\ntribe29 GmbH — The Check_MK Company\noscar.najera@tribe29.com | Phone: +49 89 9982 097 00 | https://tribe29.com\n\nKellerstraße 29, 81667 München, Germany\nAmtsgericht München, HRB 165902\nGeschäftsführer: Jan Justus, Mathias Kettner"
           org-email-link-description-format "%c: %s")
 
-    (setq notmuch-search-oldest-first nil
-          notmuch-archive-tags '("-inbox" "-unread"))
-    (evil-set-initial-state 'notmuch-tree-mode 'emacs)
 
     (defun notmuch-show-delete-message ()
       "Delete current message if already marked as deleted undo."
@@ -1311,6 +1308,9 @@ and the arguments for flyckeck-clang based on a project-specific text file."
     (setq notmuch-crypto-process-mime t)
     (setq message-kill-buffer-on-exit t)
 
+    (setq-default notmuch-search-oldest-first nil)
+    (setq notmuch-archive-tags '("-inbox" "-unread"))
+    (evil-set-initial-state 'notmuch-tree-mode 'emacs)
 
     (setq notmuch-search-line-faces
           `(("deleted" . (:strike-through "red"))
