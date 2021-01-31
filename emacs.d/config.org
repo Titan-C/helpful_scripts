@@ -1167,8 +1167,12 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 #+END_SRC
 ** Common lisp
 #+BEGIN_SRC emacs-lisp
-(load (expand-file-name "~/.quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "sbcl")
+(use-package slime
+  :config
+  (setq inferior-lisp-program "sbcl")
+  (slime-setup '(slime-fancy slime-quicklisp slime-asdf))
+  (evil-define-key 'normal 'slime-mode-map "gd" 'slime-edit-definition)
+)
 #+END_SRC
 ** JavaScript
 #+BEGIN_SRC emacs-lisp
