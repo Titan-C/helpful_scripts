@@ -336,12 +336,13 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 Documents can be set to default to certain languages that differ from my
 default. This makes them save values.
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'safe-local-variable-values
-             '((google-translate-default-source-language . "de")
-               (google-translate-default-target-language . "en")
-               (ispell-local-dictionary . "es_EC")
-               (ispell-local-dictionary . "de_DE")
-               (ispell-local-dictionary . "fr_FR")))
+(setq safe-local-variable-values
+      (append safe-local-variable-values
+              '((google-translate-default-source-language . "de")
+                (google-translate-default-target-language . "en")
+                (ispell-local-dictionary . "es_EC")
+                (ispell-local-dictionary . "de_DE")
+                (ispell-local-dictionary . "fr_FR"))))
 #+END_SRC
 #+BEGIN_SRC emacs-lisp
 (use-package google-translate
@@ -649,7 +650,8 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   (require 'org-contacts)
   (setq org-contacs-files '("~/org/contacts.org"))
 
-  (add-to-list 'safe-local-variable-values '((org-startup-folded quote showall)))
+  (setq org-startup-folded 'overview)
+  (add-to-list 'safe-local-variable-values '(org-startup-folded . showall))
 )
 
 ;; leader shortcuts
@@ -1021,7 +1023,10 @@ this new window.
 #+BEGIN_SRC emacs-lisp
 (use-package scss-mode)
 (use-package ox-hugo
-  :after ox)
+  :after ox
+  :init
+  (add-to-list 'safe-local-variable-values
+               '(eval add-hook 'after-save-hook #'org-hugo-export-wim-to-md :append :local)))
 #+END_SRC
 ** C++
 #+BEGIN_SRC emacs-lisp
