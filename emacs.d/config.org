@@ -748,15 +748,20 @@ this new window.
 ** ROAM
 #+begin_src emacs-lisp
 (use-package org-roam
-:hook (after-init . org-roam-mode)
-:custom (org-roam-directory "~/org/roam")
-:config
-(setq org-roam-capture-templates '(("d" "default" plain (function org-roam-capture--get-point)
-     "%?"
-     :file-name "%<%Y%m%d%H%M%S>-${slug}"
-     :head "#+title: ${title}\n#+CREATED: %U\n#+roam_tags:\n\n"
-     :unnarrowed t)))
-(require 'org-roam-protocol))
+  :hook (after-init . org-roam-mode)
+  :custom (org-roam-directory "~/org/roam")
+
+  :bind (("\C-crf" . org-roam-find-file)
+         ("\C-crc" . org-roam-capture)
+         ("\C-cri" . org-roam-insert)
+         ("\C-cro" . org-roam))
+  :config
+  (setq org-roam-capture-templates '(("d" "default" plain (function org-roam-capture--get-point)
+                                      "%?"
+                                      :file-name "%<%Y%m%d%H%M%S>-${slug}"
+                                      :head "#+title: ${title}\n#+CREATED: %U\n#+roam_tags:\n\n"
+                                      :unnarrowed t)))
+  (require 'org-roam-protocol))
 #+end_src
 #+begin_src emacs-lisp
 (use-package org-roam-server
