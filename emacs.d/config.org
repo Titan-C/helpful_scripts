@@ -745,7 +745,7 @@ this new window.
   (add-to-list 'org-latex-packages-alist '("AUTO" "babel" nil))
 )
 #+END_SRC
-** ROAM
+** Note taking and references management
 #+begin_src emacs-lisp
 (use-package org-roam
   :hook (after-init . org-roam-mode)
@@ -760,8 +760,9 @@ this new window.
                                       "%?"
                                       :file-name "%<%Y%m%d%H%M%S>-${slug}"
                                       :head "#+title: ${title}\n#+CREATED: %U\n#+roam_tags:\n\n"
-                                      :unnarrowed t)))
-  (require 'org-roam-protocol))
+                                      :unnarrowed t))))
+(use-package org-roam-protocol
+  :after org-protocol)
 #+end_src
 #+begin_src emacs-lisp
 (use-package org-roam-server
@@ -776,6 +777,95 @@ this new window.
         org-roam-server-network-label-truncate-length 60
         org-roam-server-network-label-wrap-length 20))
 #+end_src
+#+BEGIN_SRC emacs-lisp
+(use-package bibtex
+  :config
+  (setq bibtex-autokey-year-length 4
+        bibtex-autokey-titlewords 5
+        bibtex-autokey-titleword-length nil))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(use-package helm-bibtex
+  :commands helm-bibtex
+  :init
+  (evil-leader/set-key "hb" 'helm-bibtex)
+  (setq bibtex-completion-bibliography (expand-file-name "biblio.bib" org-directory)
+        bibtex-completion-pdf-field "file"
+        bibtex-completion-library-path (expand-file-name "bibtex-pdf/" org-directory)
+        bibtex-completion-notes-path "~/org/roam/"
+        bibtex-completion-notes-template-multiple-files "#+title: ${title} (${year})\n#+author: ${author-or-editor}\n#+roam_key: cite:${=key=}\n")
+  :config
+
+  (defun bibtex-completion-open-notes-and-pdf (keys)
+    (bibtex-completion-open-pdf keys)
+    (bibtex-completion-edit-notes keys))
+
+  (helm-bibtex-helmify-action bibtex-completion-open-notes-and-pdf helm-bibtex-open-notes-and-pdf)
+                                        ;(helm-delete-action-from-source "Edit notes with PDF" helm-source-bibtex)
+  (helm-add-action-to-source "Edit notes with PDF" 'helm-bibtex-open-notes-and-pdf helm-source-bibtex 1))
+
+(use-package org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode))
+#+END_SRC
+
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-ref
+  :init
+  (setq org-ref-show-broken-links nil
+        org-ref-bibliography-notes bibtex-completion-notes-path
+        org-ref-default-bibliography bibtex-completion-bibliography
+        org-ref-pdf-directory bibtex-completion-library-path
+        org-ref-notes-function 'orb-edit-notes)
+  :config
+  (key-chord-define bibtex-mode-map "jj" 'org-ref-bibtex-hydra/body)
+  (require 'org-ref-pdf)
+  (require 'org-ref-url-utils)
+  (require 'org-ref-arxiv)
+  (require 'doi-utils)
+  (setq doi-utils-download-pdf nil
+        doi-utils-make-notes nil)
+  )
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC emacs-lisp
+  (defun org-ref-bibtex-assoc-pdf-sup-with-entry (&optional prefix)
+    "Prompt for supplementary pdf associated with entry at point and
+  rename it.  Check whether a pdf already exists in
+  `org-ref-pdf-directory' with the name '[bibtexkey]_sup.pdf'. If the
+  file does not exist, rename it to '[bibtexkey]_sup.pdf' using
+  `org-ref-bibtex-assoc-pdf-with-entry-move-function' and place it in
+  `org-ref-pdf-directory'. Finally set the file field in the bibtex to
+  include main pdf and supplementary pdf file locations"
+    (interactive "P")
+    (save-excursion
+      (bibtex-beginning-of-entry)
+      (let* ((file (read-file-name "Select file associated with entry: "))
+	     (bibtex-expand-strings t)
+             (entry (bibtex-parse-entry t))
+             (key (reftex-get-bib-field "=key=" entry))
+             (mainpdf (concat org-ref-pdf-directory key ".pdf"))
+             (suppdf (concat org-ref-pdf-directory key "_sup.pdf"))
+             (key-files (concat ":" mainpdf ":PDF;:" suppdf ":PDF"))
+	     (file-move-func (org-ref-bibtex-get-file-move-func prefix)))
+        (if (file-exists-p suppdf)
+	    (message (format "A file named %s already exists" pdf))
+	  (progn
+	    (funcall file-move-func file suppdf)
+            (bibtex-set-field "file" key-files)
+	    (message (format "Created file %s" suppdf)))))))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (defhydra helm-org-ref-insert-link ()
+    ("c" org-ref-helm-insert-cite-link "cite article")
+    ("r" org-ref-helm-insert-ref-link "reference link")
+    ("l" org-ref-helm-insert-label-link "create label"))
+
+  ;;(key-chord-define org-mode-map "jj" 'helm-org-ref-insert-link/body)
+#+END_SRC
 ** Capture
 #+BEGIN_SRC emacs-lisp
   (setq org-capture-templates
@@ -848,86 +938,6 @@ this new window.
 ;:load-path "~/dev/org-reveal"
 ;:init
 ;(setq org-reveal-root "file:///home/me/dev/reveal.js"))
-#+END_SRC
-** Bibliography references
-#+BEGIN_SRC emacs-lisp
-  (use-package bibtex
-    :config
-    (setq bibtex-autokey-year-length 4
-          bibtex-autokey-titlewords 5
-          bibtex-autokey-titleword-length nil))
-
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-(use-package helm-bibtex
-  :commands helm-bibtex
-  :init
-  (evil-leader/set-key "hb" 'helm-bibtex)
-  :config
-
-  (setq bibtex-completion-bibliography (expand-file-name "biblio.bib" org-directory))
-  (setq bibtex-completion-pdf-field "file")
-  (setq bibtex-completion-library-path (expand-file-name "bibtex-pdf/" org-directory))
-
-  (defun bibtex-completion-open-notes-and-pdf (keys)
-       (bibtex-completion-open-pdf keys)
-       (bibtex-completion-edit-notes keys))
-
-  (helm-bibtex-helmify-action bibtex-completion-open-notes-and-pdf helm-bibtex-open-notes-and-pdf)
-  ;(helm-delete-action-from-source "Edit notes with PDF" helm-source-bibtex)
-  (helm-add-action-to-source "Edit notes with PDF" 'helm-bibtex-open-notes-and-pdf helm-source-bibtex 1))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (use-package org-ref
-   :config
-   (key-chord-define bibtex-mode-map "jj" 'org-ref-bibtex-hydra/body)
-   (setq org-ref-show-broken-links nil)
-   (setq org-ref-bibliography-notes bibtex-completion-notes-path)
-   (setq org-ref-default-bibliography bibtex-completion-bibliography)
-   (setq org-ref-pdf-directory bibtex-completion-library-path)
-   (require 'org-ref-pdf)
-   (require 'org-ref-url-utils)
-   (require 'org-ref-arxiv)
-   (require 'doi-utils)
-   (setq doi-utils-download-pdf nil
-         doi-utils-make-notes nil)
-  )
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (defun org-ref-bibtex-assoc-pdf-sup-with-entry (&optional prefix)
-    "Prompt for supplementary pdf associated with entry at point and
-  rename it.  Check whether a pdf already exists in
-  `org-ref-pdf-directory' with the name '[bibtexkey]_sup.pdf'. If the
-  file does not exist, rename it to '[bibtexkey]_sup.pdf' using
-  `org-ref-bibtex-assoc-pdf-with-entry-move-function' and place it in
-  `org-ref-pdf-directory'. Finally set the file field in the bibtex to
-  include main pdf and supplementary pdf file locations"
-    (interactive "P")
-    (save-excursion
-      (bibtex-beginning-of-entry)
-      (let* ((file (read-file-name "Select file associated with entry: "))
-	     (bibtex-expand-strings t)
-             (entry (bibtex-parse-entry t))
-             (key (reftex-get-bib-field "=key=" entry))
-             (mainpdf (concat org-ref-pdf-directory key ".pdf"))
-             (suppdf (concat org-ref-pdf-directory key "_sup.pdf"))
-             (key-files (concat ":" mainpdf ":PDF;:" suppdf ":PDF"))
-	     (file-move-func (org-ref-bibtex-get-file-move-func prefix)))
-        (if (file-exists-p suppdf)
-	    (message (format "A file named %s already exists" pdf))
-	  (progn
-	    (funcall file-move-func file suppdf)
-            (bibtex-set-field "file" key-files)
-	    (message (format "Created file %s" suppdf)))))))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (defhydra helm-org-ref-insert-link ()
-    ("c" org-ref-helm-insert-cite-link "cite article")
-    ("r" org-ref-helm-insert-ref-link "reference link")
-    ("l" org-ref-helm-insert-label-link "create label"))
-
-  ;;(key-chord-define org-mode-map "jj" 'helm-org-ref-insert-link/body)
 #+END_SRC
 * Text Editing
 ** Markdown
