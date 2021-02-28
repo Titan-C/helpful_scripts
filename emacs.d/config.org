@@ -1050,6 +1050,47 @@ this new window.
   (add-to-list 'safe-local-variable-values
                '(eval add-hook 'after-save-hook #'org-hugo-export-wim-to-md :append :local)))
 #+END_SRC
+*** JavaScript
+#+BEGIN_SRC emacs-lisp
+(use-package js2-mode
+  :mode (("\\.js$" . js2-mode))
+  :hook ((js2-mode . flycheck-mode))
+  :config
+  (evil-define-key 'normal 'js2-mode-map "gd" 'js2-jump-to-definition))
+
+(use-package prettier-js
+  :ensure t
+  :hook ((js2-mode . prettier-js-mode)))
+#+END_SRC
+
+#+begin_src emacs-lisp
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
+(defun setup-tide-mode ()
+    (interactive)
+    (tide-setup)
+    (flycheck-mode +1)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled))
+    (eldoc-mode +1)
+    (tide-hl-identifier-mode +1)
+    ;; company is an optional dependency. You have to
+    ;; install it separately via package-install
+    ;; `M-x package-install [ret] company`
+    (company-mode +1))
+
+(use-package tide
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
+#+end_src
+
+#+RESULTS:
+| tide-format-before-save | delete-trailing-whitespace |
+
 ** C++
 #+BEGIN_SRC emacs-lisp
   (use-package cmake-mode
@@ -1196,38 +1237,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
   (evil-define-key 'normal 'slime-mode-map "gd" 'slime-edit-definition)
 )
 #+END_SRC
-** JavaScript
-#+BEGIN_SRC emacs-lisp
-(use-package indium)
-#+END_SRC
-#+begin_src emacs-lisp
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
-
-(defun setup-tide-mode ()
-    (interactive)
-    (tide-setup)
-    (flycheck-mode +1)
-    (setq flycheck-check-syntax-automatically '(save mode-enabled))
-    (eldoc-mode +1)
-    (tide-hl-identifier-mode +1)
-    ;; company is an optional dependency. You have to
-    ;; install it separately via package-install
-    ;; `M-x package-install [ret] company`
-    (company-mode +1))
-
-(use-package tide
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
-#+end_src
-
-#+RESULTS:
-| tide-format-before-save | delete-trailing-whitespace |
-
 * Email
 ** Notmuch client
 #+BEGIN_SRC emacs-lisp
