@@ -757,12 +757,19 @@ this new window.
          ("\C-cro" . org-roam))
   :config
   (setq org-roam-capture-templates '(("d" "default" plain (function org-roam-capture--get-point)
-                                      "%?"
+                                      "%i\n%?"
                                       :file-name "%<%Y%m%d%H%M%S>-${slug}"
-                                      :head "#+title: ${title}\n#+CREATED: %U\n#+roam_tags:\n\n"
-                                      :unnarrowed t))))
-(use-package org-roam-protocol
-  :after org-protocol)
+                                      :head "#+title: ${title}\n#+CREATED: %U\n#+roam_tags:\n%l\n\n"
+                                      :unnarrowed t))
+        org-roam-capture-ref-templates '(("l" "web" plain (function org-roam-capture--get-point)
+                                          "${body}\n%?"
+                                          :file-name "%<%Y%m%d>-${slug}"
+                                          :head "#+title: ${title}\n#+CREATED: %U\n#+roam_key: ${ref}\n#+roam_tags:\n\n"
+                                          :unnarrowed t)))
+
+
+
+  (require 'org-roam-protocol))
 #+end_src
 #+begin_src emacs-lisp
 (use-package org-roam-server
