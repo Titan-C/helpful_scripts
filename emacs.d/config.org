@@ -993,6 +993,9 @@ this new window.
 (use-package rainbow-delimiters
   :commands rainbow-delimiters-mode
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+
+(setq xref-prompt-for-identifier nil)
+(evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
 #+END_SRC
 ** Linting
 #+BEGIN_SRC emacs-lisp
