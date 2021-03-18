@@ -648,9 +648,6 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
         cal-sync-calendar-id "personal"
         org-icalendar-date-time-format ":%Y%m%dT%H%M%SZ")
 
-  (require 'org-contacts)
-  (setq org-contacs-files '("~/org/contacts.org"))
-
   (setq org-startup-folded 'overview)
   (add-to-list 'safe-local-variable-values '(org-startup-folded . showall))
 )
