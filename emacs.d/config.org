@@ -329,8 +329,9 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
 #+END_SRC
 *** Definitions
 #+begin_src emacs-lisp
-(use-package sdcv
-  :bind (("C-c p" . 'sdcv-search-pointer)))
+(use-package lexic
+  :bind (("C-c p" . 'lexic-search))
+  :config (evil-set-initial-state 'lexic-mode 'emacs))
 #+end_src
 *** Foreign languages
 Documents can be set to default to certain languages that differ from my
