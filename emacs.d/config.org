@@ -1238,6 +1238,23 @@ and the arguments for flyckeck-clang based on a project-specific text file."
   (evil-define-key 'normal 'slime-mode-map "gd" 'slime-edit-definition)
 )
 #+END_SRC
+** Haskell
+#+begin_src emacs-lisp
+(use-package haskell-mode
+  :init
+  (setq haskell-tags-on-save t)
+  :bind (:map haskell-mode-map
+              ("C-c C-l" . haskell-process-load-or-reload)
+              ("C-c C-z" . haskell-interactive-switch)))
+(use-package hindent
+  :hook (haskell-mode . hindent-mode))
+;; HLint
+(use-package hs-lint
+  :after haskell-mode
+  :load-path "/usr/share/hlint/"
+  :bind (:map haskell-mode-map
+              ("C-c l" . hs-lint)))
+#+end_src
 * Email
 ** Notmuch client
 #+BEGIN_SRC emacs-lisp
