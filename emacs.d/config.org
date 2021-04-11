@@ -610,6 +610,7 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
    'org-babel-load-languages
    '((emacs-lisp . t)
      (scheme . t)
+     (haskell .t)
      (latex . t)
      (shell . t)
      (plantuml .t)
@@ -1244,7 +1245,7 @@ and the arguments for flyckeck-clang based on a project-specific text file."
   :init
   (setq haskell-tags-on-save t)
   :bind (:map haskell-mode-map
-              ("C-c C-l" . haskell-process-load-or-reload)
+              ("C-c C-l" . haskell-process-load-file)
               ("C-c C-z" . haskell-interactive-switch)))
 (use-package hindent
   :hook (haskell-mode . hindent-mode))
