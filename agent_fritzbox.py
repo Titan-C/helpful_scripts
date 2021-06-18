@@ -29,7 +29,6 @@
 import argparse
 import pprint
 import re
-import socket
 import time
 import traceback
 import urllib.error
@@ -47,17 +46,6 @@ def parse_args():
         "host_address", metavar="HOST", help="Host name or IP address of your Fritz!Box"
     )
     parser.add_argument(
-        "-t",
-        "--timeout",
-        type=int,
-        default=10,
-        metavar="SEC",
-        help="""Set the network timeout to <SEC> seconds.
-                                    Default is 10 seconds. Note: the timeout is not
-                                    applied to the whole check, instead it is used for
-                                    each API query.""",
-    )
-    parser.add_argument(
         "--debug",
         action="store_true",
         help="Debug mode: let Python exceptions come through",
@@ -70,11 +58,14 @@ class RequestError(Exception):
     pass
 
 
+SE = requests.Session()
+
+
 def get_info(url, data, headers):
     logging.debug("Connecting URL: %s", url)
     logging.debug("SoapAction: %s", headers["SoapAction"])
 
-    handle = requests.post(url, data=data.encode("utf-8"), headers=headers, auth=auth)
+    handle = SE.post(url, data=data.encode("utf-8"), headers=headers)
 
     infos = handle.raw.info()
     logging.debug("Server: %s", infos["SERVER"])
@@ -133,7 +124,6 @@ def main():
     log_level = logging.DEBUG if args.debug else logging.WARNING
     logging.basicConfig(level=log_level)
 
-    socket.setdefaulttimeout(args.timeout)
     base_url = "http://%s:49000/" % args.host_address
 
     try:
@@ -215,4 +205,4 @@ if __name__ == "__main__":
     )
     print(res)
     with open("fritz.err.txt", "a") as fid:
-        fid.write(res+'\n')
+        fid.write(res + "\n")
