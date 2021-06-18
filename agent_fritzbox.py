@@ -163,7 +163,7 @@ def main():
             else:
                 status.update(attrs)
 
-        return status
+        return save_data(status)
 
     except Exception:
         if args.debug:
@@ -171,9 +171,7 @@ def main():
         logging.debug("Unhandled error: %s" % traceback.format_exc())
 
 
-if __name__ == "__main__":
-
-    result = main()
+def save_data(result):
     res = ":".join(
         map(
             str,
@@ -206,3 +204,8 @@ if __name__ == "__main__":
     print(res)
     with open("fritz.err.txt", "a") as fid:
         fid.write(res + "\n")
+
+
+if __name__ == "__main__":
+
+    main()
