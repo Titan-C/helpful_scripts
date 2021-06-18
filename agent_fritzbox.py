@@ -45,6 +45,7 @@ def parse_args():
     parser.add_argument(
         "host_address", metavar="HOST", help="Host name or IP address of your Fritz!Box"
     )
+    parser.add_argument("--logs", action="store_true", help="Query eventlog")
     parser.add_argument(
         "--debug",
         action="store_true",
@@ -127,6 +128,16 @@ def main():
     base_url = "http://%s:49000/" % args.host_address
 
     try:
+        if args.logs:
+            print(
+                get_upnp_info(
+                    base_url + "upnp/control/deviceinfo",
+                    "urn:dslforum-org:service:DeviceInfo:1",
+                    "GetDeviceLog",
+                )["NewDeviceLog"]
+            )
+            return
+
         status = {}
         for configs in [
             (
