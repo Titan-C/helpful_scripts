@@ -1239,6 +1239,10 @@ and the arguments for flyckeck-clang based on a project-specific text file."
   (evil-define-key 'normal 'slime-mode-map "gd" 'slime-edit-definition)
 )
 #+END_SRC
+** Scheme
+#+begin_src emacs-lisp
+(use-package geiser-guile)
+#+END_SRC
 ** Haskell
 #+begin_src emacs-lisp
 (use-package haskell-mode
