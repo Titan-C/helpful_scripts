@@ -1511,29 +1511,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 #+END_SRC
 ** TODO save & anotations
 http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
-* Ledger
-Emacs mode for managing ledger text files
-#+BEGIN_SRC emacs-lisp
-(use-package
-  ledger-mode
-  :config
-  (add-hook 'ledger-mode-hook (lambda ()
-                                (add-hook 'before-save-hook 'ledger-mode-clean-buffer nil t)))
-  (setq ledger-default-date-format ledger-iso-date-format)
-
-
-  (defun on/ledger-link-invoice ()
-    "Attach an invoice file to this posting."
-    (interactive)
-    (when-let* ((date (ledger-xact-date))
-                (payee (replace-regexp-in-string " " "_" (string-trim-right (ledger-xact-payee))))
-                (src-file (read-file-name "Attach: " "~/dev/journal/Empresa_DE/"))
-                (file-name (concat "Empresa_DE/" date "_" payee "." (file-name-extension src-file))))
-      (ledger-navigate-beginning-of-xact)
-      (end-of-line)
-      (rename-file src-file (expand-file-name file-name "/home/titan/dev/journal/"))
-      (newline)
-      (insert "    ; Invoice: " file-name))))
 
 #+end_src
 * Circe
