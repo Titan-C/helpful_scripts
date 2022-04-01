@@ -8,7 +8,7 @@
 ;; Modified: June 25, 2021
 ;; Version: 0.0.1
 ;; Keywords: Symbol’s value as variable is void: finder-known-keywords
-;; Package-Requires: ((emacs "24.3"))
+;; Package-Requires: ((emacs "24.4"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -70,15 +70,15 @@ Values are taken from smallest seconds to hours."
   "Copy render break the INFILE into the SLICES."
   (write-region  ;; write a list.txt with all the chunks
    (string-join
-    (--map (format "file 'sli-out%d.mkv'" it)
-           (number-sequence 0 (- (length points) 1)))
+    (--map (format "file 'slice-out%d.mkv'" it)
+           (number-sequence 0 (- (length slices) 1)))
     "\n")
    nil
    "list.txt")
   (string-join (--map-indexed
                 (-let (((start end) it))
-                  (format "ffmpeg -y -ss %g -i %s -t %g -c copy slice-out%d.mkv"
-                          start infile (- end start) it-index )) slices)
+                  (format "ffmpeg -y -i %s -ss %g -t %g -c copy slice-out%d.mkv"
+                          infile start (- end start) it-index )) slices)
                " && "))
 
 (let* ((slices (trim-import-slices-from-csv "keep.csv"))
