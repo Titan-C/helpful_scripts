@@ -28,9 +28,7 @@
 
 Set SSH agent
 #+BEGIN_SRC emacs-lisp
-(if (string-equal (user-login-name) "on")
-    (setenv "SSH_AUTH_SOCK" (concat "/run/user/1000/gnupg/S.gpg-agent.ssh"))
-  (setenv "SSH_AUTH_SOCK" (concat (getenv "XDG_RUNTIME_DIR")"/gnupg/S.gpg-agent.ssh")))
+(setenv "SSH_AUTH_SOCK" (concat (getenv "XDG_RUNTIME_DIR")"/gnupg/S.gpg-agent.ssh"))
 #+END_SRC
 ** Frame title includes file being used
 #+BEGIN_SRC emacs-lisp
@@ -42,7 +40,7 @@ Set SSH agent
 #+END_SRC
 ** My lisp source or from other sources
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'load-path "~/.emacs.d/lisp/")
+  (add-to-list 'load-path "~/dev/helpful_scripts/emacs.d/lisp/")
 #+END_SRC
 ** Package management
 Make sure =use-package= is installed as it administers all packages
@@ -75,12 +73,12 @@ Make sure =use-package= is installed as it administers all packages
 #+END_SRC
 ** Style
 #+BEGIN_SRC emacs-lisp
-  (use-package material-theme
+  (use-package doom-themes
     :init
-    (load-theme 'material t))
+    (load-theme 'doom-gruvbox t))
 
   ;; font size
-  (set-face-attribute 'default nil :font "DejaVuSansMono Nerd Font-13")
+  ;;(set-face-attribute 'default nil :font "DejaVuSansMono Nerd Font-13")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -604,7 +602,7 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
 
   (add-to-list 'org-modules 'org-protocol t)
   ;; to interact from external sources
-  (server-start)
+  ;;(server-start)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -1369,8 +1367,7 @@ and the arguments for flyckeck-clang based on a project-specific text file."
     (setq notmuch-search-line-faces
           `(("deleted" . (:strike-through "red"))
             ("flagged" 'notmuch-search-flagged-face)
-            ("unread" . (:foreground "#81d4fa"
-                         :weight bold))))
+            ("unread" . 'notmuch-search-unread-face)))
 
     ;;Load org-notmuch independently to open links from org files
     (require 'org-notmuch)
@@ -1511,47 +1508,21 @@ and the arguments for flyckeck-clang based on a project-specific text file."
 #+END_SRC
 ** TODO save & anotations
 http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
-
+* Test
+#+begin_src emacs-lisp
+(use-package calibredb
+  :init
+  (setq calibredb-root-dir "/run/media/titan/ext_backup/personal/Libros/CalibreManaged")
+  (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir)))
 #+end_src
 * Circe
 #+BEGIN_SRC emacs-lisp
 (use-package circe
     :config
-    (setq circe-default-user "Titan-C"
-          )
+    (setq circe-default-user "Titan-C")
     (setq circe-network-options
       '(("Freenode"
          :tls t
          :nick "Titan-C"
          :channels ("#emacs-circe" "#clojure")))))
 #+END_SRC
-* Check_MK
-#+BEGIN_SRC emacs-lisp
-(when (string-equal (user-login-name) "on")
-  (global-set-key (kbd "<f10>")
-                  (lambda ()
-                    (interactive)
-                    (async-shell-command "WEBPACK_MODE=quick ~/git/zeug_cmk/bin/f12" "*f12*")))
-  (global-set-key (kbd "<f9>")
-                  (lambda ()
-                    (interactive)
-                    (async-shell-command "cd ~/git/check_mk/managed/ && ~/git/check_mk/managed/.f12" "*f12*"))))
-#+END_SRC
-** Jira Issue management
-#+BEGIN_SRC emacs-lisp
-(when (string-equal (user-login-name) "on")
-  (use-package
-    org-jira
-    :config
-    (setq jiralib-url "https://jira.lan.tribe29.com")))
-#+END_SRC
-** Gerrit review
-#+BEGIN_SRC emacs-lisp
-(when (string-equal (user-login-name) "on")
-(use-package magit-gerrit
-  :load-path "/home/on/git/magit-gerrit/"
-  :config
-  (require 'magit-gerrit)))
-#+END_SRC
-
-#+RESULTS:
