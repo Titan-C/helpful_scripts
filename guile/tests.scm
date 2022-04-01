@@ -16,7 +16,7 @@
 
 (define (test-on-test-end-color runner)
   (let ((log (test-runner-aux-value runner))
-	(kind (test-result-ref runner 'result-kind))
+        (kind (test-result-ref runner 'result-kind))
         (results (test-result-alist runner)))
     (when (memq kind '(fail xpass))
       (display (colorize-string (if (eq? kind 'xpass) "XPASS" "FAIL") 'RED))
@@ -28,9 +28,9 @@
     (when (output-port? log)
       (display "Test end:\n" log)
       (map (lambda (pair)
-	     ;; Write out properties not written out by on-test-begin.
+             ;; Write out properties not written out by on-test-begin.
              (unless (memq (car pair) '(test-name source-file source-line source-form))
-	       (%test-write-result1 pair log)))
+               (%test-write-result1 pair log)))
            results))))
 
 (test-runner-factory
