@@ -1,46 +1,16 @@
 #+TITLE: Emacs Configuration
 #+AUTHOR: Óscar Nájera
 
-* Personal Information
-#+BEGIN_SRC emacs-lisp
-(setq user-full-name "Óscar Nájera"
-      user-mail-address (if (string-equal (user-login-name) "on")
-                             "oscar.najera@tribe29.com"
-                           "hi@oscarnajera.com"))
-#+END_SRC
 * Editor
 ** Basic behavior settings
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
-  (setq vc-follow-symlinks t)
   (unless (string-equal (user-login-name) "on")
     (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p))
   (fset 'yes-or-no-p 'y-or-n-p)
   (setq-default indent-tabs-mode nil)
   (setq-default fill-column 75)
-  (add-hook 'text-mode-hook 'visual-line-mode) ;; word-wrap
-  (add-hook 'text-mode-hook 'flyspell-mode) ;; spell-check
-  (setq inhibit-startup-screen t)
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (add-hook 'text-mode-hook (lambda () (abbrev-mode 1)))
-#+END_SRC
-
-Set SSH agent
-#+BEGIN_SRC emacs-lisp
-(setenv "SSH_AUTH_SOCK" (concat (getenv "XDG_RUNTIME_DIR")"/gnupg/S.gpg-agent.ssh"))
-#+END_SRC
-** Frame title includes file being used
-#+BEGIN_SRC emacs-lisp
-  ;;http://emacs-fu.blogspot.fr/2011/01/setting-frame-title.html
-  (setq frame-title-format
-    '("" invocation-name ": "(:eval (if (buffer-file-name)
-                (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
-#+END_SRC
-** My lisp source or from other sources
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'load-path "~/dev/helpful_scripts/emacs.d/lisp/")
 #+END_SRC
 ** Package management
 Make sure =use-package= is installed as it administers all packages
@@ -70,230 +40,6 @@ Make sure =use-package= is installed as it administers all packages
 
     (add-hook 'ediff-prepare-buffer-hook 'ora-ediff-prepare-buffer)
   )
-#+END_SRC
-** Style
-#+BEGIN_SRC emacs-lisp
-  (use-package doom-themes
-    :init
-    (load-theme 'doom-gruvbox t))
-
-  ;; font size
-  ;;(set-face-attribute 'default nil :font "DejaVuSansMono Nerd Font-13")
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package spaceline
-  :init
-  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
-        powerline-default-separator 'wave)
-  (require 'spaceline-config)
-  (spaceline-spacemacs-theme))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-(setq display-time-24hr-format t)
-(setq display-time-format "%H:%M - %d %b %Y")
-(display-time-mode 1)
-#+END_SRC
-** Hydra
-Hydra allows to configure sets of keybindings.
-#+BEGIN_SRC emacs-lisp
-(use-package hydra)
-#+END_SRC
-** Evil-mode
-#+BEGIN_SRC emacs-lisp
-(use-package undo-tree
-  :init (global-undo-tree-mode))
-
-(use-package evil
-  :init
-  (setq evil-undo-system 'undo-tree)
-  (setq evil-want-keybinding nil)
-
-  :bind (:map evil-normal-state-map
-              ("r" . nil)
-              ("s" . nil)
-              ("h" . evil-replace)
-              ("k" . evil-redo)
-              :map evil-motion-state-map
-              ("r" . evil-next-line)
-              ("t" . evil-previous-line)
-              ("n" . evil-backward-char)
-              ("s" . evil-forward-char)
-              ("l" . evil-search-next)
-              ("L" . evil-search-previous)
-              ("k" . nil)
-              ("h" . evil-replace)
-              ("C-i" . evil-scroll-up)
-              :map evil-visual-state-map
-              ("h" . evil-replace))
-
-  :config
-  (evil-mode 1)
-
-  (defun my-save-if-bufferfilename ()
-    (if (buffer-file-name)
-        (save-buffer)
-      (message "no file is associated to this buffer: do nothing")))
-  (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
-  :after undo-tree)
-
-(use-package evil-leader
-  :init
-  (global-evil-leader-mode)
-  (evil-leader/set-leader "<SPC>")
-  (evil-leader/set-key
-      "x" 'helm-M-x
-      "f" 'helm-find-files
-      "m" 'notmuch
-      "s" 'eshell
-      "q" 'kill-this-buffer
-      "Q" 'kill-buffer-and-window
-      "r" 'avy-goto-char
-      "c" 'avy-goto-word-1
-      "g" 'helm-mini)
-)
-
-;;(global-set-key [escape] 'keyboard-quit)
-(global-set-key [escape] 'helm-keyboard-quit)
-
-
-(use-package key-chord
-  :init
-    (setq key-chord-two-keys-delay 0.05)
-    (key-chord-define-global "ww" (lambda () (interactive) (save-buffer)
-                                             (evil-normal-state)))
-  :config
-    (key-chord-mode 1))
-
-(use-package avy
-  :ensure t )
-#+END_SRC
-
-** Key Bindings
-#+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :diminish which-key-mode
-    :init
-    (setq which-key-idle-delay 0.5)
-    (which-key-mode))
-#+END_SRC
-** Window Management
-#+BEGIN_SRC emacs-lisp
-  (setq split-width-threshold 150)
-
-  (use-package ace-window
-    :bind (("s-c" . ace-window))
-    :config (setq aw-keys '(?a ?o ?e ?i ?r ?t ?n ?s)))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (require 'windmove)
-
-  (defun hydra-move-splitter-left (arg)
-    "Move window splitter left."
-    (interactive "p")
-    (if (let ((windmove-wrap-around))
-          (windmove-find-other-window 'right))
-        (shrink-window-horizontally arg)
-      (enlarge-window-horizontally arg)))
-
-  (defun hydra-move-splitter-right (arg)
-    "Move window splitter right."
-    (interactive "p")
-    (if (let ((windmove-wrap-around))
-          (windmove-find-other-window 'right))
-        (enlarge-window-horizontally arg)
-      (shrink-window-horizontally arg)))
-
-  (defun hydra-move-splitter-up (arg)
-    "Move window splitter up."
-    (interactive "p")
-    (if (let ((windmove-wrap-around))
-          (windmove-find-other-window 'up))
-        (enlarge-window arg)
-      (shrink-window arg)))
-
-  (defun hydra-move-splitter-down (arg)
-    "Move window splitter down."
-    (interactive "p")
-    (if (let ((windmove-wrap-around))
-          (windmove-find-other-window 'up))
-        (shrink-window arg)
-      (enlarge-window arg)))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-(winner-mode 1)
-
-(defun split-right-and-follow ()
-  (interactive)
-  (split-window-right)
-  (windmove-right))
-
-(global-set-key (kbd "C-x 3") 'split-right-and-follow)
-
-(defun split-below-and-follow ()
-  (interactive)
-  (split-window-below)
-  (windmove-down))
-
-(global-set-key (kbd "C-x 2") 'split-below-and-follow)
-
-(defhydra hydra-window ()
-  "
-  Movement^^        ^Split^         ^Switch^      ^Resize^
-  ----------------------------------------------------------------
-  _n_ ←         _d_ vertical      _g_ buffer      _N_ ←
-  _r_ ↓         _q_ horizontal    _f_ind files    _R_ ↓
-  _t_ ↑         _._ undo          _c_ ace 1       _T_ ↑
-  _s_ →         _:_ reset         _h_ swap        _S_ →
-  _F_ollow      _D_lt Other       _p_roject files _m_aximize
-  _SPC_ cancel  onl_y_ this       _x_ delete      _l_aunch
-  "
-  ("r" windmove-down )
-  ("t" windmove-up )
-  ("n" windmove-left )
-  ("s" windmove-right )
-  ("N" hydra-move-splitter-left)
-  ("R" hydra-move-splitter-down)
-  ("T" hydra-move-splitter-up)
-  ("S" hydra-move-splitter-right)
-  ("g" helm-mini)
-  ("p" helm-projectile)
-  ("f" helm-find-files)
-  ("F" follow-mode)
-  ("c" (lambda ()
-         (interactive)
-         (ace-window 1)
-         (add-hook 'ace-window-end-once-hook 'hydra-window/body)))
-  ("d" (split-right-and-follow))
-  ("q" (split-below-and-follow))
-  ("h" (lambda ()
-         (interactive)
-         (ace-window 4)
-         (add-hook 'ace-window-end-once-hook 'hydra-window/body)))
-  ("x" delete-window)
-  ("D" (lambda ()
-         (interactive)
-         (ace-window 16)
-         (add-hook 'ace-window-end-once-hook 'hydra-window/body)))
-  ("y" delete-other-windows)
-  ("m" ace-maximize-window)
-  ("." (progn (winner-undo)
-              (setq this-command 'winner-undo)))
-  (":" winner-redo)
-  ("l" dmenu :exit t)
-  ("SPC" nil))
-
-  (global-set-key (kbd "s-p") 'hydra-window/body)
-#+END_SRC
-** Dired
-#+BEGIN_SRC emacs-lisp
-;; modify dired keys
-(require 'dired )
-(evil-set-initial-state 'dired-mode 'emacs)
-(define-key dired-mode-map "t" 'dired-previous-line)
-(define-key dired-mode-map "r" 'dired-next-line)
-(define-key dired-mode-map "p" 'dired-toggle-marks)
-(setq-default dired-listing-switches "-alh")
 #+END_SRC
 ** Spelling
 About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
@@ -325,12 +71,6 @@ About using hunspell and langtool from https://joelkuiper.eu/spellcheck_emacs
         langtool-default-language "en-US"
         langtool-disabled-rules '("WHITESPACE_RULE")))
 #+END_SRC
-*** Definitions
-#+begin_src emacs-lisp
-(use-package lexic
-  :bind (("C-c p" . 'lexic-search))
-  :config (evil-set-initial-state 'lexic-mode 'emacs))
-#+end_src
 *** Foreign languages
 Documents can be set to default to certain languages that differ from my
 default. This makes them save values.
@@ -356,26 +96,6 @@ default. This makes them save values.
                 (ispell-local-dictionary . "es_EC")
                 (ispell-local-dictionary . "de_DE")
                 (ispell-local-dictionary . "fr_FR"))))
-#+END_SRC
-** Add-ons
-#+BEGIN_SRC emacs-lisp
-  (setq browse-url-browser-function 'browse-url-firefox)
-#+END_SRC
-** Parenthesis
-#+BEGIN_SRC emacs-lisp
-(show-paren-mode t)
-(setq show-paren-delay 0.0)
-(use-package smartparens
-  :diminish smartparens-mode
-  :bind (:map smartparens-mode-map
-        ("C-)" . sp-forward-slurp-sexp)
-        ("C-(" . sp-backward-slurp-sexp)
-        ("C-M-)" . sp-forward-barf-sexp)
-        ("C-M-(" . sp-backward-barf-sexp))
-  :init
-  (smartparens-global-mode)
-  (use-package evil-smartparens
-    :init (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)))
 #+END_SRC
 ** Pass
 #+BEGIN_SRC emacs-lisp
@@ -404,36 +124,7 @@ default. This makes them save values.
       auth-sources '(password-store))
 (auth-source-pass-enable))
 #+END_SRC
-** Tramp
-Tramp is amazing to edit remote files, but you can also edit inside docker
-containers where you don't even have an editor.
-#+BEGIN_SRC emacs-lisp
-(use-package tramp)
-(use-package docker-tramp)
-#+END_SRC
 * Completion
-#+BEGIN_SRC emacs-lisp
-(global-set-key "\M-/" 'hippie-expand)
-
-(use-package company
-  :diminish company-mode
-  :bind (:map company-active-map
-            ("C-r" . company-select-next)
-            ("C-t" . company-select-previous)
-         :map company-search-map
-            ("C-r" . company-select-next)
-            ("C-t" . company-select-previous))
-    :init
-    (add-hook 'after-init-hook 'global-company-mode)
-    (setq company-idle-delay 0.2
-          company-selection-wrap-around t)
-    )
-
-(use-package yasnippet
-  :config (yas-global-mode t))
-
-(use-package yasnippet-snippets)
-#+END_SRC
 ** Helm
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -510,25 +201,6 @@ containers where you don't even have an editor.
                 ("C-r" . ivy-next-line)
                 ("C-t" . ivy-previous-line)
                 ("C-n" . ivy-reverse-i-search)))
-#+END_SRC
-* shell
-** Xonsh
-Trying to use Xonsh inside of emacs to access a pythonic terminal
-#+BEGIN_SRC emacs-lisp
-(use-package multi-term
-  :config
-  (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1)))
-  (setq company-global-modes '(not term-mode))
-  (setq multi-term-program "/usr/bin/xonsh"))
-#+END_SRC
-** Eshell
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'exec-path "~/dev/helpful_scripts")
-  (add-to-list 'exec-path "~/.cargo/bin")
-  (add-to-list 'exec-path "~/.local/bin")
-  (use-package eshell-git-prompt
-    :init
-    (eshell-git-prompt-use-theme 'powerline))
 #+END_SRC
 * Org mode
 ** Main Behavior
@@ -642,10 +314,6 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
   ;; Launch day agenda
   (org-agenda-list 1)
   (setq initial-buffer-choice '(lambda () (get-buffer org-agenda-buffer-name)))
-  (require 'cal-sync)
-  (setq cal-sync-url "https://cloud.oscarnajera.com/remote.php/dav/calendars/oscar"
-        cal-sync-calendar-id "personal"
-        org-icalendar-date-time-format ":%Y%m%dT%H%M%SZ")
 
   (setq org-startup-folded 'overview)
   (add-to-list 'safe-local-variable-values '(org-startup-folded . showall))
@@ -664,22 +332,6 @@ Trying to use Xonsh inside of emacs to access a pythonic terminal
     "oe" 'org-todo)
 
 
-#+END_SRC
-** Alerts
-This is to set the reminders of calendar events.
-Using appt is quite fine. I get a remainder just above the minibuffer
-There is no loud sound or anything disturbing, just the appearance of
-this new window.
-#+BEGIN_SRC emacs-lisp
-  (setq
-    appt-display-mode-line t     ;; show in the modeline
-    appt-display-format 'window) ;; use our func
-  (run-at-time "5 minutes" 3600 'org-agenda-to-appt)
-  (appt-activate 1)              ;; active appt (appointment notification)
-  (display-time)                 ;; time display is required for this...
-
-  ;; update appt each time agenda opened
-  (add-hook 'org-agenda-finalize-hook 'org-agenda-to-appt)
 #+END_SRC
 ** Latex
 #+BEGIN_SRC emacs-lisp
@@ -700,13 +352,6 @@ this new window.
     ;(key-chord-define org-src-mode-map ".." 'org-edit-latex-preview-at-point)
     ;(key-chord-define org-mode-map ".." 'org-toggle-latex-fragment)
 #+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (use-package org-edit-latex
-    :disabled
-    :ensure t
-    :config
-    (add-hook 'org-mode-hook 'org-edit-latex-mode))
-#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package company-math
@@ -719,28 +364,6 @@ this new window.
   (add-hook 'org-mode-hook 'my-latex-mode-setup)
 
   (add-to-list 'company-math-allow-latex-symbols-in-faces 'org-latex-and-related))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-(use-package ox-latex
-  :ensure org
-  :after org
-  :config
-  ;; APS journals
-  (add-to-list 'org-latex-classes '("revtex4-1"
-        "\\documentclass{revtex4-1}
-        [PACKAGES]
-        [EXTRA]"
-        ("\\section{%s}" . "\\section*{%s}")
-        ("\\subsection{%s}" . "\\subsection*{%s}")
-        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-        ("\\paragraph{%s}" . "\\paragraph*{%s}")
-        ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-  (eval-after-load 'ox
-    '(require 'ox-koma-letter))
-
-  (add-to-list 'org-latex-packages-alist '("AUTO" "babel" nil))
-)
 #+END_SRC
 ** Note taking and references management
 #+begin_src emacs-lisp
@@ -920,80 +543,7 @@ this new window.
 ;;(add-to-list 'load-path "~/dev/org-protocol-capture-html/")
 ;;(require 'org-protocol-capture-html)
 #+END_SRC
-** Babel
-#+BEGIN_SRC emacs-lisp
-(use-package plantuml-mode
-  :after org
-  :config
-  (setq org-plantuml-jar-path "/opt/plantuml/plantuml.jar"))
-#+END_SRC
-*** Python
-#+BEGIN_SRC emacs-lisp
-  (setq org-babel-python-command "ipython --simple-prompt --pprint")
-  (setq org-babel-default-header-args:python
-        '((:session . "Python")
-          (:tangle . "yes")
-          (:eval . "never-export")
-          (:exports . "results")))
-#+END_SRC
-*** RevealJS
-#+BEGIN_SRC emacs-lisp
-;(use-package ox-reveal
-;:load-path "~/dev/org-reveal"
-;:init
-;(setq org-reveal-root "file:///home/me/dev/reveal.js"))
-#+END_SRC
-* Text Editing
-** Markdown
-#+BEGIN_SRC emacs-lisp
-(use-package markdown-mode
-:mode "\\.md//'"
-:config
-(add-hook 'markdown-mode-hook 'auto-fill-mode)
-(add-hook 'markdown-mode-hook 'flyspell-mode))
-#+END_SRC
-** Latex
-#+BEGIN_SRC emacs-lisp
-(use-package tex-site
-:ensure auctex
-:config
-(setq LaTeX-command "latex -shell-escape"))
-#+END_SRC
-* Magit
-#+BEGIN_SRC emacs-lisp
-(use-package magit
-  :commands magit-status
-  :init (evil-leader/set-key "t" 'magit-status)
-  :bind (:map magit-mode-map
-              ("t" . 'magit-section-backward)
-              ("\M-t" . 'magit-section-backward-sibling)
-              ("r" . 'magit-section-forward)
-              ("\M-r" . 'magit-section-forward-sibling)
-              ("p" . 'magit-tag)
-              ("n" . 'magit-rebase))
-  :config
-    (add-hook 'git-commit-mode-hook 'flyspell-mode)
-    (add-hook 'git-commit-mode-hook 'evil-insert-state)
-
-    (setq magit-diff-refine-hunk t)
-    (setq magit-repository-directories '("~/dev"))
-
-    ;;https://emacs.stackexchange.com/questions/19672/magit-gerrit-push-to-other-branch
-    (defun magit-push-to-gerrit ()
-      (interactive)
-      (magit-git-command-topdir "git push origin HEAD:refs/for/master"))
-    (transient-append-suffix 'magit-push "g" '("g" "Push to gerrit" magit-push-to-gerrit)))
-
-#+END_SRC
 * Coding
-#+BEGIN_SRC emacs-lisp
-(use-package rainbow-delimiters
-  :commands rainbow-delimiters-mode
-  :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-
-(setq xref-prompt-for-identifier nil)
-(evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
-#+END_SRC
 ** Linting
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
@@ -1005,138 +555,13 @@ this new window.
   (flycheck-add-next-checker 'python-flake8 'python-pylint)
   (add-hook 'prog-mode-hook 'flycheck-mode))
 #+END_SRC
-** Python
-#+BEGIN_SRC emacs-lisp
-(use-package elpy
-    :init
-        (advice-add 'python-mode :before 'elpy-enable)
-    :config
-        (add-hook 'python-mode-hook 'flyspell-prog-mode)
-        (add-hook 'python-mode-hook 'elpy-mode)
-        (if (string-equal (user-login-name) "on")
-            (pyvenv-activate "~/git/check_mk/.venv")
-            (pyvenv-activate "~/.virtualenvs/dev3/"))
-        (setq elpy-rpc-python-command "python3")
-        (setq elpy-rpc-timeout 60)
-        (setq elpy-rpc-backend "jedi")
-        (remove-hook 'elpy-modules 'elpy-module-flymake)
-        (setq python-shell-interpreter "ipython")
-        (setq python-shell-interpreter-args "-i --simple-prompt --pprint")
-        (setq python-shell-completion-native-enable nil)
-        (evil-define-key 'motion python-mode-map "gd" 'elpy-goto-definition)
-        (setq elpy-test-runner 'elpy-test-pytest-runner))
-
-(use-package sphinx-doc
-  :diminish sphinx-doc-mode)
-
-(use-package cython-mode
-    :mode (("\\.pyx" . cython-mode)))
-
-(use-package yaml-mode :ensure t)
-#+END_SRC
-** Web
-#+BEGIN_SRC emacs-lisp
-(use-package web-mode
-  :mode (("\\.html?" . web-mode)
-         ("\\.jsx\\'" . web-mode)
-         ("\\.tsx\\'" . web-mode)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package scss-mode)
-(use-package ox-hugo
-  :after ox
-  :init
-  (add-to-list 'safe-local-variable-values
-               '(eval add-hook 'after-save-hook #'org-hugo-export-wim-to-md :append :local)))
-#+END_SRC
-*** JavaScript
-#+BEGIN_SRC emacs-lisp
-(use-package js2-mode
-  :mode (("\\.js$" . js2-mode))
-  :hook ((js2-mode . flycheck-mode))
-  :config
-  (evil-define-key 'normal 'js2-mode-map "gd" 'js2-jump-to-definition))
-
-(use-package prettier-js
-  :ensure t
-  :hook ((js2-mode . prettier-js-mode)))
-#+END_SRC
-
-#+begin_src emacs-lisp
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
-
-(defun setup-tide-mode ()
-    (interactive)
-    (tide-setup)
-    (flycheck-mode +1)
-    (setq flycheck-check-syntax-automatically '(save mode-enabled))
-    (eldoc-mode +1)
-    (tide-hl-identifier-mode +1)
-    ;; company is an optional dependency. You have to
-    ;; install it separately via package-install
-    ;; `M-x package-install [ret] company`
-    (company-mode +1))
-
-(use-package tide
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
-#+end_src
-
-#+RESULTS:
-| tide-format-before-save | delete-trailing-whitespace |
-
 ** C++
-#+BEGIN_SRC emacs-lisp
-  (use-package cmake-mode
-    :mode (("CMakeLists\\.txt\\'" . cmake-mode)
-           ("\\.cmake\\'" . cmake-mode)))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-(let ((clang-fmt-path  "/usr/share/clang/clang-format.el"))
-  (if (file-exists-p clang-fmt-path)
-      (load clang-fmt-path)
-    (load "/usr/share/emacs/site-lisp/clang-format-10/clang-format.el")))
-
-
-(add-hook 'c-mode-common-hook (lambda ()
-                                (add-hook 'before-save-hook 'clang-format-buffer nil t)))
-
-;(use-package company-c-headers
-  ;:defer t
-  ;:init (add-to-list 'company-backends 'company-c-headers))
-
-(use-package gdb-mi
-  :defer t
-  :init (setq
-         ;; use gdb-many-windows by default when `M-x gdb'
-         gdb-many-windows t
-         ;; Non-nil means display source file containing the main routine at startup
-         gdb-show-main t))
-
-(use-package rtags
-  :pin melpast
-  :config (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
-  (evil-define-key 'motion c-mode-base-map "gd" 'rtags-find-symbol-at-point)
-  ;; Shutdown rdm when leaving emacs.
-  (add-hook 'kill-emacs-hook 'rtags-quit-rdm))
-
-(use-package flycheck-rtags)
-(use-package dumb-jump)
-#+END_SRC
-
 #+BEGIN_SRC emacs-lisp
 ;; Based on the Sarcasm/irony-mode compilation database code.
 (defun company-mode/find-clang-complete-file ()
   (when buffer-file-name
-    (let ((dir (locate-dominating-file buffer-file-name ".clang_complete")))
-      (when dir
-        (concat (file-name-as-directory dir) ".clang_complete")))))
+    (when-let ((dir (locate-dominating-file buffer-file-name ".clang_complete")))
+      (concat (file-name-as-directory dir) ".clang_complete"))))
 
 ;; Based on the Sarcasm/irony-mode compilation database code.
 (defun company-mode/load-clang-complete-file (cc-file)
@@ -1171,209 +596,11 @@ and the arguments for flyckeck-clang based on a project-specific text file."
                          (remove-if-not (lambda (f) (string-prefix-p "-I" f)) flags))))
       (setq-local company-clang-arguments flags)
       (setq-local company-c-headers-path-system (append '("/usr/include" "/usr/local/include") dirs))
-(setq-local flycheck-clang-args flags))))
+      (setq-local flycheck-clang-args flags))))
 
 (add-hook 'c-mode-common-hook 'c-c++/load-clang-args)
 #+END_SRC
-** Rust
-#+BEGIN_SRC emacs-lisp
-(use-package rust-mode
-  :config
-  (rust-enable-format-on-save))
-
-(use-package cargo
-  :config
-  (add-hook 'rust-mode-hook 'cargo-minor-mode))
-
-(use-package flycheck-rust
-  :ensure t
-  :mode (("\\.rs\\'" . rust-mode))
-  :init
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
-(use-package racer
-  :config
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode))
-
-(use-package ob-rust)
-#+END_SRC
-** Docker
-#+BEGIN_SRC emacs-lisp
-  (use-package dockerfile-mode
-    :ensure t)
-#+END_SRC
-
-** Lua
-#+BEGIN_SRC emacs-lisp
-  (use-package lua-mode)
-#+END_SRC
-** clojure
-#+BEGIN_SRC emacs-lisp
-(use-package cider
-  :pin melpast
-  :config
-  (evil-define-key 'motion clojure-mode-map "gd" 'cider-find-var))
-
-(use-package clj-refactor
-  :config
-  (clj-refactor-mode 1))
-
-(use-package flycheck-clojure
-  :config
-  (flycheck-clojure-setup))
-#+END_SRC
-** Emacs lisp
-#+BEGIN_SRC emacs-lisp
-(use-package elisp-format)
-#+END_SRC
-** Common lisp
-#+BEGIN_SRC emacs-lisp
-(use-package slime
-  :config
-  (setq inferior-lisp-program "sbcl")
-  (slime-setup '(slime-fancy slime-quicklisp slime-asdf))
-  (evil-define-key 'normal 'slime-mode-map "gd" 'slime-edit-definition)
-)
-#+END_SRC
-** Scheme
-#+begin_src emacs-lisp
-(use-package geiser-guile)
-#+END_SRC
-** Haskell
-#+begin_src emacs-lisp
-(use-package haskell-mode
-  :init
-  (setq haskell-tags-on-save t)
-  :bind (:map haskell-mode-map
-              ("C-c C-l" . haskell-process-load-file)
-              ("C-c C-z" . haskell-interactive-switch)))
-(use-package hindent
-  :hook (haskell-mode . hindent-mode))
-;; HLint
-(use-package hs-lint
-  :after haskell-mode
-  :load-path "/usr/share/hlint/"
-  :bind (:map haskell-mode-map
-              ("C-c l" . hs-lint)))
-#+end_src
 * Email
-** Notmuch client
-#+BEGIN_SRC emacs-lisp
-(use-package notmuch
-  :bind (:map notmuch-hello-mode-map
-          ("l" . notmuch-jump-search)
-          ("/" . notmuch-tree)
-         :map notmuch-search-mode-map
-          ("r" . notmuch-search-next-thread)
-          ("N" . notmuch-search-reply-to-thread)
-          ("t" . notmuch-search-previous-thread)
-          ("f" . notmuch-search-filter-by-tag)
-          ("/" . notmuch-tree)
-          ("d" . notmuch-search-delete-thread)
-          ("D" . notmuch-search-delete-all)
-         :map notmuch-tree-mode-map
-          ("r" . notmuch-tree-next-matching-message)
-          ("t" . notmuch-tree-prev-matching-message)
-          ("R" . notmuch-tree-next-message)
-          ("T" . notmuch-tree-prev-message)
-          ("n" . notmuch-tree-reply-sender)
-          ("N" . notmuch-tree-reply)
-         :map notmuch-show-mode-map
-          ("N" . notmuch-show-reply)
-          ("n" . notmuch-show-reply-sender)
-          ("r" . notmuch-show-next-message)
-          ("t" . notmuch-show-previous-message)
-          ("M-r" . notmuch-show-next-thread-show)
-          ("M-t" . notmuch-show-previous-thread-show)
-          ("d" . notmuch-show-delete-message)
-          ("D" . notmuch-show-delete-thread-then-exit)
-          ("i" . notmuch-show-tag-spam)
-        )
-  :config
-    (setq message-directory "~/.mail/"
-          message-auto-save-directory "/tmp/"
-          message-signature "Oscar Najera\nSoftware Developer\n\ntribe29 GmbH — The Check_MK Company\noscar.najera@tribe29.com | Phone: +49 89 9982 097 00 | https://tribe29.com\n\nKellerstraße 29, 81667 München, Germany\nAmtsgericht München, HRB 165902\nGeschäftsführer: Jan Justus, Mathias Kettner"
-          org-email-link-description-format "%c: %s")
-
-
-    (defun notmuch-show-delete-message ()
-      "Delete current message if already marked as deleted undo."
-      (interactive)
-      (apply #'notmuch-show-tag-message
-         (if (member "deleted" (notmuch-show-get-tags))
-            '("-deleted") '("+deleted" "-inbox" "-unread"))))
-
-    (defun notmuch-show-tag-spam ()
-      "Tag spam on current message if already marked as spam undo."
-      (interactive)
-      (apply #'notmuch-show-tag-message
-         (if (member "spam" (notmuch-show-get-tags))
-            '("-spam") '("+spam" "-inbox" "-unread"))))
-
-    (defun notmuch-show-delete-thread-then-exit ()
-      "Delete all messages in the current buffer, then exit back to search results."
-      (interactive)
-      (notmuch-show-tag-all '("+deleted"))
-      (notmuch-show-next-thread))
-
-    (defun notmuch-search-delete-thread()
-      "Delete all messages in the current thread or undelete"
-       (interactive)
-       (notmuch-search-tag
-          (if (member "deleted" (notmuch-search-get-tags))
-               '("-deleted")
-               '("+deleted" "-inbox" "-unread"))))
-
-     (defun notmuch-search-delete-all()
-       "Delete all messages in the current buffer"
-        (interactive)
-        (notmuch-search-tag-all
-           '("+deleted" "-inbox" "-unread")))
-
-
-    (define-key notmuch-tree-mode-map "d"
-       (lambda ()
-       "delete message"
-          (interactive)
-          (notmuch-tree-tag
-             (if (member "deleted" (notmuch-tree-get-tags))
-                  '("-deleted")
-                  '("+deleted" "-inbox" "-unread")))))
-
-    (setq notmuch-saved-searches
-        '((:name "inbox" :query "tag:inbox" :key "i" :sort-order newest-first)
-          (:name "CMK" :query "(tag:CMK-JIRA or tag:lists/gerrit-check_mk) and tag:unread" :key "c")
-          (:name "flagged" :query "tag:flagged" :key "f")
-          (:name "unread" :query "tag:unread" :key "u")
-          (:name "drafts" :query "tag:draft" :key "d")))
-
-    (setq notmuch-show-all-tags-list t
-          notmuch-hello-tag-list-make-query "tag:unread and not tag:killed")
-
-    (setq notmuch-fcc-dirs '((".*@oscarnajera.com" . "hi_pers/Sent")
-                             ("oscar.najera@tribe29.com" . "work/Sent")
-                             ;;(".*@gmail.com" . "\"gmail/[Gmail]/.Sent Mail\"")
-                             ))
-
-    (setq notmuch-crypto-process-mime t)
-    (setq message-kill-buffer-on-exit t)
-
-    (setq-default notmuch-search-oldest-first nil)
-    (setq notmuch-archive-tags '("-inbox" "-unread"))
-    (evil-set-initial-state 'notmuch-tree-mode 'emacs)
-
-    (setq notmuch-search-line-faces
-          `(("deleted" . (:strike-through "red"))
-            ("flagged" 'notmuch-search-flagged-face)
-            ("unread" . 'notmuch-search-unread-face)))
-
-    ;;Load org-notmuch independently to open links from org files
-    (require 'org-notmuch)
-)
-#+END_SRC
-
 ** Composer
 #+BEGIN_SRC emacs-lisp
   ;; linebreak in message editing
@@ -1381,8 +608,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
   (add-hook 'message-mode-hook 'flyspell-mode)
   (add-hook 'message-mode-hook 'turn-on-orgtbl)
   (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
-  (use-package org-mime
-    :commands (org-mime-htmlize org-mime-org-buffer-htmlize))
 #+END_SRC
 ** twitter
 #+BEGIN_SRC emacs-lisp
@@ -1397,79 +622,6 @@ and the arguments for flyckeck-clang based on a project-specific text file."
     :bind (:map twittering-mode-map
            ("r" . twittering-goto-next-status)
            ("t" . twittering-goto-previous-status)))
-#+END_SRC
-** Send
-#+BEGIN_SRC emacs-lisp
-  (setq send-mail-function 'smtpmail-send-it
-        message-send-mail-function 'message-smtpmail-send-it
-        smtpmail-local-domain "oscarnajera.com"
-  )
-
-  (defconst smtp-from-server-alist
-    '(
-      ("Oscar Najera <hi@oscarnajera.com>" . ("mail.oscarnajera.com" 587 starttls))
-      ("Oscar Najera <hello@oscarnajera.com>" . ("mail.oscarnajera.com" 587 starttls "hi"))
-      ("Oscar Najera <oscar.najera@tribe29.com>" . ("mx.tribe29.com" 587 starttls "on"))
-      ("Oscar Najera <najera.oscar@gmail.com>" . ("smtp.googlemail.com" 587 starttls "najera.oscar"))))
-
-  (defun set-smtp-server ()
-    (let* ((smtp-conf (cdr (assoc (save-restriction
-                                (message-narrow-to-headers)
-                                (message-fetch-field "from"))
-                                  smtp-from-server-alist)))
-           (server (nth 0 smtp-conf))
-           (port (nth 1 smtp-conf))
-           (protocol (nth 2 smtp-conf))
-           (user (nth 3 smtp-conf)))
-      (unless server (setq server "mail.oscarnajera.com"
-                           port 587
-                           protocol starttls
-                           user "hi"))
-      (setq smtpmail-smtp-server server
-            smtpmail-smtp-service port
-            smtpmail-stream-type protocol
-            smtpmail-smtp-user user)
-      (message "SMTP server changed to %s in port %s by %s" server port protocol)))
-  (add-hook 'message-send-mail-hook 'set-smtp-server)
-#+END_SRC
-* RSS
-#+BEGIN_SRC emacs-lisp
-;; functions to support syncing .elfeed
-;; makes sure elfeed reads index from disk before launching
-;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
-
-(defun bjm/elfeed-load-db-and-open ()
-  "Wrapper to load the elfeed db from disk before opening"
-  (interactive)
-  (elfeed-db-load)
-  (elfeed)
-  (elfeed-search-update--force))
-
-;;write to disk when quiting
-(defun bjm/elfeed-save-db-and-bury ()
-  "Wrapper to save the elfeed db to disk before burying buffer"
-  (interactive)
-  (elfeed-db-save)
-  (quit-window))
-
-(use-package elfeed
-  :bind (:map elfeed-search-mode-map
-              ("r" . next-line)
-              ("t" . previous-line)
-              ("n" . elfeed-search-untag-all-unread)
-              ("q" . bjm/elfeed-save-db-and-bury)
-         :map elfeed-show-mode-map
-              ("r" . elfeed-show-next)
-              ("t" . elfeed-show-prev))
-  :config
-  (evil-set-initial-state 'elfeed-show-mode 'emacs)
-  (evil-set-initial-state 'elfeed-search-mode 'emacs))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-  (use-package elfeed-org
-    :config
-    (elfeed-org)
-    (setq rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org")))
 #+END_SRC
 * Pdf-Reading
 #+BEGIN_SRC emacs-lisp
@@ -1494,27 +646,8 @@ and the arguments for flyckeck-clang based on a project-specific text file."
     (evil-set-initial-state 'pdf-view-mode 'emacs))
 
 #+END_SRC
-* Music
-#+BEGIN_SRC emacs-lisp
-(use-package emms
-  :init
-  (setq emms-source-file-default-directory "~/Music/")
-  :commands (emms-browser emms-smart-browse)
-  :config
-  (emms-all)
-  (emms-default-players)
-  (setq emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
-  (setq emms-info-functions '(emms-info-exiftool)))
-#+END_SRC
 ** TODO save & anotations
 http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
-* Test
-#+begin_src emacs-lisp
-(use-package calibredb
-  :init
-  (setq calibredb-root-dir "/run/media/titan/ext_backup/personal/Libros/CalibreManaged")
-  (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir)))
-#+end_src
 * Circe
 #+BEGIN_SRC emacs-lisp
 (use-package circe
