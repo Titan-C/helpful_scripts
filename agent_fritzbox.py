@@ -27,16 +27,28 @@
 # get_upnp_info('WANDSLLinkC1', 'urn:schemas-upnp-org:service:WANDSLLinkConfig:1', 'GetDSLLinkInfo')
 
 import argparse
+import logging
 import pprint
 import re
+import shlex
+import subprocess
 import time
 import traceback
 import urllib.error
 import urllib.request
-import logging
 
 import requests
 from requests.auth import HTTPDigestAuth
+
+
+def get_password():
+    return (
+        subprocess.run(
+            shlex.split("pass devices/st-martin.fritz.box"), stdout=subprocess.PIPE
+        )
+        .stdout.decode("utf-8")
+        .strip()
+    )
 
 
 def parse_args():
@@ -60,6 +72,7 @@ class RequestError(Exception):
 
 
 SE = requests.Session()
+SE.auth = HTTPDigestAuth("fritz2868", get_password())
 
 
 def get_info(url, data, headers):
